@@ -1,7 +1,37 @@
 @charset "utf-8";
+article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section,td,th,tr{display:block}
+.btn,img{-webkit-user-select:none}
+.wrap,img{width:100%}
+.custom-layer .custom-ticket-body li .right em,b,em{font-style:normal}
+body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
+a{text-decoration:none}
+button,input,select,textarea{font-size:100%;outline:0}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+img,input{border:none}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}
+caption,th{text-align:left}
+abbr,acronym{border:0;font-variant:normal}
+input,select,textarea{font-family:inherit;font-size:inherit;font-weight:inherit}
+input{background:0 0;outline:0}
+audio,canvas,video{display:inline-block}
+ol,ul{list-style:none}
+q:after,q:before{content:''}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+a,input{-webkit-tap-highlight-color:transparent}
+.hide{display:none}
+.ti{text-indent:-999em}
+.pr{position:relative}
+.btn,.pa{position:absolute}
+.fl{float:left}
+.fr{float:right}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+.btn{display:block;z-index:30;text-indent:0}
+.hid{display:none!important}
+.poniterNone{pointer-events:none}
 body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff;text-shadow:0 1px 0 #d1d1d1}
 /*!bootstrap*/
-.wrap{width:100%}
 .navbar-brand{padding:0}
 .navbar-inverse .navbar-brand,.navbar-inverse .navbar-nav>li>a{color:#fff!important}
 .main{height:auto;margin-top:10px}
@@ -129,7 +159,6 @@ body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,A
 .custom-layer .custom-ticket-body li .left .u{position:absolute;left:30px;top:60px}
 .custom-layer .custom-ticket-body li .left .m:before{content:"¥";font-size:1rem}
 .custom-layer .custom-ticket-body li .right span{margin-top:5px;display:block}
-.custom-layer .custom-ticket-body li .right em{font-style:normal}
 .custom-layer .line{width:113%;background:#e84593;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
 .custom-layer .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
 /*!media*/

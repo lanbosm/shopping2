@@ -1,6 +1,36 @@
 @charset "utf-8";
+article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section,td,th,tr{display:block}
+.btn,img{-webkit-user-select:none}
+.login_main,img{width:100%}
+body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
+b,em{font-style:normal}
+a{text-decoration:none}
+button,input,select,textarea{font-size:100%;outline:0}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+img,input{border:none}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}
+caption,th{text-align:left}
+abbr,acronym{border:0;font-variant:normal}
+input,select,textarea{font-family:inherit;font-size:inherit;font-weight:inherit}
+input{background:0 0;outline:0}
+audio,canvas,video{display:inline-block}
+ol,ul{list-style:none}
+q:after,q:before{content:''}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+a,input{-webkit-tap-highlight-color:transparent}
+.hide{display:none}
+.ti{text-indent:-999em}
+.pr{position:relative}
+.btn,.pa{position:absolute}
+.fl{float:left}
+.fr{float:right}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+.btn{display:block;z-index:30;text-indent:0}
+.hid{display:none!important}
+.poniterNone{pointer-events:none}
 body{background:url(../images/login_bg.jpg) 50% 0 no-repeat}
-.login_main{width:100%}
 .login_main .register-box{width:430px;margin:50% auto;padding:0 20px}
 .login_main .register-box .register-row1{height:66px}
 .login_main .register-box .register-row1 .logo{width:101px;height:66px;display:block;float:left;background:url(../images/logo.png) 50% 0 no-repeat;margin-left:-10px}

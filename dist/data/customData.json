@@ -1,0 +1,37 @@
+{
+	"data": [
+		{
+		    "cid": 10001,
+		    "name": "哈库",
+		    "phone": 110,
+		    "sex": "男",
+		    "points": 2000,
+		    "monney": 0,
+		    "tickets": [
+		        { "price": 100, "condition": "满399可用", "category": "全部可用", "expired": "2016.10.10~2016.11.11" },
+		        { "price": 100, "condition": "满399可用", "category": "全部可用", "expired": "2016.10.10~2016.11.11" }
+		    ]
+		},{
+		    "cid": 10002,
+		    "name": "梅里",
+		    "phone": 13919192192,
+		    "sex": "女",
+		    "points": 2000,
+		    "monney": 100,
+		    "tickets": [
+		        { "price": 100, "condition": "满399可用", "category": "全部可用", "expired": "2016.10.10~2016.11.11" },
+		        { "price": 100, "condition": "满399可用", "category": "全部可用", "expired": "2016.10.10~2016.11.11" }
+		    ]
+		},{
+		    "cid": 10003,
+		    "name": "艾斯",
+		    "phone": 13919192192,
+		    "sex": "男",
+		    "points": 2000,
+		    "monney": 100,
+		    "tickets": [
+		        
+		    ]
+		}
+	]
+}

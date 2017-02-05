@@ -60,16 +60,14 @@ gulp.task('copy:images', function () {
     return  gulp.src(['src/images/**/*']).pipe(gulp.dest('dist/images'));
 });
 
+//复制假数据
 gulp.task('copy:data',function(){
+    return  gulp.src(['src/data/**/*.json']).pipe(gulp.dest('dist/data'));
 
-    //抓取font
-    gulp.src(['**.json'],{             //抓取时候会存在子目录
-        cwd:'./data/'
-    }).pipe(rename(function (path) {
-        path.dirname = "./";             //以根目录方式输出
-    })).pipe(gulp.dest('./dist/data/'));
+    console.log(222);
 
-}3);
+
+});
 // 合并lib文件 通常是第三方库
 gulp.task('copy:lib',function(){
 
@@ -91,7 +89,7 @@ gulp.task('copy:lib',function(){
         cwd:'./lib/'
     }).pipe(rename(function (path) {
         path.dirname = "./";             //以根目录方式输出
-    })).pipe(gulp.dest('./dist/font/'));
+    })).pipe(gulp.dest('./dist/fonts/'));
 
 
     //针对vue
@@ -102,7 +100,7 @@ gulp.task('copy:lib',function(){
 })
 
 //copy
-gulp.task('copy',['copy:css','copy:images','copy:lib'],function() {
+gulp.task('copy',['copy:css','copy:images','copy:lib','copy:data'],function() {
     console.log("copy资源完成...");
     return gulp.src('./dist');
 });
