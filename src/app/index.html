@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8"/>
+	<title>首页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css" />
+	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+</head>
+
+<body>
+	<div class="wrap">
+		<!-- container -->
+		<div class="main" id="main">
+			<div class="container">
+			 		<div class="row" style=" border: none;">		  		
+						  	<div class="col-fixed-3" >
+						  		<div class="left-con">
+						  		<!-- 购物车 -->
+							  	<div class="shoppingCart">
+							  				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartItem.list.length==0}">
+												<ul>
+													<li :class="{checked:cartItem.index==index}" v-for="(index,item) in cartItem.list " track-by="$index" @click="checkCartItem($event,index);">
+														<div class="shoppingCart-item">
+															<p>{{item.title}}</p>
+															<p class="small">
+																<span>{{item.specs.list[item.specs.index].label}}</span> <span>{{item.selectDate}}</span>
+															</p> 
+															<p class="small">
+																<span>数量:{{item.amount}}</span> * <span>单价:{{item.price|currency '¥' 2 }}</span>
+															</p>
+															<p class="total">
+																<span>{{item.amount*item.price |currency '¥' 2 }}</span>
+															</p>
+														</div>
+													</li>
+												</ul>
+											</div>
+											<div class="totalprice">
+												总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
+											</div>
+							  	</div>
+							  	<!-- 计算器 -->
+							  	<div class="shoppingCalc">
+										<table class="table table-bordered" >
+												<tbody >
+													<tr >
+														<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>
+														<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
+														<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
+														<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
+														<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qrt');" >qrt</a></td>
+													</tr>
+
+													<tr>
+														<td colspan="3" rowspan="3" class="t1 ">
+															<a class="settle-accounts-btn" @click="settleAccounts()"></a>
+														</td>
+														<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
+														<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>
+														<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>
+													</tr>
+													<tr>
+														<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>
+														<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>
+														<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>
+													</tr>
+													<tr>
+														
+														<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>
+														
+														<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>
+													</tr>
+												</tbody>
+										</table>
+
+							  	</div>
+							  	</div>
+						  </div>
+				
+		  				  <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
+		  				  		<div class="right-con">
+			  				  		<div class="right-con-header">
+										<ol class="breadcrumb">
+											  <li :class="index==navData.path.length-1?'active':''" v-for="(index,nav) in navData.path"><span v-show="index==0" class="glyphicon glyphicon-home"> </span><a href="./#category={{nav.id}}" @click="getItemList(nav.id)">{{nav.name}}</a></li>
+										</ol>
+			  				  		</div>
+			  				  		<div class="right-con-content"">
+											<div class="item-box panel panel-primary">
+											   <div class="panel-heading" >
+											   		<div class="row">
+											   			   <div class="col-xs-8" >
+											   			   		<div class="category-list clearfix" v-show="navData.show" @mouseleave="navData.show=false" >
+												   			   		<div class="menu">
+												   			   			<a href="./#category={{nav.id}}" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>		
+												   			   		</div>
+												   			   		<div class="sub-menu" >
+																			<div class="item item-show clearfix" >
+																				<template v-if="!navData.list[navData.index]">
+																				<p> 数据加载中...</p>
+																				</template>
+																				<template v-if="!navData.list[navData.index].children">
+																				<p> 没有分类</p>
+																				</template>
+																				<template v-else>
+																				<a  class="btn btn-default sub-menu-category" href="./#category={{nav.id}}" v-for="(index,nav) in navData.list[navData.index].children" @click="getItemList(nav.id)">{{nav.name}}</a>
+																				</template>
+																			</div>
+																							   			   		
+												   			   		</div>
+												   			   	</div>
+											   			   </div>
+											   			   <div class="col-xs-6">
+														   <a class="btn btn-lightgreen shuaixuan"  @click="navData.show=!navData.show" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>   <div class="col-xs-12">
+														   </div>
+														</div>
+													 	<div class="searchbar  col-xs-6 col-md-offset-2 col-md-4">
+															 <div class="input-group">
+															      <input type="text" class="form-control" v-model="searchItem.input" v-on:keyup.enter="searchItem.text=searchItem.input;" placeholder="想找什么？">
+															      <span class="input-group-btn">
+															        <button class="btn btn-default" @click="searchItem.text=searchItem.input;"><span class="glyphicon glyphicon-search"></span></button>
+															      </span>
+															  </div>
+														</div> 
+													</div>
+											  </div>
+											  <div class="panel-body">
+											  		<div class="row"  v-show="itemData.list.length!=0">
+															<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item" v-for="(index,item) in filteredItemDataList ">
+																 <div class="thumbnail">
+																	  <a  class="list-btn" role="button" data-lid="item.id"><span class="glyphicon glyphicon-list"></span></a>
+																 	  <div class="prcie primary">{{item.price |currency '¥' 2}}元</div>
+																 	  <div class="photo" data-toggle="modal" data-target="#item-layer" @click="openItem(index);">
+																     	 <img class="img-responsive" :src="item.imgurl" :alt="item.title" :title="item.title" >
+																     </div>
+																      <div class="caption">
+																      	<p>{{item.title}}</p>
+																      </div>
+																       <a  class="buy-btn" role="button" :data-lid="item.id" data-toggle="modal" data-target="#item-layer" @click="openItem(index);"
+																       ><span class="glyphicon glyphicon-shopping-cart"></span></a>
+																 </div>
+															</div>
+									  			    </div>
+									  			   <div class="row"  v-else>
+														<div class="col-xs-12">
+																数据加载中....
+														</div>
+									  			   </div>
+									  			   <div class="row"  v-show="filteredItemDataList.length==0 && itemData.list.length!=0">
+														<div class="col-xs-12">
+																没有相关数据....
+														</div>
+									  			   </div>
+									  	</div>
+										<div class="panel-footer">
+														 <div class="page-bar">
+													            <ul class="pagination">
+													            	<li><span class="pagination-label">第 {{pageCur}} 页,共 {{pageTotal}} 页</span></li>
+														            <li v-if="showFirst"><a @click="pageCur--">上一页</a></li>
+														            <li v-for="index in pageindexs"  :class="{ 'active': pageCur == index}">
+														                <a @click="pageClick(index)">{{ index }}</a> </li>
+														            <li v-if="showLast"><a @click="pageCur++">下一页</a></li>
+													            </ul>
+													     </div>	  		 		
+											  		 </div>
+										</div>
+			  				  		</div>
+			  				  	</div>
+		  				  </div>
+			 		</div>
+			</div>
+
+
+			<!-- item modale -->
+			<div role="dialog" class="modal fade item-layer" id="item-layer">
+					<div class="modal-dialog ">
+							<div class="modal-content">
+								<div class="modal-body">
+								<template v-if="newItemModal">
+									<div class="thumbnail buy-thumbnail">
+												  <div class="row" >
+												  		<div class="col-xs-12">
+												  		  <a class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></a>
+												  		  <div class="price primary">{{itemData.newItem.price |currency '¥' 2}}元</div>
+												  		  <div class="info col-xs-12">
+													      <img class="img-responsive  center-block" :src="itemData.newItem.imgurl" :alt="itemData.newItem.title" :title="itemData.newItem.title">
+													        <p>{{itemData.newItem.title}}</p>
+													        <p class="boon primary">{{itemData.newItem.boon}}</p>
+													      </div>
+													    </div>
+											      </div>
+											      <div class="row">
+															<div class="specs col-xs-12 col-xs-4"  v-for="(index,specs) in itemData.newItem.specs.list" >
+																<a class="btn specs specsbtn" :class="{selected:itemData.newItem.specs.index==index}"
+																@click="itemData.newItem.specs.index=index;" >{{specs.label}}</a>
+															</div>
+															
+											      </div>
+											      <div class="row">
+											      			<div class="col-xs-12">
+											     				<a class="btn btn-lightgreen btn-block" data-dismiss="modal" @click="pushCart" >确定</a>
+											     			</div>
+											     </div>
+									</div>
+								</template>
+								</div>	
+							</div>
+					</div>
+				</div>
+			
+			
+			<!-- custom modale -->
+			<div role="dialog" class="modal fade custom-layer" id="custom-layer">
+					<div class="modal-dialog ">
+							<div class="modal-content">
+
+									<div class="modal-header">
+     										<h4 class="modal-title">顾客</h4>
+											<a class="close" data-dismiss="modal">&times;</span></a>
+      								</div>
+								    <div class="modal-body">
+								       <div class="custom-table-header">
+								       			<div class="row">
+								       				<div class="col-xs-5 col-xs-offset-3">
+										       			<div class="input-group searchCustom">
+										       					<span class="input-group-btn">
+														        <button class="btn btn-default" ><span class="glyphicon glyphicon-search" @click="searchItem.text=searchItem.input;"></span></button>
+														        </span>
+																<input type="text" class="form-control" v-model="searchCustom.input" v-on:keyup.enter="searchCustom.text=searchCustom.input;" placeholder="搜索顾客">
+														</div>
+													</div>
+													<div class="col-xs-4">
+														<a class="btn add-custom" v-show="customModal.status=='normal'|| customModal.status=='info'" @click="customModal.status='register';"></a>
+														<a class="btn cancel-custom" v-show="customModal.status=='register'" @click="customModal.status=customModal.history">取消</a>
+														<a class="btn select-ticket btn-lightgreen" v-show="customModal.status=='info'" @click="">选择</a>
+													</div>
+												</div>
+								       </div>
+								       <div class="custom-table-body">
+								       			<!-- normal -->
+								       			<template v-if="customModal.status=='normal'">		
+									       			<div class="normal">
+									       				<p class="text-center bg-success" v-show="customModal.code==301" >搜索中...</p>
+									       				<p class="text-center bg-success" v-show="customModal.code==404" >没有找到此会员</p>
+									       			</div>
+								       			</template>
+								       			<!-- registration -->
+								       			<template v-if="customModal.status=='register'">		
+								       			<div class="registration">
+								       					<div class="row">
+																<div class="col-xs-8 col-xs-offset-2">
+																		<div class="custom-sex clearfix text-center">
+																			<div class="man-radio radio">
+																				<input type="radio"  name="sex" value="男" id="custom-man" checked="checked" v-model="customData.newCustom.sex"/>
+																				<label for="custom-man"></label>
+																			</div>
+																			<div class="women-radio radio">
+																				<input type="radio" name="sex" id="custom-women" v-model="customData.newCustom.sex" value="女">
+																				<label for="custom-women"></label>
+																			</div>
+																		</div>
+																		<div class="input-group custom-name">
+																		  <span class="input-group-addon "><i class="iconfont icon-peoplefill"></i></span>
+																		  <input type="text" class="form-control" placeholder="姓名"  v-model="customData.newCustom.name">
+																		</div>
+																		<div class="input-group custom-phone">
+																		  <span class="input-group-addon"><i class="iconfont icon-mobilefill"></i></span>
+																		  <input type="num" class="form-control" placeholder="手机号" maxlength="13" v-model="customData.newCustom.phone">
+																		</div>
+																		<a class="btn btn-lightgreen btn-block" @click="addNewCustom()">保存</a>
+																</div>
+								       					</div>
+								       			</div>
+								       			</template>
+								       			<!-- custominfo -->
+								       			<template v-if="customModal.status=='info'">				
+								       			<div class="info" >
+								       					<div class="custom-info">
+								       						<div class="row">
+								       							<div class="col-xs-12 col-sm-12 clearfix">
+								       								<em class="sex-photo {{customData.curCustom.sex | sex}} "></em><span class="nickname">{{customData.curCustom.name}}</span>
+								       							</div>
+								       						</div>		       						
+								       						<div class="row">
+								       							<div class="col-xs-12 col-sm-6">手机号<span>{{customData.curCustom.phone}}</span></div>
+								       							<div class="col-xs-12 col-sm-6">积分<span>{{customData.curCustom.points}}</span></div>
+								       						</div>
+								       						<div class="row">
+								       							<div class="col-xs-12 col-sm-6">余额 <span>{{customData.curCustom.monney}}</span></div>
+								       						</div>
+								       					</div>
+								       					<div class="line"><span class="primary glyphicon glyphicon-tag">
+								       					</span></div>
+														<div class="custom-ticket">
+															<div class="custom-ticket-header">优惠券</div>
+															<div class="custom-ticket-body">
+																<ul>
+																	<li v-for="(index,custom) in customData.curCustom.tickets">
+																		<div class="left">
+																			<span class="m">{{custom.price}}</span>
+																			<span class="u">{{custom.condition}}</span>
+																		</div>	
+																		<div class="right">
+																			<span style="color: #cccccc">有效期 
+																			<em class="primary">{{custom.expired}}</em>
+																			</span>
+																			<span class="l2">{{custom.category}}</span>
+																			<span class="l3 primary">抵用券</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+								       			</div>
+								       			</template>
+								       </div>
+								       <div class="custom-table-foot text-right">
+								        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								        </div>
+								    </div>
+     		
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- main -->
+	</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript" src="/js/header.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+	
+</script>
+</body>
+</html>

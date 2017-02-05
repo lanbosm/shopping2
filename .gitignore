@@ -1,0 +1,7 @@
+pkg
+*.sublime-project
+*.sublime-workspace
+*.idea
+public
+node_modules
+
