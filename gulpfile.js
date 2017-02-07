@@ -112,7 +112,7 @@ gulp.task('lessmin', function (done) {
         .pipe(less())
         //这里可以加css sprite 让每一个css合并为一个雪碧图
         //.pipe(spriter({}))
-        //.pipe(concat('style.min.css'))
+       // .pipe(concat('style.css'))
         .pipe(cssmin({"keepBreaks":true}))
         .pipe(gulp.dest('dist/css/'))
         .on('end', done);
@@ -246,9 +246,11 @@ gulp.task('web', function() {
         port: host.port
     });
     //每次dist文件发生变化 自动刷新游览器
-    gulp.watch(['dist/**/*.css','dist/**/*.html','dist/**/*.js']).on('change', function(){
+    var watcher = gulp.watch(['dist/css/*.css','dist/**/*.html','dist/js/*.js']);
+
+    watcher.on('change', function(event) {
+       // console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
         browserSync.reload();
-       // console.log("change");
     });
 });
 
@@ -305,7 +307,7 @@ gulp.task('default',function(){
 gulp.task('dev', ['clean'],function(){           //不能同时进行 所以很多start
     gulp.start('copy',function(){
         gulp.start('fileinclude','lessmin','build-js',function(){
-            gulp.start( 'web','watch');
+            gulp.start( 'watch','web');
         });
     });
 });

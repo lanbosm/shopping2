@@ -1,7 +1,6 @@
-@charset "utf-8";
-article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section,td,th,tr{display:block}
+/*!reset css*/
+article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
 .btn,img{-webkit-user-select:none}
-.wrap,img{width:100%}
 .custom-layer .custom-ticket-body li .right em,b,em{font-style:normal}
 body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
 a{text-decoration:none}
@@ -20,6 +19,7 @@ q:after,q:before{content:''}
 sup{vertical-align:text-top}
 sub{vertical-align:text-bottom}
 a,input{-webkit-tap-highlight-color:transparent}
+img{width:100%}
 .hide{display:none}
 .ti{text-indent:-999em}
 .pr{position:relative}
@@ -30,7 +30,13 @@ a,input{-webkit-tap-highlight-color:transparent}
 .btn{display:block;z-index:30;text-indent:0}
 .hid{display:none!important}
 .poniterNone{pointer-events:none}
-body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff;text-shadow:0 1px 0 #d1d1d1}
+/*!自定义公用样式*/
+.pink{color:#e84593}
+.f_12px{font-size:12px}
+.f_14px{font-size:14px}
+.f_Bold{font-weight:700}
+.f_Nomal{font-weight:400}
+.f_Yahei{font-family:Microsoft YaHei,\5FAE\8F6F\96C5\9ED1,SimHei,\9ED1\4F53}
 /*!bootstrap*/
 .navbar-brand{padding:0}
 .navbar-inverse .navbar-brand,.navbar-inverse .navbar-nav>li>a{color:#fff!important}
@@ -50,36 +56,39 @@ body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,A
 .primary{color:#ec86b6}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{background:#6fc89c;color:#fff}
 .col-fixed-3{padding-left:15px;width:300px;padding-right:15px;position:fixed;margin-top:0}
+.shoppingCalc,.shoppingCart,.shoppingCart .shoppingCart-list .shoppingCart-item,.shoppingCart .totalprice,.wrap{width:100%}
+/*!共有btn*/
+.error{color:#ff7200}
+.footer{padding:12px 0 18px;line-height:24px}
+.shoppingCart{height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:20px}
+.shoppingCart .totalprice{text-align:right;color:#ccc;padding-right:5px}
+.shoppingCart .totalprice span{margin-left:20px}
+.shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden}
+.shoppingCart .shoppingCart-list.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
+.shoppingCart .shoppingCart-list ul{padding:0;margin:0;list-style:none}
+.shoppingCart .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
+.shoppingCart .shoppingCart-list ul li:after{display:table;clear:both;content:" "}
+.shoppingCart .shoppingCart-list ul li.checked{background:#f0f0f0}
+.shoppingCart .shoppingCart-list .shoppingCart-item p{width:100%;font-weight:700;line-height:20px;margin-bottom:0}
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small{font-size:.9rem;color:#666}
+.shoppingCart .shoppingCart-list .shoppingCart-item p.total{font-weight:700;color:#666;text-align:right}
+.shoppingCalc .table .t1{width:40%;cursor:pointer}
+.shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
+.shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
+.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
+body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff;text-shadow:0 1px 0 #d1d1d1}
 /*!left-con*/
 .left-con{height:auto;width:100%}
-.left-con .shoppingCart{width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:20px}
-.left-con .shoppingCart-list{position:relative;overflow-x:hidden}
-.left-con .shoppingCart-list.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
-.left-con .shoppingCart-list ul{padding:0;margin:0;list-style:none}
-.left-con .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
-.left-con .shoppingCart-list ul li:after{display:table;clear:both;content:" "}
-.left-con .shoppingCart-list ul li.checked{background:#f0f0f0}
-.left-con .shoppingCart-list .shoppingCart-item{width:100%}
-.left-con .shoppingCart-list .shoppingCart-item p{width:100%;font-weight:700;line-height:20px;margin-bottom:0}
-.left-con .shoppingCart-list .shoppingCart-item p.small{font-size:.9rem;color:#666}
-.left-con .shoppingCart-list .shoppingCart-item p.total{font-weight:700;color:#666;text-align:right}
-.left-con .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
-.left-con .totalprice span{margin-left:20px}
-.left-con .shoppingCalc .table{width:100%}
-.left-con .shoppingCalc .table .t1{width:40%;cursor:pointer}
-.left-con .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
-.left-con .shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
-.left-con .shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
 /*!product*/
 .product .item{padding-left:10px;padding-right:10px;margin-bottom:20px}
 .product .item .thumbnail{position:relative;margin-bottom:0}
-.product .item .thumbnail .buy-btn,.product .item .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
-.product .item .thumbnail .prcie{font-size:.9rem}
-.product .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:1.6rem;font-size:.8rem}
-.product .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.product .item .thumbnail .photo>img{display:inline;max-width:120px}
-.product .item .thumbnail .buy-btn{right:0;top:88%}
-.product .item .thumbnail .list-btn{right:0;top:8px}
+.product .item .product .item .thumbnail .list-btn,.product .item .thumbnail .buy-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
+.product .item .item .thumbnail .prcie{font-size:.9rem}
+.product .item .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:1.6rem;font-size:.8rem}
+.product .item .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
+.product .item .item .thumbnail .photo>img{display:inline;max-width:120px}
+.product .item .item .thumbnail .buy-btn{right:0;top:88%}
+.product .item .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/
 .right-con{padding-left:10px;padding-right:10px;margin-bottom:20px}
 .right-con .panel{border:none}
@@ -88,6 +97,14 @@ body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,A
 .right-con .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:25px}
 .right-con .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
 .right-con .panel-heading .nav-tabs>li>a{width:120px}
+.right-con .thumbnail{position:relative;margin-bottom:0}
+.right-con .product .item .thumbnail .list-btn,.right-con .thumbnail .buy-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
+.right-con .item .thumbnail .prcie{font-size:.9rem}
+.right-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:1.6rem;font-size:.8rem}
+.right-con .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
+.right-con .item .thumbnail .photo>img{display:inline;max-width:120px}
+.right-con .item .thumbnail .buy-btn{right:0;top:88%}
+.right-con .item .thumbnail .list-btn{right:0;top:8px}
 /*!item modale*/
 .item-layer .buy-thumbnail{border:none;padding-left:15px;padding-right:15px}
 .item-layer .buy-thumbnail>.row,.item-layer .specs{margin-top:10px}
