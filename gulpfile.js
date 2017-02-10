@@ -177,12 +177,12 @@ gulp.task('rev:css', function (done) {
     gulp.src(['src/css/*.css'])
         .pipe(gulp.dest('dist/css/'));
 
-    return gulp.src(['src/css/main.less'])  //main 是主入口
+    return gulp.src(['src/css/*.less'])  //第一层 是主入口
         .pipe(less())
         //这里可以加css sprite 让每一个css合并为一个雪碧图
         //.pipe(spriter({}))
-        .pipe(concat('style.min.css'))
-       // .pipe(cssmin({"keepBreaks":true}))
+       // .pipe(concat('style.min.css'))
+        .pipe(cssmin({"keepBreaks":true}))
         .pipe(chsiRev())
         .pipe(gulp.dest('dist/css/'));
 

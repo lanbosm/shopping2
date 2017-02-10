@@ -306,7 +306,7 @@ new Vue({
             item.imgurl=this.itemData.list[index].imgurl;
             item.specs=this.itemData.list[index].specs;
             item.amount=1;
-            item.selectDate=window.getSelectDate(); //自动获取选择日期
+            item.selectDate=util.getSelectDate(); //自动获取选择日期
             this.cartItem.list.push(item);
         },
         checkCartItem:function(ev,index){

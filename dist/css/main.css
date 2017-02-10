@@ -80,25 +80,16 @@ body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,A
 /*!left-con*/
 .left-con{height:auto;width:100%}
 /*!product*/
-.product .item{padding-left:10px;padding-right:10px;margin-bottom:20px}
-.product .item .thumbnail{position:relative;margin-bottom:0}
-.product .item .product .item .thumbnail .list-btn,.product .item .thumbnail .buy-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
-.product .item .item .thumbnail .prcie{font-size:.9rem}
-.product .item .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:1.6rem;font-size:.8rem}
-.product .item .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.product .item .item .thumbnail .photo>img{display:inline;max-width:120px}
-.product .item .item .thumbnail .buy-btn{right:0;top:88%}
-.product .item .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/
-.right-con{padding-left:10px;padding-right:10px;margin-bottom:20px}
 .right-con .panel{border:none}
 .right-con .panel-heading{color:#fff;background:0 0;padding:10px 0;border:none}
 .right-con .panel-heading .shuaixuan{padding:10px 30px;margin-bottom:-28px;border-bottom-left-radius:0;border-bottom-right-radius:0}
 .right-con .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:25px}
 .right-con .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
 .right-con .panel-heading .nav-tabs>li>a{width:120px}
-.right-con .thumbnail{position:relative;margin-bottom:0}
-.right-con .product .item .thumbnail .list-btn,.right-con .thumbnail .buy-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
+.right-con .item{padding-left:10px;padding-right:10px;margin-bottom:20px}
+.right-con .item .thumbnail{position:relative;margin-bottom:0}
+.right-con .item .thumbnail .buy-btn,.right-con .item .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
 .right-con .item .thumbnail .prcie{font-size:.9rem}
 .right-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:1.6rem;font-size:.8rem}
 .right-con .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
@@ -108,7 +99,7 @@ body{padding-top:70px;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,A
 /*!item modale*/
 .item-layer .buy-thumbnail{border:none;padding-left:15px;padding-right:15px}
 .item-layer .buy-thumbnail>.row,.item-layer .specs{margin-top:10px}
-.item-layer .specsbtn{border:1px solid #ccc;color:#ccc;width:100%;display:block}
+.item-layer .specsbtn{border:1px solid #ccc;color:#ccc;width:100%;display:block;position:relative}
 .item-layer .specsbtn.selected,.item-layer .specsbtn:hover{border:1px solid #ec86b6;color:#ec86b6}
 /*!分类列表*/
 .category-list{width:100%;color:#333;position:absolute;z-index:30;height:auto;top:47px;left:15px}
