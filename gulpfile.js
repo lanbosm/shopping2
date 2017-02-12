@@ -64,7 +64,7 @@ gulp.task('copy:images', function () {
 gulp.task('copy:data',function(){
     return  gulp.src(['src/data/**/*.json']).pipe(gulp.dest('dist/data'));
 
-    console.log(222);
+   // console.log(222);
 
 
 });
@@ -200,7 +200,7 @@ gulp.task('rev:html', function (done) {
             basepath: '@file'
         }))
 
-        .pipe(chsiRev())
+       // .pipe(chsiRev())
         .pipe(gulp.dest('dist/app'))
 });
 
@@ -317,7 +317,7 @@ gulp.task('dev', ['clean'],function(){           //不能同时进行 所以很�
 gulp.task('pro', ['clean'],function(){
     //也许你需要cdn!
     gulp.start('copy',function(){
-        gulp.start('rev:html','rev:css','rev:js',function(){ //少个图片压缩
+        gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
             console.log("生成终了..");
         });
     });
