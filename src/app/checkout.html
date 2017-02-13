@@ -16,31 +16,34 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+        body{
+            background-color: #f0eeef;
+        }
+    </style>
 </head>
 <body>
+    @@include('header.inc')
     <div class="container checkout">
-        <div class="row">
-
-        </div>
-        <div class="row">
+        <div class="row checkout-header">
             <div class="col-sm-2 col-md-2 col-lg-2">
-                <button class="btn btn-default"><<  返回</button>
+                <button class="btn btn-default checkout-btn"><<  返回</button>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-center jz">
+            <div class="col-sm-8 col-md-8 col-lg-8 text-center bill">
                 结账
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 pull-right">
-                <button class="btn btn-default pull-right">确认  >></button>
+                <button class="btn btn-default checkout-btn pull-right">确认  >></button>
             </div>
         </div>
-        <div class="row">
+        <div class="row checkout-body">
             <div class="col-sm-4 col-md-4 col-lg-4">
                 <div class="gk text-center">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 顾客
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row checkout-bodys">
             <div class="col-sm-4 col-md-4 col-lg-4 zffs">
                 <div class="gk an text-center">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 扫码

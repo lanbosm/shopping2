@@ -12,14 +12,15 @@
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
 
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
-	<!--<link rel="stylesheet" type="text/css" href="/css/common.css" />-->
-	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="../css/main.css" />
 
 </head>
 
 <body>
+	@@include('header.inc')
+
 	<div class="wrap">
 		<!-- container -->
 		<div class="main" id="main">
@@ -127,7 +128,7 @@
 														</div>
 													 	<div class="searchbar  col-xs-6 col-md-offset-2 col-md-4">
 															 <div class="input-group">
-															      <input type="text" class="form-control" v-model="searchItem.input" v-on:keyup.enter="searchItem.text=searchItem.input;" placeholder="想找什么？">
+															      <input type="text" class="form-control" v-model="searchItem.input" v-on:keyup.enter="searchItem.text=searchItem.input;" placeholder="搜索商品">
 															      <span class="input-group-btn">
 															        <button class="btn btn-default" @click="searchItem.text=searchItem.input;"><span class="glyphicon glyphicon-search"></span></button>
 															      </span>
@@ -325,9 +326,7 @@
 								       			</div>
 								       			</template>
 								       </div>
-								       <div class="custom-table-foot text-right">
-								        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        </div>
+
 								    </div>
      		
 							</div>
@@ -340,13 +339,14 @@
 
 
 
-	<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/vue.min.js"></script>
-	<script type="text/javascript" src="/js/common.js"></script>
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/vue.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
 
-	<script type="text/javascript" src="/js/header.js"></script>
-	<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="../js/header.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+
 
 <script type="text/javascript">
 

@@ -64,7 +64,7 @@ gulp.task('copy:images', function () {
 gulp.task('copy:data',function(){
     return  gulp.src(['src/data/**/*.json']).pipe(gulp.dest('dist/data'));
 
-    console.log(222);
+   // console.log(222);
 
 
 });
@@ -177,12 +177,12 @@ gulp.task('rev:css', function (done) {
     gulp.src(['src/css/*.css'])
         .pipe(gulp.dest('dist/css/'));
 
-    return gulp.src(['src/css/main.less'])  //main 是主入口
+    return gulp.src(['src/css/*.less'])  //第一层 是主入口
         .pipe(less())
         //这里可以加css sprite 让每一个css合并为一个雪碧图
         //.pipe(spriter({}))
-        .pipe(concat('style.min.css'))
-       // .pipe(cssmin({"keepBreaks":true}))
+       // .pipe(concat('style.min.css'))
+        .pipe(cssmin({"keepBreaks":true}))
         .pipe(chsiRev())
         .pipe(gulp.dest('dist/css/'));
 
@@ -200,7 +200,7 @@ gulp.task('rev:html', function (done) {
             basepath: '@file'
         }))
 
-        .pipe(chsiRev())
+       // .pipe(chsiRev())
         .pipe(gulp.dest('dist/app'))
 });
 
@@ -317,7 +317,7 @@ gulp.task('dev', ['clean'],function(){           //不能同时进行 所以很�
 gulp.task('pro', ['clean'],function(){
     //也许你需要cdn!
     gulp.start('copy',function(){
-        gulp.start('rev:html','rev:css','rev:js',function(){ //少个图片压缩
+        gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
             console.log("生成终了..");
         });
     });

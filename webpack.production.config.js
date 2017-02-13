@@ -33,7 +33,7 @@ module.exports = {
     cache: true,
   //  devtool: "source-map",
     entry: getEntry(),
-    
+
     output: {
         path: path.join(ROOT_PATH, "./dist/js/"),
         publicPath: "/dist/js/",
@@ -45,7 +45,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js?$/,                   
+                test: /\.js?$/,
                 loader: 'babel',         //es6语法
                 exclude: /node_modules/, // include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
                 query: {
@@ -68,7 +68,7 @@ module.exports = {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
-            ui: srcDir + "/js/ui"
+            util: srcDir + "/js/util"
         }
     },
     plugins: [

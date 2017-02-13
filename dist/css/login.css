@@ -40,7 +40,7 @@ body{background:url(../images/login_bg.jpg) 50% 0 no-repeat}
 .login_main .register-box .register-row2 h3{font-size:1.8rem;color:#e84593}
 .login_main .register-box .register-row3{padding-bottom:20px;border-bottom:solid 2px #e84593}
 .login_main .register-box .register-row3 .register-row3-input{width:100%;height:40px;margin-top:10px}
-.login_main .register-box .register-row3 label{float:left;width:10%;height:100%;background:#00f}
+.login_main .register-box .register-row3 label{float:left;width:10%;height:100%}
 .login_main .register-box .register-row3 label.username{background:url(../images/login_user.png) 50% 0 no-repeat}
 .login_main .register-box .register-row3 label.password{background:url(../images/login_pass.png) 50% 0 no-repeat}
 .login_main .register-box .register-row3 input{width:80%;font-size:1.5rem;padding:10px 0;height:100%;margin-left:10px;float:left}

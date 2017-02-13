@@ -1,18 +1,68 @@
-@borderDashedStyle:1px dashed #e5e5e5;
-
-.checkout{width: 1000px; height: 100vh;border: @borderDashedStyle;box-sizing: border-box;margin-top: -70px;overflow: hidden;}
-.checkout .btn{position: static;background-color: #f0eeef;margin: 10px 0;}
-.checkout .row{border-bottom: @borderDashedStyle;margin-left: 0;margin-right: 0;}
-.checkout .row:first-child{height:50px;border: 1px solid red}
-.checkout .row:nth-child(2){position: relative}
-.checkout .jz{position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);}
-.checkout .row:nth-child(3){padding: 20px 0;}
-.checkout .row:last-child{border-bottom: none;height: 100%;}
-.checkout .gk{border: @borderStyle;border-radius: @radius;height: 60px;line-height: 60px;}
-.checkout .an{margin-top: 30px;}
-.checkout .an:first-child{margin-top: 0;}
-.checkout .zffs{padding-top: 20px; border-right: @borderDashedStyle;height: 100%;}
-.checkout .yfje{color: @yfje;font-size: 50px;}
-.checkout .fj{border-bottom: @borderDashedStyle;margin: 0 -15px;}
-.checkout .ts{color: @color;margin-top: 10px;}
-.checkout .nr{margin-bottom: 20px;}
+.checkout-row(){
+  margin-left: 0;
+  margin-right: 0;
+  border-bottom: @borderDashedStyle;
+}
+.checkout{
+  height: 100vh;
+  border-left: @borderDashedStyle;
+  border-right: @borderDashedStyle;
+  overflow: hidden;
+  background-color: @bgColor;
+  .checkout-btn{
+    position: static;
+    background-color: #f0eeef;
+    margin: 10px 0;
+  }
+  .checkout-header{
+    position: relative;
+    .checkout-row;
+    .bill{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+  .checkout-body{
+    padding: 20px 0;
+    .checkout-row;
+  }
+  .gk{
+    border: @borderStyle;
+    border-radius: @radius;
+    height: 60px;
+    line-height: 60px;
+  }
+  .checkout-bodys{
+    border-bottom: none;
+    .checkout-row;
+    height: 100%;
+    .zffs{
+      padding-top: 20px;
+      border-right: @borderDashedStyle;
+      height: 100%;
+      .an{
+        margin-top: 30px;
+        background-color: #f0eeef;
+        &:first-child{margin-top: 0;}
+      }
+    }
+    .fj{
+      border-bottom: @borderDashedStyle;
+      margin: 0 -15px;
+      .nr{
+        margin-bottom: 40px;
+        margin-top: 50px;
+        .yfje{
+          color: @yfje;
+          font-size: 50px;
+        }
+        .ts{
+          color: @color;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

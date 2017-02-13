@@ -9,7 +9,7 @@ webpackJsonp([0],[
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	var _util = __webpack_require__(2);
 	
@@ -17,15 +17,23 @@ webpackJsonp([0],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	!function () {
-		var templates = '' + '<div class="navbar navbar-inverse navbar-fixed-top" id="header">' + '<a class="navbar-brand"><img src="/images/logo.jpg" alt="Brand"></a>' + '<div class="container">' + '<div class="staff">{staff}</div>' + ' <div class="navbar-header">' + '<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">' + '<span class="sr-only">Toggle navigation</span>' + '<span class="icon-bar"></span>' + '<span class="icon-bar"></span>' + '<span class="icon-bar"></span>' + '</button>' + '</div>' + '<div class="navbar-collapse collapse" role="navigation">' + '<ul class="nav navbar-nav">' + '{custom}' + '<li><a class="custom-add" onclick="queueTools.addCustom();">+</a></li>' + '<li><a class="custom-remove" onclick="queueTools.removeCustom();">-</a></li>' + '</ul>' + ' </div>' + '</div>' + '</div>';
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //var  util= require('util/util.js');
 	
-		var queueTools = {
+	
+	!function () {
+	
+		if (!document.getElementById("header-nav")) {
+			return false;
+		}
+		var navbar = document.getElementById("header-nav");
+		var template = navbar.innerHTML;
+	
+		var queueTools = _defineProperty({
 			login: false,
-			template: templates,
+			template: template,
 			data: {
 				index: 0,
-				staff: "收营员XXX",
+				staff: "里可行",
 				list: []
 			},
 			init: function init() {
@@ -34,16 +42,24 @@ webpackJsonp([0],[
 				if (localData) {
 					this.data = localData;
 				}
-			},
-			getSystemCustom: function getSystemCustom() {
-				//默认匿名用户
-				var custom = {};
-				custom.name = "custom_" + new Date().getTime();
-				custom.cid = null;
 	
+				if (this.data.list == 0) {
+					this.addCustom();
+				}
+	
+				this.refresh();
+				this.contact();
+			},
+			//获得用户资料
+			getCustomData: function getCustomData() {
+				var custom = {};
+				custom.uid = "1001";
+				custom.name = "custom_" + new Date().getTime();
+				custom.cid = parseInt(Math.random() * 1000);
 				return custom;
 			},
-			getSystemTime: function getSystemTime() {
+			//获得时间信息
+			getTimeData: function getTimeData() {
 				function nz(n) {
 					if (n < 10) {
 						n = "0" + n;
@@ -55,17 +71,14 @@ webpackJsonp([0],[
 	
 				var time = new Date();
 				var timestr = nz(time.getHours()) + ":" + nz(time.getMinutes());
+	
 				return timestr;
 			},
 			refresh: function refresh() {
 	
 				var html = this.getHeaderHtml();
-				if (!document.getElementById("header")) {
-					$("body").append(html);
-				} else {
-					document.getElementById("header").innerHTML = html;
-				}
-				//pushLocal("miku",this.data);
+	
+				navbar.innerHTML = html;
 			},
 			makeCustom: function makeCustom(data) {
 				var _self = this;
@@ -79,57 +92,90 @@ webpackJsonp([0],[
 				});
 				return html;
 			},
+			//获得最新的html
 			getHeaderHtml: function getHeaderHtml() {
 				var staff = this.data.staff;
-				var queue = this.data.list;
-				var custom = this.makeCustom(queue);
-				var tmp = this.template.replace(/{staff}/g, staff).replace(/{custom}/g, custom);
+				var aaa = this.data.list;
+				var queue = this.makeCustom(aaa);
+				var tmp = this.template.replace(/{staff}/g, staff).replace(/{queue}/g, queue);
 				return tmp;
 			},
+			//切换用户
 			switchCustom: function switchCustom(index) {
 				this.data.index = index - 1;
 				this.refresh();
 				_util2.default.pushLocal("queue", this.data);
 	
-				//alert(queueTools.data.list[queueTools.data.index].custom.name)
+				//查询购物车
+				this.findCart(this.data.list[index - 1].custom.name, this.data.list[index - 1].custom.cid);
 			},
-			addCustom: function addCustom(custom) {
+			//新增用户
+			addCustom: function addCustom() {
 				var queue = {};
 				//记录客户当前时间
-				queue.time = this.getSystemTime();
+				queue.time = this.getTimeData();
 				//记录客户名会员
-				queue.custom = this.getSystemCustom();
-	
+				queue.custom = this.getCustomData();
+				//
 				this.data.list.push(queue);
 				this.data.index = this.data.list.length - 1;
 	
 				this.refresh();
 				_util2.default.pushLocal("queue", this.data);
 			},
-			setCustom: function setCustom(custom) {
-				if (this.data.list.length == 0) {
-					return;
-				}
-				var index = this.data.index;
-				alert(index);
-				this.data.list[index].custom = custom;
-				_util2.default.pushLocal("queue", this.data);
-			},
+	
+			//删除用户
 			removeCustom: function removeCustom() {
 				var index = this.data.index;
 				this.data.list.splice(index, 1);
 				this.refresh();
 				_util2.default.pushLocal("queue", this.data);
+			},
+			//查询购物记录
+			findCart: function findCart(name, cartid) {
+				alert("用户名:" + name + ",购物车id:" + cartid);
+			},
+			//设置用户信息
+			setCustom: function setCustom(custom) {
+				if (this.data.list.length == 0) {
+					return;
+				}
+				var index = this.data.index;
+	
+				this.data.list[index].custom = custom;
+				_util2.default.pushLocal("queue", this.data);
+			},
+			//连接设备
+			contact: function contact() {
+				document.querySelector('.contact-btn').classList.remove('success', 'error');
+				if (2 > 1) {
+					document.querySelector('.contact-btn').classList.add('success');
+				} else {
+					document.querySelector('.contact-btn').classList.add('error');
+				}
+			},
+			//连接设备
+			exit: function exit() {
+				var res = confirm("确定退出吗? ");
+				if (res) {
+					_util2.default.delLocal('queue');
+					location.href = "./login.html";
+				}
 			}
+		}, "setCustom", function setCustom(custom) {
+			if (this.data.list.length == 0) {
+				return;
+			}
+			var index = this.data.index;
 	
-		};
+			this.data.list[index].custom = custom;
+			_util2.default.pushLocal("queue", this.data);
+		});
 	
-		//
 		queueTools.init();
-		queueTools.refresh();
 	
 		window.queueTools = queueTools;
-	}(); //var  util= require('util/util.js');
+	}();
 
 /***/ }
 ]);
