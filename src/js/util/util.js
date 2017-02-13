@@ -1,4 +1,5 @@
-    console.log("导入了util.js");
+    //es6 简单导入
+    //http://blog.csdn.net/lihongxun945/article/details/49031383
     var util={
 
         pushLocal:function (key,value){
@@ -60,4 +61,5 @@
 
 
 //  导出
-module.exports = util;
+    export default util;
+

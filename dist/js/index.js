@@ -11,11 +11,19 @@ webpackJsonp([1],[
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var _util = __webpack_require__(2);
 	
 	var _util2 = _interopRequireDefault(_util);
+	
+	var _jquery = __webpack_require__(4);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _layer = __webpack_require__(5);
+	
+	var _layer2 = _interopRequireDefault(_layer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24,21 +32,27 @@ webpackJsonp([1],[
 	/**
 	 * [设置购物车的高]
 	 */
+	
 	function setCartHeight() {
-	    var h = window.innerHeight * 0.6;
-	    var w = window.innerWidth;
-	    if (w >= 768) {
-	        $("#shoppingCart-list").show();
-	        $("#shoppingCart-list").height(h + "px");
-	    } else {
-	        $("#shoppingCart-list").hide();
-	    }
+	
+	    setTimeout(function () {
+	        var w = window.innerWidth;
+	        var lh = document.querySelector('.left-con').offsetHeight;
+	        var ch = document.querySelector('.shoppingCalc').offsetHeight;
+	
+	        if (w >= 768) {
+	            (0, _jquery2.default)("#shoppingCart-list").show();
+	            (0, _jquery2.default)("#shoppingCart-list").height(lh - ch - 160 + "px");
+	        } else {
+	            (0, _jquery2.default)("#shoppingCart-list").hide();
+	        }
+	    }, 300);
 	}
 	
 	new Vue({
 	    compiled: function compiled() {
 	        setCartHeight();
-	        window.onresize = setCartHeight();
+	        window.onresize = setCartHeight;
 	        this.getNavList();
 	    },
 	    ready: function ready() {
@@ -206,7 +220,7 @@ webpackJsonp([1],[
 	                this.searchCustom.searching = true;
 	                this.customModal.code = 301;
 	                setTimeout(function () {
-	                    $('#custom-layer').modal('hide');
+	                    (0, _jquery2.default)('#custom-layer').modal('hide');
 	                    if (self.filteredCustomDataList != "") {
 	                        self.customData.curCustom = self.filteredCustomDataList[0];
 	                        self.customModal.status = 'info';
@@ -219,7 +233,7 @@ webpackJsonp([1],[
 	                    }
 	                }, 200);
 	                setTimeout(function () {
-	                    $('#custom-layer').modal('show');
+	                    (0, _jquery2.default)('#custom-layer').modal('show');
 	                }, 800);
 	            } else {
 	                this.searchItem.searching = false;
@@ -301,21 +315,42 @@ webpackJsonp([1],[
 	        openItem: function openItem(index) {
 	
 	            //layer.msg('hello');
+	            var itemswiper;
+	
 	            //页面层
-	
-	
-	            layer.open({
-	                id: 'layui-layer4',
+	            _layer2.default.open({
+	                id: 'layui-layer-item',
 	                type: 1, //1 普通层
 	                shade: 0.01, //遮罩
 	                anim: 0,
 	                zIndex: 1000,
 	                closeBtn: 2,
 	                title: false,
-	                area: ['600px', '480px'], //宽高
-	                content: $('#layerbox'),
+	                area: ['auto', 'auto'], //宽高
+	                content: (0, _jquery2.default)('#layer-item-box'),
 	                success: function success() {
-	                    //alert("新建立了！！");
+	                    if (2 > 1) {
+	                        //$(".gift-detail-tab").data("show")
+	
+	                        itemswiper = new Swiper('.gift-detail-item', {
+	                            pagination: '.gift-detail-item-pagination',
+	                            paginationClickable: true,
+	                            spaceBetween: 10
+	
+	                        });
+	
+	                        itemswiper.on('onSlideChangeEnd', function (swiper) {
+	                            //some code
+	                            (0, _jquery2.default)(".gift-detail-tab").find('a').removeClass('selected');
+	                            (0, _jquery2.default)(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
+	                        });
+	
+	                        (0, _jquery2.default)(".gift-detail-tab").find('a').eq(0).addClass('selected');
+	                        (0, _jquery2.default)(".gift-detail-tab").find('a').on('click', function () {
+	
+	                            itemswiper.slideTo((0, _jquery2.default)(this).index()); //
+	                        });
+	                    }
 	                },
 	                cancel: function cancel(index) {
 	                    // if(confirm('确定要关闭么')){
@@ -325,6 +360,8 @@ webpackJsonp([1],[
 	                },
 	                end: function end() {
 	                    // alert("销毁了");
+	                    itemswiper.destroy();
+	                    (0, _jquery2.default)(".gift-detail-tab").find('a').off().removeClass('selected');
 	                }
 	            });
 	
@@ -443,6 +480,18 @@ webpackJsonp([1],[
 	
 	    }
 	}).$mount('#main');
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = window.jQuery;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = window.layer;
 
 /***/ }
 ]);

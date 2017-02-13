@@ -44,7 +44,8 @@ module.exports = {
         filename: "[name].js",
     },
     externals: {
-        jquery: "jQuery"
+        jquery: "window.jQuery",
+        layer: "window.layer"
     },
     module: {
         loaders: [
@@ -72,7 +73,8 @@ module.exports = {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
-            util: srcDir + "/js/util"
+            util: srcDir + "/js/util",
+
         }
     },
     plugins: [

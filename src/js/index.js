@@ -1,28 +1,33 @@
-
-
-
 import util from 'util/util.js';
+import $ from 'jquery';
+import layer from 'layer';
 
 // import util from 'ui/model.js';
 
 /**
  * [设置购物车的高]
  */
+
 function setCartHeight (){
-    var h=window.innerHeight*0.6;
-    var w=window.innerWidth;
-    if(w>=768){
-        $("#shoppingCart-list").show();
-        $("#shoppingCart-list").height(h+"px");
-    }else{
-        $("#shoppingCart-list").hide();
-    }
+
+    setTimeout(function() {
+        var w = window.innerWidth;
+        var lh = document.querySelector('.left-con').offsetHeight;
+        var ch = document.querySelector('.shoppingCalc').offsetHeight;
+
+        if (w >= 768) {
+            $("#shoppingCart-list").show();
+            $("#shoppingCart-list").height(lh - ch -160 + "px");
+        } else {
+            $("#shoppingCart-list").hide();
+        }
+    },300);
 }
 
 new Vue({
     compiled:function(){
         setCartHeight();
-        window.onresize=setCartHeight();
+        window.onresize=setCartHeight;
         this.getNavList();
     },
     ready: function() {
@@ -292,21 +297,46 @@ new Vue({
         openItem:function(index){
 
             //layer.msg('hello');
+            var itemswiper;
+
            //页面层
-
-
-           layer.open({
-                 id:'layui-layer4',
+            layer.open({
+                 id:'layui-layer-item',
                  type: 1,            //1 普通层
                  shade: 0.01,  //遮罩
                  anim:0,
                  zIndex:1000,
                  closeBtn: 2,
                  title: false,
-                 area: ['600px', '480px'], //宽高
-                 content: $('#layerbox'),
-                 success:function(){
-                     //alert("新建立了！！");
+                 area: ['auto', 'auto'], //宽高
+                 content: $('#layer-item-box'),
+                 success:function() {
+                     if (2>1){  //$(".gift-detail-tab").data("show")
+
+                         itemswiper = new Swiper('.gift-detail-item', {
+                             pagination: '.gift-detail-item-pagination',
+                             paginationClickable: true,
+                             spaceBetween: 10,
+
+                         });
+
+                     itemswiper.on('onSlideChangeEnd', function (swiper) {
+                         //some code
+                         $(".gift-detail-tab").find('a').removeClass('selected');
+                         $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
+
+                     })
+
+                     $(".gift-detail-tab").find('a').eq(0).addClass('selected');
+                     $(".gift-detail-tab").find('a').on('click',function(){
+
+                         itemswiper.slideTo($(this).index());//
+                     })
+
+                 }
+
+
+
                  },
                  cancel: function(index){
                     // if(confirm('确定要关闭么')){
@@ -316,6 +346,8 @@ new Vue({
                  },
                  end:function(){
                     // alert("销毁了");
+                     itemswiper.destroy();
+                     $(".gift-detail-tab").find('a').off().removeClass('selected');
                  }
            });
 
