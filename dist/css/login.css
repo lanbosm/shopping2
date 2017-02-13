@@ -46,4 +46,4 @@ body{background:url(../images/login_bg.jpg) 50% 0 no-repeat}
 .login_main .register-box .register-row3 input{width:80%;font-size:1.5rem;padding:10px 0;height:100%;margin-left:10px;float:left}
 .login_main .register-box .register-row4 .login{width:90%;background:#e84593;color:#fff;left:0;right:0;height:40px;position:relative;margin:20px auto;line-height:30px}
 .login_main .register-box .register-row4 p{color:#666}
-.login_main .register-box .register-row5{padding-top:50px;color:#666}
+.login_main .register-box .register-row5{color:#666;padding-top:60px}

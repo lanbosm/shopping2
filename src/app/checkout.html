@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结账</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+        body{
+            background-color: #f0eeef;
+        }
+    </style>
+</head>
+<body>
+    @@include('header.inc')
+    <div class="container checkout">
+        <div class="row checkout-header">
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-default checkout-btn"><<  返回</button>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-center bill">
+                结账
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 pull-right">
+                <button class="btn btn-default checkout-btn pull-right">确认  >></button>
+            </div>
+        </div>
+        <div class="row checkout-body">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <div class="gk text-center">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 顾客
+                </div>
+            </div>
+        </div>
+        <div class="row checkout-bodys">
+            <div class="col-sm-4 col-md-4 col-lg-4 zffs">
+                <div class="gk an text-center">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 扫码
+                </div>
+                <div class="gk an text-center">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 现金
+                </div>
+                <div class="gk an text-center">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 刷卡
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <div class="fj">
+                    <div class="nr">
+                        <h1 class="yfje text-center">￥ 21.50</h1>
+                        <p class="ts text-center">请选择一个付款方式</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+
+    <script type="text/javascript" src="/js/header.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

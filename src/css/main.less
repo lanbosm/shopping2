@@ -7,24 +7,20 @@
 @import "util/head";
 
 @import "main/cart";
-
-@import "main/bill";
+/*checkbout css*/
+//@import "main/checkout";
 
 
 body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:14px;line-height:1.42857143;color:#333;
-  background:#fff;
-}
+  background-color:#fff;}
 
-.index{padding-top:15px; background-color:#fff;}
-
-/*!right-con*/
-.right-con{height:auto;}
 
 /*!product*/
 .product(){
   .item {
     padding-left:10px; padding-right:10px;margin-bottom:20px;
+
 
     .thumbnail{position:relative;margin-bottom:0 ;   }
     .thumbnail .buy-btn, .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
@@ -40,24 +36,39 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
 /*!left-con*/
 .left-con {
   .panel{border:none}
-  .panel-heading{color:#fff;background:0 0;padding:10px 0;border:none}
-  .panel-heading .shuaixuan{padding:10px 30px;margin-bottom:-28px;border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .panel-heading{color:#fff;background:0 0;padding:0;border:none;
+    position: relative;}
+  .panel-heading .shuaixuan{padding:10px 20px; margin-top:3px;
+    position: relative;border-bottom-left-radius:0;border-bottom-right-radius:0}
   .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:25px}
   .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
   .panel-heading .nav-tabs>li>a{width:120px}
   .product;
 }
 
+/*!right-con*/
+.right-con{height:auto; }
+
 
 /*!分类列表*/
-.category-list{width:100%;color:#333;position:absolute;z-index:30;height:auto;top:47px;left:15px}
-.category-list .menu{width:23%;float:left;height:auto;padding-top:1px}
-.category-list .menu .sub{display:block;text-decoration:none;height:40px;text-align:center;line-height:40px;border-bottom:solid 1px #e5e5e5}
-.category-list .sub-menu{background:#fff;width:76%;float:left;height:auto;border:1px solid #e5e5e5;padding:15px 0;text-align:center}
-.category-list .sub-menu p{text-align:center;height:60px;line-height:60px}
-.category-list .sub-menu .item{display:none}
-.category-list .sub-menu .item-show{display:block}
-.category-list .sub-menu-category{margin:0 5px}
+.category-list{
+    width:100%;color:#333;position:absolute;z-index:30;height:auto;top:100%;left:0px;
+  .menu {
+    width:20%; float: left;  height: auto;  padding-top: 1px; margin-left: -15px;
+    .sub{  width: 100%; display:block;text-decoration:none;height:40px;text-align:center;line-height:40px;border-bottom:solid 1px #e5e5e5}
+  }
+
+  .sub-menu{
+    background:#fff;width:70%;float:left;height:auto;border:1px solid #e5e5e5;padding:15px 0;text-align:center;
+      min-height: 100px;
+     p{text-align:center;height:60px;line-height:60px}
+     .item{display:none}
+     .item-show{display:block;}
+      .sub-menu-category{margin:0 5px;}
+  }
+}
+
+
 
 .modal-dialog .btn{position: relative;}
 /*!item modale*/
@@ -66,7 +77,8 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   .buy-thumbnail>.row, .specs{margin-top:10px ; }
   .specsbtn{
       border:1px solid #ccc;color:#ccc;width:100%;display:block ; position: relative;
-     &.selected,:hover{border:1px solid #ec86b6;color:#ec86b6; }
+     &.selected,:hover{border:1px solid #ec86b6;col
+      color:#ec86b6; }
    }
   
 
@@ -141,18 +153,18 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 
 /*!media*/
-@media (max-width:767px){
+@media (max-width:767px){.col-fixed-3{display:none;left:0}
   body,html{font-size:12px}
 }
-@media (min-width:768px) and (max-width:991px){
-
+@media (min-width:768px) and (max-width:991px){.container{padding-left:0;padding-right:0}
+  .col-fixed-3{width:260px;left:0}
+  body,html{font-size:124px}
+}
+@media (min-width:992px) and (max-width:1199px){.container{padding-left:0;padding-right:0}
+  .col-fixed-3{width:280px;left:0}
   body,html{font-size:12px}
 }
-@media (min-width:992px) and (max-width:1199px){
-
-  body,html{font-size:12px}
-}
-@media (min-width:1200px){
-
+@media (min-width:1200px){.container{padding-left:0;padding-right:0}
+  .col-fixed-3{width:300px}
   body,html{font-size:14px}
 }
