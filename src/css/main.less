@@ -8,22 +8,23 @@
 
 @import "main/cart";
 
-
+@import "main/bill";
 
 
 body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:14px;line-height:1.42857143;color:#333;
-  background-color:#fff;}
+  background:#fff;
+}
 
+.index{padding-top:15px; background-color:#fff;}
 
-/*!left-con*/
-.left-con{height:auto;width:100%; }
+/*!right-con*/
+.right-con{height:auto;}
 
 /*!product*/
 .product(){
   .item {
     padding-left:10px; padding-right:10px;margin-bottom:20px;
-
 
     .thumbnail{position:relative;margin-bottom:0 ;   }
     .thumbnail .buy-btn, .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#ea4594}
@@ -36,8 +37,8 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   }
 }
 
-/*!right-con*/
-.right-con {
+/*!left-con*/
+.left-con {
   .panel{border:none}
   .panel-heading{color:#fff;background:0 0;padding:10px 0;border:none}
   .panel-heading .shuaixuan{padding:10px 30px;margin-bottom:-28px;border-bottom-left-radius:0;border-bottom-right-radius:0}
@@ -131,9 +132,6 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
         .line{width:113%;background:#e84593;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
         .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
    }
-
-
-
 }
 
 
@@ -143,18 +141,18 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 
 /*!media*/
-@media (max-width:767px){.col-fixed-3{display:none;left:0}
+@media (max-width:767px){
   body,html{font-size:12px}
 }
-@media (min-width:768px) and (max-width:991px){.container{padding-left:0;padding-right:0}
-  .col-fixed-3{width:260px;left:0}
-  body,html{font-size:124px}
-}
-@media (min-width:992px) and (max-width:1199px){.container{padding-left:0;padding-right:0}
-  .col-fixed-3{width:280px;left:0}
+@media (min-width:768px) and (max-width:991px){
+
   body,html{font-size:12px}
 }
-@media (min-width:1200px){.container{padding-left:0;padding-right:0}
-  .col-fixed-3{width:300px}
+@media (min-width:992px) and (max-width:1199px){
+
+  body,html{font-size:12px}
+}
+@media (min-width:1200px){
+
   body,html{font-size:14px}
 }

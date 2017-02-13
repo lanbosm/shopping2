@@ -60,80 +60,15 @@
 	<div class="wrap">
 		<!-- container -->
 		<div class="main" id="main">
-			<div class="container">
-			 		<div class="row" style=" border: none;">		  		
-						  	<div class="col-fixed-3" >
-						  		<div class="left-con">
-						  		<!-- 购物车 -->
-							  	<div class="shoppingCart">
-							  				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartItem.list.length==0}">
-												<ul>
-													<li :class="{checked:cartItem.index==index}" v-for="(index,item) in cartItem.list " track-by="$index" @click="checkCartItem($event,index);">
-														<div class="shoppingCart-item">
-															<p>{{item.title}}</p>
-															<p class="small">
-																<span>{{item.specs.list[item.specs.index].label}}</span> <span>{{item.selectDate}}</span>
-															</p> 
-															<p class="small">
-																<span>数量:{{item.amount}}</span> * <span>单价:{{item.price|currency '¥' 2 }}</span>
-															</p>
-															<p class="total">
-																<span>{{item.amount*item.price |currency '¥' 2 }}</span>
-															</p>
-														</div>
-													</li>
-												</ul>
-											</div>
-											<div class="totalprice">
-												总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
-											</div>
-							  	</div>
-							  	<!-- 计算器 -->
-							  	<div class="shoppingCalc">
-										<table class="table table-bordered" >
-												<tbody >
-													<tr >
-														<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>
-														<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
-														<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
-														<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
-														<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qrt');" >qrt</a></td>
-													</tr>
-
-													<tr>
-														<td colspan="3" rowspan="3" class="t1 ">
-															<a class="settle-accounts-btn" @click="settleAccounts()"></a>
-														</td>
-														<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
-														<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>
-														<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>
-													</tr>
-													<tr>
-														<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>
-														<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>
-														<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>
-													</tr>
-													<tr>
-														
-														<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>
-														
-														<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>
-													</tr>
-												</tbody>
-										</table>
-
-							  	</div>
-							  	</div>
-						  </div>
-				
-		  				  <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
-		  				  		<div class="right-con">
-			  				  		<div class="right-con-header">
+			<div class="container index">
+			 		<div class="row" >
+		  				  <div class="col-sm-8  col-md-9 left-con">
+			  				  		<div class="left-con-header">
 										<ol class="breadcrumb">
 											  <li :class="index==navData.path.length-1?'active':''" v-for="(index,nav) in navData.path"><span v-show="index==0" class="glyphicon glyphicon-home"> </span><a href="./#category={{nav.id}}" @click="getItemList(nav.id)">{{nav.name}}</a></li>
 										</ol>
 			  				  		</div>
-			  				  		<div class="right-con-content"">
+			  				  		<div class="left-con-content">
 											<div class="item-box panel panel-primary">
 											   <div class="panel-heading" >
 											   		<div class="row">
@@ -212,9 +147,69 @@
 													     </div>	  		 		
 											  		 </div>
 										</div>
-			  				  		</div>
+			  				  		
 			  				  	</div>
 		  				  </div>
+				<div class="col-sm-4  col-md-3 left-con" >
+						<!-- 购物车 -->
+						<div class="shoppingCart">
+							<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartItem.list.length==0}">
+								<ul>
+									<li :class="{checked:cartItem.index==index}" v-for="(index,item) in cartItem.list " track-by="$index" @click="checkCartItem($event,index);">
+										<div class="shoppingCart-item">
+											<p>{{item.title}}</p>
+											<p class="small">
+												<span>{{item.specs.list[item.specs.index].label}}</span> <span>{{item.selectDate}}</span>
+											</p>
+											<p class="small">
+												<span>数量:{{item.amount}}</span> * <span>单价:{{item.price|currency '¥' 2 }}</span>
+											</p>
+											<p class="total">
+												<span>{{item.amount*item.price |currency '¥' 2 }}</span>
+											</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="totalprice">
+								总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
+							</div>
+						</div>
+						<!-- 计算器 -->
+						<div class="shoppingCalc">
+							<table class="table table-bordered" >
+								<tbody >
+								<tr >
+									<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>
+									<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
+									<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
+									<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
+									<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qrt');" >qrt</a></td>
+								</tr>
+
+								<tr>
+									<td colspan="3" rowspan="3" class="t1 ">
+										<a class="settle-accounts-btn" @click="settleAccounts()"></a>
+									</td>
+									<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
+									<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>
+									<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>
+								</tr>
+								<tr>
+									<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>
+									<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>
+									<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>
+								</tr>
+								<tr>
+
+									<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>
+
+									<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>
+								</tr>
+								</tbody>
+							</table>
+
+						</div>
 			 		</div>
 			</div>
 
