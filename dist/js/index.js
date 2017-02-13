@@ -19,7 +19,7 @@ webpackJsonp([1],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	console.log("我是index.js");
+	// import util from 'ui/model.js';
 	
 	/**
 	 * [设置购物车的高]
@@ -299,6 +299,34 @@ webpackJsonp([1],[
 	        },
 	        //选择物品
 	        openItem: function openItem(index) {
+	
+	            //layer.msg('hello');
+	            //页面层
+	
+	
+	            layer.open({
+	                id: 'layui-layer4',
+	                type: 1, //1 普通层
+	                shade: 0.01, //遮罩
+	                anim: 0,
+	                zIndex: 1000,
+	                closeBtn: 2,
+	                title: false,
+	                area: ['600px', '480px'], //宽高
+	                content: $('#layerbox'),
+	                success: function success() {
+	                    //alert("新建立了！！");
+	                },
+	                cancel: function cancel(index) {
+	                    // if(confirm('确定要关闭么')){
+	                    //     layer.close(index)
+	                    //  }
+	                    //  return false;
+	                },
+	                end: function end() {
+	                    // alert("销毁了");
+	                }
+	            });
 	
 	            this.itemData.newItem = this.filteredItemDataList[index];
 	            this.itemData.index = index;

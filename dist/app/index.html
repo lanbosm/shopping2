@@ -87,6 +87,7 @@
 																	<template v-else>
 																		<a  class="btn btn-default sub-menu-category" href="./#category={{nav.id}}" v-for="(index,nav) in navData.list[navData.index].children" @click="getItemList(nav.id)">{{nav.name}}</a>
 																	</template>
+
 															</div>
 
 														</div>
@@ -111,13 +112,14 @@
 																 <div class="thumbnail">
 																	  <a  class="list-btn" role="button" data-lid="item.id"><span class="glyphicon glyphicon-list"></span></a>
 																 	  <div class="prcie primary">{{item.price |currency '¥' 2}}元</div>
-																 	  <div class="photo" data-toggle="modal" data-target="#item-layer" @click="openItem(index);">
+																 	  <!--<div class="photo" data-toggle="modal" data-target="#item-layer" @click="openItem(index);">-->
+																	 <div class="photo"  @click="openItem(index);">
 																     	 <img class="img-responsive" :src="item.imgurl" :alt="item.title" :title="item.title" >
 																     </div>
 																      <div class="caption">
 																      	<p>{{item.title}}</p>
 																      </div>
-																       <a  class="buy-btn" role="button" :data-lid="item.id" data-toggle="modal" data-target="#item-layer" @click="openItem(index);"
+																       <a  class="buy-btn" role="button" :data-lid="item.id"
 																       ><span class="glyphicon glyphicon-shopping-cart"></span></a>
 																 </div>
 															</div>
@@ -212,42 +214,43 @@
 			</div>
 
 
-			<!-- item modale -->
-			<div role="dialog" class="modal fade item-layer" id="item-layer">
-					<div class="modal-dialog ">
-							<div class="modal-content">
-								<div class="modal-body">
-								<template v-if="newItemModal">
-									<div class="thumbnail buy-thumbnail">
-												  <div class="row" >
-												  		<div class="col-xs-12">
-												  		  <a class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></a>
-												  		  <div class="price primary">{{itemData.newItem.price |currency '¥' 2}}元</div>
-												  		  <div class="info col-xs-12">
-													      <img class="img-responsive  center-block" :src="itemData.newItem.imgurl" :alt="itemData.newItem.title" :title="itemData.newItem.title">
-													        <p>{{itemData.newItem.title}}</p>
-													        <p class="boon primary">{{itemData.newItem.boon}}</p>
-													      </div>
-													    </div>
-											      </div>
-											      <div class="row">
-															<div class="specs col-xs-12 col-xs-4"  v-for="(index,specs) in itemData.newItem.specs.list" >
-																<a class="btn specs specsbtn" :class="{selected:itemData.newItem.specs.index==index}"
-																@click="itemData.newItem.specs.index=index;" >{{specs.label}}</a>
-															</div>
-															
-											      </div>
-											      <div class="row">
-											      			<div class="col-xs-12">
-											     				<a class="btn btn-lightgreen btn-block" data-dismiss="modal" @click="pushCart" >确定</a>
-											     			</div>
-											     </div>
-									</div>
-								</template>
-								</div>	
-							</div>
-					</div>
-				</div>
+				<!-- item modale -->
+				<div id="layerbox" style="width: 600px; height: auto; background: red; display: none;">
+			<!--<div role="dialog" class="modal fade item-layer" id="item-layer">-->
+					<!--<div class="modal-dialog ">-->
+							<!--<div class="modal-content">-->
+								<!--<div class="modal-body">-->
+								<!--<template v-if="newItemModal">-->
+									<!--<div class="thumbnail buy-thumbnail">-->
+												  <!--<div class="row" >-->
+												  		<!--<div class="col-xs-12">-->
+												  		  <!--<a class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></a>-->
+												  		  <!--<div class="price primary">{{itemData.newItem.price |currency '¥' 2}}元</div>-->
+												  		  <!--<div class="info col-xs-12">-->
+													      <!--<img class="img-responsive  center-block" :src="itemData.newItem.imgurl" :alt="itemData.newItem.title" :title="itemData.newItem.title">-->
+													        <!--<p>{{itemData.newItem.title}}</p>-->
+													        <!--<p class="boon primary">{{itemData.newItem.boon}}</p>-->
+													      <!--</div>-->
+													    <!--</div>-->
+											      <!--</div>-->
+											      <!--<div class="row">-->
+															<!--<div class="specs col-xs-12 col-xs-4"  v-for="(index,specs) in itemData.newItem.specs.list" >-->
+																<!--<a class="btn specs specsbtn" :class="{selected:itemData.newItem.specs.index==index}"-->
+																<!--@click="itemData.newItem.specs.index=index;" >{{specs.label}}</a>-->
+															<!--</div>-->
+															<!---->
+											      <!--</div>-->
+											      <!--<div class="row">-->
+											      			<!--<div class="col-xs-12">-->
+											     				<!--<a class="btn btn-lightgreen btn-block" data-dismiss="modal" @click="pushCart" >确定</a>-->
+											     			<!--</div>-->
+											     <!--</div>-->
+									<!--</div>-->
+								<!--</template>-->
+								<!--</div>	-->
+							<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
 			
 			
 			<!-- custom modale -->
@@ -363,6 +366,9 @@
 				</div>
 			</div>
 		</div>
+
+
+
 		<!-- main -->
 	</div>
 
@@ -370,6 +376,7 @@
 <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/vue.min.js"></script>
+	<script type="text/javascript" src="../js/layer.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 
 <script type="text/javascript" src="../js/header.js"></script>

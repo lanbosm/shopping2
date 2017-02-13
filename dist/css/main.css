@@ -139,6 +139,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .category-list .sub-menu .sub-menu-category{margin:0 5px}
 .modal-dialog .btn{position:relative}
 /*!item modale*/
+.item-layer{width:100px;height:100px;background:red}
 .item-layer .buy-thumbnail{border:none;padding-left:15px;padding-right:15px}
 .item-layer .buy-thumbnail>.row,.item-layer .specs{margin-top:10px}
 .item-layer .specsbtn{border:1px solid #ccc;color:#ccc;width:100%;display:block;position:relative}
