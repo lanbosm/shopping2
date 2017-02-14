@@ -28,7 +28,7 @@
  * 接口签名
  * @type {string}
  */
-const apiSecrect = "478493a6f2002ea32df9df3483e6996e";
+const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 export const HOST = "";
 export const API_URLS = {
