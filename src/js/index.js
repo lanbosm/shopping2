@@ -5,6 +5,7 @@ import {request, API_URLS, HOST} from 'util/request.js';
 
 // import util from 'ui/model.js';
 
+console.log(request.fnGet);
 /**
  * [设置购物车的高]
  */

@@ -1,8 +1,8 @@
 /*!reset css*/
 article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
 .btn,img{-webkit-user-select:none}
-.custom-layer .custom-ticket .custom-ticket-body li .right em,b,em{font-style:normal}
 body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
+b,em{font-style:normal}
 a{text-decoration:none}
 button,input,select,textarea{font-size:100%;outline:0}
 table{border-collapse:collapse;border-spacing:0}
@@ -61,8 +61,8 @@ img{width:100%}
 .footer{padding:12px 0 18px;line-height:24px}
 /*!导航栏*/
 .icon{display:inline-block;overflow:hidden;vertical-align:middle;background-repeat:no-repeat!important;background-position:50% 50%!important;width:50px;height:50px}
-.icon-snan{background:url("../images/icon_scan.png?v=1487011038058") no-repeat}
-.icon-exit{background:url("../images/icon_exit.png?v=1487011038058") no-repeat}
+.icon-snan{background:url(../images/icon_scan.png) no-repeat}
+.icon-exit{background:url(../images/icon_exit.png) no-repeat}
 .header{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#3C3F41}
 .header .logo{float:left}
 .header .header-nav{margin:0;border:none}
@@ -93,7 +93,7 @@ img{width:100%}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
 .shoppingCart .totalprice span{margin-left:20px}
 .shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden}
-.shoppingCart .shoppingCart-list.empty{background:url("../images/empty.jpg?v=1487011038058") 50% 50% no-repeat}
+.shoppingCart .shoppingCart-list.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
 .shoppingCart .shoppingCart-list ul{padding:0;margin:0;list-style:none}
 .shoppingCart .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
 .shoppingCart .shoppingCart-list ul li:after{display:table;clear:both;content:" "}
@@ -105,8 +105,37 @@ img{width:100%}
 .shoppingCalc{width:100%}
 .shoppingCalc .table .t1{width:40%;cursor:pointer}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
+.bill .col-nn-23,.bill .col-nn-30,.bill .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
-.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url("../images/jiezhang.png?v=1487011038058") no-repeat;background-size:100%;display:inline-block}
+.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
+.bill-wrap{background:#f0eeef}
+.bill .col-nn-30{width:30%}
+.bill .col-nn-23{width:23%}
+.bill .col-nn-70{width:70%}
+.bill .container{background-color:#fff;border-left:1px dashed #e5e5e5;border-right:1px dashed #e5e5e5}
+.bill .btn{position:relative}
+.bill .bill-header{padding:15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-header h3{font-size:18px;line-height:30px;margin:0}
+.bill .bill-custom{padding:30px 15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-custom .custom-btn{font-size:18px;color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#fff}
+.bill .bill-custom .custom-btn.select,.bill .bill-custom .custom-btn:active,.bill .bill-custom .custom-btn:hover{color:#666;padding:30px;border-color:#e84593;border-radius:5px;background:#fff}
+.bill .bill-custom .balance-btn,.bill .bill-custom .coupon-btn,.bill .bill-custom .point-btn{font-size:18px;color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#fff}
+.bill .bill-custom .balance-btn b,.bill .bill-custom .coupon-btn b,.bill .bill-custom .point-btn b{position:relative;top:-10px;font-style:normal}
+.bill .bill-custom .balance-btn span,.bill .bill-custom .coupon-btn span,.bill .bill-custom .point-btn span{position:absolute;font-size:14px;display:block;text-align:center;top:50px;left:0;right:0;margin:0 auto}
+.bill .bill-custom .balance-btn.select,.bill .bill-custom .balance-btn:active,.bill .bill-custom .balance-btn:hover,.bill .bill-custom .coupon-btn.select,.bill .bill-custom .coupon-btn:active,.bill .bill-custom .coupon-btn:hover,.bill .bill-custom .point-btn.select,.bill .bill-custom .point-btn:active,.bill .bill-custom .point-btn:hover{color:#666;padding:30px;border-color:#e84593;border-radius:5px;background:#fff}
+.bill .bill-custom .balance-btn.selected span,.bill .bill-custom .balance-btn:hover span,.bill .bill-custom .coupon-btn.selected span,.bill .bill-custom .coupon-btn:hover span,.bill .bill-custom .point-btn.selected span,.bill .bill-custom .point-btn:hover span{color:#e84593}
+.bill .bill-body{position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-body .left-con{padding-top:15px;padding-bottom:15px;height:850px;border-right:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-body .left-con .btn{margin-top:15px;margin-bottom:30px;font-size:18px}
+.bill .bill-body .left-con .btn span{margin-right:20px}
+.bill .bill-body .left-con .card-btn,.bill .bill-body .left-con .money-btn,.bill .bill-body .left-con .scan-btn{color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#f0eeef}
+.bill .bill-body .left-con .card-btn:hover,.bill .bill-body .left-con .money-btn:hover,.bill .bill-body .left-con .scan-btn:hover{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.bill .bill-body .left-con .card-btn:active,.bill .bill-body .left-con .money-btn:active,.bill .bill-body .left-con .scan-btn:active{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#3b8c64}
+.bill .bill-body .left-con .card-btn.select,.bill .bill-body .left-con .money-btn.select,.bill .bill-body .left-con .scan-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.bill .bill-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
+.bill .bill-body .tab-con.tab-show{display:block}
+.bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
+.bill .bill-body .tab-con.tab-con-0 .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
 body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff}
 .index{margin-top:10px}
 /*!product*/
@@ -169,10 +198,10 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .modal-body{padding:30px}
 .custom-layer .custom-table-header{width:100%;height:auto}
 .custom-layer .custom-table-body{height:auto;margin-top:10px;padding:20px 30px;border:1px dashed #ccc;border-radius:5px}
-.custom-layer .custom-table-body .normal{height:250px;background:url("../images/awyp.jpg?v=1487011038058") 50% 50% no-repeat}
+.custom-layer .custom-table-body .normal{height:250px;background:url(../images/awyp.jpg) 50% 50% no-repeat}
 .custom-layer .custom-table-foot{margin-top:10px}
 .custom-layer .custom-table-foot .btn-default{padding:5px 20px}
-.custom-layer .add-custom{width:72px;height:36px;display:inline-block;background:url("../images/add_custom.png?v=1487011038058") no-repeat;cursor:pointer;border-radius:0}
+.custom-layer .add-custom{width:72px;height:36px;display:inline-block;background:url(../images/add_custom.png) no-repeat;cursor:pointer;border-radius:0}
 .custom-layer .cancel-custom,.custom-layer .select-ticket{width:72px;height:36px;cursor:pointer;text-align:center;border-radius:20px;display:inline-block}
 .custom-layer .cancel-custom{background:#ccc;color:#fff}
 .custom-layer .searchCustom button{border-top-left-radius:30px!important;border-bottom-left-radius:30px!important}
@@ -181,17 +210,17 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .registration .custom-sex .radio{position:relative;margin:0 20px;display:inline-block}
 .custom-layer .registration .custom-sex .radio>input{position:absolute;top:0;left:0;opacity:0;margin-left:0}
 .custom-layer .registration .custom-sex .radio>label{margin-left:0;padding-left:0;width:90px;height:90px}
-.custom-layer .registration .man-radio.radio label{background:url("../images/man.png?v=1487011038058") 50% 50% no-repeat}
-.custom-layer .registration .women-radio.radio label{background:url("../images/women.png?v=1487011038058") 50% 50% no-repeat}
-.custom-layer .registration .man-radio.radio input:checked+label{background:url("../images/man_check.png?v=1487011038058") 50% 50% no-repeat}
-.custom-layer .registration .women-radio.radio input:checked+label{background:url("../images/women_check.png?v=1487011038058") 50% 50% no-repeat}
+.custom-layer .registration .man-radio.radio label{background:url(../images/man.png) 50% 50% no-repeat}
+.custom-layer .registration .women-radio.radio label{background:url(../images/women.png) 50% 50% no-repeat}
+.custom-layer .registration .man-radio.radio input:checked+label{background:url(../images/man_check.png) 50% 50% no-repeat}
+.custom-layer .registration .women-radio.radio input:checked+label{background:url(../images/women_check.png) 50% 50% no-repeat}
 .custom-layer .custom-info{color:#ccc;margin-top:-20px}
 .custom-layer .custom-info .custom-name,.custom-layer .custom-info .custom-phone{margin-top:10px;margin-bottom:10px}
 .custom-layer .custom-info .custom-layer .custom-phone .input-group-addon,.custom-layer .custom-info .custom-name .input-group-addon{background:0 0}
 .custom-layer .custom-info .row{margin-top:20px}
 .custom-layer .custom-info .sex-photo{width:70px;height:70px;display:block;float:left}
-.custom-layer .custom-info .sex-photo.man{background:url("../images/man_check.png?v=1487011038058") 50% 50% no-repeat;background-size:100%}
-.custom-layer .custom-info .sex-photo.women{background:url("../images/women_check.png?v=1487011038058") 50% 50% no-repeat;background-size:100%}
+.custom-layer .custom-info .sex-photo.man{background:url(../images/man_check.png) 50% 50% no-repeat;background-size:100%}
+.custom-layer .custom-info .sex-photo.women{background:url(../images/women_check.png) 50% 50% no-repeat;background-size:100%}
 .custom-layer .custom-info span{color:#000;margin-left:30px}
 .custom-layer .custom-info .col-xs-12{padding-left:30px}
 .custom-layer .custom-info .nickname{line-height:70px;font-size:1.5rem;display:block;float:left}
@@ -207,6 +236,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .custom-ticket .custom-ticket-body li .left .u{position:absolute;left:30px;top:60px}
 .custom-layer .custom-ticket .custom-ticket-body li .left .m:before{content:"¥";font-size:1rem}
 .custom-layer .custom-ticket .custom-ticket-body li .right span{margin-top:5px;display:block}
+.custom-layer .custom-ticket .custom-ticket-body li .right em{font-style:normal}
 .custom-layer .custom-ticket .line{width:113%;background:#e84593;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
 .custom-layer .custom-ticket .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
 /*!media*/

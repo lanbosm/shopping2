@@ -244,6 +244,8 @@ gulp.task('web', function() {
             directory: true
         },
         port: host.port
+
+
     });
     //每次dist文件发生变化 自动刷新游览器
     var watcher = gulp.watch(['dist/css/*.css','dist/**/*.html','dist/js/*.js']);
