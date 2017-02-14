@@ -1,13 +1,13 @@
 import util from 'util/util.js';
 import $ from 'jquery';
 import layer from 'layer';
+import {request, API_URLS, HOST} from 'util/request.js';
 
 // import util from 'ui/model.js';
 
 /**
  * [设置购物车的高]
  */
-
 function setCartHeight (){
 
     setTimeout(function() {
