@@ -2,27 +2,30 @@
     <!--商品详情	-->
     <div class="item-detail">
         <div class="item-detail-con">
-            <div class="price primary">{{itemData.newItem.price |currency '¥' 2}}元</div>
+            <div class="price primary">{{itemDetail.appProductDetail.price |currency '¥' 2}}元</div>
             <div class="product">
-                <img class="img-responsive  center-block" :src="itemData.newItem.imgurl" :alt="itemData.newItem.title" :title="itemData.newItem.title">
-                <p class="name">{{itemData.newItem.title}}</p>
-                <p class="boon primary">{{itemData.newItem.boon}}</p>
+                <img class="img-responsive  center-block" :src="itemDetail.appProductDetail.image" :alt="itemDetail.appProductDetail.title" :title="itemDetail.appProductDetail.title">
+                <p class="name">{{itemDetail.appProductDetail.name}}</p>
+                <p class="boon primary">{{itemDetail.appProductDetail.giftType}}</p>
             </div>
             <div class="specs-box">
-                <a class="btn specs specs-btn"  :class="{selected:itemData.newItem.specs.index==index}"
-                   v-for="(index,specs) in itemData.newItem.specs.list" @click="itemData.newItem.specs.index=index;" >{{specs.label}}</a>
+                <div v-for="(index,item ) in itemDetail.appSpecifications"  >
+                    <p class="span-label">{{item.name}}</p>
+                    <a class="btn specs specs-btn"  :class="{selected:itemData.newItem.specs.index==index}"
+                       v-for="(index2,item2) in item.appSpecificationValues" @click="switchSpec(item2.id)" >{{item2.name}}</a>
+                </div>
             </div>
-            <a class="btn btn-lightgreen btn-block specs-ok"  @click="pushCart" >确定</a>
+            <a class="btn btn-lightgreen btn-block specs-ok"  @click="pushCart()" >确定</a>
         </div>
 
     </div>
     <!--商品详情	-->
-    <div class="gift-detail">
+    <div class="gift-detail" v-show="itemDetail.appProductDetail.giftType!='none'" :data-gift="itemDetail.appProductDetail.giftType">
         <div class="gift-detail-con">
             <div class="price primary">赠 ¥ 0 / <del>100.00</del></div>
             <!-- Swiper -->
             <div class="gift-detail-item">
-                <div class="swiper-wrapper">
+                    <div class="swiper-wrapper">
                     <div class="swiper-slide" style="background-image:url('../images/naifen.jpg')"></div>
                     <div class="swiper-slide" style="background-image:url('../images/jiu.jpg')"></div>
                     <div class="swiper-slide" style="background-image:url('../images/naifen.jpg')"></div>

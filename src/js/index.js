@@ -69,12 +69,74 @@ new Vue({
             list:[]
         },
         //商品数据
-        itemData:{
-            apiUrl: '/data/itemData.json',
-            index:0,
-            list:[],
-            newItem:{},
+        itemData:[],
+        itemDetail:{
+            "msg": "响应成功",
+            "appSpecifications": [
+                {
+                    "id": 1,
+                    "name": "颜色",
+                    "appSpecificationValues": [
+                        {
+                            "id": 11,
+                            "name": "粉色",
+                            "specificationId": 1
+                        },
+                        {
+                            "id": 10,
+                            "name": "黄色",
+                            "specificationId": 1
+                        },
+                        {
+                            "id": 9,
+                            "name": "蓝色",
+                            "specificationId": 1
+                        }
+                    ]
+                }
+            ],
+            "code": 20000,
+            "appProductDetail": {
+                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
+                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
+                "barCode": "201701230953",
+                "price": "400.00",
+                "id": 49,
+                "giftType": "none",
+                "brandName": "test",
+                "textTagStr": "",
+                "specDesc": "[黄色 ]",
+                "marketable": true,
+                "stock": 12,
+                "allocatedStock": 0,
+                "giftActivity": null,
+                "appGiftActivity": null,
+                "marketPrice": null,
+                "images": [
+                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
+                ],
+                "appSpecificationValues": [
+                    {
+                        "id": 10,
+                        "name": "黄色",
+                        "specificationId": null
+                    }
+                ],
+                "availableStock": 12
+            },
+            "products": {
+                "49": [
+                    10
+                ],
+                "50": [
+                    9
+                ],
+                "51": [
+                    11
+                ]
+            }
         },
+
         //购物车
         cartItem:{
             index:0,
@@ -113,8 +175,8 @@ new Vue({
         //过滤物品数据列表
         filteredItemDataList: function () {
             var self = this;
-            var p=this.itemData.list;
-            var l=this.limit
+            var p=this.itemData;
+            var l=this.limit;
 
             //如果有搜索
             if(this.searchItem.searching){
@@ -124,7 +186,6 @@ new Vue({
             }
 
             //分页显示
-            p=this.filteredByPage(p,l);
             return p;
         },
         pageindexs: function(){
@@ -250,124 +311,112 @@ new Vue({
                 params:{'p':1},
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 emulateJSON:true
-            })
-                .then((response) => { //成功
+            }).then((response) => { //成功
                     //console.log(response.data);
                     vm.$set('customData.list', response.data.data);
-                })
-                .catch(function(response) { //失败
+            }).catch(function(response) { //失败
                     //console.log(response);
                     alert("读取会员失败");
-                })
+            })
         },
         //获取物品列表
-        getItemList:function(cid){
+        getItemList:function(){
 
             var vm = this;
 
             var apiobj={
                 url:API_URLS.products,
-                data:{'pageNum':1}
+                data:{
+                    'pageNum':1,
+                    'categoryId':null,
+                    'keyword':null,
+                    'brandId':null
+                }
             }
-           request.fnGet(vm,apiobj,function(data){
 
-                console.log(data);
-
-           });
-           // alert(API_URLS.products);
-            vm.$http.get(vm.itemData.apiUrl,{
-                params:{'category':cid},
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                emulateJSON:true
-            })
-                .then((response) => { //成功
-                   // console.log(response.data);
-                    vm.$set('itemData.list', response.data.data);
-                    vm.$set('pageCur',1);
-                })
-                .catch(function(response) { //失败
-                    //console.log(response);
-                    alert("读取数据失败");
-                })
-            // $.ajax({
-            // 	url: vm.itemData.apiUrl,
-            // 	type: 'GET',
-            // 	dataType: 'json',
-            // 	data: {'p': '1'},
-            // 	success:function(json){
-            // console.log(json.length);
-            // 		vm.$set('itemData.list', json.data)
-            // 	},
-            // 	error:function(){
-            // 		 alert("读取数据失败");
-            // 	}
-            // })
+            request.fnGet(vm,apiobj,function(res){
+                console.log(res.data);
+                vm.itemData=res.data.page.list;
+            });
         },
-        //选择物品
-        openItem:function(index){
+        //获取物品详情
+        openItem:function(pid){
 
-            //layer.msg('hello');
+            var vm = this;
+
+            var apiobj={
+                url:API_URLS.products+pid,
+                data:{
+                    'id':pid
+                }
+            }
+
             var itemswiper;
 
-           //页面层
-            layer.open({
-                 id:'layui-layer-item',
-                 type: 1,            //1 普通层
-                 shade: 0.01,  //遮罩
-                 anim:0,
-                 zIndex:1000,
-                 closeBtn: 2,
-                 title: false,
-                 area: ['auto', 'auto'], //宽高
-                 content: $('#layer-item-box'),
-                 success:function() {
-                     if (2>1){  //$(".gift-detail-tab").data("show")
+            request.fnGet(vm,apiobj,function(res){
+                console.log(res.data);
 
-                         itemswiper = new Swiper('.gift-detail-item', {
-                             pagination: '.gift-detail-item-pagination',
-                             paginationClickable: true,
-                             spaceBetween: 10,
+                //弹出页面层
+                layer.open({
+                    id:'layui-layer-item',
+                    type: 1,            //1 普通层
+                    shade: 0.01,  //遮罩
+                    anim:0,
+                    zIndex:1000,
+                    closeBtn: 2,
+                    title: false,
+                    area: ['auto', 'auto'], //宽高
+                    content: $('#layer-item-box'),
+                    success:function() {
+                        if ($(".gift-detail").data('gift')!='none'){  //如果存在赠品
+                            //data-gift
+                            itemswiper = new Swiper('.gift-detail-item', {
+                                pagination: '.gift-detail-item-pagination',
+                                paginationClickable: true,
+                                spaceBetween: 10,
 
-                         });
+                            });
 
-                     itemswiper.on('onSlideChangeEnd', function (swiper) {
-                         //some code
-                         $(".gift-detail-tab").find('a').removeClass('selected');
-                         $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
+                            itemswiper.on('onSlideChangeEnd', function (swiper) {
+                                //some code
+                                $(".gift-detail-tab").find('a').removeClass('selected');
+                                $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
 
-                     })
+                            })
 
-                     $(".gift-detail-tab").find('a').eq(0).addClass('selected');
-                     $(".gift-detail-tab").find('a').on('click',function(){
+                            $(".gift-detail-tab").find('a').eq(0).addClass('selected');
+                            $(".gift-detail-tab").find('a').on('click',function(){
 
-                         itemswiper.slideTo($(this).index());//
-                     })
+                                itemswiper.slideTo($(this).index());//
+                            })
 
-                 }
+                        }
+                    },
+                    cancel: function(index){
+                        // if(confirm('确定要关闭么')){
+                        //     layer.close(index)
+                        //  }
+                        //  return false;
+                    },
+                    end:function(){
+                        // alert("销毁了");
+                        itemswiper.destroy();
+                        $(".gift-detail-tab").find('a').off().removeClass('selected');
+                    }
+                });
 
+            });
 
+        },
+        //选择规格
+        switchSpec:function(sid){
 
-                 },
-                 cancel: function(index){
-                    // if(confirm('确定要关闭么')){
-                    //     layer.close(index)
-                    //  }
-                    //  return false;
-                 },
-                 end:function(){
-                    // alert("销毁了");
-                     itemswiper.destroy();
-                     $(".gift-detail-tab").find('a').off().removeClass('selected');
-                 }
-           });
-
-
-            this.itemData.newItem=this.filteredItemDataList[index];
-            this.itemData.index=index;
-
+            alert("规格"+sid);
         },
         //放入购物车
         pushCart: function () {
+            layer.closeAll();
+
             var index=this.itemData.index;
             var item={};
             item.id=this.itemData.list[index].id;

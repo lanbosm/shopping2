@@ -74,28 +74,6 @@ webpackJsonp([0],[
 	/**
 	 * Created by Administrator on 2017/2/6.
 	 */
-	//
-	// (function () {
-	//     let div = document.createElement("div");
-	//     div.setAttribute("class", "loadMain"); //for firefox
-	//     div.setAttribute("className", "loadMain"); //for IE
-	//     div.style.position = 'absolute';
-	//     div.style.top = '70px';
-	//     div.style.width = '100%';
-	//     div.style.textAlign = 'center';
-	//     div.innerText = '数据加载中...';
-	//     // var str = '<div class="loadMain" style="position: absolute; top:70px; width:100%; text-align:center;"></div>';
-	//     document.body.appendChild(div);
-	//
-	//     Vue.nextTick(function(){
-	//         setTimeout(function () {
-	//             let main = document.getElementById("main");
-	//             main.style.transition = "all .3s";
-	//             main.style.opacity = 1;
-	//             div.parentNode.removeChild(div);
-	//         }, 300);
-	//     });
-	// })();
 	
 	/**
 	 * 接口签名
@@ -105,19 +83,18 @@ webpackJsonp([0],[
 	
 	var HOST = exports.HOST = "http://192.168.1.199";
 	var API_URLS = exports.API_URLS = {
-	    products: "/cashier/member/products"
+	    products: "/cashier/member/products/"
 	};
 	var request = exports.request = {
 	
 	    fnGet: function fnGet(vm, apiObj, success, error) {
-	        console.log(apiObj);
+	
 	        vm.$http.get(HOST + apiObj.url, {
 	            params: apiObj.data,
-	            headers: { 'Content-Type': 'application/json' },
-	            emulateJSON: true
+	            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	        }).then(function (response) {
 	            //成功
-	            console.log(response.data);
+	
 	            if (response.data.code == 20000) {
 	                if (success) {
 	                    success(response);
@@ -205,6 +182,10 @@ webpackJsonp([0],[
 	 * Vue拦截器
 	 */
 	Vue.http.interceptors.push(function (request, next) {
+	
+	    //加载层-风格3
+	    var loading = layer.load(3);
+	
 	    var accessToken = window.localStorage.getItem("accessToken");
 	    if (accessToken) {
 	        request.headers.accessToken = accessToken;
@@ -224,17 +205,20 @@ webpackJsonp([0],[
 	        //     return false;
 	        // }
 	        response.data = response.json();
+	
 	        if (response.data.code == 49001) {
+	            layer.msg('请求失败', { icon: 2 });
 	            window.location.href = response.data.loginUrl;
 	            return true;
 	        } else if (response.data.code == 49002) {
+	            layer.msg('请求失败', { icon: 2 });
 	            window.location.href = window.host_index;
 	            return true;
 	        } else {
+	
 	            Vue.nextTick(function () {
-	                setTimeout(function () {
-	                    // document.getElementById("loadBox").style.display = 'none';
-	                }, 500);
+	                layer.close(loading);
+	                setTimeout(function () {}, 500);
 	            });
 	        }
 	    });

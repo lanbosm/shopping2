@@ -226,11 +226,12 @@ gulp.task('sprite', ['copy:images', 'lessmin'], function (done) {
 //监听事件
 gulp.task('watch', function (done) {
     //分别对html css js 处理 本来写**/* 其他文件也会多余操作
-    gulp.watch('src/**/*.html', ['fileinclude']);
+    gulp.watch('src/app/**.html', ['fileinclude']);
+    gulp.watch('src/app/*.inc', ['fileinclude']);
 
-    gulp.watch('src/**/*.less', ['lessmin']);
+    gulp.watch('src/css/*.less', ['lessmin']);
 
-    gulp.watch('src/**/*.js', ['build-js']);
+    gulp.watch('src/js/*.js', ['build-js']);
 
 });
 
