@@ -70,72 +70,8 @@ new Vue({
         },
         //商品数据
         itemData:[],
-        itemDetail:{
-            "msg": "响应成功",
-            "appSpecifications": [
-                {
-                    "id": 1,
-                    "name": "颜色",
-                    "appSpecificationValues": [
-                        {
-                            "id": 11,
-                            "name": "粉色",
-                            "specificationId": 1
-                        },
-                        {
-                            "id": 10,
-                            "name": "黄色",
-                            "specificationId": 1
-                        },
-                        {
-                            "id": 9,
-                            "name": "蓝色",
-                            "specificationId": 1
-                        }
-                    ]
-                }
-            ],
-            "code": 20000,
-            "appProductDetail": {
-                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
-                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
-                "barCode": "201701230953",
-                "price": "400.00",
-                "id": 49,
-                "giftType": "none",
-                "brandName": "test",
-                "textTagStr": "",
-                "specDesc": "[黄色 ]",
-                "marketable": true,
-                "stock": 12,
-                "allocatedStock": 0,
-                "giftActivity": null,
-                "appGiftActivity": null,
-                "marketPrice": null,
-                "images": [
-                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
-                ],
-                "appSpecificationValues": [
-                    {
-                        "id": 10,
-                        "name": "黄色",
-                        "specificationId": null
-                    }
-                ],
-                "availableStock": 12
-            },
-            "products": {
-                "49": [
-                    10
-                ],
-                "50": [
-                    9
-                ],
-                "51": [
-                    11
-                ]
-            }
-        },
+        selectItem:{},
+        itemDetail:{},
 
         //购物车
         cartItem:{
@@ -157,14 +93,8 @@ new Vue({
         }
     },
     computed: {
-        newItemModal:function(){
+        //选中的谷歌
 
-            if(this.itemData.newItem.specs){
-                return true;
-            }else{
-                return false;
-            }
-        },
         totalprice: function () {
             var total=0;
             this.cartItem.list.forEach(function(e,i){
@@ -343,18 +273,20 @@ new Vue({
         openItem:function(pid){
 
             var vm = this;
-
             var apiobj={
                 url:API_URLS.products+pid,
                 data:{
                     'id':pid
                 }
             }
-
-            var itemswiper;
+            var itemGift=false;
+            var itemswiper='';
 
             request.fnGet(vm,apiobj,function(res){
-                console.log(res.data);
+
+                vm.itemDetail=res.data;
+                //是否存在赠品
+                vm.itemDetail.appProductDetail.appGiftActivity!=null?itemGift:itemGift=true;
 
                 //弹出页面层
                 layer.open({
@@ -368,7 +300,7 @@ new Vue({
                     area: ['auto', 'auto'], //宽高
                     content: $('#layer-item-box'),
                     success:function() {
-                        if ($(".gift-detail").data('gift')!='none'){  //如果存在赠品
+                        if (itemGift){  //如果存在赠品
                             //data-gift
                             itemswiper = new Swiper('.gift-detail-item', {
                                 pagination: '.gift-detail-item-pagination',
@@ -384,8 +316,8 @@ new Vue({
 
                             })
 
-                            $(".gift-detail-tab").find('a').eq(0).addClass('selected');
-                            $(".gift-detail-tab").find('a').on('click',function(){
+                                $(".gift-detail-tab").find('a').eq(0).addClass('selected');
+                                $(".gift-detail-tab").find('a').on('click',function(){
 
                                 itemswiper.slideTo($(this).index());//
                             })
@@ -400,8 +332,10 @@ new Vue({
                     },
                     end:function(){
                         // alert("销毁了");
-                        itemswiper.destroy();
-                        $(".gift-detail-tab").find('a').off().removeClass('selected');
+                        if(itemGift){
+                            itemswiper.destroy();
+                            $(".gift-detail-tab").find('a').off().removeClass('selected');
+                        }
                     }
                 });
 
@@ -416,17 +350,40 @@ new Vue({
         //放入购物车
         pushCart: function () {
             layer.closeAll();
+            var vm=this;
+            var item={
+                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
+                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
+                "barCode": "201701230953",
+                "price": "400.00",
+                "id": 49,
+                "giftType": "none",
+                "brandName": "test",
+                "textTagStr": "",
+                "specDesc": "[黄色 ]",
+                "marketable": true,
+                "stock": 12,
+                "allocatedStock": 0,
+                "giftActivity": null,
+                "appGiftActivity": null,
+                "marketPrice": null,
+                "images": [
+                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
+                ],
+                "appSpecificationValues": [
+                    {
+                        "id": 10,
+                        "name": "黄色",
+                        "specificationId": null
+                    }
+                ],
+                "availableStock": 12
+            };
 
-            var index=this.itemData.index;
-            var item={};
-            item.id=this.itemData.list[index].id;
-            item.title=this.itemData.list[index].title;
-            item.boon=this.itemData.list[index].boon;
-            item.price=this.itemData.list[index].price;
-            item.imgurl=this.itemData.list[index].imgurl;
-            item.specs=this.itemData.list[index].specs;
-            item.amount=1;
+            var item=vm.itemDetail.appProductDetail;
             item.selectDate=util.getSelectDate(); //自动获取选择日期
+            item.amount=1; //自动获取选择日期
+
             this.cartItem.list.push(item);
         },
         checkCartItem:function(ev,index){

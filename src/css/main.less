@@ -8,14 +8,15 @@
 
 @import "main/cart";
 
-@import "main/checkout";
+@import "main/bill";
 
 
 body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:14px;line-height:1.42857143;color:#333;
   background-color:#fff;}
 
-.index{margin-top: 10px;  }
+
+.index{margin-top: 10px;   }
 
 /*!product*/
 .product(){
@@ -88,21 +89,25 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   .item-detail{
       width:320px; float: left; height: 480px;
       padding: 15px;
+      position: relative;
     .item-detail-con {
-      position: relative; width: 100%;  height:100%;
-      .price { position: absolute; left: 20px; top: 20px; }
-      .product { position: absolute;  left: 0;right: 0; top: 60px;
+      position: relative; width: 100%;  height:400px;
+      overflow:auto;
+      .price { position: relative;   }
+      .product {  position: relative;  left: 0;right: 0;
           img{width: 80%; margin: 0 auto; max-height: 160px; }
           .name{margin-top: 10px; overflow: hidden;}
       }
       .specs-box{
-          position: absolute;
-          top: 300px;
+          position: relative;
          .specs-btn{ position: relative; margin:5px 12px; float: left; color: #999999; border:solid 1px #999999;
            &:hover,&.selected{ color: @themeColor; border-color: @themeColor;}
          }
       }
-      .specs-ok{ position: absolute;  bottom: 10px;  }
+    }
+    .item-detail-bom{
+      position: relative; width: 100%;
+      .specs-ok{ position: relative;   }
     }
 
   }

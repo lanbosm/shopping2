@@ -1,25 +1,143 @@
-/*账单*/
-.wrap{background: #eee;}
+
+.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:30px){
+  color: @fontColor;
+  padding: @padding;
+  border-color:@borderColor;
+  border-radius: @radius;
+  background: @bgcolor;
+}
+
+.bill-row(){
+  border-bottom: @borderDashedStyle;
+  border-width: 2px;
+}
+
+.bill-custom-btn(){
+  .class-bill-btn(#666666,#ffffff,#cccccc);
+  &:hover{ .class-bill-btn(#666666,#ffffff,@themeColor);}
+  &:active{ .class-bill-btn(#666666,#ffffff,@themeColor);}
+  &.select{.class-bill-btn(#666666,#ffffff,@themeColor);}
+}
+
+
+.bill-header-btn(){
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+}
+
+.bill-left-btn(){
+  .class-bill-btn(#666666,#f0eeef,#cccccc);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc);}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc);}
+  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+}
+
+
+.bill-wrap{background: #f0eeef;}
 .bill{
-    height:1000px;
-    border-left: dashed 2px #cccccc;
-    border-right: dashed 2px #cccccc;
-    padding-bottom:20px;
-    background:#ffffff;
-    .bill-header{
-        text-align: center;
-        height: 60px; line-height: 60px;
-        .con{position: relative;  border-bottom: dashed 2px #cccccc; }
-        .title{font-size: 18px;}
-        .back{ left: 15px;
-          top:15px;}
-        .ok{ right: 15px;
-          top:15px;}
+
+  .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
+  .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
+  .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
+
+  .container{
+      background-color:#ffffff;
+      border-left: @borderDashedStyle;
+      border-right: @borderDashedStyle;
+  }
+  .btn{
+    position:relative;
+
+  }
+  .bill-header{
+    padding: 15px;
+    position: relative;
+    .bill-row;
+    h3{
+      font-size: 18px; line-height: 30px; margin: 0;
+    }
+    .ok-btn,.back-btn{
+        .bill-header-btn;
+    }
+  }
+  .bill-custom{
+     padding: 30px 15px;
+     position: relative;
+    .bill-row;
+    .custom-btn{
+         font-size: 18px;
+        .bill-custom-btn;
 
     }
-    .bill-body{
+    .coupon-btn,.point-btn,.balance-btn{
+         font-size: 18px;
+
+         b{
+           position: relative;
+           top: -10px;
+           font-style: normal;
+         }
+
+         span{
+           position:absolute;
+           font-size: 14px;
+           display: block;
+           text-align: center;
+           top:50px;
+           left:0;
+           right:0;
+           margin: 0 auto;
+         }
+
+        .bill-custom-btn;
+         &:hover span,&.selected span{color:@themeColor; }
 
     }
-}  
 
 
+  }
+  .bill-body{
+      position: relative;
+      .bill-row;
+
+      .left-con{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        height:850px;
+        border-right: @borderDashedStyle;
+        border-width: 2px;
+
+        .btn{
+          margin-top: 15px; margin-bottom: 30px; font-size: 18px;
+          span {margin-right: 20px;}
+        }
+        .scan-btn,.money-btn,.card-btn{
+          .bill-left-btn;
+        }
+
+      }
+
+      .tab-con{
+        border-bottom: @borderDashedStyle;
+        border-width: 2px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        display: none;
+        &.tab-show{display: block;}
+        &.tab-con-0{
+              .pay-amount{ color: @themeColor;   font-size: 60px; }
+              .pay-tips {color: @themeColor; margin-top: 10px; font-size: 16px; }
+        }
+        &.tab-con-1{
+            // background: blue;
+        }
+        &.tab-con-2{
+            // background: red;
+        }
+
+      }
+
+  }
+}

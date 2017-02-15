@@ -3,7 +3,7 @@
   width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:20px;
 
   .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
-  .totalprice span{margin-left:20px}
+  .totalprice span{margin-left:20px ;}
 
   .shoppingCart-list{position:relative;overflow-x:hidden;
 
@@ -13,8 +13,19 @@
       ul li:after{display:table;clear:both;content:" "}
       ul li.checked{background:#f0f0f0}
       .shoppingCart-item{width:100%}
-      .shoppingCart-item p{width:100%;font-weight:700;line-height:20px;margin-bottom:0}
-      .shoppingCart-item p.small{font-size:.9rem;color:#666}
+      .shoppingCart-item p{
+        width:100%;font-weight:700;line-height:20px;margin-bottom:0;
+       clear: both;
+      }
+      .shoppingCart-item p.small{
+          span{
+            display: block;
+            &:first-child{float: left;}
+            &:last-child{float: right;}
+          }
+          font-size:.9rem;color:#666
+      }
+
       .shoppingCart-item p.total{font-weight:700;color:#666;text-align:right;}
   }
 }  

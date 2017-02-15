@@ -9,13 +9,15 @@
                 <p class="boon primary">{{itemDetail.appProductDetail.giftType}}</p>
             </div>
             <div class="specs-box">
-                <div v-for="(index,item ) in itemDetail.appSpecifications"  >
+                <div class="clearfix" v-for="(index,item ) in itemDetail.appSpecifications"  >
                     <p class="span-label">{{item.name}}</p>
                     <a class="btn specs specs-btn"  :class="{selected:itemData.newItem.specs.index==index}"
                        v-for="(index2,item2) in item.appSpecificationValues" @click="switchSpec(item2.id)" >{{item2.name}}</a>
                 </div>
             </div>
-            <a class="btn btn-lightgreen btn-block specs-ok"  @click="pushCart()" >确定</a>
+        </div>
+        <div class="item-detail-bom">
+             <a class="btn btn-lightgreen btn-block specs-ok"  @click="pushCart(itemDetail.appProductDetail)" >确定</a>
         </div>
 
     </div>

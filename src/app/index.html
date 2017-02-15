@@ -124,10 +124,10 @@
 										<div class="shoppingCart-item">
 											<p>{{item.title}}</p>
 											<p class="small">
-												<span>{{item.specs.list[item.specs.index].label}}</span> <span>{{item.selectDate}}</span>
+												<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
 											</p>
 											<p class="small">
-												<span>数量:{{item.amount}}</span> * <span>单价:{{item.price|currency '¥' 2 }}</span>
+												<span>数量:{{item.amount}} * 单价 {{item.price|currency '¥' 2 }}</span><span></span>
 											</p>
 											<p class="total">
 												<span>{{item.amount*item.price |currency '¥' 2 }}</span>
