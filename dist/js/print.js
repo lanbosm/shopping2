@@ -1,55 +1,12 @@
-webpackJsonp([0],[
+webpackJsonp([3],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(8);
 
 
 /***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _util = __webpack_require__(2);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	var _jquery = __webpack_require__(3);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	var _layer = __webpack_require__(4);
-	
-	var _layer2 = _interopRequireDefault(_layer);
-	
-	var _request = __webpack_require__(5);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	new Vue({
-	    compiled: function compiled() {},
-	    ready: function ready() {},
-	    data: {
-	        message: '请选择一个付款方式'
-	    },
-	    computed: {},
-	    methods: {
-	        toBack: function toBack() {
-	            location.href = "./index.html";
-	        },
-	        toPrint: function toPrint() {
-	            // layer.load( {
-	            //     shade: [0.1,'#fff'] //0.1透明度的白色背景
-	            // });
-	
-	            location.href = "./print.html";
-	        }
-	
-	    }
-	}).$mount('#main');
-
-/***/ },
+/* 1 */,
 /* 2 */,
 /* 3 */
 /***/ function(module, exports) {
@@ -440,6 +397,50 @@ webpackJsonp([0],[
 	    return str;
 	}
 
+/***/ },
+/* 6 */,
+/* 7 */,
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _util = __webpack_require__(2);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	var _jquery = __webpack_require__(3);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _layer = __webpack_require__(4);
+	
+	var _layer2 = _interopRequireDefault(_layer);
+	
+	var _request = __webpack_require__(5);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	new Vue({
+	    compiled: function compiled() {},
+	    ready: function ready() {},
+	    data: {
+	        message: '请选择一个付款方式'
+	    },
+	    computed: {},
+	    methods: {
+	        toNext: function toNext() {
+	            location.href = "./index.html";
+	        },
+	        printBill: function printBill() {
+	
+	            //引入第三方打印
+	            window.print();
+	        }
+	
+	    }
+	}).$mount('#main');
+
 /***/ }
 ]);
-//# sourceMappingURL=bill.js.map
+//# sourceMappingURL=print.js.map

@@ -28,9 +28,9 @@
             <!-- Swiper -->
             <div class="gift-detail-item">
                     <div class="swiper-wrapper">
-                    <div class="swiper-slide" style="background-image:url('../images/naifen.jpg')"></div>
-                    <div class="swiper-slide" style="background-image:url('../images/jiu.jpg')"></div>
-                    <div class="swiper-slide" style="background-image:url('../images/naifen.jpg')"></div>
+                    <div class="swiper-slide" style="background-image:url('../../images/naifen.jpg')"></div>
+                    <div class="swiper-slide" style="background-image:url('../../images/jiu.jpg')"></div>
+                    <div class="swiper-slide" style="background-image:url('../../images/naifen.jpg')"></div>
                 </div>
             </div>
             <div class="gift-detail-tab">

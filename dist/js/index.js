@@ -30,6 +30,7 @@ webpackJsonp([2],[
 	});
 	/**
 	 * Created by Administrator on 2017/2/6.
+	 * wiki http://www.cnblogs.com/keepfool/p/5625583.html
 	 */
 	
 	/**
@@ -136,7 +137,7 @@ webpackJsonp([2],[
 	};
 	
 	/**
-	 * Vue拦截器
+	 * 全局Vue拦截器
 	 */
 	Vue.http.interceptors.push(function (request, next) {
 	
@@ -421,7 +422,7 @@ webpackJsonp([2],[
 	
 	// import util from 'ui/model.js';
 	
-	console.log(_request.request.fnGet);
+	
 	/**
 	 * [设置购物车的高]
 	 */
@@ -440,6 +441,22 @@ webpackJsonp([2],[
 	        }
 	    }, 300);
 	}
+	
+	//定义组件
+	// Vue.component('layer-item', {
+	//     template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+	// });
+	
+	
+	Vue.component('layer-custom', {
+	    template: '#layer-custom-Component', //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+	    props: { //定义参数类型
+	
+	        customModal: { //会员弹层
+	            type: Object
+	        }
+	    }
+	});
 	
 	new Vue({
 	    compiled: function compiled() {
@@ -502,11 +519,13 @@ webpackJsonp([2],[
 	            newCustom: {},
 	            curCustom: {}
 	        },
+	        //会员弹层
 	        customModal: {
 	            status: 'normal',
 	            history: '',
 	            code: 0
 	        }
+	
 	    },
 	    computed: {
 	        //选中的谷歌

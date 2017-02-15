@@ -2,11 +2,18 @@
 
 @import "util/reset";
 
-body{ background: url("../images/login_bg.jpg") no-repeat 50% 0;}
+body{ background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;}
 
 .login_main{
-    width: 100%;
-    .register-box{ width: 430px;   margin:50% auto;
+    .left-con{ height:900px; position: relative;
+    }
+    .right-con{
+      height:900px; position: relative;}
+    .register-box{ width: 430px;
+      position: absolute;
+      left:0;
+      right:0;
+      top:50%; margin-top:-211px;
 
         padding:0 20px;
 

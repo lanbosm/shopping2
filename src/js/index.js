@@ -5,7 +5,7 @@ import {request, API_URLS, HOST} from 'util/request.js';
 
 // import util from 'ui/model.js';
 
-console.log(request.fnGet);
+
 /**
  * [设置购物车的高]
  */
@@ -24,6 +24,24 @@ function setCartHeight (){
         }
     },300);
 }
+
+
+
+//定义组件
+// Vue.component('layer-item', {
+//     template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+// });
+
+
+Vue.component('layer-custom', {
+    template: '#layer-custom-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+    props: {                                       //定义参数类型
+
+        customModal: {                                       //会员弹层
+            type: Object
+        },
+    }
+});
 
 new Vue({
     compiled:function(){
@@ -86,11 +104,13 @@ new Vue({
             newCustom:{},
             curCustom:{}
         },
+        //会员弹层
         customModal:{
             status:'normal',
             history:'',
             code:0
         }
+
     },
     computed: {
         //选中的谷歌

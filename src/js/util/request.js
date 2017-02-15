@@ -1,6 +1,8 @@
 /**
  * Created by Administrator on 2017/2/6.
+ * wiki http://www.cnblogs.com/keepfool/p/5625583.html
  */
+
 
 /**
  * 接口签名
@@ -108,7 +110,7 @@ export const request = {
 
 
 /**
- * Vue拦截器
+ * 全局Vue拦截器
  */
 Vue.http.interceptors.push(function (request, next) {
 

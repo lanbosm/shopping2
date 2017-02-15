@@ -1,0 +1,88 @@
+
+.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:30px){
+  color: @fontColor;
+  padding: @padding;
+  border-color:@borderColor;
+  border-radius: @radius;
+  background: @bgcolor;
+}
+
+.bill-row(){
+  border-bottom: @borderDashedStyle;
+  border-width: 2px;
+}
+
+
+
+.bill-header-btn(){
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+}
+
+.bill-print-btn(){
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,15px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,15px);}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,15px);}
+  &.select{.class-bill-btn(#ffffff,@green,#cccccc,5px,15px);}
+}
+
+
+.print-wrap{background: #f0eeef; }
+.print{
+
+  .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
+  .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
+  .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
+
+  .container{
+      background-color:#ffffff;
+      border-left: @borderDashedStyle;
+      border-right: @borderDashedStyle;
+  }
+  .btn{
+    position:relative;
+
+  }
+  .print-header{
+    padding: 15px;
+    position: relative;
+    .bill-row;
+    h3{
+      font-size: 18px; line-height: 30px; margin: 0;
+      span{
+        color: @themeColor;}
+    }
+    .ok-btn,.back-btn{
+        .bill-header-btn;
+    }
+  }
+  .print-custom{
+     padding: 30px 15px;
+     position: relative;
+     width: 60%;
+    .bill-row;
+    .print-btn{
+         font-size: 18px;
+        .bill-print-btn;
+
+    }
+
+
+  }
+  .print-body{
+      position: relative;
+      .bill-row;
+      width: 60%;
+      height:900px;
+      .print-box{
+          padding-top: 15px;
+          display: none;
+          &.show{display: block;}
+
+      }
+
+
+  }
+}

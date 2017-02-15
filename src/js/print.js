@@ -17,15 +17,15 @@ import {request, API_URLS, HOST} from 'util/request.js';
 
         },
         methods: {
-            toBack:function(){
+            toNext:function(){
                 location.href="./index.html";
             },
-            toPrint:function(){
-                // layer.load( {
-                //     shade: [0.1,'#fff'] //0.1透明度的白色背景
-                // });
+            printBill:function(){
 
-                location.href="./print.html";
+                //引入第三方打印
+                window.print();
+
+             
             }
 
 

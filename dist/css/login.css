@@ -1,7 +1,6 @@
 /*!reset css*/
 article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
 .btn,img{-webkit-user-select:none}
-.login_main,img{width:100%}
 body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
 b,em{font-style:normal}
 a{text-decoration:none}
@@ -20,6 +19,7 @@ q:after,q:before{content:''}
 sup{vertical-align:text-top}
 sub{vertical-align:text-bottom}
 a,input{-webkit-tap-highlight-color:transparent}
+img{width:100%}
 .hide{display:none}
 .ti{text-indent:-999em}
 .pr{position:relative}
@@ -31,7 +31,8 @@ a,input{-webkit-tap-highlight-color:transparent}
 .hid{display:none!important}
 .poniterNone{pointer-events:none}
 body{background:url(../images/login_bg.jpg) 50% 0 no-repeat}
-.login_main .register-box{width:430px;margin:50% auto;padding:0 20px}
+.login_main .left-con,.login_main .right-con{height:900px;position:relative}
+.login_main .register-box{width:430px;position:absolute;left:0;right:0;top:50%;margin-top:-211px;padding:0 20px}
 .login_main .register-box .register-row1{height:66px}
 .login_main .register-box .register-row1 .logo{width:101px;height:66px;display:block;float:left;background:url(../images/logo.png) 50% 0 no-repeat;margin-left:-10px}
 .login_main .register-box .register-row1 .weclome{width:280px;height:66px;margin-left:10px;margin-top:10px;display:block;float:left}

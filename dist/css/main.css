@@ -139,10 +139,33 @@ img{width:100%}
 .bill .bill-body .left-con .card-btn:hover,.bill .bill-body .left-con .money-btn:hover,.bill .bill-body .left-con .scan-btn:hover{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-body .left-con .card-btn:active,.bill .bill-body .left-con .money-btn:active,.bill .bill-body .left-con .scan-btn:active{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .bill .bill-body .left-con .card-btn.select,.bill .bill-body .left-con .money-btn.select,.bill .bill-body .left-con .scan-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.print .col-nn-23,.print .col-nn-30,.print .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .bill .bill-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
 .bill .bill-body .tab-con.tab-show{display:block}
 .bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
 .bill .bill-body .tab-con.tab-con-0 .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
+.print-wrap{background:#f0eeef}
+.print .col-nn-30{width:30%}
+.print .col-nn-23{width:23%}
+.print .col-nn-70{width:70%}
+.print .container{background-color:#fff;border-left:1px dashed #e5e5e5;border-right:1px dashed #e5e5e5}
+.print .btn{position:relative}
+.print .print-header{padding:15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.print .print-header h3{font-size:18px;line-height:30px;margin:0}
+.print .print-header h3 span{color:#e84593}
+.print .print-header .back-btn,.print .print-header .ok-btn{color:#666;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#f0eeef}
+.print .print-header .back-btn:hover,.print .print-header .ok-btn:hover{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.print .print-header .back-btn:active,.print .print-header .ok-btn:active{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#3b8c64}
+.print .print-header .back-btn.select,.print .print-header .ok-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.print .print-custom{padding:30px 15px;position:relative;width:60%;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.print .print-custom .print-btn{font-size:18px;color:#666;padding:15px;border-color:#ccc;border-radius:5px;background:#f0eeef}
+.print .print-custom .print-btn.select,.print .print-custom .print-btn:active,.print .print-custom .print-btn:hover{color:#fff;padding:15px;border-color:#ccc;border-radius:5px}
+.print .print-custom .print-btn:hover{background:#6fc89c}
+.print .print-custom .print-btn:active{background:#3b8c64}
+.print .print-custom .print-btn.select{background:#6fc89c}
+.print .print-body{position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px;width:60%;height:900px}
+.print .print-body .print-box{padding-top:15px;display:none}
+.print .print-body .print-box.show{display:block}
 body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff}
 .index{margin-top:10px}
 /*!product*/
