@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>结账</title>
+    <title>打印</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -22,18 +22,18 @@
 <body>
     @@include('header.inc')
     <div class="wrap bill-wrap">
-        <div class="main">
+        <div class="main" id="main">
             <div class="bill">
                 <div class="container bill-header">
                     <div class="row">
                         <div class="col-sm-2 col-md-2 col-lg-2">
-                            <a class="btn btn-default back-btn pull-left"><<  返回</a>
+                            <a class="btn btn-default back-btn pull-left" @click="toBank();">  返回</a>
                         </div>
                         <div class="col-sm-8 col-md-8 col-lg-8 text-center">
-                            <h3>结账</h3>
+                            <h3>打印</h3>
                         </div>
                         <div class="col-sm-2 col-md-2 col-lg-2 pull-right">
-                            <a class="btn btn-default ok-btn pull-right">确认  >></a>
+                            <a class="btn btn-default ok-btn pull-right"  @click="toPrint();">确认  >></a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,8 @@
                                         <!--默认无选择-->
                                         <div class="tab-con tab-con-0 text-center tab-show">
                                                 <h1 class="pay-amount ">￥ 21.50</h1>
-                                                <p class="pay-tips ">请选择一个付款方式</p>
+                                                <p class="pay-tips "> {{ message }}</p>
+                                                <child msg="hello!"></child>
                                         </div>
 
                                         <!--默认无选择-->
@@ -97,13 +98,32 @@
                         </div>
             </div>
         </div>
+
+
+
     </div>
     <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/vue.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
-
     <script type="text/javascript" src="/js/header.js"></script>
+    <script type="text/javascript" src="/js/bill.js"></script>
+    <script>
 
+
+ //        var MyComponent = Vue.extend({
+//            // 选项
+//            replace: false,
+//            template: '<div>A custom component!</div>',
+//
+//        })
+//        Vue.component('my-component', MyComponent);
+
+
+
+
+
+
+    </script>
 </body>
 </html>

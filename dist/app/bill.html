@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>订单页</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="format-detection" content="email=no" />
-	<meta http-equiv="pragma" content="no-cache" />
-	<meta http-equiv="cache-control" content="no-cache" />
-	<meta http-equiv="expires" content="0" />
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
-	<link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <meta charset="UTF-8">
+    <title>结账</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
 
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+
+    </style>
 </head>
-
 <body>
-	<div class="header">
+    <div class="header">
     <div class="container">
         <div class="logo">
             <a class="navbar-brand"><img src="../images/logo.jpg" alt="Brand"></a>
@@ -55,47 +57,109 @@
 
     </div>
 </div>
-	<div class="wrap">
-		<!-- main -->
-			<div class="main">
-				<div class="container bill">
-						<div class="row bill-header" >
-							<div class="col-xs-12">
-								 <div class="con">
-									<a class="btn btn-default  back">返回</a>
-									<span class="title">结账</span>
-									<a class="btn btn-default  ok">确定</a>
-								 </div>
-							</div>
-						</div>
-						<div class="row bill-body" >
-							<div class="col-xs-12 bill-body-top">
-									我是内容头
-							</div>
-							<div class="col-xs-4 bill-body-left">
-								我是内容左
-							</div>
-							<div class="col-xs-8 bill-body-right">
-								我是内容右
-							</div>
-						</div>
-				</div>
-			</div>
+    <div class="wrap bill-wrap">
+        <div class="main" id="main">
+            <div class="bill">
+                <div class="container bill-header">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <a class="btn btn-default back-btn pull-left" @click="toBack();"><<  返回</a>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8 text-center">
+                            <h3>结账</h3>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2 pull-right">
+                            <a class="btn btn-default ok-btn pull-right"  @click="toPrint();">确认  >></a>
+                        </div>
+                    </div>
+                </div>
 
-			
+                <div class="container bill-custom">
+                         <div class="row">
+                             <div class="col-nn-30">
+                                <a class="btn btn-default custom-btn btn-block">
+                                    <span class="glyphicon glyphicon-user"></span> 顾客
+                                </a>
+                            </div>
+                             <div class="col-nn-23 ">
+                                 <a class="btn btn-default  coupon-btn btn-block">
+                                     <b>优惠券</b><span>- ¥  20.00</span>
+                                 </a>
+                             </div>
+                             <div class="col-nn-23">
+                                 <a class="btn btn-default  point-btn btn-block">
+                                     <b>100积分</b><span>- ¥  10.00</span>
+                                 </a>
+                             </div>
+                             <div class="col-nn-23">
+                                 <a class="btn btn-default  balance-btn btn-block">
+                                     <b>¥  20余额</b><span>- ¥  20.00</span>
+                                 </a>
+                             </div>
+                         </div>
+                </div>
 
-	</div>
+                <div class="container bill-body">
+                        <div class="row">
+                            <div class="col-nn-30  left-con">
+                                    <a class="btn btn-default scan-btn btn-block">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 扫码
+                                    </a>
+                                    <a class="btn btn-default  money-btn btn-block">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 现金
+                                    </a>
+                                    <div class="btn btn-default  card-btn btn-block">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 刷卡
+                                    </div>
+                                </div>
+                                <div class="col-nn-70 right-con">
+                                        <!--默认无选择-->
+                                        <div class="tab-con tab-con-0 text-center tab-show">
+                                                <h1 class="pay-amount ">￥ 21.50</h1>
+                                                <p class="pay-tips "> {{ message }}</p>
+                                                <child msg="hello!"></child>
+                                        </div>
 
-		<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-		<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../js/vue.min.js"></script>
-		<script type="text/javascript" src="../js/common.js"></script>
+                                        <!--默认无选择-->
+                                        <div class="tab-con tab-con-1 text-center">
+                                               刷卡方式
+                                        </div>
 
-		<script type="text/javascript" src="../js/header.js"></script>
-		<script>
+                                        <!--默认无选择-->
+                                        <div class="tab-con tab-con-2 text-center">
+                                                 现金方式
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
 
-		</script>
-	
 
+
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/header.js"></script>
+    <script type="text/javascript" src="/js/bill.js"></script>
+    <script>
+
+
+ //        var MyComponent = Vue.extend({
+//            // 选项
+//            replace: false,
+//            template: '<div>A custom component!</div>',
+//
+//        })
+//        Vue.component('my-component', MyComponent);
+
+
+
+
+
+
+    </script>
 </body>
 </html>

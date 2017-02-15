@@ -233,7 +233,7 @@ new Vue({
                 emulateJSON:true
             })
                 .then((response) => { //成功
-                    console.log(response.data);
+                   // console.log(response.data);
                     vm.$set('navData.list', response.data.data);
                     vm.$set('navData.path', response.data.path);
 
@@ -252,10 +252,8 @@ new Vue({
                 emulateJSON:true
             })
                 .then((response) => { //成功
-                    console.log(response.data);
+                    //console.log(response.data);
                     vm.$set('customData.list', response.data.data);
-
-
                 })
                 .catch(function(response) { //失败
                     //console.log(response);
@@ -265,14 +263,25 @@ new Vue({
         //获取物品列表
         getItemList:function(cid){
 
-            var vm = this
+            var vm = this;
+
+            var apiobj={
+                url:API_URLS.products,
+                data:{'pageNum':1}
+            }
+           request.fnGet(vm,apiobj,function(data){
+
+                console.log(data);
+
+           });
+           // alert(API_URLS.products);
             vm.$http.get(vm.itemData.apiUrl,{
                 params:{'category':cid},
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 emulateJSON:true
             })
                 .then((response) => { //成功
-                    console.log(response.data);
+                   // console.log(response.data);
                     vm.$set('itemData.list', response.data.data);
                     vm.$set('pageCur',1);
                 })

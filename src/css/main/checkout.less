@@ -1,7 +1,7 @@
 
-.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px){
+.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:30px){
   color: @fontColor;
-  padding: 30px;
+  padding: @padding;
   border-color:@borderColor;
   border-radius: @radius;
   background: @bgcolor;
@@ -17,7 +17,14 @@
   &:hover{ .class-bill-btn(#666666,#ffffff,@themeColor);}
   &:active{ .class-bill-btn(#666666,#ffffff,@themeColor);}
   &.select{.class-bill-btn(#666666,#ffffff,@themeColor);}
+}
 
+
+.bill-header-btn(){
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
 }
 
 .bill-left-btn(){
@@ -50,6 +57,9 @@
     .bill-row;
     h3{
       font-size: 18px; line-height: 30px; margin: 0;
+    }
+    .ok-btn,.back-btn{
+        .bill-header-btn;
     }
   }
   .bill-custom{

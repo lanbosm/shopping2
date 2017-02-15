@@ -27,7 +27,7 @@ img{width:100%}
 .fl{float:left}
 .fr{float:right}
 .clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
-.btn{display:block;z-index:30;text-indent:0;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+.btn{display:block;z-index:30;text-indent:0;-webkit-transition:all 0s;-moz-transition:all 0s;-ms-transition:all 0s;-o-transition:all 0s;transition:all 0s}
 .hid{display:none!important}
 .poniterNone{pointer-events:none}
 /*!自定义公用样式*/
@@ -116,6 +116,10 @@ img{width:100%}
 .bill .btn{position:relative}
 .bill .bill-header{padding:15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .bill .bill-header h3{font-size:18px;line-height:30px;margin:0}
+.bill .bill-header .back-btn,.bill .bill-header .ok-btn{color:#666;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#f0eeef}
+.bill .bill-header .back-btn:hover,.bill .bill-header .ok-btn:hover{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.bill .bill-header .back-btn:active,.bill .bill-header .ok-btn:active{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#3b8c64}
+.bill .bill-header .back-btn.select,.bill .bill-header .ok-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-custom{padding:30px 15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .bill .bill-custom .custom-btn{font-size:18px;color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#fff}
 .bill .bill-custom .custom-btn.select,.bill .bill-custom .custom-btn:active,.bill .bill-custom .custom-btn:hover{color:#666;padding:30px;border-color:#e84593;border-radius:5px;background:#fff}

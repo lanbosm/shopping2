@@ -30,14 +30,16 @@
  */
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
-export const HOST = "";
+
+export const HOST = "http://192.168.1.199";
 export const API_URLS = {
-    a: "www.baidu.com"
+    products: "/cashier/member/products"
 };
 export const request = {
 
     fnGet: function (vm, apiObj, success, error) {
-        vm.$http.get(apiObj.url, {
+        console.log(apiObj);
+        vm.$http.get(HOST+apiObj.url, {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'},
             emulateJSON: true
@@ -142,6 +144,7 @@ Vue.http.interceptors.push(function (request, next) {
         request.headers.timeStamp = signature.timeStamp;
         request.headers.sign = signature.sign;
     }
+
     console.log(signature);
     console.log("token:" + accessToken);
     // document.getElementById("loadBox").style.display = 'block';
