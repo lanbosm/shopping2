@@ -238,57 +238,18 @@ new Vue({
         //放入购物车
         pushCart: function (item) {
             layer.closeAll();
-<<<<<<< HEAD
             var vm = this;
-            var item = {
-                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
-                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
-                "barCode": "201701230953",
-                "price": "400.00",
-                "id": 49,
-                "giftType": "none",
-                "brandName": "test",
-                "textTagStr": "",
-                "specDesc": "[黄色 ]",
-                "marketable": true,
-                "stock": 12,
-                "allocatedStock": 0,
-                "giftActivity": null,
-                "appGiftActivity": null,
-                "marketPrice": null,
-                "images": [
-                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
-                ],
-                "appSpecificationValues": [
-                    {
-                        "id": 10,
-                        "name": "黄色",
-                        "specificationId": null
-                    }
-                ],
-                "availableStock": 12
-            };
-
-            var item = vm.itemDetail.appProductDetail;
-            item.selectDate = util.getSelectDate(); //自动获取选择日期
-            item.amount = 1; //自动获取选择日期
-
-            this.cartItem.list.push(item);
-        }
-=======
-            var vm=this;
-            var newitem={};
+            var newitem = {};
             Object.assign(newitem, item);
 
             console.log(vm.itemDetail.appProductDetail);
 
-            newitem.selectDate=util.getSelectDate(); //自动获取选择日期
-            newitem.amount=1; //自动获取选择日期
+            newitem.selectDate = util.getSelectDate(); //自动获取选择日期
+            newitem.amount = 1; //自动获取选择日期
             this.cartData.list.push(newitem);
-        },
+        }
 
 
->>>>>>> origin/master
     },
     methods: {
         //获取导航列表
@@ -357,6 +318,7 @@ new Vue({
             request.fnGet(vm,apiobj,function(res){
 
                 vm.itemDetail=res.data;
+                console.log(vm.itemDetail.appProductDetail);
                 //是否存在赠品
                 vm.itemDetail.appProductDetail.appGiftActivity!=null?itemGift:itemGift=true;
 
