@@ -31,7 +31,7 @@ function setCartHeight (){
 Vue.component('layer-item', {
     template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
     props: {                                       //定义参数类型
-        itemDetail:Object,
+        itemDetail:Object
     },
     methods: {
         switchSpec: function (pid) {
@@ -52,10 +52,19 @@ Vue.component('layer-item', {
 Vue.component('layer-custom', {
     template: '#layer-custom-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
     props: {                                       //定义参数类型
-
-        customModal: {                                       //会员弹层
+        customModal: {                             //会员弹层
             type: Object
         },
+        customData: {
+            type: Object
+        }
+    },
+    methods:{
+        save: function (customdata) {
+            if (customdata){
+                this.$dispatch('register', customdata)
+            }
+        }
     }
 });
 
@@ -104,7 +113,6 @@ new Vue({
         },
         //商品数据
         itemData:[],
-        selectItem:{},
         itemDetail:{},
 
         //购物车
@@ -252,16 +260,23 @@ new Vue({
     },
     //共有方法
     events:{
+        //会员注册
+        register: function(customdata){
+            var name = customdata.newCustom.name;
+            var phone = customdata.newCustom.phone;
+            var sex = customdata.newCustom.sex;
+
+            alert(name+'===='+phone+'==='+sex);
+        },
         //选择规格
         switchSpec:function(sid){
-
             alert("规格"+sid);
         },
         //放入购物车
         pushCart: function () {
             layer.closeAll();
-            var vm=this;
-            var item={
+            var vm = this;
+            var item = {
                 "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
                 "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
                 "barCode": "201701230953",
@@ -290,34 +305,29 @@ new Vue({
                 "availableStock": 12
             };
 
-            var item=vm.itemDetail.appProductDetail;
-            item.selectDate=util.getSelectDate(); //自动获取选择日期
-            item.amount=1; //自动获取选择日期
+            var item = vm.itemDetail.appProductDetail;
+            item.selectDate = util.getSelectDate(); //自动获取选择日期
+            item.amount = 1; //自动获取选择日期
 
             this.cartItem.list.push(item);
-        },
-
-
+        }
     },
     methods: {
         //获取导航列表
         getNavList:function(){
-            var vm = this
+            var vm = this;
             vm.$http.get(vm.navData.apiUrl,{
                 params:{'cache':Math.random()},
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 emulateJSON:true
-            })
-                .then((response) => { //成功
+            }).then((response) => { //成功
                    // console.log(response.data);
-                    vm.$set('navData.list', response.data.data);
-                    vm.$set('navData.path', response.data.path);
-
-                })
-                .catch(function(response) { //失败
-                    //console.log(response);
-                    alert("读取导航失败");
-                })
+                vm.$set('navData.list', response.data.data);
+                vm.$set('navData.path', response.data.path);
+            }).catch(function(response) { //失败
+                //console.log(response);
+                alert("读取导航失败");
+            })
         },
         //获取会员列表
         getCustomList:function(){
@@ -363,7 +373,7 @@ new Vue({
                 data:{
                     'id':pid
                 }
-            }
+            };
             var itemGift=false;
             var itemswiper='';
 
@@ -390,7 +400,7 @@ new Vue({
                             itemswiper = new Swiper('.gift-detail-item', {
                                 pagination: '.gift-detail-item-pagination',
                                 paginationClickable: true,
-                                spaceBetween: 10,
+                                spaceBetween: 10
 
                             });
 

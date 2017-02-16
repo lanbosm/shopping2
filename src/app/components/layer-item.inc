@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="item-detail-bom">
-             <a class="btn btn-lightgreen btn-block specs-ok"  @click="pushCart(itemDetail.appProductDetail)" >确定</a>
+             <a class="btn btn-lightgreen btn-block specs-ok"  @click="(pushCartitemDetail.appProductDetail)" >确定</a>
         </div>
 
     </div>

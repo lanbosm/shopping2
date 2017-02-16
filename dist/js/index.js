@@ -44,6 +44,7 @@ webpackJsonp([2],[
 	var API_URLS = exports.API_URLS = {
 	    products: "/cashier/member/products/"
 	};
+	
 	var request = exports.request = {
 	
 	    fnGet: function fnGet(vm, apiObj, success, error) {
@@ -467,9 +468,18 @@ webpackJsonp([2],[
 	Vue.component('layer-custom', {
 	    template: '#layer-custom-Component', //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
 	    props: { //定义参数类型
-	
 	        customModal: { //会员弹层
 	            type: Object
+	        },
+	        customData: {
+	            type: Object
+	        }
+	    },
+	    methods: {
+	        save: function save(customdata) {
+	            if (customdata) {
+	                this.$dispatch('register', customdata);
+	            }
 	        }
 	    }
 	});
@@ -519,7 +529,6 @@ webpackJsonp([2],[
 	        },
 	        //商品数据
 	        itemData: [],
-	        selectItem: {},
 	        itemDetail: {},
 	
 	        //购物车
@@ -663,9 +672,16 @@ webpackJsonp([2],[
 	    },
 	    //共有方法
 	    events: {
+	        //会员注册
+	        register: function register(customdata) {
+	            var name = customdata.newCustom.name;
+	            var phone = customdata.newCustom.phone;
+	            var sex = customdata.newCustom.sex;
+	
+	            alert(name + '====' + phone + '===' + sex);
+	        },
 	        //选择规格
 	        switchSpec: function switchSpec(sid) {
-	
 	            alert("规格" + sid);
 	        },
 	        //放入购物车
@@ -703,7 +719,6 @@ webpackJsonp([2],[
 	
 	            this.cartItem.list.push(item);
 	        }
-	
 	    },
 	    methods: {
 	        //获取导航列表

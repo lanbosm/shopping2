@@ -16,6 +16,7 @@ export const HOST = "http://192.168.1.199"; //http://192.168.1.199
 export const API_URLS = {
     products: "/cashier/member/products/"
 };
+
 export const request = {
 
     fnGet: function (vm, apiObj, success, error) {

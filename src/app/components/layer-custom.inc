@@ -47,15 +47,15 @@
                                                 <label for="custom-women"></label>
                                             </div>
                                         </div>
-                                        <div class="input-group custom-name">
+                                        <div class="input-group custom-name custom-group">
                                             <span class="input-group-addon "><i class="iconfont icon-peoplefill"></i></span>
                                             <input type="text" class="form-control" placeholder="姓名"  v-model="customData.newCustom.name">
                                         </div>
-                                        <div class="input-group custom-phone">
+                                        <div class="input-group custom-phone custom-group">
                                             <span class="input-group-addon"><i class="iconfont icon-mobilefill"></i></span>
                                             <input type="num" class="form-control" placeholder="手机号" maxlength="13" v-model="customData.newCustom.phone">
                                         </div>
-                                        <a class="btn btn-lightgreen btn-block" @click="addNewCustom()">保存</a>
+                                        <a class="btn btn-lightgreen btn-block" @click="save(customData)">保存</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,9 +89,9 @@
                                                     <span class="u">{{custom.condition}}</span>
                                                 </div>
                                                 <div class="right">
-																			<span style="color: #cccccc">有效期
-																			<em class="primary">{{custom.expired}}</em>
-																			</span>
+                                                    <span style="color: #cccccc">有效期
+                                                        <em class="primary">{{custom.expired}}</em>
+                                                    </span>
                                                     <span class="l2">{{custom.category}}</span>
                                                     <span class="l3 primary">抵用券</span>
                                                 </div>

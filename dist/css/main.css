@@ -269,6 +269,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .custom-ticket .custom-ticket-body li .right em{font-style:normal}
 .custom-layer .custom-ticket .line{width:113%;background:#e84593;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
 .custom-layer .custom-ticket .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
+.custom-layer .custom-group{margin:10px 0}
 /*!media*/
 @media (max-width:767px){body,html{font-size:12px}
 }

@@ -87,6 +87,7 @@ webpackJsonp([0],[
 	var API_URLS = exports.API_URLS = {
 	    products: "/cashier/member/products/"
 	};
+	
 	var request = exports.request = {
 	
 	    fnGet: function fnGet(vm, apiObj, success, error) {
