@@ -378,7 +378,6 @@ new Vue({
         },
         checkcartData:function(ev,index){
             this.cartData.index=index;
-
         },
         buildBill:function(){
             if(this.cartData.list.length>0) {

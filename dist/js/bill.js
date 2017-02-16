@@ -31,7 +31,8 @@ webpackJsonp([0],[
 	    compiled: function compiled() {},
 	    ready: function ready() {},
 	    data: {
-	        message: '请选择一个付款方式'
+	        message: '请选择一个付款方式',
+	        index: 0
 	    },
 	    computed: {},
 	    methods: {
@@ -39,11 +40,10 @@ webpackJsonp([0],[
 	            location.href = "./index.html";
 	        },
 	        toPrint: function toPrint() {
-	            // layer.load( {
-	            //     shade: [0.1,'#fff'] //0.1透明度的白色背景
-	            // });
-	
 	            location.href = "./print.html";
+	        },
+	        switchPay: function switchPay(index) {
+	            this.index = index;
 	        }
 	
 	    }

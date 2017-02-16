@@ -11,7 +11,8 @@ import {request, API_URLS, HOST} from 'util/request.js';
 
         },
         data: {
-            message: '请选择一个付款方式'
+            message: '请选择一个付款方式',
+            index:0
         },
         computed:{
 
@@ -21,11 +22,10 @@ import {request, API_URLS, HOST} from 'util/request.js';
                 location.href="./index.html";
             },
             toPrint:function(){
-                // layer.load( {
-                //     shade: [0.1,'#fff'] //0.1透明度的白色背景
-                // });
-
                 location.href="./print.html";
+            },
+            switchPay:function (index) {
+                this.index = index;
             }
 
 
