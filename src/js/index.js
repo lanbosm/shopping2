@@ -90,7 +90,12 @@ new Vue({
         }
     },
     data:{
-
+        productParams:{
+            'pageNum':1,
+            'categoryId':null,
+            'keyword':null,
+            'brandId':null
+        },
         searchItem:{
             text:"",          //文本
             input:"",		  //控件
@@ -288,12 +293,7 @@ new Vue({
             var vm = this;
             var apiobj={
                 url:API_URLS.products,                  //API_URLS.products
-                data:{
-                    'pageNum':1,
-                    'categoryId':null,
-                    'keyword':null,
-                    'brandId':null
-                }
+                data:vm.productParams
             }
             request.fnGet(vm,apiobj,function(res){
                 console.log(res.data);
@@ -374,11 +374,10 @@ new Vue({
                 });
 
             });
-
         },
+
         checkcartData:function(ev,index){
             this.cartData.index=index;
-
         },
         buildBill:function(){
             if(this.cartData.list.length>0) {
@@ -387,8 +386,6 @@ new Vue({
             }else{
                 alert('请先选择物品');
             }
-
-
         },
         //计算器
         calc:function(keycode){
@@ -424,7 +421,6 @@ new Vue({
                 }else{
 
                     amount=keycode;
-
                 }
 
                 this.cartData.list[index].amount=parseInt(amount);
@@ -438,10 +434,11 @@ new Vue({
             return arr.slice((this.pageCur-1)*limit,(this.pageCur)*limit );
         },
         //页码点击事件
-        pageClick: function(page){
-            if(page != this.pageCur){
-                this.pageCur = page;
-                window.scrollTo(0,0);
+        pageTo: function(page){
+            if(page !=  this.productParams.pageNum){
+
+                this.productParams.pageNum=page;
+                this.getItemList();
             }
         },
         getspecsClick:function(index){

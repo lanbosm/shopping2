@@ -506,7 +506,12 @@ webpackJsonp([2],[
 	        }
 	    },
 	    data: {
-	
+	        productParams: {
+	            'pageNum': 1,
+	            'categoryId': null,
+	            'keyword': null,
+	            'brandId': null
+	        },
 	        searchItem: {
 	            text: "", //文本
 	            input: "", //控件
@@ -701,12 +706,7 @@ webpackJsonp([2],[
 	            var vm = this;
 	            var apiobj = {
 	                url: _request.API_URLS.products, //API_URLS.products
-	                data: {
-	                    'pageNum': 1,
-	                    'categoryId': null,
-	                    'keyword': null,
-	                    'brandId': null
-	                }
+	                data: vm.productParams
 	            };
 	            _request.request.fnGet(vm, apiobj, function (res) {
 	                console.log(res.data);
@@ -785,6 +785,7 @@ webpackJsonp([2],[
 	                });
 	            });
 	        },
+	
 	        checkcartData: function checkcartData(ev, index) {
 	            this.cartData.index = index;
 	        },
@@ -846,10 +847,11 @@ webpackJsonp([2],[
 	            return arr.slice((this.pageCur - 1) * limit, this.pageCur * limit);
 	        },
 	        //页码点击事件
-	        pageClick: function pageClick(page) {
-	            if (page != this.pageCur) {
-	                this.pageCur = page;
-	                window.scrollTo(0, 0);
+	        pageTo: function pageTo(page) {
+	            if (page != this.productParams.pageNum) {
+	
+	                this.productParams.pageNum = page;
+	                this.getItemList();
 	            }
 	        },
 	        getspecsClick: function getspecsClick(index) {

@@ -37,13 +37,10 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
     }
     .thumbnail .photo{
       width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer;
-      @media (min-height:1080px){
 
-        &{height:240px;line-height:240px;}
-      }
     }
 
-    .thumbnail .photo>img{display:inline;max-width:120px}
+    .thumbnail .photo>img{display:inline;max-width:120px ; background: url('@{imgPath}/lazyload.png') 50% 50% no-repeat; background-size:cover;}
     .thumbnail .buy-btn{right:0;bottom: 8px;}
     .thumbnail .list-btn{right:0;top:8px; }
   }

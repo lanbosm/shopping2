@@ -104,10 +104,10 @@
 										<div class="page-bar">
 											<ul class="pagination">
 												<li><span class="pagination-label">第 {{page.pageNum}} 页,共 {{page.pages}} 页</span></li>
-												<li v-if="page.hasPreviousPage"><a @click="pageCur--">上一页</a></li>
-												<li v-for="index in page.pages"  :class="{ 'active': pageNum == index}">
-													<a @click="pageClick(index)">{{ (index+1) }}</a> </li>
-												<li v-if="showLast"><a @click="pageCur++">下一页</a></li>
+												<li v-if="page.hasPreviousPage"><a @click="pageTo(page.pageNum-1)">上一页</a></li>
+												<li v-for="index in page.pages"  :class="{ 'active': page.pageNum == index+1}">
+													<a @click="pageTo(index+1)">{{ (index+1) }}</a> </li>
+												<li v-if="page.hasNextPage"><a @click="pageTo(page.pageNum+1)">下一页</a></li>
 											</ul>
 										</div>
 									</div>
