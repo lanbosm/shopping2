@@ -81,9 +81,7 @@ new Vue({
         }
     },
     data:{
-        pageCur: 1,//当前页码
-        pageTotal: 10, //总页数
-        limit:12,  //一页显示多少个
+
         searchItem:{
             text:"",          //文本
             input:"",		  //控件
@@ -102,13 +100,15 @@ new Vue({
             path:[],
             list:[]
         },
+        //页对象
+        page:{
+
+        },
         //商品数据
         itemData:[],
-        selectItem:{},
         itemDetail:{},
-
         //购物车
-        cartItem:{
+        cartData:{
             index:0,
             list:[],
         },
@@ -133,7 +133,7 @@ new Vue({
 
         totalprice: function () {
             var total=0;
-            this.cartItem.list.forEach(function(e,i){
+            this.cartData.list.forEach(function(e,i){
                 total+=e.price*e.amount;
             })
             return total;
@@ -153,44 +153,6 @@ new Vue({
 
             //分页显示
             return p;
-        },
-        pageindexs: function(){
-            var left = 1
-            var right = this.pageTotal
-            var pages = []
-            if(this.pageTotal>= 11){
-                if(this.pageTotal > 5 && this.pageCur < this.pageTotal-4){
-                    left = this.pageCur - 5
-                    right = this.pageCur + 4
-                }else{
-                    if(this.pageCur<=5){
-                        left = 1
-                        right = 10
-                    }else{
-                        right = this.pageTotal
-                        left = this.pageTotal -9
-                    }
-                }
-            }
-            while (left <= right){
-                pages.push(left)
-                left ++
-            }
-            return pages
-        },
-        //显示下一页
-        showLast: function(){
-            if(this.pageCur == this.pageTotal   ){
-                return false
-            }
-            return true
-        },
-        //显示上一页
-        showFirst: function(){
-            if(this.pageCur == 1){
-                return false
-            }
-            return true
         },
         //filteredCustomDataList
         filteredCustomDataList: function () {
@@ -258,43 +220,17 @@ new Vue({
             alert("规格"+sid);
         },
         //放入购物车
-        pushCart: function () {
+        pushCart: function (item) {
             layer.closeAll();
             var vm=this;
-            var item={
-                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
-                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
-                "barCode": "201701230953",
-                "price": "400.00",
-                "id": 49,
-                "giftType": "none",
-                "brandName": "test",
-                "textTagStr": "",
-                "specDesc": "[黄色 ]",
-                "marketable": true,
-                "stock": 12,
-                "allocatedStock": 0,
-                "giftActivity": null,
-                "appGiftActivity": null,
-                "marketPrice": null,
-                "images": [
-                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
-                ],
-                "appSpecificationValues": [
-                    {
-                        "id": 10,
-                        "name": "黄色",
-                        "specificationId": null
-                    }
-                ],
-                "availableStock": 12
-            };
+            var newitem={};
+            Object.assign(newitem, item);
 
-            var item=vm.itemDetail.appProductDetail;
-            item.selectDate=util.getSelectDate(); //自动获取选择日期
-            item.amount=1; //自动获取选择日期
+            console.log(vm.itemDetail.appProductDetail);
 
-            this.cartItem.list.push(item);
+            newitem.selectDate=util.getSelectDate(); //自动获取选择日期
+            newitem.amount=1; //自动获取选择日期
+            this.cartData.list.push(newitem);
         },
 
 
@@ -336,9 +272,7 @@ new Vue({
         },
         //获取物品列表
         getItemList:function(){
-
             var vm = this;
-
             var apiobj={
                 url:API_URLS.products,                  //API_URLS.products
                 data:{
@@ -348,10 +282,11 @@ new Vue({
                     'brandId':null
                 }
             }
-
             request.fnGet(vm,apiobj,function(res){
                 console.log(res.data);
-                vm.itemData=res.data.page.list;
+                vm.page=res.data.page;
+                vm.itemData=vm.page.list;
+
             });
         },
         //获取物品详情
@@ -427,48 +362,44 @@ new Vue({
             });
 
         },
-        checkCartItem:function(ev,index){
-            this.cartItem.index=index;
+        checkcartData:function(ev,index){
+            this.cartData.index=index;
+
         },
-        settleAccounts:function(){
-            console.log(this.cartItem.list)
+        buildBill:function(){
+            if(this.cartData.list.length>0) {
+                console.log(this.cartData.list);
+                location.href = "./bill.html";
+            }else{
+                alert('请先选择物品');
+            }
 
-            // ok.onclick=function(){
-
-            // 	save()
-            // }
-
-            // out.onclick=function(){
-            // 	//localStorage.setItem("sss",'{"haha":12}');
-            // 	var str=localStorage.getItem("bbb");
-            // 	str =JSON.parse(str);
-            // 	console.log(str);
-            // }
 
         },
         //计算器
         calc:function(keycode){
-            if(this.cartItem.list.length==0){return;}
-            var index=this.cartItem.index;
+            var vm=this;
+            if(this.cartData.list.length==0){return;}
 
+            var index=this.cartData.index;
             //选中的单价
-            var prcie=this.cartItem.list[index].price;
+            var price=this.cartData.list[index].price;
             //选中的数量
-            var amount=this.cartItem.list[index].amount;
+            var amount=this.cartData.list[index].amount;
 
             if(isNaN(keycode)){
                 switch (keycode) {
-                    case 'qrt': //resize
-                        this.cartItem.list[index].amount=1;
+                    case 'qty': //resize
+                        this.cartData[index].amount=1;
                         break;
                     case 'x':   //close
                         var str=amount+"";
                         amount=str.substring(0,str.length-1);
                         if(amount==""){
-                            this.cartItem.list.splice(index,1);
+                            this.cartData.list.splice(index,1);
                         }
                         else{
-                            this.cartItem.list[index].amount=parseInt(amount);
+                            this.cartData.list[index].amount=parseInt(amount);
                         }
                         break;
                 }
@@ -479,11 +410,12 @@ new Vue({
                 }else{
 
                     amount=keycode;
+
                 }
 
-
-                this.cartItem.list[index].amount=parseInt(amount);
-                console.log(this.cartItem.list);
+                this.cartData.list[index].amount=parseInt(amount);
+               // this.cartData[index].amount=parseInt(amount);
+                console.log(this.cartData.list);
             }
         },
         //分页
