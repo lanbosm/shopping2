@@ -66,31 +66,31 @@
                 <div class="container bill-body">
                         <div class="row">
                             <div class="col-nn-30  left-con">
-                                    <a class="btn btn-default scan-btn btn-block">
+                                    <a class="btn btn-default scan-btn btn-block" @click="switchPay(0)">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 扫码
                                     </a>
-                                    <a class="btn btn-default  money-btn btn-block">
+                                    <a class="btn btn-default  money-btn btn-block"  @click="switchPay(1)">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 现金
                                     </a>
-                                    <div class="btn btn-default  card-btn btn-block">
+                                    <div class="btn btn-default  card-btn btn-block"  @click="switchPay(2)">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 刷卡
                                     </div>
                                 </div>
                                 <div class="col-nn-70 right-con">
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-0 text-center tab-show">
+                                        <div class="tab-con tab-con-0 text-center " :class={'tab-show':index==0}>
                                                 <h1 class="pay-amount ">￥ 21.50</h1>
                                                 <p class="pay-tips "> {{ message }}</p>
                                                 <child msg="hello!"></child>
                                         </div>
 
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-1 text-center">
+                                        <div class="tab-con tab-con-1 text-center" :class={'tab-show':index==1}>
                                                刷卡方式
                                         </div>
 
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-2 text-center">
+                                        <div class="tab-con tab-con-2 text-center" :class={'tab-show':index==2}>
                                                  现金方式
                                         </div>
                                 </div>

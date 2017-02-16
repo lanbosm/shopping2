@@ -156,7 +156,7 @@
 						<div class="shoppingCart">
 							<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.list.length==0}">
 								<ul>
-									<li :class="{checked:cartData.index==index}" v-for="(index,item) in cartData.list " track-by="$index" @click="checkCartData($event,index);">
+									<li :class="{checked:cartData.index==index}" v-for="(index,item) in cartData.list " track-by="$index" @click="checkcartData($event,index);">
 										<div class="shoppingCart-item">
 											<p>{{item.title}}</p>
 											<p class="small">

@@ -180,8 +180,8 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#e84593}
 .left-con .item .thumbnail .prcie{font-size:.9rem}
 .left-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:3.2rem;line-height:1.6rem;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.left-con .item .thumbnail .photo{width:100%;height:120px;line-height:120px;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.left-con .item .thumbnail .photo>img{display:inline;max-width:120px;background:url(../images/lazyload.png) 50% 50% no-repeat;background-size:cover}
+.left-con .item .thumbnail .photo{width:100%;height:10rem;line-height:10rem;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
+.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url(../images/lazyload.png) 50% 50% no-repeat;background-size:cover}
 .left-con .item .thumbnail .buy-btn{right:0;bottom:8px}
 .left-con .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/
@@ -278,4 +278,6 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 @media (min-width:992px) and (max-width:1199px){body,html{font-size:12px}
 }
 @media (min-width:1200px){body,html{font-size:14px}
+}
+@media (min-width:1800px){body,html{font-size:18px}
 }
