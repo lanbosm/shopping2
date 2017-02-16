@@ -22,7 +22,7 @@
 
 <body>
 	<div class="header">
-    <div class="container">
+    <div class="container-fluid ">
         <div class="logo">
             <a class="navbar-brand"><img src="../../images/logo.jpg" alt="Brand"></a>
         </div>
@@ -62,7 +62,7 @@
 	<div class="wrap">
 		<!-- container -->
 		<div class="main" id="main">
-			<div class="container index">
+			<div class="container-fluid index">
 			 		<div class="row" >
 						<div class="col-sm-8  col-md-9 left-con">
 							<div class="left-con-header">
@@ -139,10 +139,10 @@
 									<div class="panel-footer">
 										<div class="page-bar">
 											<ul class="pagination">
-												<li><span class="pagination-label">第 {{pageCur}} 页,共 {{pageTotal}} 页</span></li>
-												<li v-if="showFirst"><a @click="pageCur--">上一页</a></li>
-												<li v-for="index in pageindexs"  :class="{ 'active': pageCur == index}">
-													<a @click="pageClick(index)">{{ index }}</a> </li>
+												<li><span class="pagination-label">第 {{page.pageNum}} 页,共 {{page.pages}} 页</span></li>
+												<li v-if="page.hasPreviousPage"><a @click="pageCur--">上一页</a></li>
+												<li v-for="index in page.pages"  :class="{ 'active': pageNum == index}">
+													<a @click="pageClick(index)">{{ (index+1) }}</a> </li>
 												<li v-if="showLast"><a @click="pageCur++">下一页</a></li>
 											</ul>
 										</div>
@@ -154,9 +154,9 @@
 				<div class="col-sm-4  col-md-3 right-con" >
 						<!-- 购物车 -->
 						<div class="shoppingCart">
-							<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartItem.list.length==0}">
+							<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.list.length==0}">
 								<ul>
-									<li :class="{checked:cartItem.index==index}" v-for="(index,item) in cartItem.list " track-by="$index" @click="checkCartItem($event,index);">
+									<li :class="{checked:cartIndex==index}" v-for="(index,item) in cartData.list " track-by="$index" @click="checkCartData($event,index);">
 										<div class="shoppingCart-item">
 											<p>{{item.title}}</p>
 											<p class="small">
@@ -185,12 +185,12 @@
 									<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
 									<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
 									<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
-									<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qrt');" >qrt</a></td>
+									<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qty');" >QTY</a></td>
 								</tr>
 
 								<tr>
 									<td colspan="3" rowspan="3" class="t1 ">
-										<a class="settle-accounts-btn" @click="settleAccounts()"></a>
+										<a class="settle-accounts-btn" @click="buildBill()"></a>
 									</td>
 									<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
 									<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>

@@ -1,5 +1,5 @@
 <div class="header">
-    <div class="container">
+    <div class="container-fluid ">
         <div class="logo">
             <a class="navbar-brand"><img src="../../images/logo.jpg" alt="Brand"></a>
         </div>
