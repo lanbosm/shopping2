@@ -1,3 +1,4 @@
+<template id="layer-item-Component">
 <div id="layer-item-box" class="item-layer" style="display: none;">
     <!--商品详情	-->
     <div class="item-detail">
@@ -12,7 +13,7 @@
                 <div class="clearfix" v-for="(index,item ) in itemDetail.appSpecifications"  >
                     <p class="span-label">{{item.name}}</p>
                     <a class="btn specs specs-btn"  :class="{selected:itemData.newItem.specs.index==index}"
-                       v-for="(index2,item2) in item.appSpecificationValues" @click="switchSpec(item2.id)" >{{item2.name}}</a>
+                       v-for="(index2,item2) in item.appSpecificationValues" v-on:click="switchSpec(item2.id)" >{{item2.name}}</a>
                 </div>
             </div>
         </div>
@@ -43,3 +44,4 @@
         </div>
     </div>
 </div>
+</template>

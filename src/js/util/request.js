@@ -11,7 +11,8 @@
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-export const HOST = "http://192.168.1.199";
+export const HOST = "http://192.168.1.199"; //http://192.168.1.199
+
 export const API_URLS = {
     products: "/cashier/member/products/"
 };

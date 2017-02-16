@@ -28,9 +28,25 @@ function setCartHeight (){
 
 
 //定义组件
-// Vue.component('layer-item', {
-//     template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
-// });
+Vue.component('layer-item', {
+    template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+    props: {                                       //定义参数类型
+        itemDetail:Object,
+    },
+    methods: {
+        switchSpec: function (pid) {
+            if (pid){
+                this.$dispatch('switchSpec', pid)
+            }
+        },
+        pushCart: function (appProductDetail) {
+            if (appProductDetail){
+                this.$dispatch('pushCart', appProductDetail)
+            }
+        }
+    }
+
+});
 
 
 Vue.component('layer-custom', {
@@ -234,6 +250,55 @@ new Vue({
 
         }
     },
+    //共有方法
+    events:{
+        //选择规格
+        switchSpec:function(sid){
+
+            alert("规格"+sid);
+        },
+        //放入购物车
+        pushCart: function () {
+            layer.closeAll();
+            var vm=this;
+            var item={
+                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
+                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
+                "barCode": "201701230953",
+                "price": "400.00",
+                "id": 49,
+                "giftType": "none",
+                "brandName": "test",
+                "textTagStr": "",
+                "specDesc": "[黄色 ]",
+                "marketable": true,
+                "stock": 12,
+                "allocatedStock": 0,
+                "giftActivity": null,
+                "appGiftActivity": null,
+                "marketPrice": null,
+                "images": [
+                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
+                ],
+                "appSpecificationValues": [
+                    {
+                        "id": 10,
+                        "name": "黄色",
+                        "specificationId": null
+                    }
+                ],
+                "availableStock": 12
+            };
+
+            var item=vm.itemDetail.appProductDetail;
+            item.selectDate=util.getSelectDate(); //自动获取选择日期
+            item.amount=1; //自动获取选择日期
+
+            this.cartItem.list.push(item);
+        },
+
+
+    },
     methods: {
         //获取导航列表
         getNavList:function(){
@@ -275,7 +340,7 @@ new Vue({
             var vm = this;
 
             var apiobj={
-                url:API_URLS.products,
+                url:API_URLS.products,                  //API_URLS.products
                 data:{
                     'pageNum':1,
                     'categoryId':null,
@@ -361,50 +426,6 @@ new Vue({
 
             });
 
-        },
-        //选择规格
-        switchSpec:function(sid){
-
-            alert("规格"+sid);
-        },
-        //放入购物车
-        pushCart: function () {
-            layer.closeAll();
-            var vm=this;
-            var item={
-                "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/158a76d1-17f1-44c7-bdb4-327783e72427.png",
-                "name": "BananaUmbrella蕉下小黑伞遮阳伞琉璃双层晴雨两用防晒晴雨伞折叠",
-                "barCode": "201701230953",
-                "price": "400.00",
-                "id": 49,
-                "giftType": "none",
-                "brandName": "test",
-                "textTagStr": "",
-                "specDesc": "[黄色 ]",
-                "marketable": true,
-                "stock": 12,
-                "allocatedStock": 0,
-                "giftActivity": null,
-                "appGiftActivity": null,
-                "marketPrice": null,
-                "images": [
-                    "http://123.57.231.138:8089/aoup-resource-memory/upload/image/201701/85907254-8c33-4d4f-a740-8b461e64fffc-source.jpg"
-                ],
-                "appSpecificationValues": [
-                    {
-                        "id": 10,
-                        "name": "黄色",
-                        "specificationId": null
-                    }
-                ],
-                "availableStock": 12
-            };
-
-            var item=vm.itemDetail.appProductDetail;
-            item.selectDate=util.getSelectDate(); //自动获取选择日期
-            item.amount=1; //自动获取选择日期
-
-            this.cartItem.list.push(item);
         },
         checkCartItem:function(ev,index){
             this.cartItem.index=index;

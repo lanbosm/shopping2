@@ -39,7 +39,8 @@ webpackJsonp([3],[
 	 */
 	var apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 	
-	var HOST = exports.HOST = "http://192.168.1.199";
+	var HOST = exports.HOST = "http://192.168.1.199"; //http://192.168.1.199
+	
 	var API_URLS = exports.API_URLS = {
 	    products: "/cashier/member/products/"
 	};

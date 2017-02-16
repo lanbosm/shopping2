@@ -2,7 +2,6 @@
     <div role="dialog" class="modal fade custom-layer" id="custom-layer">
         <div class="modal-dialog ">
             <div class="modal-content">
-                {{ myskge }}
                 <div class="modal-header">
                     <h4 class="modal-title">顾客</h4>
                     <a class="close" data-dismiss="modal">&times;</span></a>
