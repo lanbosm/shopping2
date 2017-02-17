@@ -65,6 +65,12 @@
   .bill-custom{
      padding: 30px 15px;
      position: relative;
+    .cur{
+      border-color: @themeColor !important;
+      >span{
+        color: @themeColor !important;
+      }
+    }
     .bill-row;
     .custom-btn{
          font-size: 18px;
@@ -80,20 +86,18 @@
            font-style: normal;
          }
 
-         span{
-           position:absolute;
+         span {
+           position: absolute;
            font-size: 14px;
            display: block;
            text-align: center;
-           top:50px;
-           left:0;
-           right:0;
+           top: 50px;
+           left: 0;
+           right: 0;
            margin: 0 auto;
          }
-
         .bill-custom-btn;
          &:hover span,&.selected span{color:@themeColor; }
-
     }
 
 
@@ -116,7 +120,9 @@
         .scan-btn,.money-btn,.card-btn{
           .bill-left-btn;
         }
-
+        .on {
+          background-color: @green;
+        }
       }
 
       .tab-con{

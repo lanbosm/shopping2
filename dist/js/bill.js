@@ -32,7 +32,8 @@ webpackJsonp([0],[
 	    ready: function ready() {},
 	    data: {
 	        message: '请选择一个付款方式',
-	        index: 0
+	        index: 0,
+	        choice: [true, false, false]
 	    },
 	    computed: {},
 	    methods: {
@@ -44,8 +45,11 @@ webpackJsonp([0],[
 	        },
 	        switchPay: function switchPay(index) {
 	            this.index = index;
+	        },
+	        choiceDis: function choiceDis(index) {
+	            alert(this.choice[index]);
+	            this.choice[index] = !this.choice[index];
 	        }
-	
 	    }
 	}).$mount('#main');
 

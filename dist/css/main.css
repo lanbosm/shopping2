@@ -124,6 +124,8 @@ img{width:100%}
 .bill .bill-header .back-btn:active,.bill .bill-header .ok-btn:active{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .bill .bill-header .back-btn.select,.bill .bill-header .ok-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-custom{padding:30px 15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-custom .cur{border-color:#e84593!important}
+.bill .bill-custom .cur>span{color:#e84593!important}
 .bill .bill-custom .custom-btn{font-size:18px;color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#fff}
 .bill .bill-custom .custom-btn.select,.bill .bill-custom .custom-btn:active,.bill .bill-custom .custom-btn:hover{color:#666;padding:30px;border-color:#e84593;border-radius:5px;background:#fff}
 .bill .bill-custom .balance-btn,.bill .bill-custom .coupon-btn,.bill .bill-custom .point-btn{font-size:18px;color:#666;padding:30px;border-color:#ccc;border-radius:5px;background:#fff}
@@ -140,6 +142,7 @@ img{width:100%}
 .bill .bill-body .left-con .card-btn:active,.bill .bill-body .left-con .money-btn:active,.bill .bill-body .left-con .scan-btn:active{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .bill .bill-body .left-con .card-btn.select,.bill .bill-body .left-con .money-btn.select,.bill .bill-body .left-con .scan-btn.select{color:#fff;padding:30px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .print .col-nn-23,.print .col-nn-30,.print .col-nn-70{padding-left:15px;padding-right:15px;float:left}
+.bill .bill-body .left-con .on{background-color:#6fc89c}
 .bill .bill-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
 .bill .bill-body .tab-con.tab-show{display:block}
 .bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
