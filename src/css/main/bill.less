@@ -6,17 +6,16 @@
 
 .bill-custom-btn(){
   .class-bill-btn(#666666,#ffffff,#cccccc);
-  &:hover{ .class-bill-btn(#666666,#ffffff,@themeColor);}
-  &:active{ .class-bill-btn(#666666,#ffffff,@themeColor);}
-  &.select{.class-bill-btn(#666666,#ffffff,@themeColor);}
+  &:hover{ .class-bill-btn(#666666,#ffffff,#999999);}
+  &:active{ .class-bill-btn(#666666,#ffffff,#999999);}
+  &.select{.class-bill-btn(#666666,#ffffff,#999999);}
 }
 
 
 .bill-header-btn(){
-
-  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 10px);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 10px );}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 10px);}
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
   &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
 }
 
@@ -39,11 +38,9 @@
       background-color:#ffffff;
       border-left: @borderDashedStyle;
       border-right: @borderDashedStyle;
-      width: 970px;
   }
   .btn{
     position:relative;
-
   }
   .bill-header{
     padding: 15px;
@@ -59,6 +56,12 @@
   .bill-custom{
      padding: 30px 15px;
      position: relative;
+    .cur{
+      border-color: @themeColor !important;
+      >span{
+        color: @themeColor !important;
+      }
+    }
     .bill-row;
     .custom-btn{
          font-size: 18px;
@@ -74,8 +77,8 @@
            font-style: normal;
          }
 
-         span{
-           position:absolute;
+         span {
+           position: absolute;
            font-size: 14px;
            display: block;
            text-align: center;
@@ -110,7 +113,9 @@
         .scan-btn,.money-btn,.card-btn{
           .bill-left-btn;
         }
-
+        .on {
+          background-color: @green;
+        }
       }
 
       .tab-con{

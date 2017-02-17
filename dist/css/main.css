@@ -115,7 +115,7 @@ img{width:100%}
 .bill .col-nn-30{width:30%}
 .bill .col-nn-23{width:23%}
 .bill .col-nn-70{width:70%}
-.bill .container{background-color:#fff;border-left:1px dashed #e5e5e5;border-right:1px dashed #e5e5e5;width:970px}
+.bill .container{background-color:#fff;border-left:1px dashed #e5e5e5;border-right:1px dashed #e5e5e5}
 .bill .btn{position:relative}
 .bill .bill-header{padding:15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .bill .bill-header h3{font-size:18px;line-height:30px;margin:0}
@@ -124,12 +124,14 @@ img{width:100%}
 .bill .bill-header .back-btn:active,.bill .bill-header .ok-btn:active{color:#fff;padding:10px 20px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .bill .bill-header .back-btn.select,.bill .bill-header .ok-btn.select{color:#fff;padding:20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-custom{padding:30px 15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
+.bill .bill-custom .cur{border-color:#e84593!important}
+.bill .bill-custom .cur>span{color:#e84593!important}
 .bill .bill-custom .custom-btn{font-size:18px;color:#666;padding:20px;border-color:#ccc;border-radius:5px;background:#fff}
-.bill .bill-custom .custom-btn.select,.bill .bill-custom .custom-btn:active,.bill .bill-custom .custom-btn:hover{color:#666;padding:20px;border-color:#e84593;border-radius:5px;background:#fff}
+.bill .bill-custom .custom-btn.select,.bill .bill-custom .custom-btn:active,.bill .bill-custom .custom-btn:hover{color:#666;padding:20px;border-color:#999;border-radius:5px;background:#fff}
 .bill .bill-custom .balance-btn,.bill .bill-custom .coupon-btn,.bill .bill-custom .point-btn{font-size:18px;color:#666;padding:20px;border-color:#ccc;border-radius:5px;background:#fff}
 .bill .bill-custom .balance-btn b,.bill .bill-custom .coupon-btn b,.bill .bill-custom .point-btn b{position:relative;top:-10px;font-style:normal}
 .bill .bill-custom .balance-btn span,.bill .bill-custom .coupon-btn span,.bill .bill-custom .point-btn span{position:absolute;font-size:14px;display:block;text-align:center;top:40px;left:0;right:0;margin:0 auto}
-.bill .bill-custom .balance-btn.select,.bill .bill-custom .balance-btn:active,.bill .bill-custom .balance-btn:hover,.bill .bill-custom .coupon-btn.select,.bill .bill-custom .coupon-btn:active,.bill .bill-custom .coupon-btn:hover,.bill .bill-custom .point-btn.select,.bill .bill-custom .point-btn:active,.bill .bill-custom .point-btn:hover{color:#666;padding:20px;border-color:#e84593;border-radius:5px;background:#fff}
+.bill .bill-custom .balance-btn.select,.bill .bill-custom .balance-btn:active,.bill .bill-custom .balance-btn:hover,.bill .bill-custom .coupon-btn.select,.bill .bill-custom .coupon-btn:active,.bill .bill-custom .coupon-btn:hover,.bill .bill-custom .point-btn.select,.bill .bill-custom .point-btn:active,.bill .bill-custom .point-btn:hover{color:#666;padding:20px;border-color:#999;border-radius:5px;background:#fff}
 .bill .bill-custom .balance-btn.selected span,.bill .bill-custom .balance-btn:hover span,.bill .bill-custom .coupon-btn.selected span,.bill .bill-custom .coupon-btn:hover span,.bill .bill-custom .point-btn.selected span,.bill .bill-custom .point-btn:hover span{color:#e84593}
 .bill .bill-body{position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .bill .bill-body .left-con{padding-top:15px;padding-bottom:15px;height:850px;border-right:1px dashed #e5e5e5;border-width:2px}
@@ -139,6 +141,7 @@ img{width:100%}
 .bill .bill-body .left-con .card-btn:hover,.bill .bill-body .left-con .money-btn:hover,.bill .bill-body .left-con .scan-btn:hover{color:#fff;padding:20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-body .left-con .card-btn:active,.bill .bill-body .left-con .money-btn:active,.bill .bill-body .left-con .scan-btn:active{color:#fff;padding:20px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .bill .bill-body .left-con .card-btn.select,.bill .bill-body .left-con .money-btn.select,.bill .bill-body .left-con .scan-btn.select{color:#fff;padding:20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.bill .bill-body .left-con .on{background-color:#6fc89c}
 .bill .bill-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
 .bill .bill-body .tab-con.tab-show{display:block}
 .bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
