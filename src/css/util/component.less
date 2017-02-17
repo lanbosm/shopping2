@@ -39,33 +39,13 @@
 	-o-transition:  all 0ms;
 	transition:  all 0ms;
 }
-//.i_Btn{
-//	.i_Btn_base;
-//	&:link,&:visited{
-//		text-decoration: none;color:@btn-color;padding:0 24px;
-//	}
-//	&:hover{
-//		background-color:@btn-active-bg;
-//	}
-//}
-//.i_Btn_light{
-//	background-color:#A69979;
-//}
-//.i_Btn_highlight{
-//	background-color: @btn-active-bg;
-//	&:hover{
-//		background-color: saturate(@btn-active-bg,20%)
-//	}
-//}
-//.i_Text{
-//	.i_Text_base;
-//}
-//.i_Text_dark{
-//	background-color:#504324;color:#8B8167;
-//}
-//.error{color:#ff7200;}
-
-/* 弹层 */
+.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:20px){
+	color: @fontColor;
+	padding: @padding;
+	border-color:@borderColor;
+	border-radius: @radius;
+	background: @bgcolor;
+}
 
 
 /*页脚*/

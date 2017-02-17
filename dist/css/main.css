@@ -143,12 +143,16 @@ img{width:100%}
 .bill .bill-body .tab-con.tab-show{display:block}
 .bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
 .bill .bill-body .tab-con.tab-con-0 .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
+.bill .bill-body .list-box{padding-bottom:30px;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .bill .bill-body .list-box table{border:none}
 .bill .bill-body .list-box table td,.bill .bill-body .list-box table th{width:25%;text-align:center;border:none;font-size:14px;padding:4px;line-height:30px}
-.print .col-nn-23,.print .col-nn-30,.print .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .bill .bill-body .list-box table tbody tr{background:#6fc89c;color:#fff}
 .bill .bill-body .list-box table tbody tr td:nth-child(2) span{background:#fff;color:#6fc89c;width:90%;display:inline-block;border-radius:4px}
 .bill .bill-body .list-box table tbody tr td:nth-child(3){background:#b998cd;color:#fff}
+.bill .bill-body .calc-box{padding-top:15px;padding-bottom:30px}
+.bill .bill-body .calc-box ul{width:320px;background:#eee;border-left:solid 1px #ccc;border-top:solid 1px #ccc;margin:0;padding:0}
+.print .col-nn-23,.print .col-nn-30,.print .col-nn-70{padding-left:15px;padding-right:15px;float:left}
+.bill .bill-body .calc-box ul li{box-sizing:border-box;border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;width:25%;height:80px;line-height:80px;font-size:22px;float:left}
 .print-wrap{background:#f0eeef}
 .print .col-nn-30{width:30%}
 .print .col-nn-23{width:23%}
@@ -177,7 +181,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .panel{border:none}
 .left-con .panel-heading{color:#fff;background:0 0;padding:0;border:none;position:relative}
 .left-con .panel-heading .shuaixuan{padding:10px 20px;margin-top:3px;position:relative;border-bottom-left-radius:0;border-bottom-right-radius:0}
-.left-con .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:15px 25px}
+.left-con .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:15px 25px;min-height:530px}
 .left-con .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
 .left-con .panel-heading .nav-tabs>li>a{width:120px}
 .left-con .item{padding-left:7px;padding-right:8px;margin-bottom:15px}

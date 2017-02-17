@@ -12,11 +12,11 @@ import {request, API_URLS, HOST} from 'util/request.js';
 function setCartHeight (){
 
     setTimeout(function() {
-        var w = window.innerWidth;
+        var w = window.innerHeight;
         var lh = document.querySelector('.left-con').offsetHeight;
         var ch = document.querySelector('.shoppingCalc').offsetHeight;
 
-        if (w >= 768) {
+        if (w >= 768 ) {
             $("#shoppingCart-list").show();
             $("#shoppingCart-list").height(lh - ch -160 + "px");
         } else {
@@ -70,8 +70,7 @@ Vue.component('layer-custom', {
 
 new Vue({
     compiled:function(){
-        setCartHeight();
-        window.onresize=setCartHeight;
+
         this.getNavList();
     },
     ready: function() {
@@ -108,7 +107,7 @@ new Vue({
         },
         //导航数据
         navData:{
-            apiUrl: '/data/navData.json',
+            apiUrl: '../data/navData.json',
             index:0,
             show:false,
             path:[],
@@ -128,7 +127,7 @@ new Vue({
         },
         //会员数据
         customData:{
-            apiUrl: '/data/customData.json',
+            apiUrl: '../data/customData.json',
             index:0,
             list:[],
             newCustom:{},
@@ -299,7 +298,8 @@ new Vue({
                 console.log(res.data);
                 vm.page=res.data.page;
                 vm.itemData=vm.page.list;
-
+                setCartHeight();
+                window.onresize=setCartHeight;
             });
         },
         //获取物品详情

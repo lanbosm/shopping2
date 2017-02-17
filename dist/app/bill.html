@@ -12,9 +12,9 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />
 
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
     <style>
 
     </style>
@@ -23,7 +23,7 @@
     <div class="header">
     <div class="container-fluid ">
         <div class="logo">
-            <a class="navbar-brand"><img src="../../images/logo.jpg" alt="Brand"></a>
+            <a class="navbar-brand"><img src="../images/logo.jpg" alt="Brand"></a>
         </div>
 
         <div class="header-nav navbar " id="header-nav">
@@ -114,19 +114,19 @@
                                 </div>
                                 <div class="col-nn-70 right-con">
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-0 text-center " :class={'tab-show':index==2}>
+                                        <div class="tab-con tab-con-0 text-center " :class={'tab-show':index==0}>
                                                 <h1 class="pay-amount ">￥ 21.50</h1>
                                                 <p class="pay-tips "> {{ message }}</p>
                                                 <child msg="hello!"></child>
                                         </div>
 
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-1 text-center" :class={'tab-show':index==1}>
+                                        <div class="tab-con tab-con-1 text-center" :class={'tab-show':index==2}>
                                                刷卡方式
                                         </div>
 
                                         <!--现金方式-->
-                                        <div class="tab-con tab-con-2 text-center" :class={'tab-show':index==0}>
+                                        <div class="tab-con tab-con-2 text-center" :class={'tab-show':index==1}>
                                                 <div class="list-box ">
                                                     <table class="table">
                                                         <thead>
@@ -145,12 +145,28 @@
                                                                 <td>30</td>
                                                                 <td>现金</td>
                                                             </tr>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="calc-box ">
-                                                        计算器
+                                                       <ul class="clearfix">
+                                                           <li>1</li>
+                                                           <li>2</li>
+                                                           <li>3</li>
+                                                           <li>+10</li>
+                                                           <li>2</li>
+                                                           <li>3</li>
+                                                           <li>4</li>
+                                                           <li>+20</li>
+                                                           <li>7</li>
+                                                           <li>8</li>
+                                                           <li>9</li>
+                                                           <li>+50</li>
+                                                           <li>C</li>
+                                                           <li>0</li>
+                                                           <li>.</li>
+                                                           <li>X</li>
+                                                       </ul>
                                                 </div>
                                         </div>
                                 </div>
@@ -163,11 +179,11 @@
 
     </div>
     <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/vue.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
-    <script type="text/javascript" src="/js/header.js"></script>
-    <script type="text/javascript" src="/js/bill.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/vue.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/header.js"></script>
+    <script type="text/javascript" src="../js/bill.js"></script>
     <script>
 
 

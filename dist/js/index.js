@@ -42,7 +42,10 @@ webpackJsonp([2],[
 	var HOST = exports.HOST = "http://192.168.1.199"; //http://192.168.1.199
 	
 	var API_URLS = exports.API_URLS = {
+	    public_key: "/cashier/common/public_key",
+	    login_out: "/cashier/common/log_out",
 	    products: "/cashier/member/products/"
+	
 	};
 	
 	var request = exports.request = {
@@ -431,7 +434,7 @@ webpackJsonp([2],[
 	function setCartHeight() {
 	
 	    setTimeout(function () {
-	        var w = window.innerWidth;
+	        var w = window.innerHeight;
 	        var lh = document.querySelector('.left-con').offsetHeight;
 	        var ch = document.querySelector('.shoppingCalc').offsetHeight;
 	
@@ -486,8 +489,7 @@ webpackJsonp([2],[
 	
 	new Vue({
 	    compiled: function compiled() {
-	        setCartHeight();
-	        window.onresize = setCartHeight;
+	
 	        this.getNavList();
 	    },
 	    ready: function ready() {
@@ -524,7 +526,7 @@ webpackJsonp([2],[
 	        },
 	        //导航数据
 	        navData: {
-	            apiUrl: '/data/navData.json',
+	            apiUrl: '../data/navData.json',
 	            index: 0,
 	            show: false,
 	            path: [],
@@ -542,7 +544,7 @@ webpackJsonp([2],[
 	        },
 	        //会员数据
 	        customData: {
-	            apiUrl: '/data/customData.json',
+	            apiUrl: '../data/customData.json',
 	            index: 0,
 	            list: [],
 	            newCustom: {},
@@ -712,6 +714,8 @@ webpackJsonp([2],[
 	                console.log(res.data);
 	                vm.page = res.data.page;
 	                vm.itemData = vm.page.list;
+	                setCartHeight();
+	                window.onresize = setCartHeight;
 	            });
 	        },
 	        //获取物品详情

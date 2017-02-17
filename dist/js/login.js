@@ -1,8 +1,8 @@
-webpackJsonp([4],[
+webpackJsonp([3],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(9);
+	module.exports = __webpack_require__(8);
 
 
 /***/ },
@@ -405,8 +405,7 @@ webpackJsonp([4],[
 /***/ },
 /* 6 */,
 /* 7 */,
-/* 8 */,
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -429,8 +428,11 @@ webpackJsonp([4],[
 	
 	new Vue({
 	    compiled: function compiled() {},
-	    ready: function ready() {},
+	    ready: function ready() {
+	        alert(111111);
+	    },
 	    data: {
+	        accessToken: '',
 	        message: '请选择一个付款方式'
 	    },
 	    computed: {},
@@ -449,4 +451,4 @@ webpackJsonp([4],[
 
 /***/ }
 ]);
-//# sourceMappingURL=print.js.map
+//# sourceMappingURL=login.js.map

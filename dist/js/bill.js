@@ -85,7 +85,10 @@ webpackJsonp([0],[
 	var HOST = exports.HOST = "http://192.168.1.199"; //http://192.168.1.199
 	
 	var API_URLS = exports.API_URLS = {
+	    public_key: "/cashier/common/public_key",
+	    login_out: "/cashier/common/log_out",
 	    products: "/cashier/member/products/"
+	
 	};
 	
 	var request = exports.request = {

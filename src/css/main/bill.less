@@ -1,12 +1,4 @@
 
-.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:20px){
-  color: @fontColor;
-  padding: @padding;
-  border-color:@borderColor;
-  border-radius: @radius;
-  background: @bgcolor;
-}
-
 .bill-row(){
   border-bottom: @borderDashedStyle;
   border-width: 2px;
@@ -142,6 +134,7 @@
       }
 
       .list-box{
+          padding-bottom: 30px;
           table{border: none;}
           table td,table th{ width: 25%; text-align: center;border: none; font-size: 14px; padding: 4px; line-height: 30px; }
           table tbody tr{ background: @green; color: #ffffff;}
@@ -150,7 +143,29 @@
 
           table tbody tr td:nth-child(3){ background: #b998cd; color:#ffffff;}
 
+          border-bottom: @borderDashedStyle;
+          border-width: 2px;
       }
+
+      .calc-box{
+          padding-top: 15px;
+          padding-bottom: 30px;
+          ul {
+            width: 320px; background: #eeeeee; border-left: solid 1px #cccccc; border-top: solid 1px #cccccc;
+            margin: 0; padding: 0;
+            li {
+              box-sizing: border-box;
+              border-right: solid 1px #cccccc;
+              border-bottom: solid 1px #cccccc;
+              width: 25%;
+              height: 80px;
+              line-height: 80px;
+              font-size: 22px;
+              float: left;
+            }
+          }
+      }
+
 
   }
 }

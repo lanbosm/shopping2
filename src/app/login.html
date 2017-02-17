@@ -64,9 +64,11 @@
     
 </body>
 <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="../js/vue.min.js"></script>
+<script type="text/javascript" src="../js/login.js"></script>
 <script>
 
     function checkLogin(){
@@ -87,13 +89,7 @@
 
     $(function(){
 
-        $(".login").on("click",function(){
-                if(checkLogin()){
 
-                    alert("login");
-                    location.href="./index.html";
-                }
-        })
 
    });
 
