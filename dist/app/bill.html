@@ -82,17 +82,17 @@
                                 </a>
                             </div>
                              <div class="col-nn-23 ">
-                                 <a class="btn btn-default  coupon-btn btn-block">
+                                 <a class="btn btn-default  coupon-btn btn-block" :class={'cur':choice.fir} @click="choiceDis('fir')">
                                      <b>优惠券</b><span>- ¥  20.00</span>
                                  </a>
                              </div>
                              <div class="col-nn-23">
-                                 <a class="btn btn-default  point-btn btn-block">
+                                 <a class="btn btn-default  point-btn btn-block" :class={'cur':choice.sec} @click="choiceDis('sec')">
                                      <b>100积分</b><span>- ¥  10.00</span>
                                  </a>
                              </div>
                              <div class="col-nn-23">
-                                 <a class="btn btn-default  balance-btn btn-block">
+                                 <a class="btn btn-default  balance-btn btn-block" :class={'cur':choice.thr} @click="choiceDis('thr')">
                                      <b>¥  20余额</b><span>- ¥  20.00</span>
                                  </a>
                              </div>
@@ -102,13 +102,13 @@
                 <div class="container bill-body">
                         <div class="row">
                             <div class="col-nn-30  left-con">
-                                    <a class="btn btn-default scan-btn btn-block" @click="switchPay(0)">
+                                    <a class="btn btn-default scan-btn btn-block" @click="switchPay(0)" :class={'on':index==0}>
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 扫码
                                     </a>
-                                    <a class="btn btn-default  money-btn btn-block"  @click="switchPay(1)">
+                                    <a class="btn btn-default  money-btn btn-block"  @click="switchPay(1)" :class={'on':index==1}>
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 现金
                                     </a>
-                                    <div class="btn btn-default  card-btn btn-block"  @click="switchPay(2)">
+                                    <div class="btn btn-default  card-btn btn-block"  @click="switchPay(2)" :class={'on':index==2}>
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 刷卡
                                     </div>
                                 </div>
