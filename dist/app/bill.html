@@ -82,17 +82,17 @@
                                 </a>
                             </div>
                              <div class="col-nn-23 ">
-                                 <a class="btn btn-default  coupon-btn btn-block" :class={'cur':choice[0]==true} @click="choiceDis(0)">
+                                 <a class="btn btn-default  coupon-btn btn-block" :class={'cur':choice.fir} @click="choiceDis('fir')">
                                      <b>优惠券</b><span>- ¥  20.00</span>
                                  </a>
                              </div>
                              <div class="col-nn-23">
-                                 <a class="btn btn-default  point-btn btn-block" :class={'cur':aaa.check} @click="choiceDis(1)">
+                                 <a class="btn btn-default  point-btn btn-block" :class={'cur':choice.sec} @click="choiceDis('sec')">
                                      <b>100积分</b><span>- ¥  10.00</span>
                                  </a>
                              </div>
                              <div class="col-nn-23">
-                                 <a class="btn btn-default  balance-btn btn-block" :class={'cur':choice[2]==true} @click="choiceDis(2)">
+                                 <a class="btn btn-default  balance-btn btn-block" :class={'cur':choice.thr} @click="choiceDis('thr')">
                                      <b>¥  20余额</b><span>- ¥  20.00</span>
                                  </a>
                              </div>

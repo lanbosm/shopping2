@@ -14,9 +14,9 @@ import {request, API_URLS, HOST} from 'util/request.js';
             message: '请选择一个付款方式',
             index:0,
             choice:{
-                fir:true,
-                sec:false,
-                thr:false
+                'fir':true,
+                'sec':false,
+                'thr':false
             }
         },
         computed:{
@@ -32,9 +32,8 @@ import {request, API_URLS, HOST} from 'util/request.js';
             switchPay:function (index) {
                 this.index = index;
             },
-            choiceDis:function(index){
-                this.choice[index]=!this.choice[index];
-                alert(this.choice[index]);
+            choiceDis:function(param){
+                this.choice[param] = !this.choice[param];
             }
         }
     }).$mount('#main');
