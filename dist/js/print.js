@@ -32,6 +32,7 @@ webpackJsonp([4],[
 	 * Created by Administrator on 2017/2/6.
 	 * wiki http://www.cnblogs.com/keepfool/p/5625583.html
 	 */
+	//wiku http://www.cnblogs.com/dupd/p/5951311.html
 	
 	/**
 	 * 接口签名
@@ -43,6 +44,7 @@ webpackJsonp([4],[
 	
 	var API_URLS = exports.API_URLS = {
 	    public_key: "/cashier/common/public_key",
+	    login: "/cashier/login",
 	    login_out: "/cashier/common/log_out",
 	    products: "/cashier/member/products/"
 	
@@ -60,39 +62,39 @@ webpackJsonp([4],[
 	
 	            if (response.data.code == 20000) {
 	                if (success) {
-	                    success(response);
+	                    success(response.data);
 	                }
 	            } else {
 	                if (error) {
-	                    error(response);
+	                    error(response.data);
 	                }
 	            }
 	        }).catch(function (response) {
 	            //失败
 	            console.log(response);
-	            alert("服务器连接失败");
+	            console.log("服务器连接失败");
 	        });
 	    },
 	    fnPost: function fnPost(vm, apiObj, success, error) {
-	        vm.$http.post(apiObj.url, apiObj.data, {
-	            params: api.data,
+	        vm.$http.post(HOST + apiObj.url, apiObj.data, {
+	            params: apiObj.data,
 	            headers: { 'Content-Type': 'application/json' }
 	        }).then(function (response) {
 	            //成功
 	            console.log(response.data);
 	            if (response.data.code == 20000) {
 	                if (success) {
-	                    success(response);
+	                    success(response.data);
 	                }
 	            } else {
 	                if (error) {
-	                    error(response);
+	                    error(response.data);
 	                }
 	            }
 	        }).catch(function (response) {
 	            //失败
 	            console.log(response);
-	            alert("服务器连接失败");
+	            console.log("服务器连接失败");
 	        });
 	    },
 	    fnPut: function fnPut(vm, apiObj, success, error) {
@@ -103,17 +105,17 @@ webpackJsonp([4],[
 	            console.log(response.data);
 	            if (response.data.code == 20000) {
 	                if (success) {
-	                    success(response);
+	                    success(response.data);
 	                }
 	            } else {
 	                if (error) {
-	                    error(response);
+	                    error(response.data);
 	                }
 	            }
 	        }).catch(function (response) {
 	            //失败
 	            console.log(response);
-	            alert("服务器连接失败");
+	            console.log("服务器连接失败");
 	        });
 	    },
 	    fnDelete: function fnDelete(vm, apiObj, success, error) {
@@ -126,17 +128,17 @@ webpackJsonp([4],[
 	            console.log(response.data);
 	            if (response.data.code == 20000) {
 	                if (success) {
-	                    success(response);
+	                    success(response.data);
 	                }
 	            } else {
 	                if (error) {
-	                    error(response);
+	                    error(response.data);
 	                }
 	            }
 	        }).catch(function (response) {
 	            //失败
 	            console.log(response);
-	            alert("服务器连接失败");
+	            console.log("服务器连接失败");
 	        });
 	    }
 	};
@@ -161,7 +163,7 @@ webpackJsonp([4],[
 	    }
 	
 	    console.log(signature);
-	    console.log("token:" + accessToken);
+	    // console.log("token:" + accessToken);
 	    // document.getElementById("loadBox").style.display = 'block';
 	    next(function (response) {
 	        // if(!response || !response.data){

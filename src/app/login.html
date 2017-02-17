@@ -15,7 +15,11 @@
     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b1as4qcc70hpvi.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css" />
 
-
+    <style>
+        .layui-layer-loading .layui-layer-content {
+            margin: 0 auto;
+        }
+    </style>
 
 </head>
 <body>
@@ -41,15 +45,15 @@
                                         <div class="register-row3 pr">
                                             <div class="register-row3-input">
                                                 <label for="username" class="username"></label>
-                                                 <input   type="text" name="username" id="username" placeholder="请输入账号" />
+                                                 <input   type="text" name="username" id="username" v-model="username" placeholder="请输入账号" />
                                             </div>
                                             <div class="register-row3-input">
                                                 <label for="password" class="password"></label>
-                                                <input type="password" name="username" id="password" placeholder="请输入密码"/>
+                                                <input type="password" name="username" id="password"  v-model="password" v-on:keyup.enter="toLogin();" placeholder="请输入密码"/>
                                             </div>
                                         </div>
                                         <div class="register-row4 pr">
-                                                <a class="btn login">登录</a>
+                                                <a class="btn login" @click="toLogin()">登录</a>
                                                 <p>如登录出现异常，请清理浏览器缓存后再尝试。</p>
                                         </div>
                                         <div class="register-row5 pr">
@@ -68,6 +72,11 @@
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/vue.min.js"></script>
+<script type="text/javascript" src="../../js/jsbn.js"></script>
+<script type="text/javascript" src="../../js/prng4.js"></script>
+<script type="text/javascript" src="../../js/rng.js"></script>
+<script type="text/javascript" src="../../js/rsa.js"></script>
+<script type="text/javascript" src="../../js/base64.js"></script>
 <script type="text/javascript" src="../js/login.js"></script>
 <script>
 

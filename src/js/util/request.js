@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/2/6.
  * wiki http://www.cnblogs.com/keepfool/p/5625583.html
  */
-
+//wiku http://www.cnblogs.com/dupd/p/5951311.html
 
 /**
  * 接口签名
@@ -15,6 +15,7 @@ export const HOST = "http://192.168.1.199"; //http://192.168.1.199
 
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
+    login:"/cashier/login",
     login_out:"/cashier/common/log_out",
     products: "/cashier/member/products/"
 
@@ -33,39 +34,39 @@ export const request = {
 
                 if (response.data.code == 20000) {
                     if (success) {
-                        success(response);
+                        success(response.data);
                     }
                 } else {
                     if (error) {
-                        error(response);
+                        error(response.data);
                     }
                 }
             })
             .catch(function (response) { //失败
                 console.log(response);
-                alert("服务器连接失败");
+                console.log("服务器连接失败");
             })
     },
     fnPost: function (vm, apiObj, success, error) {
-        vm.$http.post(apiObj.url, apiObj.data, {
-            params: api.data,
+        vm.$http.post(HOST+apiObj.url, apiObj.data, {
+            params: apiObj.data,
             headers: {'Content-Type': 'application/json'}
         })
             .then((response) => { //成功
                 console.log(response.data);
                 if (response.data.code == 20000) {
                     if (success) {
-                        success(response);
+                        success(response.data);
                     }
                 } else {
                     if (error) {
-                        error(response);
+                        error(response.data);
                     }
                 }
             })
             .catch(function (response) { //失败
                 console.log(response);
-                alert("服务器连接失败");
+                console.log("服务器连接失败");
             })
     },
     fnPut: function (vm, apiObj, success, error) {
@@ -76,17 +77,17 @@ export const request = {
                 console.log(response.data);
                 if (response.data.code == 20000) {
                     if (success) {
-                        success(response);
+                        success(response.data);
                     }
                 } else {
                     if (error) {
-                        error(response);
+                        error(response.data);
                     }
                 }
             })
             .catch(function (response) { //失败
                 console.log(response);
-                alert("服务器连接失败");
+                console.log("服务器连接失败");
             })
     },
     fnDelete: function (vm, apiObj, success, error) {
@@ -99,17 +100,17 @@ export const request = {
                 console.log(response.data);
                 if (response.data.code == 20000) {
                     if (success) {
-                        success(response);
+                        success(response.data);
                     }
                 } else {
                     if (error) {
-                        error(response);
+                        error(response.data);
                     }
                 }
             })
             .catch(function (response) { //失败
                 console.log(response);
-                alert("服务器连接失败");
+                console.log("服务器连接失败");
             })
     }
 };
@@ -135,7 +136,7 @@ Vue.http.interceptors.push(function (request, next) {
     }
 
     console.log(signature);
-    console.log("token:" + accessToken);
+   // console.log("token:" + accessToken);
     // document.getElementById("loadBox").style.display = 'block';
     next(function (response) {
         // if(!response || !response.data){
