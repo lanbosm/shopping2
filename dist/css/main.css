@@ -184,7 +184,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .item .thumbnail .prcie{font-size:.9rem}
 .left-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:3.2rem;line-height:1.6rem;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .left-con .item .thumbnail .photo{width:100%;height:10rem;line-height:10rem;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem}
+.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url(../images/lazyload.png) 50% 50% no-repeat;background-size:cover}
 .left-con .item .thumbnail .buy-btn{right:0;bottom:8px}
 .left-con .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/

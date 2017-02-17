@@ -13,7 +13,11 @@ import {request, API_URLS, HOST} from 'util/request.js';
         data: {
             message: '请选择一个付款方式',
             index:0,
-            choice:[true,false,false]
+            choice:{
+                fir:true,
+                sec:false,
+                thr:false
+            }
         },
         computed:{
 
@@ -29,8 +33,8 @@ import {request, API_URLS, HOST} from 'util/request.js';
                 this.index = index;
             },
             choiceDis:function(index){
-                alert(this.choice[index]);
                 this.choice[index]=!this.choice[index];
+                alert(this.choice[index]);
             }
         }
     }).$mount('#main');
