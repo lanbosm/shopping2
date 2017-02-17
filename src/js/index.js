@@ -295,8 +295,8 @@ new Vue({
                 data:vm.productParams
             }
             request.fnGet(vm,apiobj,function(res){
-                console.log(res.data);
-                vm.page=res.data.page;
+                console.log(res);
+                vm.page=res.page;
                 vm.itemData=vm.page.list;
                 setCartHeight();
                 window.onresize=setCartHeight;
