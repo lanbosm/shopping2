@@ -1,5 +1,5 @@
 
-.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:30px){
+.class-bill-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:20px){
   color: @fontColor;
   padding: @padding;
   border-color:@borderColor;
@@ -21,9 +21,10 @@
 
 
 .bill-header-btn(){
-  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+
+  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 10px);
+  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 10px );}
+  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 10px);}
   &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
 }
 
@@ -46,6 +47,7 @@
       background-color:#ffffff;
       border-left: @borderDashedStyle;
       border-right: @borderDashedStyle;
+      width: 970px;
   }
   .btn{
     position:relative;
@@ -85,7 +87,7 @@
            font-size: 14px;
            display: block;
            text-align: center;
-           top:50px;
+           top:40px;
            left:0;
            right:0;
            margin: 0 auto;
@@ -136,6 +138,17 @@
         &.tab-con-2{
             // background: red;
         }
+
+      }
+
+      .list-box{
+          table{border: none;}
+          table td,table th{ width: 25%; text-align: center;border: none; font-size: 14px; padding: 4px; line-height: 30px; }
+          table tbody tr{ background: @green; color: #ffffff;}
+
+          table tbody tr td:nth-child(2) span {  background: #ffffff; color:@green;  width: 90%;  display: inline-block; border-radius: 4px; }
+
+          table tbody tr td:nth-child(3){ background: #b998cd; color:#ffffff;}
 
       }
 

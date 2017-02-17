@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="col-nn-70 right-con">
                                         <!--默认无选择-->
-                                        <div class="tab-con tab-con-0 text-center " :class={'tab-show':index==0}>
+                                        <div class="tab-con tab-con-0 text-center " :class={'tab-show':index==2}>
                                                 <h1 class="pay-amount ">￥ 21.50</h1>
                                                 <p class="pay-tips "> {{ message }}</p>
                                                 <child msg="hello!"></child>
@@ -125,9 +125,33 @@
                                                刷卡方式
                                         </div>
 
-                                        <!--默认无选择-->
-                                        <div class="tab-con tab-con-2 text-center" :class={'tab-show':index==2}>
-                                                 现金方式
+                                        <!--现金方式-->
+                                        <div class="tab-con tab-con-2 text-center" :class={'tab-show':index==0}>
+                                                <div class="list-box ">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>价格</th>
+                                                                <th>付款</th>
+                                                                <th>找零</th>
+                                                                <th>支付方式</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="text-left">
+                                                            <tr>
+
+                                                                <td>70</td>
+                                                                <td><span>1000</span></td>
+                                                                <td>30</td>
+                                                                <td>现金</td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="calc-box ">
+                                                        计算器
+                                                </div>
                                         </div>
                                 </div>
                             </div>
