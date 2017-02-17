@@ -29,6 +29,7 @@ function getEntry() {
     return files;
 }
 
+console.log(222);
 module.exports = {
     cache: true,
   //  devtool: "source-map",

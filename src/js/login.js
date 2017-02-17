@@ -2,7 +2,7 @@ import util from 'util/util.js';
 import $ from 'jquery';
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
-// import RSAKey from 'util/rsa.js';
+import RSAKey from 'util/rsa.js';
 
 
 var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -140,7 +140,7 @@ new Vue({
                     var rsaKey = new RSAKey();
 
                     rsaKey.setPublic(b64tohex(vm.publicKey.modulus), b64tohex(vm.publicKey.exponent));
-                    var enPassword = hex2b64(rsaKey.encrypt(vm.passwordValue));
+                    var enPassword = hex2b64(rsaKey.encrypt(vm.password));
                     console.log(enPassword );
                 });
 

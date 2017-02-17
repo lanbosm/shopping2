@@ -4,6 +4,8 @@
 // <body onClick='rng_seed_time();' onKeyPress='rng_seed_time();'>
 // in your main HTML document.
 
+import {prng_newstate,rng_psize} from './prng4.js';
+
 var rng_state;
 var rng_pool;
 var rng_pptr;
@@ -66,3 +68,6 @@ function rng_get_bytes(ba) {
 function SecureRandom() {}
 
 SecureRandom.prototype.nextBytes = rng_get_bytes;
+
+
+export default SecureRandom;

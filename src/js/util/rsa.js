@@ -1,4 +1,6 @@
 import BigInteger from './jsbn.js';
+import SecureRandom from './rng.js';
+
 
 // Depends on jsbn.js and rng.js
 
