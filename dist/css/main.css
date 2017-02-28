@@ -61,8 +61,8 @@ img{width:100%}
 .footer{padding:12px 0 18px;line-height:24px}
 /*!导航栏*/
 .icon{display:inline-block;overflow:hidden;vertical-align:middle;background-repeat:no-repeat!important;background-position:50% 50%!important;width:50px;height:50px}
-.icon-snan{background:url("../images/icon_scan.png?v=1487328021310") no-repeat}
-.icon-exit{background:url("../images/icon_exit.png?v=1487328021310") no-repeat}
+.icon-snan{background:url("../images/icon_scan.png?v=1487328118358") no-repeat}
+.icon-exit{background:url("../images/icon_exit.png?v=1487328118358") no-repeat}
 .header{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#3C3F41}
 .header .logo{float:left}
 .header .header-nav{margin:0;border:none}
@@ -93,7 +93,7 @@ img{width:100%}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
 .shoppingCart .totalprice span{margin-left:20px}
 .shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden}
-.shoppingCart .shoppingCart-list.empty{background:url("../images/empty.jpg?v=1487328021310") 50% 50% no-repeat}
+.shoppingCart .shoppingCart-list.empty{background:url("../images/empty.jpg?v=1487328118358") 50% 50% no-repeat}
 .shoppingCart .shoppingCart-list ul{padding:0;margin:0;list-style:none}
 .shoppingCart .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
 .shoppingCart .shoppingCart-list ul li:after{display:table;clear:both;content:" "}
@@ -110,7 +110,7 @@ img{width:100%}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
 .bill .col-nn-23,.bill .col-nn-30,.bill .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
-.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url("../images/jiezhang.png?v=1487328021310") no-repeat;background-size:100%;display:inline-block}
+.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url("../images/jiezhang.png?v=1487328118358") no-repeat;background-size:100%;display:inline-block}
 .bill-wrap{background:#f0eeef}
 .bill .col-nn-30{width:30%}
 .bill .col-nn-23{width:23%}
@@ -193,7 +193,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .item .thumbnail .prcie{font-size:.9rem}
 .left-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:3.2rem;line-height:1.6rem;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .left-con .item .thumbnail .photo{width:100%;height:10rem;line-height:10rem;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url("../images/lazyload.png?v=1487328021310") 50% 50% no-repeat;background-size:cover}
+.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url("../images/lazyload.png?v=1487328118358") 50% 50% no-repeat;background-size:cover}
 .left-con .item .thumbnail .buy-btn{right:0;bottom:8px}
 .left-con .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/
@@ -240,10 +240,10 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .modal-body{padding:30px}
 .custom-layer .custom-table-header{width:100%;height:auto}
 .custom-layer .custom-table-body{height:auto;margin-top:10px;padding:20px 30px;border:1px dashed #ccc;border-radius:5px}
-.custom-layer .custom-table-body .normal{height:250px;background:url("../images/awyp.jpg?v=1487328021310") 50% 50% no-repeat}
+.custom-layer .custom-table-body .normal{height:250px;background:url("../images/awyp.jpg?v=1487328118358") 50% 50% no-repeat}
 .custom-layer .custom-table-foot{margin-top:10px}
 .custom-layer .custom-table-foot .btn-default{padding:5px 20px}
-.custom-layer .add-custom{width:72px;height:36px;display:inline-block;background:url("../images/add_custom.png?v=1487328021310") no-repeat;cursor:pointer;border-radius:0}
+.custom-layer .add-custom{width:72px;height:36px;display:inline-block;background:url("../images/add_custom.png?v=1487328118358") no-repeat;cursor:pointer;border-radius:0}
 .custom-layer .cancel-custom,.custom-layer .select-ticket{width:72px;height:36px;cursor:pointer;text-align:center;border-radius:20px;display:inline-block}
 .custom-layer .cancel-custom{background:#ccc;color:#fff}
 .custom-layer .searchCustom button{border-top-left-radius:30px!important;border-bottom-left-radius:30px!important}
@@ -252,17 +252,17 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .custom-layer .registration .custom-sex .radio{position:relative;margin:0 20px;display:inline-block}
 .custom-layer .registration .custom-sex .radio>input{position:absolute;top:0;left:0;opacity:0;margin-left:0}
 .custom-layer .registration .custom-sex .radio>label{margin-left:0;padding-left:0;width:90px;height:90px}
-.custom-layer .registration .man-radio.radio label{background:url("../images/man.png?v=1487328021310") 50% 50% no-repeat}
-.custom-layer .registration .women-radio.radio label{background:url("../images/women.png?v=1487328021310") 50% 50% no-repeat}
-.custom-layer .registration .man-radio.radio input:checked+label{background:url("../images/man_check.png?v=1487328021310") 50% 50% no-repeat}
-.custom-layer .registration .women-radio.radio input:checked+label{background:url("../images/women_check.png?v=1487328021310") 50% 50% no-repeat}
+.custom-layer .registration .man-radio.radio label{background:url("../images/man.png?v=1487328118358") 50% 50% no-repeat}
+.custom-layer .registration .women-radio.radio label{background:url("../images/women.png?v=1487328118358") 50% 50% no-repeat}
+.custom-layer .registration .man-radio.radio input:checked+label{background:url("../images/man_check.png?v=1487328118358") 50% 50% no-repeat}
+.custom-layer .registration .women-radio.radio input:checked+label{background:url("../images/women_check.png?v=1487328118358") 50% 50% no-repeat}
 .custom-layer .custom-info{color:#ccc;margin-top:-20px}
 .custom-layer .custom-info .custom-name,.custom-layer .custom-info .custom-phone{margin-top:10px;margin-bottom:10px}
 .custom-layer .custom-info .custom-layer .custom-phone .input-group-addon,.custom-layer .custom-info .custom-name .input-group-addon{background:0 0}
 .custom-layer .custom-info .row{margin-top:20px}
 .custom-layer .custom-info .sex-photo{width:70px;height:70px;display:block;float:left}
-.custom-layer .custom-info .sex-photo.man{background:url("../images/man_check.png?v=1487328021310") 50% 50% no-repeat;background-size:100%}
-.custom-layer .custom-info .sex-photo.women{background:url("../images/women_check.png?v=1487328021310") 50% 50% no-repeat;background-size:100%}
+.custom-layer .custom-info .sex-photo.man{background:url("../images/man_check.png?v=1487328118358") 50% 50% no-repeat;background-size:100%}
+.custom-layer .custom-info .sex-photo.women{background:url("../images/women_check.png?v=1487328118358") 50% 50% no-repeat;background-size:100%}
 .custom-layer .custom-info span{color:#000;margin-left:30px}
 .custom-layer .custom-info .col-xs-12{padding-left:30px}
 .custom-layer .custom-info .nickname{line-height:70px;font-size:1.5rem;display:block;float:left}

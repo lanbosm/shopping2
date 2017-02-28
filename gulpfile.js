@@ -200,7 +200,7 @@ gulp.task('rev:html', function (done) {
             basepath: '@file'
         }))
 
-        .pipe(chsiRev())
+
         .pipe(gulp.dest('dist/app'))
 });
 
