@@ -29,7 +29,7 @@ function getEntry() {
     return files;
 }
 
-console.log(222);
+
 module.exports = {
     cache: true,
   //  devtool: "source-map",
@@ -69,7 +69,8 @@ module.exports = {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
-            util: srcDir + "/js/util"
+            util: srcDir + "/js/util",
+            components : srcDir + "/app/components "
         }
     },
     plugins: [

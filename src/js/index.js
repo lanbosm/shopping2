@@ -2,7 +2,8 @@ import util from 'util/util.js';
 import $ from 'jquery';
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
-
+import Vue from 'vue';
+import custom from 'components/layer-custom.vue'
 // import util from 'ui/model.js';
 
 
@@ -48,25 +49,38 @@ Vue.component('layer-item', {
 
 });
 
+// components:{
+//     app:App
+// },
 
-Vue.component('layer-custom', {
-    template: '#layer-custom-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
-    props: {                                       //定义参数类型
-        customModal: {                             //会员弹层
-            type: Object
-        },
-        customData: {
-            type: Object
-        }
-    },
-    methods:{
-        save: function (customdata) {
-            if (customdata){
-                this.$dispatch('register', customdata)
-            }
-        }
-    }
-});
+
+Vue.component('layer-custom',custom);
+//    template: custom,           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
+//});
+// props: {                                       //定义参数类型
+//     customModal: {                             //会员弹层
+//         type: Object
+//     },
+//     customData: {
+//         type: Object
+//     }
+// },
+// methods:{
+//     save: function (customdata) {
+//         if (customdata){
+//             this.$dispatch('register', customdata)
+//         }
+//     }
+// }
+// Vue.component('modal-dialog', {
+//     template: '#dialog-template',
+//     props: ['show'],
+//     methods: {
+//         close: function() {
+//             this.show = false
+//         }
+//     }
+// })
 
 new Vue({
     compiled:function(){
@@ -88,7 +102,12 @@ new Vue({
             }
         }
     },
+    components:{
+
+    },
     data:{
+        show:false,
+        dialogClass:"info",
         productParams:{
             'pageNum':1,
             'categoryId':null,
@@ -301,6 +320,10 @@ new Vue({
                 setCartHeight();
                 window.onresize=setCartHeight;
             });
+        },
+        closeDialog:function(){
+
+            this.show=true;
         },
         //获取物品详情
         openItem:function(pid){

@@ -45,7 +45,8 @@ module.exports = {
     },
     externals: {
         jquery: "window.jQuery",
-        layer: "window.layer"
+        layer: "window.layer",
+        vue: "window.Vue"
     },
     module: {
         loaders: [
@@ -54,9 +55,18 @@ module.exports = {
                 loader: 'babel',         //es6语法
                 exclude: /node_modules/, // include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
                 query: {
-                    presets: ['es2015'] //也可以通过外部配置文件.babelrc
-
+                    presets: ['es2015'],//也可以通过外部配置文件.babelrc
+                    plugins:['transform-runtime']
                 }
+            },
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader",
+            },
+            {
+                test: /\.less$/,
+                loader: "style-loader!css-loader!less-loader",
+
             },
             {
                 test: /\.(eot|woff|svg|ttf|woff2|gif)(\?|$)/,
@@ -65,8 +75,8 @@ module.exports = {
             {
                 test: /\.(png|jpg)$/,
                 loader: 'url?limit=1200&name=[hash].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
-            }
-
+            },
+            {test:/\.vue$/, loader:'vue'}
         ],
         noParse: []
     },
@@ -74,8 +84,9 @@ module.exports = {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
+            ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
-
+            components : srcDir + "/app/components"
         }
     },
     plugins: [
