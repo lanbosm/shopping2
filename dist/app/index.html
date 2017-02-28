@@ -12,10 +12,10 @@
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
 
-	<link rel="stylesheet" type="text/css" href="../css/swiper.min.css?v=1487328019006"/>
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css?v=1487328019006"/>
-	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_g9towvi5v1da38fr.css?v=1487328019006">
-	<link rel="stylesheet" type="text/css" href="../css/main.css?v=1487328019006" />
+	<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_g9towvi5v1da38fr.css">
+	<link rel="stylesheet" type="text/css" href="../css/main.css" />
 
 
 </head>
@@ -215,6 +215,38 @@
 			</div>
 
 
+				<template id="dialog-template">
+					<div class="dialogs" >
+						<div class="dialog" v-bind:class="{ 'dialog-active': show }">
+							<div class="dialog-content">
+								<div class="close rotate">
+									<span class="iconfont icon-close" @click="close"></span>
+								</div>
+								<slot name="header"></slot>
+								<slot name="body"></slot>
+								<slot name="footer"></slot>
+							</div>
+						</div>
+						<div class="dialog-overlay"></div>
+					</div>
+				</template>
+
+				<modal-dialog v-bind:show.sync="show" :class="dialogClass" >
+
+					<header class="dialog-header" slot="header">
+						<h1 class="dialog-title">提示信息</h1>
+					</header>
+
+					<div class="dialog-body" slot="body">
+						<p>你想在对话框中放什么内容都可以！</p>
+						<p>你可以放一段文字，也可以放一些表单，或者是一些图片。</p>
+					</div>
+
+					<footer class="dialog-footer" slot="footer">
+						<button class="btn" @click="closeDialog">关闭</button>
+					</footer>
+				</modal-dialog>
+
 				<!--  layer-item -->
 				<template id="layer-item-Component">
 <div id="layer-item-box" class="item-layer" style="display: none;">
@@ -387,16 +419,16 @@
 	</div>
 
 
-<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js?v=1487328019006"></script>
-<script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js?v=1487328019006"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js?v=1487328019006"></script>
-<script type="text/javascript" src="../js/swiper.min.js?v=1487328019006"></script>
-<script type="text/javascript" src="../js/vue.min.js?v=1487328019006"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/swiper.min.js"></script>
+<script type="text/javascript" src="../js/vue.min.js"></script>
 
-<script type="text/javascript" src="../js/common.js?v=1487328019006"></script>
+<script type="text/javascript" src="../js/common.js"></script>
 
-<script type="text/javascript" src="../js/header.js?v=1487328019006"></script>
-<script type="text/javascript" src="../js/index.js?v=1487328019006"></script>
+<script type="text/javascript" src="../js/header.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
 
 
 <script type="text/javascript">

@@ -2,7 +2,8 @@ import util from 'util/util.js';
 import $ from 'jquery';
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
-
+import Vue from 'vue';
+import App from './App.vue'
 // import util from 'ui/model.js';
 
 
@@ -68,6 +69,16 @@ Vue.component('layer-custom', {
     }
 });
 
+Vue.component('modal-dialog', {
+    template: '#dialog-template',
+    props: ['show'],
+    methods: {
+        close: function() {
+            this.show = false
+        }
+    }
+})
+
 new Vue({
     compiled:function(){
 
@@ -88,7 +99,12 @@ new Vue({
             }
         }
     },
+    components:{
+        app:App
+    },
     data:{
+        show:false,
+        dialogClass:"info",
         productParams:{
             'pageNum':1,
             'categoryId':null,
@@ -301,6 +317,10 @@ new Vue({
                 setCartHeight();
                 window.onresize=setCartHeight;
             });
+        },
+        closeDialog:function(){
+
+            this.show=true;
         },
         //获取物品详情
         openItem:function(pid){

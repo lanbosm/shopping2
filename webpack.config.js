@@ -45,16 +45,19 @@ module.exports = {
     },
     externals: {
         jquery: "window.jQuery",
-        layer: "window.layer"
+        layer: "window.layer",
+        vue: "window.Vue"
     },
     module: {
         loaders: [
+            {test:/\.vue$/, loader:'vue'},
             {
                 test: /\.js?$/,                   
                 loader: 'babel',         //es6语法
                 exclude: /node_modules/, // include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
                 query: {
-                    presets: ['es2015'] //也可以通过外部配置文件.babelrc
+                    presets: ['es2015'],//也可以通过外部配置文件.babelrc
+                    plugins:['transform-runtime']
                 }
             },
             {
@@ -73,8 +76,8 @@ module.exports = {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
+            ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
-
         }
     },
     plugins: [
