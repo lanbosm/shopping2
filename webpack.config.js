@@ -6,7 +6,7 @@ var fs = require('fs');
 
 //var CleanWebpackPlugin = require('clean-webpack-plugin');// 删除文件
 //var CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝文件
-//var ExtractTextPlugin = require("extract-text-webpack-plugin");//提取文件 如.css
+var ExtractTextPlugin = require("extract-text-webpack-plugin");//提取文件 如.css
 
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;  //压缩文件
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
@@ -94,7 +94,8 @@ module.exports = {
         new CommonsChunkPlugin({
             name:'common',
             filename: "common.js"
-        })
+        }),
+
 
         //加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
         // new webpack.optimize.uglifyJsPlugin({

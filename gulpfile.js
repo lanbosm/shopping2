@@ -132,17 +132,6 @@ gulp.task('fileinclude', function (done) {
 
 //引用webpack对js进行操作 js处理
 gulp.task("build-js", function(done) {
-    //  console.log("正在打包Js..."); //官方写法版
-    // var devconfig = Object.create(webpackConfig);
-    // var devCompiler = webpack(devconfig);  //在编译一次？
-    // devCompiler.run(function(err, stats) {
-    //     if(err) throw new gutil.PluginError("webpack:build-js", err);
-    //     gutil.log("[webpack:build-js]", stats.toString({
-    //         colors: true
-    //     }));
-    //     console.log("打包完成...");
-    //     done();
-    // });
 
     console.log("正在打包Js...");   //插件版
     return   gulp.src('src/js/main.js')  //这里src只是装样子 如果想有效请使用vinyl-named
@@ -158,6 +147,10 @@ gulp.task("build-js", function(done) {
             console.log("打包完成...");
         });
 });
+
+
+
+
 
 //准备发布的js打包
 gulp.task('rev:js', function (done) {
@@ -299,6 +292,39 @@ gulp.task('webpack-dev',function(){
 });
 
 
+//webpack服务器
+gulp.task('webpack-prod',function(){
+    var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
+    var WebpackDevServer = require("webpack-dev-server");
+    //new HotMiddleware(compiler);                   //中间件 还没添加
+    var config = Object.create(webpackConfigDev);
+    config.devtool = "eval";
+    config.debug = false;
+
+
+    //tips
+    //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
+    //官网的解释是webpack-dev-server没有权限读取webpack的配置
+
+    var compiler = webpack(config);
+    var server = new WebpackDevServer(compiler, {
+        contentBase: "./",
+        publicPath: "/dist/js/",
+        inline:true,
+        hot: true,
+        compress: false,
+        stats: { colors: true }
+    });
+    server.listen( host.port, "localhost", function(err) {
+        if(err) throw new gutil.PluginError("webpack-dev-server", err);
+        // Server listening
+        // gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
+        console.log("listen successful , port at 3000");
+    });
+
+    // server.close();
+});
+
 
 
 gulp.task('default',function(){
@@ -332,3 +358,10 @@ gulp.task('webpackdev', ['clean'],function(){
      gulp.start('copy','fileinclude','lessmin','webpack-dev');
 });
 
+
+//webpack服务器开发 适合 js编译
+gulp.task('webpackprod', ['clean'],function(){
+    gulp.start('copy','rev:html','rev:css','rev:js',function(){
+        console.log(2222222);
+    });
+});

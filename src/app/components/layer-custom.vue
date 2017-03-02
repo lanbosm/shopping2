@@ -1,5 +1,4 @@
 <template>
-    <!--id="layer-custom-Component"-->
     <div role="dialog" class="modal fade custom-layer" id="custom-layer">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -111,13 +110,15 @@
     </div>
 </template>
 <style scoped rel=”stylesheet/less”  lang="less">
-    @import "skin";
+    @import "../../css/util/skin.less";
+
+    @imgPath:"../../images";
 
     /*!custom modale*/
     .custom-layer {
         border-bottom:solid 3px #93d6b3;padding:10px 30px;
-    .modal-header{
-    .close{margin-top:-20px}
+        .modal-header{
+        .close{margin-top:-20px}
     }
     .modal-body {
         padding: 30px 30px;
@@ -125,10 +126,10 @@
 
     .custom-table-header{width:100%;height:auto}
     .custom-table-body{height:auto;margin-top:10px;padding:20px 30px;border:1px dashed #ccc;border-radius:5px}
-    .custom-table-body .normal{height:250px;background:url('/image/awyp.jpg') 50% 50% no-repeat}
+    .custom-table-body .normal{height:250px;background:url('@{imgPath}/awyp.jpg') 50% 50% no-repeat}
     .custom-table-foot{margin-top:10px}
     .custom-table-foot .btn-default{padding:5px 20px}
-    .add-custom{width:72px;height:36px;display:inline-block;background:url('/image/add_custom.png') no-repeat;cursor:pointer;border-radius:0}
+    .add-custom{width:72px;height:36px;display:inline-block;background:url('@{imgPath}/add_custom.png') no-repeat;cursor:pointer;border-radius:0}
     .cancel-custom,.select-ticket{width:72px;height:36px;cursor:pointer;text-align:center;border-radius:20px;display:inline-block}
     .cancel-custom{background:#ccc;color:#fff}
     .searchCustom button{border-top-left-radius:30px!important;border-bottom-left-radius:30px!important}
@@ -139,10 +140,10 @@
     .custom-sex .radio{position:relative;margin:0 20px;display:inline-block}
     .custom-sex .radio>input{position:absolute;top:0;left:0;opacity:0;margin-left:0}
     .custom-sex .radio>label{margin-left:0;padding-left:0;width:90px;height:90px}
-    .man-radio.radio label{background:url('/image/man.png') 50% 50% no-repeat}
-    .women-radio.radio label{background:url('/image/women.png') 50% 50% no-repeat}
-    .man-radio.radio input:checked+label{background:url('/image/man_check.png') 50% 50% no-repeat}
-    .women-radio.radio input:checked+label{background:url('/image/women_check.png') 50% 50% no-repeat}
+    .man-radio.radio label{background:url('@{imgPath}/man.png') 50% 50% no-repeat}
+    .women-radio.radio label{background:url('@{imgPath}/women.png') 50% 50% no-repeat}
+    .man-radio.radio input:checked+label{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat}
+    .women-radio.radio input:checked+label{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat}
     }
     .custom-info{
     .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
@@ -150,8 +151,8 @@
     color:#ccc;margin-top:-20px;
     .row{margin-top:20px}
     .sex-photo{width:70px;height:70px;display:block;float:left}
-    .sex-photo.man{background:url('/image/man_check.png') 50% 50% no-repeat;background-size:100%}
-    .sex-photo.women{background:url('/image/women_check.png') 50% 50% no-repeat;background-size:100%}
+    .sex-photo.man{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat;background-size:100%}
+    .sex-photo.women{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat;background-size:100%}
     span{color:#000;margin-left:30px}
     .col-xs-12{padding-left:30px}
     .nickname{line-height:70px;font-size:1.5rem;display:block;float:left}
@@ -183,7 +184,7 @@
     export default{
         data(){
             return {
-                msg:'welcome Vue ^_^'
+                msg:''
             }
         },
         props: {                                       //定义参数类型
