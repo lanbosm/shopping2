@@ -3,7 +3,8 @@ import $ from 'jquery';
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
-import custom from 'components/layer-custom.vue'
+import appHeader from 'components/header.vue'
+import layerCustom from 'components/layer-custom.vue'
 // import util from 'ui/model.js';
 
 
@@ -53,34 +54,10 @@ Vue.component('layer-item', {
 //     app:App
 // },
 
+Vue.component('app-header',appHeader);
 
-Vue.component('layer-custom',custom);
-//    template: custom,           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
-//});
-// props: {                                       //定义参数类型
-//     customModal: {                             //会员弹层
-//         type: Object
-//     },
-//     customData: {
-//         type: Object
-//     }
-// },
-// methods:{
-//     save: function (customdata) {
-//         if (customdata){
-//             this.$dispatch('register', customdata)
-//         }
-//     }
-// }
-// Vue.component('modal-dialog', {
-//     template: '#dialog-template',
-//     props: ['show'],
-//     methods: {
-//         close: function() {
-//             this.show = false
-//         }
-//     }
-// })
+Vue.component('layer-custom',layerCustom);
+
 
 new Vue({
     compiled:function(){
@@ -90,8 +67,11 @@ new Vue({
     ready: function() {
 
         var cid=util.getUrlHash("category");
+
+
         this.getItemList(cid);
         this.getCustomList();
+        this.getLocalData();
     },
     filters: {
         sex: function(value){
@@ -106,6 +86,16 @@ new Vue({
 
     },
     data:{
+        vana:[],
+        //头部信息
+        headerData:{
+            index:0,
+            staff:"里可行",
+            list:[
+
+            ]
+        },
+        luna:"sss",
         show:false,
         dialogClass:"info",
         productParams:{
@@ -275,6 +265,12 @@ new Vue({
 
     },
     methods: {
+        //获取本地数据
+        getLocalData() {
+            this.headerData=util.pullLocal("queue");
+            console.log(this.headerData);
+            //console.log(111);
+        },
         //获取导航列表
         getNavList:function(){
             var vm = this;
@@ -320,6 +316,11 @@ new Vue({
                 setCartHeight();
                 window.onresize=setCartHeight;
             });
+        },
+        openNaNa:function(){
+            alert("nana");
+            console.log(this.luna);
+
         },
         closeDialog:function(){
 

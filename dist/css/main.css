@@ -61,8 +61,8 @@ img{width:100%}
 .footer{padding:12px 0 18px;line-height:24px}
 /*!导航栏*/
 .icon{display:inline-block;overflow:hidden;vertical-align:middle;background-repeat:no-repeat!important;background-position:50% 50%!important;width:50px;height:50px}
-.icon-snan{background:url("../images/icon_scan.png?v=1488476306425") no-repeat}
-.icon-exit{background:url("../images/icon_exit.png?v=1488476306425") no-repeat}
+.icon-snan{background:url(../images/icon_scan.png) no-repeat}
+.icon-exit{background:url(../images/icon_exit.png) no-repeat}
 .header{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#3C3F41}
 .header .logo{float:left}
 .header .header-nav{margin:0;border:none}
@@ -93,7 +93,7 @@ img{width:100%}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
 .shoppingCart .totalprice span{margin-left:20px}
 .shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden}
-.shoppingCart .shoppingCart-list.empty{background:url("../images/empty.jpg?v=1488476306425") 50% 50% no-repeat}
+.shoppingCart .shoppingCart-list.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
 .shoppingCart .shoppingCart-list ul{padding:0;margin:0;list-style:none}
 .shoppingCart .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
 .shoppingCart .shoppingCart-list ul li:after{display:table;clear:both;content:" "}
@@ -110,7 +110,7 @@ img{width:100%}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
 .bill .col-nn-23,.bill .col-nn-30,.bill .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
-.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url("../images/jiezhang.png?v=1488476306425") no-repeat;background-size:100%;display:inline-block}
+.shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
 .bill-wrap{background:#f0eeef}
 .bill .col-nn-30{width:30%}
 .bill .col-nn-23{width:23%}
@@ -193,7 +193,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .item .thumbnail .prcie{font-size:.9rem}
 .left-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:3.2rem;line-height:1.6rem;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .left-con .item .thumbnail .photo{width:100%;height:10rem;line-height:10rem;font-size:0;text-align:center;overflow:hidden;cursor:pointer}
-.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url("../images/lazyload.png?v=1488476306425") 50% 50% no-repeat;background-size:cover}
+.left-con .item .thumbnail .photo>img{display:inline;max-width:10rem;max-height:10rem;background:url(../images/lazyload.png) 50% 50% no-repeat;background-size:cover}
 .left-con .item .thumbnail .buy-btn{right:0;bottom:8px}
 .left-con .item .thumbnail .list-btn{right:0;top:8px}
 /*!right-con*/

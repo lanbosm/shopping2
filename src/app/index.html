@@ -21,11 +21,10 @@
 </head>
 
 <body>
-	@@include('./components/header.inc')
-
 	<div class="wrap">
 		<!-- container -->
 		<div class="main" id="main">
+			<app-header></app-header>
 			<div class="container-fluid index">
 			 		<div class="row" >
 						<div class="col-sm-8  col-md-9 left-con">
@@ -36,9 +35,9 @@
 							</div>
 							<div class="left-con-content">
 								<div class="item-box panel panel-primary">
-									<div class="panel-heading">
+									<div class="panel-heading" @click="openNaNa">
 										<!--分类航条-->
-										<div class="row" v-show="navData.show">
+										<div class="row" v-show="navData.show" >
 											<div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">
 												<div class="menu">
 													<a href="./#category={{nav.id}}" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>

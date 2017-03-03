@@ -253,7 +253,7 @@ gulp.task('web', function() {
 
 
 //webpack服务器 万物皆模块（js） 没配好 css html 要手动刷新
-gulp.task('webpack-dev',function(){
+gulp.task('webpackDevServer',function(){
     var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
     var WebpackDevServer = require("webpack-dev-server");
     //new HotMiddleware(compiler);                   //中间件 还没添加
@@ -267,40 +267,6 @@ gulp.task('webpack-dev',function(){
     }
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
-
-    //tips
-    //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
-    //官网的解释是webpack-dev-server没有权限读取webpack的配置
-
-    var compiler = webpack(config);
-    var server = new WebpackDevServer(compiler, {
-        contentBase: "./",
-        publicPath: "/dist/js/",
-        inline:true,
-        hot: true,
-        compress: false,
-        stats: { colors: true }
-    });
-    server.listen( host.port, "localhost", function(err) {
-        if(err) throw new gutil.PluginError("webpack-dev-server", err);
-        // Server listening
-        // gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
-        console.log("listen successful , port at 3000");
-    });
-
-    // server.close();
-});
-
-
-//webpack服务器
-gulp.task('webpack-prod',function(){
-    var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
-    var WebpackDevServer = require("webpack-dev-server");
-    //new HotMiddleware(compiler);                   //中间件 还没添加
-    var config = Object.create(webpackConfigDev);
-    config.devtool = "eval";
-    config.debug = false;
-
 
     //tips
     //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
@@ -354,14 +320,14 @@ gulp.task('pro', ['clean'],function(){
 
 
 //webpack服务器开发 适合 js编译
-gulp.task('webpackdev', ['clean'],function(){
-     gulp.start('copy','fileinclude','lessmin','webpack-dev');
+gulp.task('webpack-dev', ['clean'],function(){
+     gulp.start('copy','fileinclude','lessmin','webpackDevServer');
 });
 
 
 //webpack服务器开发 适合 js编译
-gulp.task('webpackprod', ['clean'],function(){
+gulp.task('webpack-prod', ['clean'],function(){
     gulp.start('copy','rev:html','rev:css','rev:js',function(){
-        console.log(2222222);
+        console.log("打包好了");
     });
 });
