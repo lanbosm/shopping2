@@ -4,9 +4,11 @@ import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
 import appHeader from 'components/header.vue'
-import layerCustom from 'components/layer-custom.vue'
+import layerCustom from 'components/layer-custom.vue';
 // import util from 'ui/model.js';
 
+require('../css/main/aaa.less');
+require('../css/main/bbb.less');
 
 /**
  * [设置购物车的高]
@@ -71,7 +73,8 @@ new Vue({
 
         this.getItemList(cid);
         this.getCustomList();
-        this.getLocalData();
+       // this.getLocalData();
+
     },
     filters: {
         sex: function(value){
@@ -86,7 +89,6 @@ new Vue({
 
     },
     data:{
-        vana:[],
         //头部信息
         headerData:{
             index:0,
@@ -95,7 +97,6 @@ new Vue({
 
             ]
         },
-        luna:"sss",
         show:false,
         dialogClass:"info",
         productParams:{

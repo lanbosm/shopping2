@@ -14,6 +14,11 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 var ROOT_PATH = path.resolve(__dirname);
 var srcDir = path.resolve(process.cwd(), 'src');
 
+
+
+let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+
 //获取多页面的每个入口文件，用于配置中的entry
 function getEntry() {
     var jsPath = path.resolve(srcDir, 'js');
@@ -58,11 +63,12 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader",
+                loader: ExtractTextPlugin.extract("css-loader")
+                //loader: "style-loader!css-loader",
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!less-loader",
+                loader: ExtractTextPlugin.extract('css-loader!less-loader'),
 
             },
             {
@@ -73,17 +79,14 @@ module.exports = {
                 test: /\.(png|jpg)$/,
                 loader: 'url?limit=1200&name=/dist/images/[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
             },
-            {test:/\.vue$/, loader:'vue'}
+            {
+                test:/\.vue$/,
+                loader:'vue'
 
-        ],
-        vue: {
-            loaders: {
-                less: ExtractTextPlugin.extract('vue-style-loader', 'css!less')
             }
-        },
+        ],
         noParse: []
     },
-
     resolve: {
         alias: {
             jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
@@ -99,9 +102,10 @@ module.exports = {
             name:'common',
             filename: "common.js",
         }),
-        new ExtractTextPlugin("sss.css", {allChunks: true}),
+        extractCss,
+        extractLess,
        // 加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
-        new uglifyJsPlugin({
+        new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
             }

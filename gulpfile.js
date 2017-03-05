@@ -166,9 +166,6 @@ gulp.task('rev:js', function (done) {
 //准备发布的css打包
 gulp.task('rev:css', function (done) {
 
-    //也许还有其他的外部css?
-    gulp.src(['src/css/*.css'])
-        .pipe(gulp.dest('dist/css/'));
 
     return gulp.src(['src/css/*.less'])  //第一层 是主入口
         .pipe(less())

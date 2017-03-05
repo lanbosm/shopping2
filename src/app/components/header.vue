@@ -50,8 +50,8 @@
         },
         ready(){
             //数据传递
-            this.listData= this.$parent.headerData;
-            console.log(util);
+            this.listData= util.pullLocal("queue");
+            console.log(this.listData);
         },
         data(){
             return {

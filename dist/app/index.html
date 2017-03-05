@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_g9towvi5v1da38fr.css">
 	<link rel="stylesheet" type="text/css" href="../css/main.css" />
-
+	<link rel="stylesheet" type="text/css" href="../css/index.css" />
 
 </head>
 
@@ -24,7 +24,7 @@
 	<div class="wrap">
 		<!-- container -->
 		<div class="main" id="main">
-			<app-header :header-Data="vana"></app-header>
+			<app-header></app-header>
 			<div class="container-fluid index">
 			 		<div class="row" >
 						<div class="col-sm-8  col-md-9 left-con">
@@ -40,7 +40,6 @@
 										<div class="row" v-show="navData.show" >
 											<div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">
 												<div class="menu">
-													{{luna}}
 													<a href="./#category={{nav.id}}" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>
 												</div>
 												<div class="sub-menu" >

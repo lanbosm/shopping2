@@ -15,6 +15,9 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 var ROOT_PATH = path.resolve(__dirname);
 var srcDir = path.resolve(process.cwd(), 'src');
 
+let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+
 //获取多页面的每个入口文件，用于配置中的entry
 function getEntry() {
     var jsPath = path.resolve(srcDir, 'js');
@@ -61,12 +64,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader",
+                loader: ExtractTextPlugin.extract("css-loader")
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!less-loader",
-
+                loader: ExtractTextPlugin.extract('css-loader!less-loader'),
             },
             {
                 test: /\.(eot|woff|svg|ttf|woff2|gif)(\?|$)/,
@@ -96,13 +98,8 @@ module.exports = {
             filename: "common.js"
         }),
 
-
-        //加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
-        // new webpack.optimize.uglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
+        extractCss,
+        extractLess
 
         //清理    因为gulp也有类似功能 注销
         //new CleanWebpackPlugin(['dist'])
