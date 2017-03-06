@@ -37,7 +37,7 @@
 								<div class="item-box panel panel-primary">
 									<div class="panel-heading" @click="openNaNa">
 										<!--分类航条-->
-										<div class="row" v-show="navData.show" >
+		`								<div class="row" v-show="navData.show" >
 											<div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">
 												<div class="menu">
 													<a href="./#category={{nav.id}}" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>
@@ -116,29 +116,7 @@
 						</div>
 				<div class="col-sm-4  col-md-3 right-con" >
 						<!-- 购物车 -->
-						<div class="shoppingCart">
-							<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.list.length==0}">
-								<ul>
-									<li :class="{checked:cartData.index==index}" v-for="(index,item) in cartData.list " track-by="$index" @click="checkcartData($event,index);">
-										<div class="shoppingCart-item">
-											<p>{{item.title}}</p>
-											<p class="small">
-												<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
-											</p>
-											<p class="small">
-												<span>数量:{{item.amount}} * 单价 {{item.price|currency '¥' 2 }}</span><span></span>
-											</p>
-											<p class="total">
-												<span>{{item.amount*item.price |currency '¥' 2 }}</span>
-											</p>
-										</div>
-									</li>
-								</ul>
-							</div>
-							<div class="totalprice">
-								总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
-							</div>
-						</div>
+						<cart ></cart>
 						<!-- 计算器 -->
 						<div class="shoppingCalc">
 							<table class="table table-bordered" >

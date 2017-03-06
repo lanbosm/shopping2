@@ -4,30 +4,9 @@ import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
 import appHeader from 'components/header.vue'
+import appCart from 'components/cart.vue';
 import layerCustom from 'components/layer-custom.vue';
 // import util from 'ui/model.js';
-
-require('../css/main/aaa.less');
-require('../css/main/bbb.less');
-
-/**
- * [设置购物车的高]
- */
-function setCartHeight (){
-
-    setTimeout(function() {
-        var w = window.innerHeight;
-        var lh = document.querySelector('.left-con').offsetHeight;
-        var ch = document.querySelector('.shoppingCalc').offsetHeight;
-
-        if (w >= 768 ) {
-            $("#shoppingCart-list").show();
-            $("#shoppingCart-list").height(lh - ch -160 + "px");
-        } else {
-            $("#shoppingCart-list").hide();
-        }
-    },300);
-}
 
 
 
@@ -55,11 +34,12 @@ Vue.component('layer-item', {
 // components:{
 //     app:App
 // },
-
+//定义头组件
 Vue.component('app-header',appHeader);
-
+//定义顾客组件
 Vue.component('layer-custom',layerCustom);
-
+//定义购物车组件
+Vue.component('cart',appCart);
 
 new Vue({
     compiled:function(){
@@ -310,16 +290,18 @@ new Vue({
                 url:API_URLS.products,                  //API_URLS.products
                 data:vm.productParams
             }
+
+
+            apiobj.url="/dist/data/products.json";
             request.fnGet(vm,apiobj,function(res){
                 console.log(res);
                 vm.page=res.page;
                 vm.itemData=vm.page.list;
-                setCartHeight();
-                window.onresize=setCartHeight;
+
             });
         },
         openNaNa:function(){
-            alert("nana");
+            //alert("nana");
             console.log(this.luna);
 
         },

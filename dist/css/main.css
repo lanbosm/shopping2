@@ -89,10 +89,11 @@ img{width:100%}
 .header .header-nav .menu-box .contact-btn.error:after{content:" 扫描连接失败"}
 .header .header-nav .menu-box .exit-btn{display:inline-block;margin-left:20px;color:#999}
 .header .header-nav .menu-box .exit-btn:hover{text-decoration:none}
-.shoppingCart{width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:20px}
+/*!购物车*/
+.shoppingCart{width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:0}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
 .shoppingCart .totalprice span{margin-left:20px}
-.shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden}
+.shoppingCart .shoppingCart-list{position:relative;overflow-x:hidden;height:470px}
 .shoppingCart .shoppingCart-list.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
 .shoppingCart .shoppingCart-list ul{padding:0;margin:0;list-style:none}
 .shoppingCart .shoppingCart-list ul li{height:auto;clear:both;margin-bottom:20px;padding:10px 15px}
@@ -105,6 +106,7 @@ img{width:100%}
 .shoppingCart .shoppingCart-list .shoppingCart-item p.small span:first-child{float:left}
 .shoppingCart .shoppingCart-list .shoppingCart-item p.small span:last-child{float:right}
 .shoppingCart .shoppingCart-list .shoppingCart-item p.total{font-weight:700;color:#666;text-align:right}
+/*!计算器*/
 .shoppingCalc{width:100%}
 .shoppingCalc .table .t1{width:40%;cursor:pointer}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}

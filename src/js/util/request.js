@@ -11,7 +11,7 @@
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-export const HOST = "http://192.168.1.199"; //http://192.168.1.199
+export const HOST = "http://localhost:3000//"; //http://192.168.1.199:82/
 
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
