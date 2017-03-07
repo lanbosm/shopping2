@@ -118,40 +118,41 @@
 						<!-- 购物车 -->
 						<cart ></cart>
 						<!-- 计算器 -->
-						<div class="shoppingCalc">
-							<table class="table table-bordered" >
-								<tbody >
-								<tr >
-									<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>
-									<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
-									<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
-									<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
-									<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qty');" >QTY</a></td>
-								</tr>
+						<calc @trigger-build-order="buildOrder"></calc>
+						<!--<div class="shoppingCalc">-->
+							<!--<table class="table table-bordered" >-->
+								<!--<tbody >-->
+								<!--<tr >-->
+									<!--<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>-->
+									<!--<td rowspan="3"><a class="num-btn btn-lightgreen" style="line-height: 120px;" @click="calc('qty');" >QTY</a></td>-->
+								<!--</tr>-->
 
-								<tr>
-									<td colspan="3" rowspan="3" class="t1 ">
-										<a class="settle-accounts-btn" @click="buildBill()"></a>
-									</td>
-									<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
-									<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>
-									<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>
-								</tr>
-								<tr>
-									<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>
-									<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>
-									<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>
-								</tr>
-								<tr>
+								<!--<tr>-->
+									<!--<td colspan="3" rowspan="3" class="t1 ">-->
+										<!--<a class="settle-accounts-btn" @click="buildBill()"></a>-->
+									<!--</td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>-->
+									<!--<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>-->
+								<!--</tr>-->
+								<!--<tr>-->
+									<!--<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>-->
+									<!--<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>-->
+									<!--<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>-->
+								<!--</tr>-->
+								<!--<tr>-->
 
-									<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>
+									<!--<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>-->
 
-									<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>
-								</tr>
-								</tbody>
-							</table>
+									<!--<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>-->
+								<!--</tr>-->
+								<!--</tbody>-->
+							<!--</table>-->
 
-						</div>
+						<!--</div>-->
 			 		</div>
 			</div>
 

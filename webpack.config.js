@@ -88,7 +88,7 @@ module.exports = {
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
-            components : srcDir + "/app/components"
+            components : srcDir + "/app/components",
         }
     },
     plugins: [

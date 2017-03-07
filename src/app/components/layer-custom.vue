@@ -146,42 +146,41 @@
     .women-radio.radio input:checked+label{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat}
     }
     .custom-info{
-    .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
-    .custom-name .input-group-addon,.custom-layer .custom-phone .input-group-addon{background:0 0}
-    color:#ccc;margin-top:-20px;
-    .row{margin-top:20px}
-    .sex-photo{width:70px;height:70px;display:block;float:left}
-    .sex-photo.man{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat;background-size:100%}
-    .sex-photo.women{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat;background-size:100%}
-    span{color:#000;margin-left:30px}
-    .col-xs-12{padding-left:30px}
-    .nickname{line-height:70px;font-size:1.5rem;display:block;float:left}
-    }
-    .custom-ticket{
-        height:auto;
-    .custom-ticket-header{padding-bottom:20px}
-    .custom-ticket-body{height:300px;overflow-x:hidden}
-    .custom-ticket-body ul{list-style:none;padding:0}
-    .custom-ticket-body li{width:80%;height:90px;display:block;border:2px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
-    .custom-ticket-body li:first-child{margin-top:0}
-    .custom-ticket-body li .left{width:33%;height:100%;background:#e8e9f1;position:relative;float:left}
-    .custom-ticket-body li .right{width:66%;height:100%;position:relative;float:left;background:#fff;padding:10px 20px}
-    .custom-ticket-body li .left .m{position:absolute;font-size:2rem;left:20px;top:10px}
-    .custom-ticket-body li .left .u{position:absolute;left:30px;top:60px}
-    .custom-ticket-body li .left .m:before{content:"¥";font-size:1rem}
-    .custom-ticket-body li .right span{margin-top:5px;display:block}
-    .custom-ticket-body li .right em{font-style:normal}
-    .line{width:113%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
-    .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
-    }
-    .custom-group{
-        margin: 10px 0;
-    }
+        .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
+        .custom-name .input-group-addon,.custom-layer .custom-phone .input-group-addon{background:0 0}
+        color:#ccc;margin-top:-20px;
+        .row{margin-top:20px}
+        .sex-photo{width:70px;height:70px;display:block;float:left}
+        .sex-photo.man{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat;background-size:100%}
+        .sex-photo.women{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat;background-size:100%}
+        span{color:#000;margin-left:30px}
+        .col-xs-12{padding-left:30px}
+        .nickname{line-height:70px;font-size:1.5rem;display:block;float:left}
+        }
+        .custom-ticket{
+            height:auto;
+        .custom-ticket-header{padding-bottom:20px}
+        .custom-ticket-body{height:300px;overflow-x:hidden}
+        .custom-ticket-body ul{list-style:none;padding:0}
+        .custom-ticket-body li{width:80%;height:90px;display:block;border:2px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
+        .custom-ticket-body li:first-child{margin-top:0}
+        .custom-ticket-body li .left{width:33%;height:100%;background:#e8e9f1;position:relative;float:left}
+        .custom-ticket-body li .right{width:66%;height:100%;position:relative;float:left;background:#fff;padding:10px 20px}
+        .custom-ticket-body li .left .m{position:absolute;font-size:2rem;left:20px;top:10px}
+        .custom-ticket-body li .left .u{position:absolute;left:30px;top:60px}
+        .custom-ticket-body li .left .m:before{content:"¥";font-size:1rem}
+        .custom-ticket-body li .right span{margin-top:5px;display:block}
+        .custom-ticket-body li .right em{font-style:normal}
+        .line{width:113%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
+        .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
+        }
+        .custom-group{
+            margin: 10px 0;
+        }
     }
 </style>
 
 <script>
-
 
     export default{
         data(){
@@ -198,7 +197,13 @@
              }
         },
         methods:{
-            save(customdata){
+            //去登录
+            tologin(){
+
+
+            },
+            //去注册
+            toregister(customdata){
                  if (customdata){
                      this.$dispatch('register', customdata)
                  }

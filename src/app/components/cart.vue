@@ -9,7 +9,7 @@
 									<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
 								</p>
 								<p class="small">
-									<span>数量:{{item.amount}} * 单价 {{item.price|currency '¥' 2 }}</span><span></span>
+									<span>数量{{author}} :{{item.amount}} * 单价 {{item.price|currency '¥' 2 }}</span><span></span>
 								</p>
 								<p class="total">
 									<span>{{item.amount*item.price |currency '¥' 2 }}</span>
@@ -18,7 +18,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="totalprice">
+				<div class="totalprice" @click="setAuthor">
 					总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
 				</div>
 	</div>
@@ -30,7 +30,6 @@
     "use strict";
     import util from 'util/util.js';
     import $ from 'jquery';
-
 
     /**
      * [设置购物车的高]
@@ -44,47 +43,40 @@
 			this.setCartHeight();
             window.onresize=this.setCartHeight;
         },
-        data(){
-            return {
-                cartData:{
-                    index:0,
-                    list:[],
-                }
+        computed: {
+            //数据来自全局
+            cartData () {
+                return this.$store.state.cartData
+            },
+            totalprice () {
+                var total=0;
+                this.cartData.list.forEach(function(e,i){
+                    total+=e.price*e.amount;
+                })
+                return total;
             }
-        },
-        props: {                                       //定义参数类型
-
         },
         methods:{
             //自适应高
            setCartHeight (){
-					var w = window.innerHeight;
-					var lh = document.querySelector('.left-con').offsetHeight;
-					var ch = document.querySelector('.shoppingCalc').offsetHeight;
 
-					if (w >= 768 ) {
-						$("#shoppingCart-list").show();
-						document.getElementById("shoppingCart-list").style.height=lh-ch-140+"px";
-					} else {
-						$("#shoppingCart-list").hide();
-					}
+                    var w = window.innerWidth;
+                    var lh = document.querySelector('.left-con').offsetHeight;
+                    var ch = document.querySelector('.shoppingCalc').offsetHeight;
+
+
+                    if (w >= 768) {
+                        $("#shoppingCart-list").show();
+                        document.getElementById("shoppingCart-list").style.height = lh - ch - 140 + "px";
+                    } else {
+
+                        $("#shoppingCart-list").hide();
+                    }
+
 			},
-            removeCustom(){
-                var index=this.listData.index-1;
-                this.listData.list.splice(index,1);
-                this.saveLocalData();
-            },
-            switchCustom(index){
-                this.listData.index=index;
-                this.saveLocalData();
-            },
-            getLocalData(){
+            checkcartData:function(ev,index){
 
-
-            },
-            saveLocalData(){
-                this.$parent.headerData=this.listData;
-                util.pushLocal("queue",this.$parent.headerData);
+                this.cartData.index=index;
             }
         }
     }

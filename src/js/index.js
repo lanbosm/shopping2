@@ -5,17 +5,20 @@ import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
 import appHeader from 'components/header.vue'
 import appCart from 'components/cart.vue';
+import appCalc from 'components/calc.vue';
 import layerCustom from 'components/layer-custom.vue';
 // import util from 'ui/model.js';
+import Vuex from 'vuex'
+import store from './vuex/store'
 
-
-
+//Vue.use(Vuex);
 //定义组件
 Vue.component('layer-item', {
     template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
     props: {                                       //定义参数类型
         itemDetail:Object
     },
+
     methods: {
         switchSpec: function (pid) {
             if (pid){
@@ -40,12 +43,15 @@ Vue.component('app-header',appHeader);
 Vue.component('layer-custom',layerCustom);
 //定义购物车组件
 Vue.component('cart',appCart);
+//定义计算器组件
+Vue.component('calc',appCalc);
 
 new Vue({
     compiled:function(){
 
         this.getNavList();
     },
+    store,
     ready: function() {
 
         var cid=util.getUrlHash("category");
@@ -132,8 +138,8 @@ new Vue({
 
     },
     computed: {
-        //选中的谷歌
 
+        //选中的谷歌
         totalprice: function () {
             var total=0;
             this.cartData.list.forEach(function(e,i){
@@ -300,13 +306,27 @@ new Vue({
 
             });
         },
+        //创建订单
+        buildOrder:function(cart){
+
+            alert("创建订单");
+            console.log(cart);
+            // if(this.cartData.list.length>0) {
+            //     // console.log(this.cartData.list);
+            //     // this.$parent.buildBill2();
+            //     this.$emit('increment')
+            //     //location.href = "./bill.html";
+            // }else{
+            //     alert('请先选择物品');
+            // }
+        },
+
         openNaNa:function(){
             //alert("nana");
             console.log(this.luna);
 
         },
         closeDialog:function(){
-
             this.show=true;
         },
         //获取物品详情
@@ -382,58 +402,8 @@ new Vue({
 
             });
         },
-
-        checkcartData:function(ev,index){
-            this.cartData.index=index;
-        },
-        buildBill:function(){
-            if(this.cartData.list.length>0) {
-                console.log(this.cartData.list);
-                location.href = "./bill.html";
-            }else{
-                alert('请先选择物品');
-            }
-        },
-        //计算器
-        calc:function(keycode){
-            var vm=this;
-            if(this.cartData.list.length==0){return;}
-
-            var index=this.cartData.index;
-            //选中的单价
-            var price=this.cartData.list[index].price;
-            //选中的数量
-            var amount=this.cartData.list[index].amount;
-
-            if(isNaN(keycode)){
-                switch (keycode) {
-                    case 'qty': //resize
-                        this.cartData[index].amount=1;
-                        break;
-                    case 'x':   //close
-                        var str=amount+"";
-                        amount=str.substring(0,str.length-1);
-                        if(amount==""){
-                            this.cartData.list.splice(index,1);
-                        }
-                        else{
-                            this.cartData.list[index].amount=parseInt(amount);
-                        }
-                        break;
-                }
-            }else{
-
-                if(amount!=1){
-                    amount+=keycode+'';
-                }else{
-
-                    amount=keycode;
-                }
-
-                this.cartData.list[index].amount=parseInt(amount);
-               // this.cartData[index].amount=parseInt(amount);
-                console.log(this.cartData.list);
-            }
+        buildBill2:function(){
+            alert(333333333);
         },
         //分页
         filteredByPage:function(arr,limit){

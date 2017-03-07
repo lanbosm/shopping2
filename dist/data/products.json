@@ -80,6 +80,45 @@
         "marketable": true,
         "stock": 1,
         "allocatedStock": 0
+      }, {
+        "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/bc6c8846-f6ad-4b83-b869-550ffe145406.png",
+        "name": "酱心曲奇NO.1",
+        "barCode": "201701231106",
+        "price": "0.01",
+        "id": 53,
+        "giftType": "none",
+        "brandName": "测试商品，用户勿拍",
+        "textTagStr": "",
+        "specDesc": "[草莓 2016-5 ]",
+        "marketable": true,
+        "stock": 1,
+        "allocatedStock": 0
+      }, {
+        "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/bc6c8846-f6ad-4b83-b869-550ffe145406.png",
+        "name": "酱心曲奇NO.1",
+        "barCode": "201701231106",
+        "price": "0.01",
+        "id": 53,
+        "giftType": "none",
+        "brandName": "测试商品，用户勿拍",
+        "textTagStr": "",
+        "specDesc": "[草莓 2016-5 ]",
+        "marketable": true,
+        "stock": 1,
+        "allocatedStock": 0
+      }, {
+        "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/products/2017-01-23/bc6c8846-f6ad-4b83-b869-550ffe145406.png",
+        "name": "酱心曲奇NO.1",
+        "barCode": "201701231106",
+        "price": "0.01",
+        "id": 53,
+        "giftType": "none",
+        "brandName": "测试商品，用户勿拍",
+        "textTagStr": "",
+        "specDesc": "[草莓 2016-5 ]",
+        "marketable": true,
+        "stock": 1,
+        "allocatedStock": 0
       }
     ],
     "firstPage": 1,
