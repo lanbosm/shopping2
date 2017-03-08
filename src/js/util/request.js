@@ -3,7 +3,11 @@
  * wiki http://www.cnblogs.com/keepfool/p/5625583.html
  */
 //wiku http://www.cnblogs.com/dupd/p/5951311.html
+import Vue from 'vue'
+import VueResource from 'vue-resource'
 
+//http请求
+Vue.use(VueResource)
 /**
  * 接口签名
  * @type {string}
@@ -119,6 +123,7 @@ export const request = {
 /**
  * 全局Vue拦截器
  */
+
 Vue.http.interceptors.push(function (request, next) {
 
     //加载层-风格3

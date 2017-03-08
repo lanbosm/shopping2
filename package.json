@@ -12,6 +12,10 @@
     "type": "git",
     "url": "https://github.com/lanbosm/gulp-webpack-demo.git"
   },
+  "dependencies": {
+    "vue": "^2.2.0",
+    "vuex": "^2.2.0"
+  },
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
@@ -45,9 +49,9 @@
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.2.1",
-    "vue-router": "^0.7.13",
+    "vue-resource": "^1.2.1",
+    "vue-router": "^2.2.0",
     "vue-style-loader": "^1.0.0",
-    "vuex": "^2.2.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },

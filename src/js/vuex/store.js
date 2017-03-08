@@ -1,9 +1,9 @@
 
 
-
+import Vue from 'vue';
 import Vuex from 'vuex'
 
-
+Vue.use(Vuex)
 //vue 定义全局变量
 const store = new Vuex.Store({
   state: {

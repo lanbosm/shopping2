@@ -49,7 +49,7 @@ module.exports = {
     externals: {
         jquery: "window.jQuery",
         layer: "window.layer",
-        vue: "window.Vue"
+
     },
     module: {
         loaders: [
@@ -89,6 +89,7 @@ module.exports = {
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
             components : srcDir + "/app/components",
+            vue: 'vue/dist/vue'
         }
     },
     plugins: [

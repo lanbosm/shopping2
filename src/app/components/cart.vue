@@ -9,17 +9,17 @@
 									<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
 								</p>
 								<p class="small">
-									<span>数量{{author}} :{{item.amount}} * 单价 {{item.price|currency '¥' 2 }}</span><span></span>
+									<span>数量 :{{item.amount}} * 单价 {{item.price  }}</span><span></span>
 								</p>
 								<p class="total">
-									<span>{{item.amount*item.price |currency '¥' 2 }}</span>
+									<span>{{item.amount*item.price }}</span>
 								</p>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<div class="totalprice" @click="setAuthor">
-					总价 <span class="primary">{{totalprice |currency '¥' 2 }}</span>
+				<div class="totalprice">
+					总价 <span class="primary">¥ {{totalprice}}</span>
 				</div>
 	</div>
 </template>

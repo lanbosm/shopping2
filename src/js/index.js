@@ -3,13 +3,17 @@ import $ from 'jquery';
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
+
 import appHeader from 'components/header.vue'
 import appCart from 'components/cart.vue';
 import appCalc from 'components/calc.vue';
 import layerCustom from 'components/layer-custom.vue';
 // import util from 'ui/model.js';
-import Vuex from 'vuex'
+
 import store from './vuex/store'
+
+
+
 
 //Vue.use(Vuex);
 //定义组件
@@ -47,19 +51,24 @@ Vue.component('cart',appCart);
 Vue.component('calc',appCalc);
 
 new Vue({
-    compiled:function(){
+    created:function(){
 
-        this.getNavList();
+
     },
     store,
-    ready: function() {
+    mounted: function() {
+        this.$nextTick(function () {
+            // 代码保证 this.$el 在 document 中
 
-        var cid=util.getUrlHash("category");
+            this.getNavList();
+            var cid=util.getUrlHash("category");
 
 
-        this.getItemList(cid);
-        this.getCustomList();
-       // this.getLocalData();
+            this.getItemList(cid);
+            this.getCustomList();
+
+        })
+
 
     },
     filters: {

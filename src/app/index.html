@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_g9towvi5v1da38fr.css">
 	<link rel="stylesheet" type="text/css" href="../css/main.css" />
-	<link rel="stylesheet" type="text/css" href="../css/index.css" />
+
 
 </head>
 
@@ -30,7 +30,7 @@
 						<div class="col-sm-8  col-md-9 left-con">
 							<div class="left-con-header">
 								<ol class="breadcrumb">
-									<li :class="index==navData.path.length-1?'active':''" v-for="(index,nav) in navData.path"><span v-show="index==0" class="glyphicon glyphicon-home"> </span><a href="./#category={{nav.id}}" @click="getItemList(nav.id)">{{nav.name}}</a></li>
+									<li :class="index==navData.path.length-1?'active':''" v-for="(index,nav) in navData.path"><span v-show="index==0" class="glyphicon glyphicon-home"> </span><a :href="nav.id" @click="getItemList(nav.id)">{{nav.name}}</a></li>
 								</ol>
 							</div>
 							<div class="left-con-content">
@@ -40,17 +40,17 @@
 		`								<div class="row" v-show="navData.show" >
 											<div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">
 												<div class="menu">
-													<a href="./#category={{nav.id}}" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>
+													<a :href="nav.id" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>
 												</div>
 												<div class="sub-menu" >
 													<template v-if="!navData.list[navData.index]">
 														<p> 数据加载中...</p>
-													</template>
-													<template v-if="!navData.list[navData.index].children">
-														<p> 没有分类</p>
+														<template v-if="1<2">
+															<p> 没有分类</p>
+														</template>
 													</template>
 													<template v-else>
-														<a  class="btn btn-default sub-menu-category" href="./#category={{nav.id}}" v-for="(index,nav) in navData.list[navData.index].children" @click="getItemList(nav.id)">{{nav.name}}</a>
+														<a  class="btn btn-default sub-menu-category" :href="nav.id" v-for="(index,nav) in navData.list[navData.index].children" @click="getItemList(nav.id)">{{nav.name}}</a>
 													</template>
 
 												</div>
@@ -72,32 +72,32 @@
 										</div>
 									</div>
 									<div class="panel-body">
-										<div class="row"  v-show="itemData.length!=0">
-											<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item" v-for="(index,item) in filteredItemDataList ">
-												<div class="thumbnail" @click="openItem(item.id);">
-													<a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
-													<div class="prcie primary">{{item.price |currency '¥' 2}}元</div>
-													<div class="photo"  >
-														<img class="img-responsive" :src="item.image" :alt="item.title" :title="item.title" >
-													</div>
-													<div class="caption">
-														<p>{{item.name}}</p>
-													</div>
-													<a  class="buy-btn" role="button"   v-show="item.giftType!='none'"
-													><span class="iconfont icon-baobei"></span></a>
-												</div>
-											</div>
-										</div>
-										<div class="row"  v-else>
-											<div class="col-xs-12">
-												数据加载中....
-											</div>
-										</div>
-										<div class="row"  v-show="filteredItemDataList.length==0 && itemData.list.length!=0">
-											<div class="col-xs-12">
-												没有相关数据....
-											</div>
-										</div>
+										<!--<div class="row"  v-show="itemData.length!=0">-->
+											<!--<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item" v-for="(index,item) in filteredItemDataList ">-->
+												<!--<div class="thumbnail" @click="openItem(item.id);">-->
+													<!--<a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>-->
+													<!--<div class="prcie primary">{{item.price |currency '¥' 2}}元</div>-->
+													<!--<div class="photo"  >-->
+														<!--<img class="img-responsive" :src="item.image" :alt="item.title" :title="item.title" >-->
+													<!--</div>-->
+													<!--<div class="caption">-->
+														<!--<p>{{item.name}}</p>-->
+													<!--</div>-->
+													<!--<a  class="buy-btn" role="button"   v-show="item.giftType!='none'"-->
+													<!--&gt;<span class="iconfont icon-baobei"></span></a>-->
+												<!--</div>-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="row"  v-else>-->
+											<!--<div class="col-xs-12">-->
+												<!--数据加载中....-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="row"  v-show="filteredItemDataList.length==0 && itemData.list.length!=0">-->
+											<!--<div class="col-xs-12">-->
+												<!--没有相关数据....-->
+											<!--</div>-->
+										<!--</div>-->
 									</div>
 									<div class="panel-footer">
 										<div class="page-bar">
@@ -116,37 +116,23 @@
 						</div>
 				<div class="col-sm-4  col-md-3 right-con" >
 						<!-- 购物车 -->
-						<cart ></cart>
-						<!-- 计算器 -->
+						<cart></cart>
+						<!--&lt;!&ndash; 计算器 &ndash;&gt;-->
 						<calc @trigger-build-order="buildOrder"></calc>
 			 		</div>
 			</div>
 
-				<!--<template id="dialog-template">-->
-					<!--<div class="dialogs" >-->
-						<!--<div class="dialog" v-bind:class="{ 'dialog-active': show }">-->
-							<!--<div class="dialog-content">-->
-								<!--<div class="close rotate">-->
-									<!--<span class="iconfont icon-close" @click="close"></span>-->
-								<!--</div>-->
-								<!--<slot name="header"></slot>-->
-								<!--<slot name="body"></slot>-->
-								<!--<slot name="footer"></slot>-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div class="dialog-overlay"></div>-->
-					<!--</div>-->
-				<!--</template>-->
-				
-
-				<!--  layer-item -->
-				@@include('./components/layer-item.inc')
-				<layer-item :item-Detail="itemDetail"></layer-item>
 
 
-			    <!-- custom modale -->
-				<!--@@include('./components/layer-custom.inc')-->
-				<layer-custom :custom-modal="customModal" :custom-data="customData"></layer-custom>
+
+				<!--&lt;!&ndash;  layer-item &ndash;&gt;-->
+				<!--@@include('./components/layer-item.inc')-->
+				<!--<layer-item :item-Detail="itemDetail"></layer-item>-->
+
+
+			    <!--&lt;!&ndash; custom modale &ndash;&gt;-->
+				<!--&lt;!&ndash;@@include('./components/layer-custom.inc')&ndash;&gt;-->
+				<!--<layer-custom :custom-modal="customModal" :custom-data="customData"></layer-custom>-->
 			</div>
 		</div>
 
@@ -160,7 +146,6 @@
 <script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/swiper.min.js"></script>
-<script type="text/javascript" src="../js/vue.min.js"></script>
 
 <script type="text/javascript" src="../js/common.js"></script>
 
