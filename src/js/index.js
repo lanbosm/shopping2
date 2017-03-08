@@ -5,84 +5,64 @@ import {request, API_URLS, HOST} from 'util/request.js';
 import Vue from 'vue';
 
 import appHeader from 'components/header.vue'
-import appCart from 'components/cart.vue';
-import appCalc from 'components/calc.vue';
+import App from 'components/App.vue'
 import layerCustom from 'components/layer-custom.vue';
 // import util from 'ui/model.js';
 
 import store from './vuex/store'
-
+import VueRouter from 'vue-router'
 
 
 
 //Vue.use(Vuex);
 //定义组件
-Vue.component('layer-item', {
-    template: '#layer-item-Component',           //如果要传参 一定要遵循相关的规范 参考wiki 驼峰要 -拆开
-    props: {                                       //定义参数类型
-        itemDetail:Object
-    },
-
-    methods: {
-        switchSpec: function (pid) {
-            if (pid){
-                this.$dispatch('switchSpec', pid)
-            }
-        },
-        pushCart: function (appProductDetail) {
-            if (appProductDetail){
-                this.$dispatch('pushCart', appProductDetail)
-            }
-        }
-    }
-
-});
 
 // components:{
 //     app:App
 // },
 //定义头组件
 Vue.component('app-header',appHeader);
-//定义顾客组件
-Vue.component('layer-custom',layerCustom);
-//定义购物车组件
-Vue.component('cart',appCart);
-//定义计算器组件
-Vue.component('calc',appCalc);
 
-new Vue({
+//定义根组件
+Vue.component('App',App);
+//定义顾客组件
+//Vue.component('layer-custom',layerCustom);
+
+
+//路由配置
+Vue.use(VueRouter)
+
+// const router = new VueRouter({
+//     mode: 'history',
+//     routes: routers
+// })
+import ProductList from 'components/list.vue';
+import Home2 from 'components/nav2.vue'
+//路由配置
+//如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
+const router = new VueRouter({
+    routes: [
+            {
+                path: '/',
+                component:  ProductList
+            },
+            {
+                path: '/prolist',
+                component:  ProductList
+            },
+
+    ]
+})
+
+//vue实例
+var vm =new Vue({
     created:function(){
 
 
     },
     store,
-    mounted: function() {
-        this.$nextTick(function () {
-            // 代码保证 this.$el 在 document 中
-
-            this.getNavList();
-            var cid=util.getUrlHash("category");
-
-
-            this.getItemList(cid);
-            this.getCustomList();
-
-        })
-
-
-    },
-    filters: {
-        sex: function(value){
-            if(value=="男"){
-                return "man";
-            }else{
-                return "women";
-            }
-        }
-    },
-    components:{
-
-    },
+    el:'#main',
+    router,
     data:{
         //头部信息
         headerData:{
@@ -144,315 +124,23 @@ new Vue({
             history:'',
             code:0
         }
-
     },
     computed: {
 
-        //选中的谷歌
-        totalprice: function () {
-            var total=0;
-            this.cartData.list.forEach(function(e,i){
-                total+=e.price*e.amount;
-            })
-            return total;
-        },
-        //过滤物品数据列表
-        filteredItemDataList: function () {
-            var self = this;
-            var p=this.itemData;
-            var l=this.limit;
-
-            //如果有搜索
-            if(this.searchItem.searching){
-                p=p.filter(function (item) {
-                    return item.title.indexOf(self.searchItem.text) !== -1;
-                });
-            }
-
-            //分页显示
-            return p;
-        },
-        //filteredCustomDataList
-        filteredCustomDataList: function () {
-            var self = this;
-            var p=this.customData.list;
-
-            p=p.filter(function (custom) {
-
-                if(self.searchCustom.text == custom.name || self.searchCustom.text == custom.phone){
-                    return custom;
-                }
-            });
-            return p;
-        }
-
     },
     watch: {
-        'searchItem.text': function (val) {
-            if(val){
-                this.searchItem.searching=true;
-
-            }
-            else{
-                this.searchItem.searching=false;
-            }
-            //从第一页开始找
-            this.pageCur=1;
-        },
-        'searchCustom.text': function (val) {
-            var self=this;
-            if(val){
-                this.searchCustom.searching=true;
-                this.customModal.code=301;
-                setTimeout(function(){
-                    $('#custom-layer').modal('hide');
-                    if(self.filteredCustomDataList!=""){
-                        self.customData.curCustom=self.filteredCustomDataList[0];
-                        self.customModal.status='info';
-                        self.customModal.history='info';
-                        self.customModal.code=200;
-                    }else{
-                        self.customModal.status='normal';
-                        self.customModal.history='normal';
-                        self.customModal.code=404;
-                    }
-                },200);
-                setTimeout(function(){
-                    $('#custom-layer').modal('show');
-                },800);
-            }
-            else{
-                this.searchItem.searching=false;
-                this.customModal.status='normal';
-                this.customModal.history='normal';
-                this.customModal.code=0;
-            }
-
-        }
-    },
-    //共有方法
-    events:{
-        //会员注册
-        register: function(customdata){
-            var name = customdata.newCustom.name;
-            var phone = customdata.newCustom.phone;
-            var sex = customdata.newCustom.sex;
-
-            alert(name+'===='+phone+'==='+sex);
-        },
-        //选择规格
-        switchSpec:function(sid){
-            alert("规格"+sid);
-        },
-        //放入购物车
-        pushCart: function (item) {
-            layer.closeAll();
-            var vm = this;
-            var newitem = {};
-            Object.assign(newitem, item);
-
-            console.log(vm.itemDetail.appProductDetail);
-
-            newitem.selectDate = util.getSelectDate(); //自动获取选择日期
-            newitem.amount = 1; //自动获取选择日期
-            this.cartData.list.push(newitem);
-        }
-
 
     },
     methods: {
-        //获取本地数据
-        getLocalData() {
-            this.headerData=util.pullLocal("queue");
-            console.log(this.headerData);
-            //console.log(111);
-        },
-        //获取导航列表
-        getNavList:function(){
-            var vm = this;
-            vm.$http.get(vm.navData.apiUrl,{
-                params:{'cache':Math.random()},
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                emulateJSON:true
-            }).then((response) => { //成功
-                   // console.log(response.data);
-                vm.$set('navData.list', response.data.data);
-                vm.$set('navData.path', response.data.path);
-            }).catch(function(response) { //失败
-                //console.log(response);
-                alert("读取导航失败");
-            })
-        },
-        //获取会员列表
-        getCustomList:function(){
-            var vm = this
-            vm.$http.get(vm.customData.apiUrl,{
-                params:{'p':1},
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                emulateJSON:true
-            }).then((response) => { //成功
-                    //console.log(response.data);
-                    vm.$set('customData.list', response.data.data);
-            }).catch(function(response) { //失败
-                    //console.log(response);
-                    alert("读取会员失败");
-            })
-        },
-        //获取物品列表
-        getItemList:function(){
-            var vm = this;
-            var apiobj={
-                url:API_URLS.products,                  //API_URLS.products
-                data:vm.productParams
-            }
 
 
-            apiobj.url="/dist/data/products.json";
-            request.fnGet(vm,apiobj,function(res){
-                console.log(res);
-                vm.page=res.page;
-                vm.itemData=vm.page.list;
+    },
+    mounted() {
 
-            });
-        },
-        //创建订单
-        buildOrder:function(cart){
-
-            alert("创建订单");
-            console.log(cart);
-            // if(this.cartData.list.length>0) {
-            //     // console.log(this.cartData.list);
-            //     // this.$parent.buildBill2();
-            //     this.$emit('increment')
-            //     //location.href = "./bill.html";
-            // }else{
-            //     alert('请先选择物品');
-            // }
-        },
-
-        openNaNa:function(){
-            //alert("nana");
-            console.log(this.luna);
-
-        },
-        closeDialog:function(){
-            this.show=true;
-        },
-        //获取物品详情
-        openItem:function(pid){
-
-            var vm = this;
-            var apiobj={
-                url:API_URLS.products+pid,
-                data:{
-                    'id':pid
-                }
-            };
-            var itemGift=false;
-            var itemswiper='';
-
-            request.fnGet(vm,apiobj,function(res){
-
-                vm.itemDetail=res.data;
-                console.log(vm.itemDetail.appProductDetail);
-                //是否存在赠品
-                vm.itemDetail.appProductDetail.appGiftActivity!=null?itemGift:itemGift=true;
-
-                //弹出页面层
-                layer.open({
-                    id:'layui-layer-item',
-                    type: 1,            //1 普通层
-                    shade: 0.01,  //遮罩
-                    anim:0,
-                    zIndex:1000,
-                    closeBtn: 2,
-                    title: false,
-                    area: ['auto', 'auto'], //宽高
-                    content: $('#layer-item-box'),
-                    success:function() {
-                        if (itemGift){  //如果存在赠品
-                            //data-gift
-                            itemswiper = new Swiper('.gift-detail-item', {
-                                pagination: '.gift-detail-item-pagination',
-                                paginationClickable: true,
-                                spaceBetween: 10
-
-                            });
-
-                            itemswiper.on('onSlideChangeEnd', function (swiper) {
-                                //some code
-                                $(".gift-detail-tab").find('a').removeClass('selected');
-                                $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
-
-                            })
-
-                                $(".gift-detail-tab").find('a').eq(0).addClass('selected');
-                                $(".gift-detail-tab").find('a').on('click',function(){
-
-                                itemswiper.slideTo($(this).index());//
-                            })
-
-                        }
-                    },
-                    cancel: function(index){
-                        // if(confirm('确定要关闭么')){
-                        //     layer.close(index)
-                        //  }
-                        //  return false;
-                    },
-                    end:function(){
-                        // alert("销毁了");
-                        if(itemGift){
-                            itemswiper.destroy();
-                            $(".gift-detail-tab").find('a').off().removeClass('selected');
-                        }
-                    }
-                });
-
-            });
-        },
-        buildBill2:function(){
-            alert(333333333);
-        },
-        //分页
-        filteredByPage:function(arr,limit){
-            this.pageTotal=Math.ceil(arr.length/limit);
-            return arr.slice((this.pageCur-1)*limit,(this.pageCur)*limit );
-        },
-        //页码点击事件
-        pageTo: function(page){
-            if(page !=  this.productParams.pageNum){
-
-                this.productParams.pageNum=page;
-                this.getItemList();
-            }
-        },
-        getspecsClick:function(index){
-
-            return this.itemData.newItem.specs.index;
-
-        },
-        specsClick:function(index){
-
-            this.itemData.newItem.specs.index=index;
-
-        },
-        //增加用户
-        addNewCustom:function(){
-            if(this.customData.newCustom.name==""){
-                alert("姓名不能为空");
-                return false;
-            }
-            if(this.customData.newCustom.phone==""){
-                alert("手机号不能为空");
-                return false;
-            }
-
-            this.customData.list.push(this.customData.newCustom);
-
-            console.log(this.customData.list);
-        }
-
-
+        //起始路由
+        this.$router.push('/prolist');
     }
-}).$mount('#main');
+})
+
+
+//.$mount('#main');
