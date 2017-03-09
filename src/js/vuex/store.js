@@ -1,5 +1,6 @@
 
 
+
 import Vue from 'vue';
 import Vuex from 'vuex'
 
@@ -8,6 +9,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     author: 'lanbo',
+    headData:{
+          index:0,
+          staff:"李科兴",
+          list:[
+
+          ]
+    },
+    pageData:{},
     cartData:{
           index:0,
           list:[
@@ -38,6 +47,9 @@ const store = new Vuex.Store({
   mutations:{
       author (state,msg){
          state.author=msg;
+      },
+      setPageData (state,data){
+          state.pageData=data;
       }
 
   }

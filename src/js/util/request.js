@@ -15,13 +15,16 @@ Vue.use(VueResource)
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-export const HOST = "http://localhost:3000//"; //http://192.168.1.199:82/
+export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
 
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
     login:"/cashier/login",
     login_out:"/cashier/common/log_out",
-    products: "/cashier/member/products/"
+    products: "/cashier/member/products/",
+
+
+    products_json: "/dist/data/products.json" //假数据
 
 
 };
@@ -32,15 +35,15 @@ export const request = {
 
         vm.$http.get(HOST+apiObj.url, {
             params: apiObj.data,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        })
-            .then((response) => { //成功
-
+            headers: {'Content-Type': 'application/json'},
+        }).then((response) => { //成功
                 if (response.data.code == 20000) {
+
                     if (success) {
                         success(response.data);
                     }
                 } else {
+
                     if (error) {
                         error(response.data);
                     }

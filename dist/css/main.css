@@ -145,7 +145,7 @@ img{width:100%}
 .bill .bill-body .left-con .card-btn.select,.bill .bill-body .left-con .money-btn.select,.bill .bill-body .left-con .scan-btn.select{color:#fff;padding:20px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .bill .bill-body .left-con .on{background-color:#6fc89c}
 .bill .bill-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
-.bill .bill-body .tab-con.tab-show{display:block}
+.bill .bill-body .tab-con.tabShow{display:block}
 .bill .bill-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
 .bill .bill-body .tab-con.tab-con-0 .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
 .bill .bill-body .list-box{padding-bottom:30px;border-bottom:1px dashed #e5e5e5;border-width:2px}

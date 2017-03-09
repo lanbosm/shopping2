@@ -3,6 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var fs = require('fs');
 
+
 //var CleanWebpackPlugin = require('clean-webpack-plugin');// 删除文件
 //var CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝文件
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//提取文件 如.css
@@ -11,8 +12,10 @@ var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;  //压缩文件
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 
 //定义了一些文件夹的路径
-var ROOT_PATH = path.resolve(__dirname);
-var srcDir = path.resolve(process.cwd(), 'src');
+var ROOT_PATH = path.join(path.resolve(__dirname),'../');
+var srcDir =  path.join(path.resolve(__dirname),'../src');
+
+
 
 let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
 let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));

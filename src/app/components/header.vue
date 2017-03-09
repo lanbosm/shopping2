@@ -17,15 +17,15 @@
                 </div>
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
-                        <li v-for="(index,item) in listData.list"><a class="custom" :class="{cur:listData.index==(index+1)}" @click="switchCustom(index+1)"><span class="num">{{index+1}}</span><span class="time">{{item.time}}</span></a></li>
+                        <li v-for="(item,index) in listData.list"><a class="custom" :class="{cur:listData.index==(index+1)}" @click="switchCustom(index+1)"><span class="num">{{index+1}}</span><span class="time">{{item.time}}</span></a></li>
                     </ul>
                     <a class="custom-add" @click="addCustom();">+</a>
                     <a class="custom-remove" @click="removeCustom();">-</a>
                     <div class="menu-box">
-                        <a class="contact-btn" onclick="queueTools.contact(this);">
+                        <a class="contact-btn" :class="{success:contact}" @click="contact();">
                             <i class="icon icon-snan"></i>
                         </a>
-                        <a class="exit-btn" onclick="queueTools.exit();">
+                        <a class="exit-btn" @click="exit();">
                             <i class="icon icon-exit"></i>
                             退出
                         </a>
@@ -41,26 +41,39 @@
 <style>
 </style>
 <script>
+
     "use strict";
     import util from 'util/util.js';
 
     export default{
-        compiled() {
+        created(){
 
+            if(!this.$store.state.headData.staff){
+                this.getStaffData();
+            }
         },
-        ready(){
-            //数据传递
-            this.listData= util.pullLocal("queue");
+        computed: {
+            listData () {
+                return this.$store.state.headData;
+            }
         },
         data(){
             return {
-                listData:{},
+                success:true
             }
         },
-        props: {                                       //定义参数类型
-
-        },
         methods:{
+            //获取员工资料
+            getStaffData(){
+                    var headData={
+                            index:0,
+                            staff:"李科兴2号",
+                            list:[]
+                    };
+                    this.$store.state.headData=headData;
+                    this.saveLocalData();
+
+            },
             //获得时间信息
             getTimeData(){
                 function nz(n){
@@ -93,10 +106,12 @@
                 //记录客户名会员
                 queue.custom=this.getCustomData();
 
+
                 this.listData.list.push(queue);
                 this.listData.index=this.listData.list.length;
 
                 this.saveLocalData();
+
             },
             removeCustom(){
                 var index=this.listData.index-1;
@@ -104,17 +119,35 @@
                 this.saveLocalData();
             },
             switchCustom(index){
-                this.listData.index=index;
+                alert(index);
                 this.saveLocalData();
+
+                this.listData.index=index;
             },
             getLocalData(){
 
+                this.$store.state.headData= util.pullLocal("queue");
 
             },
             saveLocalData(){
-                this.$parent.headerData=this.listData;
-                util.pushLocal("queue",this.$parent.headerData);
-            }
+
+                util.pushLocal("queue",this.$store.state.headData);
+            },
+            contact(){
+                alert("连接设备");
+            },
+            exit(){
+                var res=confirm("确定退出吗?");
+                if(res){
+                    location.href="./login.html"
+                }else{
+
+                }
+            },
+        },
+        mounted() {
+
+            this.getLocalData();
         }
     }
 </script>

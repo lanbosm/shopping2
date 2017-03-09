@@ -1,7 +1,4 @@
-import util from 'util/util.js';
-import $ from 'jquery';
-import layer from 'layer';
-import {request, API_URLS, HOST} from 'util/request.js';
+
 import Vue from 'vue';
 
 import appHeader from 'components/header.vue'
@@ -12,14 +9,9 @@ import layerCustom from 'components/layer-custom.vue';
 import store from './vuex/store'
 import VueRouter from 'vue-router'
 
-
-
-//Vue.use(Vuex);
 //定义组件
 
-// components:{
-//     app:App
-// },
+
 //定义头组件
 Vue.component('app-header',appHeader);
 
@@ -37,19 +29,16 @@ Vue.use(VueRouter)
 //     routes: routers
 // })
 import ProductList from 'components/list.vue';
-import Home2 from 'components/nav2.vue'
+
 //路由配置
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
 const router = new VueRouter({
+    //mode: 'history',
     routes: [
             {
                 path: '/',
                 component:  ProductList
-            },
-            {
-                path: '/prolist',
-                component:  ProductList
-            },
+            }
 
     ]
 })
@@ -64,14 +53,6 @@ var vm =new Vue({
     el:'#main',
     router,
     data:{
-        //头部信息
-        headerData:{
-            index:0,
-            staff:"里可行",
-            list:[
-
-            ]
-        },
         show:false,
         dialogClass:"info",
         productParams:{
@@ -138,7 +119,7 @@ var vm =new Vue({
     mounted() {
 
         //起始路由
-        this.$router.push('/prolist');
+        this.$router.push('/');
     }
 })
 

@@ -1,39 +1,51 @@
-import util from 'util/util.js';
-import $ from 'jquery';
-import layer from 'layer';
-import {request, API_URLS, HOST} from 'util/request.js';
 
-    new Vue({
-        compiled:function(){
+import Vue from 'vue';
+import AppHeader from 'components/header.vue'
+import AppOrder from 'components/AppOrder.vue'
 
-        },
-        ready: function() {
 
-        },
-        data: {
-            message: '请选择一个付款方式',
-            index:0,
-            choice:{
-                'fir':true,
-                'sec':false,
-                'thr':false
-            }
-        },
-        computed:{
+import store from './vuex/store'
+import VueRouter from 'vue-router'
 
+import Order from 'components/Order.vue'
+import nav2 from 'components/nav2.vue'
+
+//路由配置
+Vue.use(VueRouter)
+
+//定义根组件
+Vue.component('app',AppOrder);
+
+//定义头组件
+Vue.component('app-header',AppHeader);
+
+
+// //路由配置
+//如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
+const router = new VueRouter({
+    routes: [
+        {
+            path: '/',
+            name: 'Order',
+            component:Order
         },
-        methods: {
-            toBack:function(){
-                location.href="./index.html";
-            },
-            toPrint:function(){
-                location.href="./print.html";
-            },
-            switchPay:function (index) {
-                this.index = index;
-            },
-            choiceDis:function(param){
-                this.choice[param] = !this.choice[param];
-            }
+        {
+            path: '/nav2',
+            component:nav2
         }
-    }).$mount('#main');
+    ]
+})
+
+var vm=new Vue({
+        created:function(){
+
+
+        },
+        store,
+        router,
+        el:'#main',
+        mounted() {
+            //起始路由
+            //this.$router.push('/');
+        }
+    })

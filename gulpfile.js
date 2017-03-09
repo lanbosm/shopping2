@@ -49,7 +49,7 @@ gulp.task('clean', function () {
         .pipe(clean({force: true}));
 });
 
-
+//gulp-autoprefixer
 //将第三方css拷贝目录
 gulp.task('copy:css', function () {
     return  gulp.src(['src/css/**/*.css']).pipe(gulp.dest('dist/css'));
@@ -276,7 +276,8 @@ gulp.task('webpackDevServer',function(){
         inline:true,
         hot: true,
         compress: false,
-        stats: { colors: true }
+        stats: { colors: true },
+
     });
     server.listen( host.port, "localhost", function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);

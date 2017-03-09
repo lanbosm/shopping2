@@ -1,31 +1,36 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12">
-           我是导航二
-        </div>
-    </div>
+   	<ol class="breadcrumb">                 
+        <li class="active'"><span  class="glyphicon glyphicon-home"></span><a href="#">首页2</a></li>
+        <li class="active'"><span  class="glyphicon"></span><a href="#">分类2</a></li>
+        <li class="active'"><span  class="glyphicon"></span><a href="#">品牌2</a></li>
+    </ol>
 </template>
 
+<style>
+</style>
 <script>
-    export default {
-        name: 'ProductList',
-        props:["pageSize","itemData"],
-        computed:{
+    "use strict";
+  
+    export default{
+        compiled() {
 
         },
+        ready(){
+            //数据传递
+			
+        },
+        computed: {
+            //数据来自全局
+            listData () {
+                return [];
+            },
+        },
         methods:{
-            //页数改变后的回调，参数为改变后的页码
-                mmmm(index){
-                let ts = this;
+            filterList:function(id){
 
-                //使当前页变为改变后的页码
-                ts.currentPage = index;
+                this.cartData.index=index;
             }
         }
     }
 </script>
 
-<style scoped>
-
-
-</style>
