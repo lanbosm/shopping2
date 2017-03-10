@@ -1,23 +1,23 @@
 
-.bill-row(){
+.order-row(){
   border-bottom: @borderDashedStyle;
   border-width: 2px;
 }
 
 
 
-.bill-header-btn(){
-  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
-  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+.order-header-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
 }
 
-.bill-print-btn(){
-  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,15px);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,15px);}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,15px);}
-  &.select{.class-bill-btn(#ffffff,@green,#cccccc,5px,15px);}
+.order-print-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,15px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,15px);}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,15px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc,5px,15px);}
 }
 
 
@@ -40,24 +40,24 @@
   .print-header{
     padding: 15px;
     position: relative;
-    .bill-row;
+    .order-row;
     h3{
       font-size: 18px; line-height: 30px; margin: 0;
       span{
         color: @themeColor;}
     }
     .ok-btn,.back-btn{
-        .bill-header-btn;
+        .order-header-btn;
     }
   }
   .print-custom{
      padding: 30px 15px;
      position: relative;
      width: 60%;
-    .bill-row;
+    .order-row;
     .print-btn{
          font-size: 18px;
-        .bill-print-btn;
+        .order-print-btn;
 
     }
 
@@ -65,7 +65,7 @@
   }
   .print-body{
       position: relative;
-      .bill-row;
+      .order-row;
       width: 60%;
       height:900px;
       .print-box{

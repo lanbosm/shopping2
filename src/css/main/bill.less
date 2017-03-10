@@ -1,35 +1,35 @@
 
-.bill-row(){
+.order-row(){
   border-bottom: @borderDashedStyle;
   border-width: 2px;
 }
 
-.bill-custom-btn(){
-  .class-bill-btn(#666666,#ffffff,#cccccc);
-  &:hover{ .class-bill-btn(#666666,#ffffff,#999999);}
-  &:active{ .class-bill-btn(#666666,#ffffff,#999999);}
-  &.select{.class-bill-btn(#666666,#ffffff,#999999);}
+.order-custom-btn(){
+  .class-order-btn(#666666,#ffffff,#cccccc);
+  &:hover{ .class-order-btn(#666666,#ffffff,#999999);}
+  &:active{ .class-order-btn(#666666,#ffffff,#999999);}
+  &.select{.class-order-btn(#666666,#ffffff,#999999);}
 }
 
 
-.bill-header-btn(){
-  .class-bill-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
-  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+.order-header-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
 }
 
-.bill-left-btn(){
-  .class-bill-btn(#666666,#f0eeef,#cccccc);
-  &:hover{ .class-bill-btn(#ffffff,@green,#cccccc);}
-  &:active{ .class-bill-btn(#ffffff,#3b8c64,#cccccc);}
-  &.select{.class-bill-btn(#ffffff,@green,#cccccc);}
+.order-left-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc);}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
 }
 
 
-.bill-wrap{background: #f0eeef;}
-.bill{
-
+.order-wrap{background: #f0eeef;}
+.order{
+  background: #efefef;
   .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
   .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
   .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
@@ -42,18 +42,19 @@
   .btn{
     position:relative;
   }
-  .bill-header{
+  .order-header{
     padding: 15px;
     position: relative;
-    .bill-row;
+    .order-row;
     h3{
       font-size: 18px; line-height: 30px; margin: 0;
     }
     .ok-btn,.back-btn{
-        .bill-header-btn;
+        .order-header-btn;
     }
   }
-  .bill-custom{
+
+  .order-custom{
      padding: 30px 15px;
      position: relative;
     .cur{
@@ -62,10 +63,10 @@
         color: @themeColor !important;
       }
     }
-    .bill-row;
+    .order-row;
     .custom-btn{
          font-size: 18px;
-        .bill-custom-btn;
+        .order-custom-btn;
 
     }
     .coupon-btn,.point-btn,.balance-btn{
@@ -88,16 +89,16 @@
            margin: 0 auto;
          }
 
-        .bill-custom-btn;
+         .order-custom-btn;
          &:hover span,&.selected span{color:@themeColor; }
 
     }
 
 
   }
-  .bill-body{
+  .order-body{
       position: relative;
-      .bill-row;
+      .order-row;
 
       .left-con{
         padding-top: 15px;
@@ -105,17 +106,23 @@
         height:850px;
         border-right: @borderDashedStyle;
         border-width: 2px;
-
+        position: relative;
         .btn{
           margin-top: 15px; margin-bottom: 30px; font-size: 18px;
           span {margin-right: 20px;}
         }
         .scan-btn,.money-btn,.card-btn{
-          .bill-left-btn;
+          .order-left-btn;
+        }
+        .recharge-btn{
+          margin-top: 100px;
+          .order-left-btn;
         }
         .on {
           background-color: @green;
+          color: #ffffff;
         }
+
       }
 
       .tab-con{

@@ -10,6 +10,7 @@ const store = new Vuex.Store({
   state: {
     author: 'lanbo',
     loading:false,
+    mode:"order",  //模式
     headData:{
           index:0,
           staff:"李科兴",
@@ -37,17 +38,25 @@ const store = new Vuex.Store({
               }
           ],
     },
-    vipData:{
-        index:0,
-        list:[
-
-        ]
+    vipData: {
+        "appMember": {
+            "id": 6429,
+            "headPortrait": "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png",
+            "username": "13636555444",
+            "nickname": "222",
+            "point": 0,
+            "balance": 0,
+            "appCoupons": []
+        }
     }
   },
    // 变量赋值
   mutations:{
       setLoading(state,data){
         state.loading=data;
+      },
+      setMode(state,data){
+          state.mode=data;
       },
       setPageData (state,data){
           state.pageData=data;

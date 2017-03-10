@@ -1,9 +1,7 @@
 <template>
-   	<ol class="breadcrumb">                 
-        <li class="active'"><span  class="glyphicon glyphicon-home"></span><a href="#">首页</a></li>
-        <li class="active'"><span  class="glyphicon"></span><a href="#">分类</a></li>
-        <li class="active'"><span  class="glyphicon"></span><a href="#">品牌</a></li>
-    </ol>
+    <div class="content">
+            404
+    </div>
 </template>
 
 <style>
