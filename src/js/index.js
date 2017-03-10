@@ -24,10 +24,6 @@ Vue.component('App',App);
 //路由配置
 Vue.use(VueRouter)
 
-// const router = new VueRouter({
-//     mode: 'history',
-//     routes: routers
-// })
 import ProductList from 'components/list.vue';
 
 //路由配置

@@ -41,8 +41,8 @@ module.exports = {
     entry: getEntry(),
     
     output: {
-        path: path.join(ROOT_PATH, "./dist/js/"),
-        publicPath: "/dist/js/",
+        path: path.join(ROOT_PATH, "./dist"),
+        publicPath: "/js", //gulp 已经托管了WebpackDevServer
         filename: "[name].js",
     },
     externals: {

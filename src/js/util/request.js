@@ -2,10 +2,11 @@
  * Created by Administrator on 2017/2/6.
  * wiki http://www.cnblogs.com/keepfool/p/5625583.html
  */
-//wiku http://www.cnblogs.com/dupd/p/5951311.html
+//wiki es6  http://www.cnblogs.com/dupd/p/5951311.html
+//vue-resource https://github.com/pagekit/vue-resource/blob/develop/docs/http.md
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-
+import store from '../vuex/store'
 //http请求
 Vue.use(VueResource)
 /**
@@ -24,28 +25,32 @@ export const API_URLS = {
     products: "/cashier/member/products/",
 
 
-    products_json: "/dist/data/products.json" //假数据
+    products_json: "/data/products.json" //假数据
 
 
 };
 
+Vue.http.options.emulateJSON = true; //json模式
+Vue.http.options.timeout = 500;  //500超时
+/**
+ * 四大金刚
+ * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
+ */
 export const request = {
 
     fnGet: function (vm, apiObj, success, error) {
-
         vm.$http.get(HOST+apiObj.url, {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'},
         }).then((response) => { //成功
                 if (response.data.code == 20000) {
-
                     if (success) {
                         success(response.data);
                     }
                 } else {
-
                     if (error) {
                         error(response.data);
+                        store.state.loading=false;
                     }
                 }
             })
@@ -68,6 +73,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
+                        store.state.loading=false;
                     }
                 }
             })
@@ -89,6 +95,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
+                        store.state.loading=false;
                     }
                 }
             })
@@ -112,6 +119,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
+                        store.state.loading=false;
                     }
                 }
             })
@@ -126,11 +134,7 @@ export const request = {
 /**
  * 全局Vue拦截器
  */
-
 Vue.http.interceptors.push(function (request, next) {
-
-    //加载层-风格3
-    let loading = layer.load(3);
 
     let accessToken = window.localStorage.getItem("accessToken");
     if (accessToken) {
@@ -144,30 +148,26 @@ Vue.http.interceptors.push(function (request, next) {
     }
 
     console.log(signature);
-   // console.log("token:" + accessToken);
-    // document.getElementById("loadBox").style.display = 'block';
+    store.state.loading=true;
+     // console.log("token:" + accessToken);
+
     next(function (response) {
         // if(!response || !response.data){
         //     return false;
         // }
-        response.data = response.json();
-
+        // response.data = response.json(); //本地假数据时注销
+        store.state.loading=false;
         if (response.data.code == 49001) {
-            layer.msg('请求失败', {icon: 2});
+
             window.location.href = response.data.loginUrl;
             return true;
         } else if (response.data.code == 49002) {
-            layer.msg('请求失败', {icon: 2});
+
             window.location.href = window.host_index;
             return true;
         } else {
+            return false;
 
-            Vue.nextTick(function () {
-                layer.close(loading);
-                setTimeout(function () {
-
-                }, 500);
-            });
         }
     });
 });

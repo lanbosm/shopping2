@@ -6,6 +6,7 @@
                         <breadcrumb></breadcrumb>
                     </div>
                     <div class="left-con-content">
+                        <Loading v-if="loading"></Loading>
                         <div class="item-box panel panel-primary">
                             <div class="panel-heading">
                                 <!--<div class="row" v-show="navData.show" >-->
@@ -70,6 +71,7 @@
     import Pagination  from 'components/Pagination.vue';
     import AppCart from 'components/cart.vue';
     import AppCalc from 'components/calc.vue';
+    import Loading from 'components/Loading.vue';
 
     export default{
         name: 'app',
@@ -82,27 +84,23 @@
         },
         computed: {
             //数据来自全局
+            loading () {
+                    return this.$store.state.loading;
+            }
 
         },
         components: {
             'cart':AppCart,              //购物车
             'calc':AppCalc,              //计算器
              Pagination,                 //分页器
-             breadcrumb                  //面包屑
+             breadcrumb,                  //面包屑
+             Loading
         },
         methods:{
             //创建订单
             buildOrder:function(cart){
                 alert("创建订单");
                 console.log(cart);
-                // if(this.cartData.list.length>0) {
-                //     // console.log(this.cartData.list);
-                //     // this.$parent.buildBill2();
-                //     this.$emit('increment')
-                //     //location.href = "./bill.html";
-                // }else{
-                //     alert('请先选择物品');
-                // }
             },
 
         },
@@ -112,8 +110,6 @@
            // alert(id);
         },
         mounted(){
-
-            var vm = this;
 
             //组件开始挂载时获取用户信息
             //alert(66);

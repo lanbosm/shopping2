@@ -265,20 +265,29 @@ gulp.task('webpackDevServer',function(){
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
 
+
     //tips
     //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
     //官网的解释是webpack-dev-server没有权限读取webpack的配置
 
     var compiler = webpack(config);
     var server = new WebpackDevServer(compiler, {
-        contentBase: "./",
-        publicPath: "/dist/js/",
+        contentBase: config.output.path,
+        publicPath: config.output.publicPath,
         inline:true,
         hot: true,
         compress: false,
         stats: { colors: true },
+        // proxy: {
+        //     '/data/*': {
+        //         target: 'http://localhost:3000/',
+        //         changeOrigin: true,
+        //         secure: false
+        //     }
+        // }
 
-    });
+
+        });
     server.listen( host.port, "localhost", function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening

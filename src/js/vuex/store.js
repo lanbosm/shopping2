@@ -9,6 +9,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     author: 'lanbo',
+    loading:false,
     headData:{
           index:0,
           staff:"李科兴",
@@ -45,8 +46,8 @@ const store = new Vuex.Store({
   },
    // 变量赋值
   mutations:{
-      author (state,msg){
-         state.author=msg;
+      setLoading(state,data){
+        state.loading=data;
       },
       setPageData (state,data){
           state.pageData=data;

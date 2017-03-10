@@ -1,5 +1,5 @@
 import util from 'util/util.js';
-import $ from 'jquery';
+import Vue from 'vue'
 import layer from 'layer';
 import {request, API_URLS, HOST} from 'util/request.js';
 import RSAKey from 'util/rsa.js';
