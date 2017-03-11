@@ -2,8 +2,8 @@
 	<div class="shoppingCalc">
 		<table class="table table-bordered" >
 			<tbody >
-			<tr >
-				<td colspan="3" class="t1" data-toggle="modal" data-target="#custom-layer"><span class="glyphicon glyphicon-user"></span>顾客</td>
+			<tr>
+				<td colspan="3" class="t1" @click="showCustomModal" ><span class="glyphicon glyphicon-user"></span>顾客</td>
 				<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
@@ -59,6 +59,29 @@
             }
         },
         methods:{
+            //显示会员模块
+			showCustomModal(){
+			    var layerCustom='#layer-custom';
+                function centerModals() {
+                    $(layerCustom).each(function(i) {
+                        var $clone = $(this).clone().css('display','block').appendTo('body');
+                        var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                        top = top > 0 ? top : 0;
+                        $clone.remove();
+                        $(this).find('.modal-content').css("margin-top", top);
+                    });
+                };
+                $(layerCustom).on('show.bs.modal', centerModals);
+                //禁用空白处点击关闭
+                $(layerCustom).modal({
+                    backdrop: 'static',
+                    keyboard: false,//禁止键盘
+                    show:false
+                });
+				//页面大小变化是仍然保证模态框水平垂直居中
+                $(window).on('resize', centerModals);
+                $(layerCustom).modal('toggle');
+			},
             //计算器
             calc:function(keycode){
                 var vm=this;

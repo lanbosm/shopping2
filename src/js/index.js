@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 import appHeader from 'components/header.vue'
 import App from 'components/App.vue'
-import layerCustom from 'components/layer-custom.vue';
+import CustomModal from 'components/CustomMain.vue';
 // import util from 'ui/model.js';
 
 import store from './vuex/store'
@@ -17,14 +17,16 @@ Vue.component('app-header',appHeader);
 
 //定义根组件
 Vue.component('App',App);
+
 //定义顾客组件
-//Vue.component('layer-custom',layerCustom);
+Vue.component('layer-custom',CustomModal);
 
 
 //路由配置
 Vue.use(VueRouter)
 
 import ProductList from 'components/list.vue';
+
 
 //路由配置
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
@@ -38,6 +40,7 @@ const router = new VueRouter({
 
     ]
 })
+
 
 //vue实例
 var vm =new Vue({

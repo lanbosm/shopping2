@@ -38,16 +38,17 @@ const store = new Vuex.Store({
               }
           ],
     },
-    vipData: {
-        "appMember": {
-            "id": 6429,
-            "headPortrait": "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png",
-            "username": "13636555444",
-            "nickname": "222",
-            "point": 0,
-            "balance": 0,
-            "appCoupons": []
-        }
+    customData: {
+            "id":6282,
+            "headPortrait":"http://wx.qlogo.cn/mmopen/0nn3FBrD9a3NichacG5w0ic23TUfNCuOHP7IuSN0uSrfwNnZxlcFwJTVFaicr070Id03Ne8bzlCz04IstCQN07cgKXZ76GGb9tM/0",
+            "username":"15616268045",
+            "nickname":"aoop",
+            "sex":"male",
+            "point":0,
+            "balance":0,
+            "phone":13555777222,
+            "appCoupons":[
+            ]
     }
   },
    // 变量赋值

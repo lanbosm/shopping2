@@ -1,5 +1,5 @@
 <template>
-	<div class="container-fluid index" id="app">
+	<div class="container-fluid index" >
             <div class="row" >
                 <div class="col-sm-8  col-md-9 left-con">
                     <div class="left-con-header">

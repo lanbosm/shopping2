@@ -59,9 +59,9 @@
             },
             fetchData:function () {
                     var vm=this;
-                    var page=this.$route.query.page;
+                    var page=this.$route.query.page||1;
                     var apiObj={
-                        url: API_URLS.products_json,
+                        url: API_URLS.products,
                         data:{'page':page}
                     };
 
