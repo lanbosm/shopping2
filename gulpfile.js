@@ -20,8 +20,8 @@ const gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     clean = require('gulp-clean'),
     spriter = require('gulp-css-spriter'),
-    base64 = require('gulp-css-base64');
-
+    base64 = require('gulp-css-base64'),
+    open = require('gulp-open');
 
 
 
@@ -63,10 +63,6 @@ gulp.task('copy:images', function () {
 //复制假数据
 gulp.task('copy:data',function(){
     return  gulp.src(['src/data/**/*.json']).pipe(gulp.dest('dist/data'));
-
-   // console.log(222);
-
-
 });
 // 合并lib文件 通常是第三方库
 gulp.task('copy:lib',function(){
@@ -218,9 +214,7 @@ gulp.task('watch', function (done) {
     //分别对html css js 处理 本来写**/* 其他文件也会多余操作
     gulp.watch('src/app/**/*.html', ['fileinclude']);
     gulp.watch('src/app/**/*.inc', ['fileinclude']);
-
     gulp.watch('src/css/**/*.less', ['lessmin']);
-
     gulp.watch('src/js/**/*.js', ['build-js']);
 
 });
@@ -291,8 +285,10 @@ gulp.task('webpackDevServer',function(){
     server.listen( host.port, "localhost", function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening
-        // gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
         console.log("listen successful , port at 3000");
+        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://localhost:3000'}));
+
+
     });
 
     // server.close();

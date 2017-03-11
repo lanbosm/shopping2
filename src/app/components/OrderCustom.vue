@@ -7,24 +7,9 @@
                     </a>
                 </div>
 
-                <recharge-list></recharge-list>
+                <info-list v-if="showInfo"></info-list>
+                <recharge-list v-if="showRecharge"></recharge-list>
 
-                <coupon-list></recharge-list>
-                <!--<div class="col-nn-23 ">-->
-                    <!--<a class="btn btn-default  coupon-btn btn-block" :class={cur:true} @click="choiceDis('fir')">-->
-                        <!--<b>优惠券</b><span>- ¥  20.00</span>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-nn-23">-->
-                    <!--<a class="btn btn-default  point-btn btn-block" :class={cur:true} @click="choiceDis('sec')">-->
-                        <!--<b>100积分</b><span>- ¥  10.00</span>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-nn-23">-->
-                    <!--<a class="btn btn-default  balance-btn btn-block" :class={cur:true} @click="choiceDis('thr')">-->
-                        <!--<b>¥  20余额</b><span>- ¥  20.00</span>-->
-                    <!--</a>-->
-                <!--</div>-->
             </div>
         </div>
 </template>
@@ -33,12 +18,12 @@
 </style>
 <script>
     "use strict";
+    import InfoList from 'components/InfoList.vue';
     import RechargeList from 'components/RechargeList.vue';
 
     export default{
-        compiled() {
-
-        },
+        name: 'OrderHeader',
+        props:["showInfo","showRecharge"],
         data() {
             return {
                 message: '请选择一个付款方式',
@@ -58,11 +43,10 @@
         },
         components: {
             RechargeList,
+            InfoList
         },
         methods: {
-                toBack:function(){
-                    location.href="./index.html";
-                },
+
                 toPrint:function(){
                     location.href="./print.html";
                 },
