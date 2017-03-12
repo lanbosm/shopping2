@@ -89,9 +89,9 @@ gulp.task('copy:lib',function(){
 
 
     //针对vue
-    gulp.src(['vue/vue.min.js','vue/vue-router.min.js','vue/vue-resource.min.js'],{
-        cwd:'./lib/'
-    }).pipe(concat('vue.min.js')).pipe(gulp.dest('./dist/js'));
+    // gulp.src(['vue/vue.min.js','vue/vue-router.min.js','vue/vue-resource.min.js'],{
+    //     cwd:'./lib/'
+    // }).pipe(concat('vue.min.js')).pipe(gulp.dest('./dist/js'));
 
 })
 
@@ -185,7 +185,6 @@ gulp.task('rev:html', function (done) {
             prefix: '@@',
             basepath: '@file'
         }))
-
 
         .pipe(gulp.dest('dist/app'))
 });
@@ -317,6 +316,8 @@ gulp.task('pro', ['clean'],function(){
     gulp.start('copy',function(){
         gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
             console.log("生成终了..");
+
+
         });
     });
 });
@@ -332,5 +333,15 @@ gulp.task('webpack-dev', ['clean'],function(){
 gulp.task('webpack-prod', ['clean'],function(){
     gulp.start('copy','rev:html','rev:css','rev:js',function(){
         console.log("打包好了");
+        browserSync.init({
+            server: {
+                baseDir: host.path,
+                directory: true
+            },
+            port: host.port
+
+
+        });
+
     });
 });

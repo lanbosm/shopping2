@@ -52,23 +52,7 @@
             toRegister(){
                this.$parent.searchShow=false;
                this.$parent.registerShow=true;
-            },
-            //to
-            toCustom(){
-
-                $('#example').modal('show')
-
-            },
-            //去登录
-            tologin(){
-
-
-            },
-            //去注册
-            toregister(customdata){
-                 if (customdata){
-                     this.$dispatch('register', customdata)
-                 }
+               this.$parent.infoShow=false;
             }
         }
     }

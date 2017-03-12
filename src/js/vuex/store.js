@@ -19,25 +19,13 @@ const store = new Vuex.Store({
           ]
     },
     pageData:{},
-    cartData:{
-          index:0,
-          list:[
-              {
-                  'title':'测试商品',
-                  'name':'测试商品的名称',
-                  'selectDate':"2016-03-07",
-                  'amount':'1',
-                  'price':12
-              },
-              {
-                  'title':'测试商品2',
-                  'name':'测试商品的名称2',
-                  'selectDate':"2016-03-07",
-                  'amount':'1',
-                  'price':12
-              }
-          ],
+    itemData:{
+        appProductDetail:{},
+        appSpecifications:[]
     },
+    cartData:[
+
+    ],
     customData: {
             "id":6282,
             "headPortrait":"http://wx.qlogo.cn/mmopen/0nn3FBrD9a3NichacG5w0ic23TUfNCuOHP7IuSN0uSrfwNnZxlcFwJTVFaicr070Id03Ne8bzlCz04IstCQN07cgKXZ76GGb9tM/0",
@@ -61,6 +49,12 @@ const store = new Vuex.Store({
       },
       setPageData (state,data){
           state.pageData=data;
+      },
+      setItemData (state,data){
+          state.itemData=data;
+      },
+      setCartData (state,data){
+          state.cartData=data;
       }
 
   }

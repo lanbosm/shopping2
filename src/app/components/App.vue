@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <router-view :page-size="pageSize" ></router-view>
+                                <router-view :page-size="pageSize" @open-detail="openDetail" ></router-view>
                             </div>
                             <div class="panel-footer">
                                 <Pagination :page-size="pageSize" ></Pagination>
@@ -60,6 +60,7 @@
                     <calc @trigger-build-order="buildOrder"></calc>
                 </div>
             </div>
+            <list-item :product-detail="productDetail" :specifications="specifications" :gift-index="giftIndex" @close-detail="closeDetail"></list-item>
     </div>
 </template>
 
@@ -72,6 +73,8 @@
     import AppCart from 'components/cart.vue';
     import AppCalc from 'components/calc.vue';
     import Loading from 'components/Loading.vue';
+    import ListItem from 'components/ListItem.vue';
+    import layer from 'layer';
 
     export default{
         name: 'app',
@@ -79,13 +82,21 @@
             return {
                 pageSize:8,                 //一页显示多少个
                 page:{},
-                categoryShow:false
+                categoryShow:false,
+                giftIndex:0
             }
         },
         computed: {
             //数据来自全局
             loading () {
                     return this.$store.state.loading;
+            }, //
+            productDetail (){
+                    return this.$store.state.itemData.appProductDetail;
+            },
+            specifications (){
+
+                    return this.$store.state.itemData.appSpecifications;
             }
 
         },
@@ -94,6 +105,7 @@
             'calc':AppCalc,              //计算器
              Pagination,                 //分页器
              breadcrumb,                  //面包屑
+             ListItem,                    //商品详情
              Loading
         },
         methods:{
@@ -102,7 +114,74 @@
                 alert("创建订单");
                 console.log(cart);
             },
+            openDetail() {
+                var itemGift = false;
+                var itemswiper = '';
+                //是否存在赠品
+                // alert(this.$store.state.itemData.appProductDetail.appGiftActivity.name);
+                this.$store.state.itemData.appProductDetail.appGiftActivity.name ? itemGift : itemGift = true;
+                itemGift = true;
+                this.$nextTick(() => {
+                    //弹出页面层
+                    var vm=this;
+                    layer.open({
+                        id: 'layui-layer-item',
+                        type: 1,            //1 普通层
+                        shade: 0.01,  //遮罩
+                        anim: 0,
+                        zIndex: 1000,
+                        closeBtn: 2,
+                        title: false,
+                        area: ['auto', 'auto'], //宽高
+                        content: $('#layer-item-box'),
+                        success: function () {
+                            if (itemGift){  //如果存在赠品
 
+                                itemswiper = new Swiper('.gift-detail-item', {
+                                     pagination: '.gift-detail-item-pagination',
+                                    paginationClickable: true,
+                                    spaceBetween: 10
+
+                                });
+
+                              itemswiper.on('onSlideChangeEnd', function (swiper) {
+                                   //some code
+                                  $(".gift-detail-tab").find('a').removeClass('selected');
+                                  $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
+                                  vm.giftIndex=swiper.activeIndex;
+
+                              })
+
+                              $(".gift-detail-tab").find('a').eq(0).addClass('selected');
+                              $(".gift-detail-tab").find('a').on('click',function(){
+
+                                     itemswiper.slideTo($(this).index());//
+                                     vm.giftIndex=$(this).index();
+                               })
+
+                            }
+                        },
+                        end: function () {
+                            // alert("销毁了");
+                            if(itemGift){
+                                itemswiper.destroy();
+                                $(".gift-detail-tab").find('a').off().removeClass('selected');
+                            }
+                        }
+                    });
+
+                })
+            },
+            closeDetail(item){
+                    layer.closeAll();
+                    this.pushCart(item);
+
+            },
+            pushCart(item){
+                    var cartData=this.$store.state.cartData;
+                    cartData.push(item);
+                    this.$store.commit("setMode",cartData);
+            }
         },
         created(){
 

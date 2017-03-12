@@ -43,7 +43,8 @@
                         <div class="custom-ticket-header">优惠券</div>
                         <div class="custom-ticket-body">
                         <ul>
-                        <li v-for="(index,custom) in [22,11,55,11,22]">
+                        <div class="text-center" v-if="customData.appCoupons && customData.appCoupons.length==0">暂无优惠券</div>
+                        <li v-for="(index,custom) in customData.appCoupons">
                         <div class="left">
                         <span class="m">300.00</span>
                         <span class="u">满300可用</span>
@@ -87,23 +88,7 @@
             toRegister(){
                this.$parent.searchShow=false;
                this.$parent.registerShow=true;
-            },
-            //to
-            toCustom(){
-
-                $('#example').modal('show')
-
-            },
-            //去登录
-            tologin(){
-
-
-            },
-            //去注册
-            toregister(customdata){
-                 if (customdata){
-                     this.$dispatch('register', customdata)
-                 }
+               this.$parent.infoShow=false;
             }
         }
     }

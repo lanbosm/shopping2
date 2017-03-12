@@ -11,9 +11,10 @@
 /*!bootstrap*/
 .navbar-brand{padding:0}
 .navbar-inverse .navbar-brand,.navbar-inverse .navbar-nav>li>a{color:#fff!important}
-.main{height:auto;}
+.main{height:auto; max-width: 1920px;}
 .modal-backdrop.in{opacity:.5}
 .glyphicon{margin-right:5px}
+.breadcrumb{background: none; margin-bottom: 10px; font-size:.9rem}
 .breadcrumb>li+li:before{content:" > "}
 .breadcrumb li a{color:#333}
 .breadcrumb li.active a{color:#539776}
@@ -29,6 +30,41 @@
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{background:#6fc89c;color:#fff}
 .col-fixed-3{padding-left:15px;width:300px;padding-right:15px;position:fixed;margin-top:0}
 
+@media (min-width: 768px) {
+
+	.col-sm-33 {
+
+		width: 33%;
+
+		float: left;
+
+	}
+
+}
+
+@media (min-width: 992px) {
+
+	.col-md-50 {
+
+		width: 20%;
+
+		float: left;
+
+	}
+
+}
+
+@media (min-width: 1200px) {
+
+	.col-lg-50 {
+
+		width: 20%;
+
+		float: left;
+
+	}
+
+}
 
 
 /*!共有btn*/

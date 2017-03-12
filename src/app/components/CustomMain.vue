@@ -98,9 +98,9 @@
     export default{
         data(){
             return {
-                searchShow:false,
+                searchShow:true,
                 registerShow:false,
-                infoShow:true
+                infoShow:false
             }
         },
         components:{

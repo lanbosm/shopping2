@@ -1,8 +1,8 @@
 <template>
    	<div class="shoppingCart">
-				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.list.length==0}">
+				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.length==0}">
 					<ul>
-						<li :class="{checked:cartData.index==index}" v-for="(index,item) in cartData.list " track-by="$index" @click="checkcartData($event,index);">
+						<li :class="{checked:false}" v-for="(item,index) in cartData " track-by="$index" @click="checkcartData($event,index);">
 							<div class="shoppingCart-item">
 								<p>{{item.title}}</p>
 								<p class="small">
@@ -12,7 +12,7 @@
 									<span>数量 :{{item.amount}} * 单价 {{item.price  }}</span><span></span>
 								</p>
 								<p class="total">
-									<span>{{item.amount*item.price }}</span>
+									<span>{{item.amount*item.price | currency }}</span>
 								</p>
 							</div>
 						</li>
@@ -38,6 +38,12 @@
         compiled() {
 
         },
+        filters: {
+            currency: function (value) {
+                if (!value) return '';
+                return '¥ ' + value.toFixed(2);
+            }
+        },
         ready(){
             //数据传递
 			this.setCartHeight();
@@ -46,11 +52,12 @@
         computed: {
             //数据来自全局
             cartData () {
+                console.log(this.$store.state.cartData);
                 return this.$store.state.cartData
             },
             totalprice () {
                 var total=0;
-                this.cartData.list.forEach(function(e,i){
+                this.cartData.forEach(function(e,i){
                     total+=e.price*e.amount;
                 })
                 return total;
@@ -66,11 +73,11 @@
 
 
                     if (w >= 768) {
-                        $("#shoppingCart-list").show();
+                        document.getElementById("#shoppingCart-list").style.display="block";
                         document.getElementById("shoppingCart-list").style.height = lh - ch - 140 + "px";
                     } else {
 
-                        $("#shoppingCart-list").hide();
+                        document.getElementById("#shoppingCart-list").style.display="none";
                     }
 
 			},

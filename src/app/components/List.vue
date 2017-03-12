@@ -6,8 +6,8 @@
         </div>
     </div>
     <div class="row"  v-else-if="itemData.length!=0">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 item" v-for="(item,index) in itemData ">
-             <div class="thumbnail" @click="openItem(item.id);">
+        <div class="col-lg-50 col-md-50 col-sm-33 col-xs-12 item" v-for="(item,index) in itemData ">
+             <div class="thumbnail" @click="fetchItem(item.id);">
                  <a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
                  <div class="prcie primary">{{item.price | currency }}元</div>
                  <div class="photo"  >
@@ -39,10 +39,10 @@
             }
         },
         created(){
-            this.fetchData();
+            this.fetchList();
         },
         watch: {
-            '$route': 'fetchData'
+            '$route': 'fetchList'
         },
         filters: {
             currency: function (value) {
@@ -51,13 +51,24 @@
             }
         },
         methods:{
-            //页数改变后的回调，参数为改变后的页码
-            goToCallback(index){
-                let ts = this;
-                //使当前页变为改变后的页码
-                ts.currentPage = index;
+            //获取物品详情
+            fetchItem:function(pid){
+
+                var apiobj={
+                    url:API_URLS.products50,
+                    data:{
+                        'id':pid
+                    }
+                };
+
+                request.fnGet(this,apiobj,(res)=>{
+                    console.log(res);
+                    this.$store.commit("setItemData",res);
+                    this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
+                })
             },
-            fetchData:function () {
+            //请求列表
+            fetchList() {
                     var vm=this;
                     var page=this.$route.query.page||1;
                     var apiObj={
@@ -66,10 +77,9 @@
                     };
 
 
-                //请求数据
-                request.fnGet(vm,apiObj,function(res){
-                    vm.$store.commit("setPageData",res.page);
-                })
+                    request.fnGet(vm,apiObj,(res)=>{
+                        this.$store.commit("setPageData",res.page);
+                    })
 
             }
         }

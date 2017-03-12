@@ -77,6 +77,7 @@
             toCancel(){
                this.$parent.searchShow=true;
                this.$parent.registerShow=false;
+               this.$parent.infoShow=false;
             },
             searchCustom(){
 

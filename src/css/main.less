@@ -33,14 +33,21 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      @media (max-width: 768px) {
+        font-size:1.2rem;
 
+      }
     }
     .thumbnail .photo{
-      width:100%;height:10rem;line-height:10rem;font-size:0;text-align:center;overflow:hidden;cursor:pointer;
+      width:100%; height:5.5rem; line-height: 5.5rem;  vertical-align:middle; text-align:center;overflow:hidden;cursor:pointer;
+      @media (max-width: 768px) {
+        height: auto;
 
+      }
     }
 
-    .thumbnail .photo>img{display:inline;max-width:10rem;max-height: 10rem;   background: url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
+
+    .thumbnail .photo>img{display:inline-block; width: 50%;  margin: 0 auto;   background: url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
      background-size:cover;}
     .thumbnail .buy-btn{right:0;bottom: 8px;}
     .thumbnail .list-btn{right:0;top:8px; }
@@ -52,9 +59,9 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   .panel{border:none}
   .panel-heading{color:#fff;background:0 0;padding:0;border:none;
     position: relative;}
-  .panel-heading .shuaixuan{padding:10px 20px; margin-top:3px;
+  .panel-heading .shuaixuan{padding:10px 10px; margin-top:3px; font-size: .9rem;
     position: relative;border-bottom-left-radius:0;border-bottom-right-radius:0}
-  .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:15px 25px ; min-height:530px;}
+  .panel-body{border:1px solid #e5e5e5;border-radius:5px;padding:15px 25px ; min-height:570px;}
   .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
   .panel-heading .nav-tabs>li>a{width:120px}
   .product;
@@ -104,6 +111,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
           img{width: 80%; margin: 0 auto; max-height: 160px; }
           .name{margin-top: 10px; overflow: hidden;}
       }
+      .stock{color:#999999;}
       .specs-box{
           position: relative;
          .specs-btn{ position: relative; margin:5px 12px; float: left; color: #999999; border:solid 1px #999999;
@@ -139,7 +147,10 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
           top:60px;
           margin: 0 auto;
 
-          .swiper-slide {background:none no-repeat 50% 50% ; background-size: 70%;}
+          .swiper-slide {background:none no-repeat 50% 50% ;
+            img{width: 50%; margin: 0 auto;}
+          }
+
     }
     .gift-detail-tab{ top:240px; position: absolute;
         width: 100%;
