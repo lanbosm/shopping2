@@ -16,23 +16,23 @@ Vue.use(VueResource)
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
-//export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
+//export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
+export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
 
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
     login:"/cashier/login",
     login_out:"/cashier/common/log_out",
-   // products: "/cashier/member/products",
+    products: "/cashier/member/products",
     customers:"/cashier/member/customers",               //会员模块
 
 
-    products: "/data/products.json", //假数据
-    products50:"/data/products50.json"
+    //products: "/data/products.json", //假数据
+    ///products50:"/data/products50.json"
 
 };
 
-Vue.http.options.emulateJSON = true; //json模式
+//Vue.http.options.emulateJSON = true; //json模式
 Vue.http.options.timeout = 500;  //500超时
 /**
  * 四大金刚
@@ -41,6 +41,7 @@ Vue.http.options.timeout = 500;  //500超时
 export const request = {
 
     fnGet: function (vm, apiObj, success, error) {
+
         vm.$http.get(HOST+apiObj.url, {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'},
@@ -62,36 +63,28 @@ export const request = {
             })
     },
     fnPost: function (vm, apiObj, success, error) {
-        $.ajax({
-            url: HOST+apiObj.url,
-            type: 'POST',
-            dataType: 'json',
-            data:apiObj.data ,
-            success:function(){
-                success();
-            }
-        })
-        // vm.$http.post(HOST+apiObj.url, apiObj.data, {
-        //     params: apiObj.data,
-        //     headers: {'Content-Type': 'application/json'}
-        // })
-        //     .then((response) => { //成功
-        //         console.log(response.data);
-        //         if (response.data.code == 20000) {
-        //             if (success) {
-        //                 success(response.data);
-        //             }
-        //         } else {
-        //             if (error) {
-        //                 error(response.data);
-        //                 store.state.loading=false;
-        //             }
-        //         }
-        //     })
-        //     .catch(function (response) { //失败
-        //         console.log(response);
-        //         console.log("服务器连接失败");
-        //     })
+
+            vm.$http.post(HOST+apiObj.url, apiObj.data, {
+                params: apiObj.data,
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then((response) => { //成功
+                console.log(response.data);
+                if (response.data.code == 20000) {
+                    if (success) {
+                        success(response.data);
+                    }
+                } else {
+                    if (error) {
+                        error(response.data);
+                        store.state.loading=false;
+                    }
+                }
+            })
+            .catch(function (response) { //失败
+                console.log(response);
+                console.log("服务器连接失败");
+            })
     },
     fnPut: function (vm, apiObj, success, error) {
         vm.$http.put(apiObj.url, apiObj.data, {
@@ -152,13 +145,15 @@ Vue.http.interceptors.push(function (request, next) {
         request.headers.accessToken = accessToken;
     }
     let signature = getSign();
+
+
     if (signature) {
         request.headers.nonceStr = signature.nonceStr;
         request.headers.timeStamp = signature.timeStamp;
         request.headers.sign = signature.sign;
     }
 
-    console.log(signature);
+
     store.state.loading=true;
      // console.log("token:" + accessToken);
 
@@ -166,7 +161,7 @@ Vue.http.interceptors.push(function (request, next) {
         // if(!response || !response.data){
         //     return false;
         // }
-        // response.data = response.json(); //本地假数据时注销
+        response.data = response.json(); //本地假数据时注销
         store.state.loading=false;
         if (response.data.code == 49001) {
 

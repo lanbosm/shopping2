@@ -8,7 +8,8 @@
                     <div class="left-con-content">
                         <Loading v-if="loading"></Loading>
                         <div class="item-box panel panel-primary">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="color: red;">
+                                <category></category>
                                 <!--<div class="row" v-show="navData.show" >-->
                                     <!--<div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">-->
                                         <!--<div class="menu">-->
@@ -69,6 +70,7 @@
 <script>
 
     import breadcrumb from 'components/breadcrumb.vue';
+    import category from 'components/category.vue';
     import Pagination  from 'components/Pagination.vue';
     import AppCart from 'components/cart.vue';
     import AppCalc from 'components/calc.vue';
@@ -105,6 +107,7 @@
             'calc':AppCalc,              //计算器
              Pagination,                 //分页器
              breadcrumb,                  //面包屑
+             category,                    //分类
              ListItem,                    //商品详情
              Loading
         },

@@ -30,11 +30,11 @@ img{width:100%}
 .btn{display:block;z-index:30;text-indent:0}
 .hid{display:none!important}
 .poniterNone{pointer-events:none}
-body{background:url("../images/login_bg.jpg?v=1489290698706") 50% 0 no-repeat}
+body{background:url(../images/login_bg.jpg) 50% 0 no-repeat}
 .login_main .left-con,.login_main .right-con{height:900px;position:relative}
 .login_main .register-box{width:430px;position:absolute;left:0;right:0;top:50%;margin-top:-211px;padding:0 20px}
 .login_main .register-box .register-row1{height:66px}
-.login_main .register-box .register-row1 .logo{width:101px;height:66px;display:block;float:left;background:url("../images/logo.png?v=1489290698706") 50% 0 no-repeat;margin-left:-10px}
+.login_main .register-box .register-row1 .logo{width:101px;height:66px;display:block;float:left;background:url(../images/logo.png) 50% 0 no-repeat;margin-left:-10px}
 .login_main .register-box .register-row1 .weclome{width:280px;height:66px;margin-left:10px;margin-top:10px;display:block;float:left}
 .login_main .register-box .register-row1 .weclome h1{font-size:2rem;line-height:2rem;margin:.8rem 0 0;font-weight:700}
 .login_main .register-box .register-row2{margin-top:25px}
@@ -42,8 +42,8 @@ body{background:url("../images/login_bg.jpg?v=1489290698706") 50% 0 no-repeat}
 .login_main .register-box .register-row3{padding-bottom:20px;border-bottom:solid 2px #e84593}
 .login_main .register-box .register-row3 .register-row3-input{width:100%;height:40px;margin-top:10px}
 .login_main .register-box .register-row3 label{float:left;width:10%;height:100%}
-.login_main .register-box .register-row3 label.username{background:url("../images/login_user.png?v=1489290698706") 50% 0 no-repeat}
-.login_main .register-box .register-row3 label.password{background:url("../images/login_pass.png?v=1489290698706") 50% 0 no-repeat}
+.login_main .register-box .register-row3 label.username{background:url(../images/login_user.png) 50% 0 no-repeat}
+.login_main .register-box .register-row3 label.password{background:url(../images/login_pass.png) 50% 0 no-repeat}
 .login_main .register-box .register-row3 input{width:80%;font-size:1.5rem;padding:10px 0;height:100%;margin-left:10px;float:left}
 .login_main .register-box .register-row4 .login{width:90%;background:#e84593;color:#fff;left:0;right:0;height:40px;position:relative;margin:20px auto;line-height:30px}
 .login_main .register-box .register-row4 p{color:#666}

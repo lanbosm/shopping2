@@ -89,8 +89,9 @@ new Vue({
         compiled:function(){
 
         },
-        ready: function() {
-               this.getToken();
+        mounted: function() {
+
+
         },
         data: {
             publicKey:{},
@@ -133,6 +134,7 @@ new Vue({
                 // var tmpKey = data.tmpKey;
 
                 request.fnGet(vm,apiobj,function(res) {
+
                     vm.publicKey=res.data;
                     console.log( vm.publicKey);
                     //  $api.setStorage('tmpKey', tmpKey);
@@ -142,30 +144,34 @@ new Vue({
                     rsaKey.setPublic(b64tohex(vm.publicKey.modulus), b64tohex(vm.publicKey.exponent));
                     var enPassword = hex2b64(rsaKey.encrypt(vm.password));
                     console.log(enPassword );
+                    callback()();
                 });
 
             },
             toLogin:function(){
-                var vm=this;
-                var apiobj={
-                    url:API_URLS.login,
-                    data:{
-                        username:vm.username,
-                        enPasswd:vm.password,
-                        tmpKey:vm.token
-                    }
-                };
 
-                if(!this.username){ layer.tips('请输入用户名', '#username'); return false;}
-                if(!this.password){ layer.tips('请输入密码', '#password'); return false;}
+                this.getToken();
 
-                request.fnPost(vm,apiobj,function(res) {
-                   // alert(2222);
-                    console.log(res);
-                },function(res){
-
-                    layer.msg('用户名密码错误', {icon: 2});
-                });
+                // var vm=this;
+                // var apiobj={
+                //     url:API_URLS.login,
+                //     data:{
+                //         username:vm.username,
+                //         enPasswd:vm.password,
+                //         tmpKey:vm.token
+                //     }
+                // };
+                //
+                // if(!this.username){ layer.tips('请输入用户名', '#username'); return false;}
+                // if(!this.password){ layer.tips('请输入密码', '#password'); return false;}
+                //
+                // request.fnPost(vm,apiobj,function(res) {
+                //    // alert(2222);
+                //     console.log(res);
+                // },function(res){
+                //
+                //     layer.msg('用户名密码错误', {icon: 2});
+                // });
                 //layer.msg('登录失败', {icon: 2});
 
                //lert(this.username);

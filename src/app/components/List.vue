@@ -73,7 +73,7 @@
                     var page=this.$route.query.page||1;
                     var apiObj={
                         url: API_URLS.products,
-                        data:{'page':page}
+                        data:{'pageNum':page}
                     };
 
 
