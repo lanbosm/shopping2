@@ -46,6 +46,7 @@ export const request = {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'},
         }).then((response) => { //成功
+                console.log(response);
                 if (response.data.code == 20000) {
                     if (success) {
                         success(response.data);
@@ -140,6 +141,16 @@ export const request = {
  */
 Vue.http.interceptors.push(function (request, next) {
 
+    // if (accessToken) {
+    //     Vue.http.headers.common['accessToken'] = accessToken + '';
+    // }
+    // let signature = getSign();
+    //
+    // if (signature) {
+    //     Vue.http.headers.common['nonceStr'] = signature.nonceStr + '';
+    //     Vue.http.headers.common['timeStamp'] = signature.timeStamp + '';
+    //     Vue.http.headers.common['sign'] = signature.sign + '';
+    // }
     let accessToken = window.localStorage.getItem("accessToken");
     if (accessToken) {
         request.headers.accessToken = accessToken;
@@ -158,26 +169,18 @@ Vue.http.interceptors.push(function (request, next) {
      // console.log("token:" + accessToken);
 
     next(function (response) {
-        // if(!response || !response.data){
-        //     return false;
-        // }
-        response.data = response.json(); //本地假数据时注销
+
         store.state.loading=false;
         if (response.data.code == 49001) {
 
             window.location.href = response.data.loginUrl;
             return true;
-        }
-        else if (response.data.code == 40001) {
-            alert("手机号码不正确");
-            return true;
-        }
-        else if (response.data.code == 49002) {
+        } else if (response.data.code == 49002) {
 
             window.location.href = window.host_index;
             return true;
         } else {
-            return false;
+            return response;
 
         }
     });

@@ -1,4 +1,20 @@
     //es6 简单导入
+
+    // {
+    //     "list":[
+    //     {
+    //         "id":1,
+    //         "createDate":1488960097000,
+    //         "modifyDate":1488960099000,
+    //         "amount":200,
+    //         "baseline":300,
+    //         "name":"充300送200"
+    //     }
+    // ],
+    //     "code":20000,
+    //     "msg":"响应成功"
+    // }
+
     //http://blog.csdn.net/lihongxun945/article/details/49031383
     var util={
 

@@ -95,30 +95,33 @@ new Vue({
         },
         data: {
             publicKey:{},
-            token:'',
+            logining:false,
             username: '',
-            password: ''
+            password: '',
+
         },
         computed:{
 
         },
         watch: {
             'username': function (val) {
+                if(this.logining){return;}
                 if(val){
                    //实时action
                 }
                 else{
-                    layer.tips('请输入用户名', '#username');
+                    //layer.tips('请输入用户名', '#username');
 
                 }
 
             },
             'password': function (val) {
+
                 if(val){
                     //实时action
                 }
                 else{
-                    layer.tips('请输入密码', '#password');
+                    //layer.tips('请输入密码', '#password');
                 }
 
             }
@@ -129,54 +132,62 @@ new Vue({
                 var apiobj={
                     url:API_URLS.public_key,
                 };
-                // var modulus = data.modulus;
-                // var exponent = data.exponent;
-                // var tmpKey = data.tmpKey;
+
+                if(this.logining){return false;}
+                if(!this.username){ layer.tips('请输入用户名', '#username'); return false;}
+                if(!this.password){ layer.tips('请输入密码', '#password'); return false;}
+
+                this.logining=true;
 
                 request.fnGet(vm,apiobj,function(res) {
 
                     vm.publicKey=res.data;
-                    console.log( vm.publicKey);
+
                     //  $api.setStorage('tmpKey', tmpKey);
-                    util.pushLocal('token',vm.publicKey.tmpKey);
+                    //util.pushLocal('token',vm.publicKey.tmpKey);
                     var rsaKey = new RSAKey();
 
                     rsaKey.setPublic(b64tohex(vm.publicKey.modulus), b64tohex(vm.publicKey.exponent));
-                    var enPassword = hex2b64(rsaKey.encrypt(vm.password));
-                    console.log(enPassword );
-                    callback()();
+                    vm.password = hex2b64(rsaKey.encrypt(vm.password));
+
+
+                    //console.log(hex2b64(rsaKey.encrypt(vm.password)))
+                     vm.toLogin();
+
                 });
 
+
             },
-            toLogin:function(){
+            toLogin:function() {
 
-                this.getToken();
+                var vm = this;
+                var apiobj = {
+                    url: API_URLS.login,
+                    data: {
+                        username: vm.username,
+                        enPasswd: vm.password,
+                        tmpKey: vm.publicKey.tmpKey
+                    }
+                };
 
-                // var vm=this;
-                // var apiobj={
-                //     url:API_URLS.login,
-                //     data:{
-                //         username:vm.username,
-                //         enPasswd:vm.password,
-                //         tmpKey:vm.token
-                //     }
-                // };
-                //
-                // if(!this.username){ layer.tips('请输入用户名', '#username'); return false;}
-                // if(!this.password){ layer.tips('请输入密码', '#password'); return false;}
-                //
-                // request.fnPost(vm,apiobj,function(res) {
-                //    // alert(2222);
-                //     console.log(res);
-                // },function(res){
-                //
-                //     layer.msg('用户名密码错误', {icon: 2});
-                // });
-                //layer.msg('登录失败', {icon: 2});
+                console.log(apiobj.data);
+                var loading = layer.load(2, {
+                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
 
-               //lert(this.username);
+                request.fnPost(vm, apiobj, function (res) {
+                    layer.close(loading);
+                    console.log(res);
+                    location.href="./index.html";
+                }, function (res) {
+                    layer.close(loading);
+                    layer.msg(res.msg, {icon: 2});
+                    vm.password="";
+                    vm.logining=false;
+
+                })
+
+
             }
-
-
         }
     }).$mount('#main');
