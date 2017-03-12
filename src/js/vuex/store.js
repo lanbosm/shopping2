@@ -23,6 +23,15 @@ const store = new Vuex.Store({
         appProductDetail:{},
         appSpecifications:[]
     },
+    categoryData:{},
+    list:{
+        categoryId:"",
+        brandId:"",
+        searchStr:"",
+        pageNum:1,
+        categoryName:"",
+        brandName:""
+    },
     cartData:[
 
     ],
@@ -53,8 +62,22 @@ const store = new Vuex.Store({
       setItemData (state,data){
           state.itemData=data;
       },
-      setCartData (state,data){
-          state.cartData=data;
+      setList (state,data){   //尝试新写法
+
+          Object.assign(state.list,data); //大概就是下面的意思
+          // var type=Object.keys(data)[0]
+          //
+          // switch (type){
+          //     case "cartgoryId":
+          //         state.list.cartgoryId=data.value;
+          //     case "brandId":
+          //         state.list.brandId=data.value;
+          //     case "searchstr":
+          //         state.list.searchstr=data.value;
+          //     case "pageNum":
+          //         state.list.pageNum=data.value;
+          // }
+
       }
 
   }

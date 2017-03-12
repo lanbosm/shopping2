@@ -2,7 +2,7 @@
    	<div class="shoppingCart">
 				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.length==0}">
 					<ul>
-						<li :class="{checked:false}" v-for="(item,index) in cartData " track-by="$index" @click="checkcartData($event,index);">
+						<li :class="{checked:index==cartItemIndex}" v-for="(item,index) in cartData " track-by="$index" @click="checkCartItem(index);">
 							<div class="shoppingCart-item">
 								<p>{{item.title}}</p>
 								<p class="small">
@@ -35,26 +35,21 @@
      * [设置购物车的高]
      */
     export default{
-        compiled() {
-
-        },
+        name:"cart",
         filters: {
             currency: function (value) {
                 if (!value) return '';
                 return '¥ ' + value.toFixed(2);
             }
         },
-        ready(){
-            //数据传递
-			this.setCartHeight();
-            window.onresize=this.setCartHeight;
+		props:['cartData','cartItemIndex'],
+
+        created(){
+            //this.setCartHeight();
+            //window.onresize=this.setCartHeight;
         },
         computed: {
             //数据来自全局
-            cartData () {
-                console.log(this.$store.state.cartData);
-                return this.$store.state.cartData
-            },
             totalprice () {
                 var total=0;
                 this.cartData.forEach(function(e,i){
@@ -81,9 +76,9 @@
                     }
 
 			},
-            checkcartData:function(ev,index){
+            checkCartItem:function(index){
 
-                this.cartData.index=index;
+                this.$parent.cartItemIndex=index;
             }
         }
     }

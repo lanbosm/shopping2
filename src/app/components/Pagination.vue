@@ -4,8 +4,7 @@
         <ul class="pagination">
             <li><span class="pagination-label">第 {{page.pageNum}} 页,共 {{page.pages}} 页</span></li>
             <li v-if="page.hasPreviousPage"><a @click="pageTo(page.pageNum-1)">上一页</a></li>
-            <li v-for=" index in page.pages"  :class="{ 'active': page.pageNum == index}">
-            <router-link  @click="pageTo(index)" :to="{path:'/',query: {page:index}}">{{ index }}</router-link></li>
+            <router-link tag="li" v-for=" index in page.pages"  :to="{path:'/',query: {page:index}}"><a>{{ index }}</a></router-link>
             <li v-if="page.hasNextPage"><a @click="pageTo(page.pageNum+1)">下一页</a></li>
         </ul>
     </div>
@@ -25,9 +24,9 @@
         methods:{
             //页码点击事件
             pageTo: function(page){
-                console.log("page");
-                if(page !=  this.page.pageNum){
 
+                if(page !=  this.page.pageNum){
+                    alert(111)
                    // this.productParams.pageNum=page;
                     //this.getItemList();
                 }

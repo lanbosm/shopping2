@@ -41,23 +41,15 @@
     "use strict";
     import util from 'util/util.js';
     import $ from 'jquery';
-    /**
-     * [设置购物车的高]
-     */
     export default{
-        compiled() {
-
-        },
-        ready(){
-            //数据传递
-
-        },
-        computed: {
-            //数据来自全局
-            cartData () {
-                return this.$store.state.cartData
+        name:"calc",
+        filters: {
+            currency: function (value) {
+                if (!value) return '';
+                return '¥ ' + value.toFixed(2);
             }
         },
+        props:['cartData','cartItemIndex'],
         methods:{
             //显示会员模块
 			showCustomModal(){
@@ -85,13 +77,15 @@
             //计算器
             calc:function(keycode){
                 var vm=this;
-                if(this.cartData.list.length==0){return;}
+                if(this.cartData.length==0){return;}
 
-                var index=this.cartData.index;
+                var index=this.cartItemIndex;
+
+
                 //选中的单价
-                var price=this.cartData.list[index].price;
+                var price=this.cartData[index].price;
                 //选中的数量
-                var amount=this.cartData.list[index].amount;
+                var amount=this.cartData[index].amount;
 
                 if(isNaN(keycode)){
                     switch (keycode) {
@@ -102,28 +96,26 @@
                             var str=amount+"";
                             amount=str.substring(0,str.length-1);
                             if(amount==""){
-                                this.cartData.list.splice(index,1);
+                                this.cartData.splice(index,1);
                             }
                             else{
-                                this.cartData.list[index].amount=parseInt(amount);
+                                this.cartData[index].amount=parseInt(amount);
                             }
                             break;
                     }
                 }else{
-                    if(amount!=1){
+                    if(amount){
                         amount+=keycode+'';
                     }else{
-
                         amount=keycode;
                     }
-                    this.cartData.list[index].amount=parseInt(amount);
+                    this.cartData[index].amount=parseInt(amount);
 
-                    //console.log(this.cartData.list);
                 }
             },
 			//结账
             checkOrder:function(){
-                if(this.cartData.list.length>0) {
+                if(this.cartData.length>0) {
 
                     this.$emit('trigger-build-order',this.cartData);
 

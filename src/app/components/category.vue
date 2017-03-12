@@ -1,51 +1,19 @@
 <template>
-    <div class="categroy row"  >
-        <div class="col-xs-12 category-list clearfix" @mouseleave="navData.show=false">
-        <div class="menu">
-            <a href="#" class="sub " v-on:mouseenter="navData.index=index"  @click="getItemList(nav.id)" >链接1</a>
-            <a href="#" class="sub " v-on:mouseenter="navData.index=index"  @click="getItemList(nav.id)" >链接1</a>
-            <a href="#" class="sub " v-on:mouseenter="navData.index=index"  @click="getItemList(nav.id)" >链接1</a>
+    <div class="categroy row" v-if="showCategory">
+        <div class="col-xs-12 category-list clearfix"  @mouseleave="outcheck" >
+        <div class="menu"  >
+            <a  class="sub" href="javascript:void(0)":class="{cur:item.id==productList.categoryId}"  v-for="(item,index) in productCategories" @click="fetchCategory(item.id,item.name)" >{{item.name}}</a>
         </div>
-            <!--<a :href="nav.id" class="sub btn-lightgreen" v-on:mouseenter="navData.index=index" v-for="(index,nav) in navData.list" @click="getItemList(nav.id)" >{{nav.name}}</a>-->
-
         <div class="sub-menu" >
-                <!--<template v-if="!navData.list[navData.index]">-->
-                    <!--<p> 数据加载中...</p>-->
-                    <!--<template v-if="1<2">-->
-                        <!--<p> 没有分类</p>-->
-                    <!--</template>-->
-                <!--</template>-->
-                <!--<template v-else>-->
-                    <div class="l">
-                        <div class="l-t">国内</div>
+                    <div v-show="subCategory.length==0"><p> 数据加载中...</p></div>
+
+                     <div class="l" v-for="(item,index) in subCategory">
+                        <div class="l-t">{{item.name}}</div>
                         <div class="l-c">
-                            <a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a>
+                            <a  class="btn btn-default sub-menu-category"  :class="{cur:item2.id==productList.brandId}" v-for="(item2,index2) in item.appBrands"  @click="fetchBrand(item2.id,item2.name,subCategory.id,subCategory.name)">{{item2.name}}</a>
                         </div>
                     </div>
-                    <div class="l">
-                        <div class="l-t">国内</div>
-                        <div class="l-c">
-                            <a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a>
-                            <a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a>
-                            <a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a><a  class="btn btn-default sub-menu-category" href="#"  @click="getItemList(nav.id)">子类</a>
-                        </div>
-                    </div>
-
-                <!--</template>-->
-
         </div>
-        <!--<div class="sub-menu" >-->
-        <!--<template v-if="!navData.list[navData.index]">-->
-        <!--<p> 数据加载中...</p>-->
-        <!--<template v-if="1<2">-->
-        <!--<p> 没有分类</p>-->
-        <!--</template>-->
-        <!--</template>-->
-        <!--<template v-else>-->
-        <!--<a  class="btn btn-default sub-menu-category" :href="nav.id" v-for="(index,nav) in navData.list[navData.index].children" @click="getItemList(nav.id)">{{nav.name}}</a>-->
-        <!--</template>-->
-    <!---->
-        <!--</div>-->
 
         </div>
     </div>
@@ -57,20 +25,78 @@
 </style>
 <script>
     "use strict";
-  
+    import {request, API_URLS, HOST} from 'util/request.js';
+
     export default{
         name:"category",
+        props:['showCategory','productCategories','productList'],
+        data(){
+          return {
+              cacheload:false
+          }
+        },
         computed: {
-            //数据来自全局
-            listData () {
-                return [];
-            },
+            subCategory(){
+                if(this.productCategories.length>0){
+                   let list= this.productCategories.filter((arr)=>{
+                       return arr.appTags!=null;
+                   });
+                   return list[0].appTags;
+                }else{
+                    return [];
+                }
+            }
+        },
+        watch: {
+            'showCategory'(val){
+                if(val && !this.cacheload){
+                    this.cacheload=true
+                    this.fetchCategory(this.productList.categoryId,"全部分类");
+                }
+            }
         },
         methods:{
-            filterList:function(id){
+            outcheck:function(){
+                var out=true;
+                var lock=function(){
+                    out=false;
+                }
+                document.querySelector('.category-list').addEventListener('mouseover',lock,false)
+                setTimeout(()=> {
+                    if(out){
+                        document.querySelector('.category-list').addEventListener('mouseover',lock,false)
+                        this.$parent.showCategory = false;
+                    }
+                },500);
+            },
+            fetchCategory:function(cid,cname){
 
-                this.cartData.index=index;
-            }
+                var apiobj={
+                    url:API_URLS.category,
+                    data:{"categoryId":this.productList.categoryId}
+                };
+                request.fnGet(this,apiobj,(res)=>{
+                    this.$store.commit("setCategoryData",res.appProductCategories);
+                    this.$store.commit("setList",{"categoryId":cid,"categoryName":cname});
+                    this.productList.brandId=null;
+                    this.productList.brandName=null;
+                })
+            },
+            fetchBrand:function(bid,bname){
+                var apiobj={
+                    url:API_URLS.products,
+                    data:{
+                        'categoryId': this.productList.categoryId,
+                        'brandId': this.productList.brandId,
+                        'pageNum': this.productList.pageNum,
+                        'searchStr': this.productList.searchStr
+                    }
+                };
+                request.fnGet(this,apiobj,(res)=>{
+                    this.$store.commit("setList",{"brandId":bid,"brandName":bname});
+                    this.$parent.showCategory=false;
+                })
+            },
         }
     }
 </script>
