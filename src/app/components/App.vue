@@ -24,7 +24,7 @@
                                 <router-view :page-size="pageSize" :product-list="productList"  @open-detail="openDetail" ></router-view>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page-size="pageSize" ></Pagination>
+                                <Pagination :page="page" ></Pagination>
                             </div>
                         </div>
                     </div>
@@ -69,12 +69,15 @@
         },
         computed: {
             //数据来自全局
+            loading () {
+                return this.$store.state.loading;
+            },
             productList(){
                 return this.$store.state.list;
             },
-            loading () {
-                    return this.$store.state.loading;
-            }, //
+            page () {
+                return this.$store.state.pageData
+            },
             productDetail (){
                     return this.$store.state.itemData.appProductDetail;
             },
@@ -110,8 +113,9 @@
                 var itemswiper = '';
                 //是否存在赠品
                 // alert(this.$store.state.itemData.appProductDetail.appGiftActivity.name);
-                this.$store.state.itemData.appProductDetail.appGiftActivity.name ? itemGift : itemGift = true;
-                itemGift = true;
+
+                !this.$store.state.itemData.appProductDetail.appGiftActivity ? itemGift : itemGift = true;
+
                 this.$nextTick(() => {
                     //弹出页面层
                     var vm=this;
@@ -127,6 +131,7 @@
                         area: ['auto', 'auto'], //宽高
                         content: $('#layer-item-box'),
                         success: function () {
+
                             if (itemGift){  //如果存在赠品
 
                                 itemswiper = new Swiper('.gift-detail-item', {
@@ -155,6 +160,7 @@
                         },
                         end: function () {
                             // alert("销毁了");
+
                             if(itemGift){
                                 itemswiper.destroy();
                                 $(".gift-detail-tab").find('a').off().removeClass('selected');

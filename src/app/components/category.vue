@@ -36,6 +36,7 @@
           }
         },
         computed: {
+
             subCategory(){
                 if(this.productCategories.length>0){
                    let list= this.productCategories.filter((arr)=>{
@@ -50,7 +51,7 @@
         watch: {
             'showCategory'(val){
                 if(val && !this.cacheload){
-                    this.cacheload=true
+                    this.cacheload=true;
                     this.fetchCategory(this.productList.categoryId,"全部分类");
                 }
             }
@@ -73,9 +74,10 @@
 
                 var apiobj={
                     url:API_URLS.category,
-                    data:{"categoryId":this.productList.categoryId}
+                    data:{"productCategoryId":cid}
                 };
                 request.fnGet(this,apiobj,(res)=>{
+                    if(!cid){cid=res.appProductCategories[0].id}
                     this.$store.commit("setCategoryData",res.appProductCategories);
                     this.$store.commit("setList",{"categoryId":cid,"categoryName":cname});
                     this.productList.brandId=null;

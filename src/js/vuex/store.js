@@ -23,7 +23,7 @@ const store = new Vuex.Store({
         appProductDetail:{},
         appSpecifications:[]
     },
-    categoryData:{},
+    categoryData:[],
     list:{
         categoryId:"",
         brandId:"",
@@ -61,6 +61,9 @@ const store = new Vuex.Store({
       },
       setItemData (state,data){
           state.itemData=data;
+      },
+      setCategoryData (state,data){
+          state.categoryData=data;
       },
       setList (state,data){   //尝试新写法
 
