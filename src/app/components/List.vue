@@ -38,22 +38,6 @@
                 return this.$store.state.pageData.list;
             }
         },
-//        watch: {
-//            'itemData':"fetchList"
-//        },
-        watch: {
-            'showList'(){
-                //if(val){
-                    //alert(111);
-                    this.fetchList();
-                    console.log(111);
-                //}
-            }
-        },
-        created(){
-            this.fetchList();
-            //alert(111);
-        },
         filters: {
             currency: function (value) {
                 if (!value) return '';
@@ -73,21 +57,6 @@
                     this.$store.commit("setItemData",res);
                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
                 })
-            },
-            //请求列表
-            fetchList() {
-                    var apiObj={
-                        url: API_URLS.products,
-                        data:{
-                            'categoryId': this.productList.categoryId,
-                            'brandId': this.productList.brandId,
-                            'pageNum': this.productList.pageNum,
-                            'searchStr': this.productList.searchStr
-                        }
-                    };
-                    request.fnGet(this,apiObj,(res)=>{
-                        this.$store.commit("setPageData",res.page);
-                    })
             }
         }
     }

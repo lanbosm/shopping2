@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <product-list ref="list" v-if="showlist" :product-list="productList"  @open-detail="openDetail" ></product-list>
+                                <product-list  v-if="showlist" :product-list="productList"     @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
                                 <Pagination :page="page" :product-list="productList" ></Pagination>
@@ -56,6 +56,7 @@
     import ProductList from 'components/list.vue';
 
     import layer from 'layer';
+    import {request, API_URLS, HOST} from 'util/request.js';
 
     export default{
         name: 'app',
@@ -76,11 +77,13 @@
                 }else{
                    // console.log(this.);
                     console.log(this);
-                    this.$refs.list.fetchList();
+                    this.fetchList();
+                    return false;
                 }
 
             },
             loading () {
+                console.log(this);
                 return this.$store.state.loading;
             },
             productList(){
@@ -116,6 +119,21 @@
              Loading
         },
         methods:{
+            //请求列表
+            fetchList() {
+                var apiObj={
+                    url: API_URLS.products,
+                    data:{
+                        'categoryId': this.productList.categoryId,
+                        'brandId': this.productList.brandId,
+                        'pageNum': this.productList.pageNum,
+                        'searchStr': this.productList.searchStr
+                    }
+                };
+                request.fnGet(this,apiObj,(res)=>{
+                    this.$store.commit("setPageData",res.page);
+                })
+            },
             //创建订单
             buildOrder:function(cart){
                 alert("创建订单");
