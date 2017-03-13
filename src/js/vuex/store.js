@@ -12,11 +12,11 @@ const store = new Vuex.Store({
     loading:false,
     mode:"order",  //模式
     headData:{
-          index:0,
-          staff:"李科兴",
-          list:[
+        index:0,
+        staff:"李科兴",
+        list:[
 
-          ]
+        ]
     },
     pageData:{},
     itemData:{
