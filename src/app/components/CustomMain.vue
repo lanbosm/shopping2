@@ -94,13 +94,15 @@
     import CustomSearch from 'components/CustomSearch.vue';
     import CustomRegister from 'components/CustomRegister.vue';
     import CustomInfo from 'components/CustomInfo.vue';
+    import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
         data(){
             return {
                 searchShow:true,
                 registerShow:false,
-                infoShow:false
+                infoShow:false,
+                username:''
             }
         },
         components:{
@@ -125,6 +127,25 @@
                  if (customdata){
                      this.$dispatch('register', customdata)
                  }
+            },
+            toRegisterView(){
+                this.searchShow=false;
+                this.registerShow=true;
+                this.infoShow=false;
+            },
+            doSearch(){
+                let vm = this;
+                if(vm.username){
+                    let apiobj = {
+                        url : API_URLS.customers,
+                        data:{username:vm.username}
+                    };
+                    request.fnGet(vm, apiobj, function (res) {
+                        console.log(res);
+                    })
+                }else{
+                    alert('请输入手机号码');
+                }
             }
         }
     }

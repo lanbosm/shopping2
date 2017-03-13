@@ -9,7 +9,7 @@
                         <span class="input-group-btn" @click="searchCustom"><button class="btn btn-default" ><span class="glyphicon glyphicon-search" ></span></button>
                                     </span>
                         <!--v-model="searchCustom.input" v-on:keyup.enter="searchCustom.text=searchCustom.input;"-->
-                        <input type="text" class="form-control" placeholder="搜索顾客" v-model="searchName"  @keyup.enter="searchCustom()">
+                        <input type="text" v-model="$parent.username" class="form-control" @keyup.enter="$parent.doSearch" placeholder="搜索顾客">
                     </div>
                 </div>
                 <div class="col-xs-4">
@@ -87,6 +87,7 @@
                         url:API_URLS.customers,
                         data:{'username':this.searchName}
                     }
+                    alert(this.searchName)
 //                    request.fnPost(this,apiObj,function(){
 //                        alert(2222);
 //                    })
