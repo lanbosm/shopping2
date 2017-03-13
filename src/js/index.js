@@ -8,6 +8,7 @@ import CustomModal from 'components/CustomMain.vue';
 
 import store from './vuex/store'
 import VueRouter from 'vue-router'
+import  $ from 'jquery'
 
 //定义组件
 
@@ -113,10 +114,12 @@ var vm =new Vue({
     },
     methods: {
 
-
     },
     mounted() {
-
+        // 关闭窗口时弹出确认提示
+        $(window).bind('beforeunload', function(){
+            return '您可能有数据没有保存';
+        });
         //起始路由
         this.$router.push('/');
     }

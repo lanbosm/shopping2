@@ -126,6 +126,8 @@
             },
             doSearch(){
                 let vm = this;
+                this.searchShow=true;
+                this.registerShow=false;
                 if(vm.username){
                     let apiobj = {
                         url : API_URLS.customers,
