@@ -32,17 +32,11 @@
 
     export default {
         name: 'ProductList',
-        props:["pageSize","productList"],
+        props:["pageSize","productList","showList"],
         computed: {
             itemData () {
                 return this.$store.state.pageData.list;
             }
-        },
-        created(){
-            this.fetchList();
-        },
-        watch: {
-            '$route': 'fetchList'
         },
         filters: {
             currency: function (value) {
@@ -57,34 +51,12 @@
                 var apiobj={
                     url:API_URLS.products+"/"+pid,
                 };
-
-
                 request.fnGet(this,apiobj,(res)=>{
                     console.log(res);
 
                     this.$store.commit("setItemData",res);
                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
                 })
-            },
-            //请求列表
-            fetchList() {
-                    var vm=this;
-                    var page=this.$route.query.page||1;
-
-                    this.$store.commit("setList",{"pageNum":page});
-                    var apiObj={
-                        url: API_URLS.products,
-                        data:{
-                            'categoryId': this.productList.categoryId,
-                            'brandId': this.productList.brandId,
-                            'pageNum': this.productList.pageNum,
-                            'searchStr': this.productList.searchStr
-                        }
-                    };
-
-                    request.fnGet(vm,apiObj,(res)=>{
-                        this.$store.commit("setPageData",res.page);
-                    })
             }
         }
     }

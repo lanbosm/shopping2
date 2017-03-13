@@ -21,10 +21,10 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <router-view :page-size="pageSize" :product-list="productList"  @open-detail="openDetail" ></router-view>
+                                <product-list  v-if="showlist" :product-list="productList"     @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page-size="pageSize" ></Pagination>
+                                <Pagination :page="page" :product-list="productList" ></Pagination>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,10 @@
     import AppCalc from 'components/calc.vue';
     import Loading from 'components/Loading.vue';
     import ListItem from 'components/ListItem.vue';
+    import ProductList from 'components/list.vue';
+
     import layer from 'layer';
+    import {request, API_URLS, HOST} from 'util/request.js';
 
     export default{
         name: 'app',
@@ -61,7 +64,6 @@
 
             return {
                 pageSize:8,                 //一页显示多少个
-                page:{},
                 showCategory:false,
                 giftIndex:0,
                 cartItemIndex:0
@@ -69,12 +71,28 @@
         },
         computed: {
             //数据来自全局
-            productList(){
-                return this.$store.state.list;
+            showlist(){
+                if(this.$store.state.pageData.list){
+                    return true;
+                }else{
+                   // console.log(this.);
+                    console.log(this);
+                    this.fetchList();
+                    return false;
+                }
+
             },
             loading () {
-                    return this.$store.state.loading;
-            }, //
+                console.log(this);
+                return this.$store.state.loading;
+            },
+            productList(){
+               // console.log(this.$store.state.pageData);
+                return this.$store.state.list;
+            },
+            page () {
+                return this.$store.state.pageData
+            },
             productDetail (){
                     return this.$store.state.itemData.appProductDetail;
             },
@@ -96,10 +114,26 @@
              breadcrumb,                  //面包屑
              category,                    //分类
              ListItem,                    //商品详情
+             ProductList,                 //商品列表
              searchbar,
              Loading
         },
         methods:{
+            //请求列表
+            fetchList() {
+                var apiObj={
+                    url: API_URLS.products,
+                    data:{
+                        'categoryId': this.productList.categoryId,
+                        'brandId': this.productList.brandId,
+                        'pageNum': this.productList.pageNum,
+                        'searchStr': this.productList.searchStr
+                    }
+                };
+                request.fnGet(this,apiObj,(res)=>{
+                    this.$store.commit("setPageData",res.page);
+                })
+            },
             //创建订单
             buildOrder:function(cart){
                 alert("创建订单");
@@ -110,8 +144,9 @@
                 var itemswiper = '';
                 //是否存在赠品
                 // alert(this.$store.state.itemData.appProductDetail.appGiftActivity.name);
-                this.$store.state.itemData.appProductDetail.appGiftActivity.name ? itemGift : itemGift = true;
-                itemGift = true;
+
+                !this.$store.state.itemData.appProductDetail.appGiftActivity ? itemGift : itemGift = true;
+
                 this.$nextTick(() => {
                     //弹出页面层
                     var vm=this;
@@ -127,6 +162,7 @@
                         area: ['auto', 'auto'], //宽高
                         content: $('#layer-item-box'),
                         success: function () {
+
                             if (itemGift){  //如果存在赠品
 
                                 itemswiper = new Swiper('.gift-detail-item', {
@@ -155,6 +191,7 @@
                         },
                         end: function () {
                             // alert("销毁了");
+
                             if(itemGift){
                                 itemswiper.destroy();
                                 $(".gift-detail-tab").find('a').off().removeClass('selected');

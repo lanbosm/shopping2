@@ -26,7 +26,6 @@ Vue.component('layer-custom',CustomModal);
 //路由配置
 Vue.use(VueRouter)
 
-import ProductList from 'components/list.vue';
 
 
 //路由配置
@@ -36,7 +35,6 @@ const router = new VueRouter({
     routes: [
             {
                 path: '/',
-                component:  ProductList
             }
 
     ]
@@ -121,7 +119,7 @@ var vm =new Vue({
             return '您可能有数据没有保存';
         });
         //起始路由
-        this.$router.push('/');
+        //this.$router.push('/');
     }
 })
 

@@ -36,6 +36,7 @@
           }
         },
         computed: {
+
             subCategory(){
                 if(this.productCategories.length>0){
                    let list= this.productCategories.filter((arr)=>{
@@ -50,8 +51,8 @@
         watch: {
             'showCategory'(val){
                 if(val && !this.cacheload){
-                    this.cacheload=true
-                    this.fetchCategory(this.productList.categoryId,"全部分类");
+                    this.cacheload=true;
+                    this.fetchCategory(this.productList.categoryId);
                 }
             }
         },
@@ -73,27 +74,33 @@
 
                 var apiobj={
                     url:API_URLS.category,
-                    data:{"categoryId":this.productList.categoryId}
+                    data:{"productCategoryId":cid}
                 };
                 request.fnGet(this,apiobj,(res)=>{
+                    if(!cid){
+                        cid=res.appProductCategories[0].id;
+                        cname=res.appProductCategories[0].name;
+                    }
+                    this.$store.commit("setList", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
                     this.$store.commit("setCategoryData",res.appProductCategories);
-                    this.$store.commit("setList",{"categoryId":cid,"categoryName":cname});
-                    this.productList.brandId=null;
-                    this.productList.brandName=null;
+
                 })
             },
             fetchBrand:function(bid,bname){
+
                 var apiobj={
                     url:API_URLS.products,
                     data:{
                         'categoryId': this.productList.categoryId,
-                        'brandId': this.productList.brandId,
-                        'pageNum': this.productList.pageNum,
+                        'brandId': bid,
+                        'pageNum':  1,
                         'searchStr': this.productList.searchStr
                     }
                 };
                 request.fnGet(this,apiobj,(res)=>{
-                    this.$store.commit("setList",{"brandId":bid,"brandName":bname});
+                    this.$store.commit("setList",{"brandId":bid,"brandName":bname,"pageNum":1})
+                    this.$store.commit("setPageData",res.page);
+
                     this.$parent.showCategory=false;
                 })
             },
