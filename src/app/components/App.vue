@@ -115,6 +115,7 @@
                 this.$nextTick(() => {
                     //弹出页面层
                     var vm=this;
+
                     layer.open({
                         id: 'layui-layer-item',
                         type: 1,            //1 普通层

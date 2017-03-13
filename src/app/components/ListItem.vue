@@ -50,8 +50,9 @@
 
 </style>
 <script>
-
+    import {request, API_URLS, HOST} from 'util/request.js';
     import util from 'util/util.js';
+
 
     export default{
         name:"ListItem",
@@ -78,8 +79,9 @@
         methods:{
             fetchItem:function(pid){
 
+
                 var apiobj={
-                    url:API_URLS.products50,
+                    url:API_URLS.products,
                     data:{
                         'id':pid
                     }
