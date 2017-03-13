@@ -10,8 +10,6 @@
 <style>
 </style>
 <script>
-    "use strict";
-  
     export default{
         name: 'OrderMenu',
         props:["showRechargeBtn"],

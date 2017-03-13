@@ -100,7 +100,6 @@
 <style>
 </style>
 <script>
-    "use strict";
     import util from 'util/util.js';
     import $ from 'jquery';
     import appCart from 'components/cart.vue';

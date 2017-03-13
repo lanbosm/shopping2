@@ -42,8 +42,8 @@
 </style>
 <script>
 
-    "use strict";
-    import util from 'util/util.js';
+    import util from '../../js/util/util.js';
+    import layer from 'layer';
 
     export default{
 
@@ -81,7 +81,11 @@
                 this.$store.commit('addPage', 1);
             },
             removePage(){
-                this.$store.commit('removePage', 1);
+                let vm = this;
+                layer.confirm('确定要删除吗？删除后数据将丢失！', function(index){
+                    vm.$store.commit('removePage', 1);
+                    layer.close(index);
+                });
             },
             switchPage(index){
                 this.$store.commit('switchPage', index);
@@ -93,11 +97,12 @@
                 alert("连接设备");
             },
             exit(){
-                if(confirm("确定退出吗?")){
-                    util.pushLocal("pageList", this.pageList);
+                let vm = this;
+                layer.confirm('确定要退出吗？', function(index){
+                    util.pushLocal("pageList", vm.pageList);
                     location.href="./login.html";
-                }else{
-                }
+                    layer.close(index);
+                });
             },
         },
         mounted() {

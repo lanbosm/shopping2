@@ -44,7 +44,6 @@
 
 </style>
 <script>
-    "use strict";
     import OrderHeader from 'components/OrderHeader.vue';
     import OrderCustom from 'components/OrderCustom.vue';
     import OrderMenu from 'components/OrderMenu.vue';

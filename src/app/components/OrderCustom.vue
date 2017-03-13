@@ -17,7 +17,6 @@
 <style>
 </style>
 <script>
-    "use strict";
     import InfoList from 'components/InfoList.vue';
     import RechargeList from 'components/RechargeList.vue';
 

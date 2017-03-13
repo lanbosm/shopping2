@@ -54,7 +54,7 @@ const store = new Vuex.Store({
         appSpecifications:[]
     },
     categoryData:[],
-    list:{
+    productParams:{
         categoryId:"",
         brandId:"",
         searchStr:"",
@@ -80,6 +80,9 @@ const store = new Vuex.Store({
       setCategoryData (state,data){
           state.categoryData=data;
       },
+      setProductParams (state,data){
+          state.productParams=data;
+      },
       setCustomData(state, data){
           state.currentPage.customData = data;
       },
@@ -100,6 +103,12 @@ const store = new Vuex.Store({
       },
       removePage(state, data){
           console.log("remove");
+          if(state.pageList.length === 1){
+              state.pageList = [];
+              state.pageList.push(defaultPage(0));
+              state.currentPage = state.pageList[state.pageList.length - 1];
+              return;
+          }
           let index = state.currentPage.index;
           let isDel = false;
           let n = 0;
@@ -108,7 +117,7 @@ const store = new Vuex.Store({
                   state.pageList.splice(i, 1);
                   isDel = true;
               }
-              if (isDel) {
+              if (isDel && state.pageList[i]) {
                   state.pageList[i].index = state.currentPage.index + n++ ;
               }
           }
@@ -142,7 +151,7 @@ function defaultPage(len){
             appSpecifications:[]
         },
         categoryData:[],
-            list:{
+        list:{
             categoryId:"",
             brandId:"",
             searchStr:"",

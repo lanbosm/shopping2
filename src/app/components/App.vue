@@ -3,28 +3,27 @@
             <div class="row" >
                 <div class="col-sm-8  col-md-9 left-con">
                     <div class="left-con-header">
-                        <breadcrumb  ref="breadcrumb" :product-list="productList"></breadcrumb>
+                        <breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>
                     </div>
                     <div class="left-con-content">
                         <Loading v-if="loading"></Loading>
                         <div class="item-box panel panel-primary">
                             <div class="panel-heading" >
-                                <category :show-category="showCategory" :product-categories="productCategories" :product-list="productList"></category>
+                                <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
                                 <div class="row">
                                     <div class="col-xs-4 col-md-2 col-lg-2">
                                         <a class="btn btn-lightgreen shuaixuan"  @click="showCategory=!showCategory" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
                                     <div class="col-xs-6 col-md-3 col-xs-offset-2 col-lg-offset-7">
-                                        <searchbar  :product-list="productList"></searchbar>
+                                        <searchbar  :product-params="productParams"></searchbar>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <product-list  v-if="showlist" :product-list="productList"     @open-detail="openDetail" ></product-list>
+                                <product-list  v-if="showlist" :product-params="productParams"  @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" :product-list="productList" ></Pagination>
+                                <Pagination :page="page" :product-params="productParams" ></Pagination>
                             </div>
                         </div>
                     </div>
@@ -56,12 +55,11 @@
     import ProductList from 'components/list.vue';
 
     import layer from 'layer';
-    import {request, API_URLS, HOST} from 'util/request.js';
+    import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
         name: 'app',
         data() {
-
             return {
                 pageSize:8,                 //一页显示多少个
                 showCategory:false,
@@ -85,9 +83,8 @@
             loading () {
                 return this.$store.state.loading;
             },
-            productList(){
-               // console.log(this.$store.state.pageData);
-                return this.$store.state.list;
+            productParams(){
+                return this.$store.state.productParams;
             },
             page () {
                 return this.$store.state.pageData
@@ -120,13 +117,13 @@
         methods:{
             //请求列表
             fetchList() {
-                var apiObj={
+                let apiObj={
                     url: API_URLS.products,
                     data:{
-                        'categoryId': this.productList.categoryId,
-                        'brandId': this.productList.brandId,
-                        'pageNum': this.productList.pageNum,
-                        'searchStr': this.productList.searchStr
+                        'categoryId': this.productParams.categoryId,
+                        'brandId': this.productParams.brandId,
+                        'pageNum': this.productParams.pageNum,
+                        'searchStr': this.productParams.searchStr
                     }
                 };
                 request.fnGet(this,apiObj,(res)=>{
@@ -139,17 +136,13 @@
                 console.log(cart);
             },
             openDetail() {
-                var itemGift = false;
-                var itemswiper = '';
                 //是否存在赠品
-                // alert(this.$store.state.itemData.appProductDetail.appGiftActivity.name);
+                let vm=this;
+                let itemGift = !!vm.$store.state.itemData.appProductDetail.appGiftActivity;
+                let itemswiper = '';
 
-                !this.$store.state.itemData.appProductDetail.appGiftActivity ? itemGift : itemGift = true;
-
-                this.$nextTick(() => {
+                vm.$nextTick(() => {
                     //弹出页面层
-                    var vm=this;
-
                     layer.open({
                         id: 'layui-layer-item',
                         type: 1,            //1 普通层
@@ -163,34 +156,27 @@
                         success: function () {
 
                             if (itemGift){  //如果存在赠品
-
                                 itemswiper = new Swiper('.gift-detail-item', {
                                      pagination: '.gift-detail-item-pagination',
                                     paginationClickable: true,
                                     spaceBetween: 10
 
                                 });
-
                               itemswiper.on('onSlideChangeEnd', function (swiper) {
                                    //some code
                                   $(".gift-detail-tab").find('a').removeClass('selected');
                                   $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
                                   vm.giftIndex=swiper.activeIndex;
-
-                              })
-
+                              });
                               $(".gift-detail-tab").find('a').eq(0).addClass('selected');
                               $(".gift-detail-tab").find('a').on('click',function(){
 
                                      itemswiper.slideTo($(this).index());//
                                      vm.giftIndex=$(this).index();
                                })
-
                             }
                         },
                         end: function () {
-                            // alert("销毁了");
-
                             if(itemGift){
                                 itemswiper.destroy();
                                 $(".gift-detail-tab").find('a').off().removeClass('selected');
@@ -201,16 +187,14 @@
                 })
             },
             closeDetail(item){
-                    layer.closeAll();
-                    this.pushCart(item);
-
+                layer.closeAll();
+                this.pushCart(item);
             },
             pushCart(item){
-                    this.cartData.push(item);
+                this.cartData.push(item);
             }
         },
         created(){
-
         },
         mounted(){
 

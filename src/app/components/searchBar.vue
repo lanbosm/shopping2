@@ -1,63 +1,54 @@
 <template>
    	    <div class="searchbar">
-               <div class="input-group">
-                         <input type="text" class="form-control" v-model="searchItem.input" v-on:keyup.enter="searchItem.text=searchItem.input;" placeholder="搜索商品">
-                          <span class="input-group-btn">
-                                         <button class="btn btn-default" @click="searchItem.text=searchItem.input;"><span class="glyphicon glyphicon-search"></span></button>
-                           </span>
-                 </div>
+            <div class="input-group">
+                <input type="text" class="form-control" v-model="searchItem.keyword" @keyup.enter="fetchList" placeholder="条码/商品名称">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" @click="fetchList"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
        </div>
 </template>
 
 <style>
 </style>
 <script>
-    "use strict";
-    import {request, API_URLS, HOST} from 'util/request.js';
+    import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
         name:"searchbar",
-        props:['productList'],
+        props:['productParams'],
         data(){
           return {
               searchItem:{
                   searching:false,
-                  input:"",
-                  text:""
+                  keyword:""
               }
           }
         },
        watch:{
-           'searchItem.text' (val) {
-               if(val){
-                   this.fetchList();
-               }
-           },
         },
         methods:{
             //请求列表
             fetchList() {
-                var vm=this;
-                var str=this.searchItem.text;
+                if(!this.searchItem.keyword){
+                    return;
+                }
+                let vm=this;
 
-
-
-                var apiObj={
+                let apiObj={
                     url: API_URLS.products,
                     data:{
-                        'categoryId': this.productList.categoryId,
-                        'brandId': this.productList.brandId,
-                        'pageNum': this.productList.pageNum,
-                        'keyword': str
+                        'categoryId': vm.productParams.categoryId,
+                        'brandId': vm.productParams.brandId,
+                        'pageNum': 1,
+                        'keyword': vm.searchItem.keyword
                     }
                 };
 
                 request.fnGet(vm,apiObj,(res)=>{
-                    this.$store.commit("setList",{"searchStr":str,"pageNum":1});
-                    this.$store.commit("setPageData",res.page);
-
+                    vm.$store.commit("setProductParams",{"searchStr":vm.searchItem.keyword,"pageNum":1});
+                    vm.$store.commit("setPageData", res.page);
                 })
-
             }
         }
     }

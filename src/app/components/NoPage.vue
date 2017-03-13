@@ -7,8 +7,6 @@
 <style>
 </style>
 <script>
-    "use strict";
-  
     export default{
         compiled() {
 

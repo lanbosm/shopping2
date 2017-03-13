@@ -17,8 +17,6 @@
 <style>
 </style>
 <script>
-    "use strict";
-
     export default{
         name: 'OrderHeader',
         props:["title","back","next"],

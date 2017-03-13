@@ -4,25 +4,21 @@
         <ul class="pagination">
             <li><span class="pagination-label">第 {{page.pageNum}} 页,共 {{page.pages}} 页</span></li>
             <li v-if="page.hasPreviousPage"><a @click="pageTo(page.pageNum-1)">上一页</a></li>
-            <li v-for=" index in page.pages" :class="{active:index==productList.pageNum}"  @click="pageTo(index)"><a>{{ index }}</a></li>
+            <li v-for=" index in page.pages" :class="{active:index==productParams.pageNum}"  @click="pageTo(index)"><a>{{ index }}</a></li>
             <li v-if="page.hasNextPage"><a @click="pageTo(page.pageNum+1)">下一页</a></li>
         </ul>
     </div>
 </template>
 
 <script>
-    import {request, API_URLS, HOST} from 'util/request.js';
+    import {request, API_URLS} from '../../js/util/request.js';
 
     export default {
         name: 'Pagination',
-        props:["page",'productList'],
+        props:["page",'productParams'],
         computed: {
               showPrev(){
-                  if(this.page===1){
-                      return false;
-                  }else{
-                      return true;
-                  }
+                  return this.page !== 1;
               },
               prev(){
                   return this.page-1
@@ -33,19 +29,19 @@
             //页码点击事件
             pageTo: function(index){
                 if(index !=  this.page.pageNum){
-                    this.productList.pageNum=index;
+                    this.productParams.pageNum=index;
                     this.fetchList();
                 }
             },
             //请求列表
             fetchList() {
-                var apiObj={
+                let apiObj={
                     url: API_URLS.products,
                     data:{
-                        'categoryId': this.productList.categoryId,
-                        'brandId': this.productList.brandId,
-                        'pageNum': this.productList.pageNum,
-                        'searchStr': this.productList.searchStr
+                        'categoryId': this.productParams.categoryId,
+                        'brandId': this.productParams.brandId,
+                        'pageNum': this.productParams.pageNum,
+                        'searchStr': this.productParams.searchStr
                     }
                 };
 
