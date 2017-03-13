@@ -46,14 +46,10 @@
     import util from 'util/util.js';
 
     export default{
-        created(){
 
-            if(!this.$store.state.headData.staff){
-                this.getStaffData();
-            }
-        },
         computed: {
             listData () {
+
                 return this.$store.state.headData;
             }
         },
@@ -147,7 +143,13 @@
         },
         mounted() {
 
-            this.getLocalData();
+            if(!this.$store.state.headData){
+                this.getStaffData();
+                this.saveLocalData();
+            }else{
+                this.getLocalData();
+            }
+
         }
     }
 </script>

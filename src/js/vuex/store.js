@@ -11,19 +11,13 @@ const store = new Vuex.Store({
     author: 'lanbo',
     loading:false,
     mode:"order",  //模式
-    headData:{
-          index:0,
-          staff:"李科兴",
-          list:[
-
-          ]
-    },
+    headData:null,
     pageData:{},
     itemData:{
         appProductDetail:{},
         appSpecifications:[]
     },
-    categoryData:{},
+    categoryData:[],
     list:{
         categoryId:"",
         brandId:"",
@@ -61,6 +55,9 @@ const store = new Vuex.Store({
       },
       setItemData (state,data){
           state.itemData=data;
+      },
+      setCategoryData (state,data){
+          state.categoryData=data;
       },
       setList (state,data){   //尝试新写法
 
