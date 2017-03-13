@@ -141,7 +141,6 @@
                 this.haomafan("remove",index);
             },
             switchCustom(index){
-                alert(index);
                 this.listData.index=index;
                 this.haomafan("swicth",index);
             },
@@ -155,6 +154,7 @@
                     this.$store.commit("addQueue",index);
                 }
                 if(code=="swicth") {
+
                     this.$store.commit("swicthQueue",index);
                 }
                 if(code=="remove") {

@@ -57,9 +57,7 @@ const store = new Vuex.Store({
             categoryName:"",
             brandName:""
         },
-        cartData:[
-
-        ],
+        cartData:[],
         customData: {}
     },
     queueData:[],
@@ -77,9 +75,7 @@ const store = new Vuex.Store({
         categoryName:"",
         brandName:""
     },
-    cartData:[
-
-    ],
+    cartData:[ ],
     customData:[]
   },
    // 变量赋值
@@ -123,7 +119,6 @@ const store = new Vuex.Store({
       },
       addQueue (state,data){
 
-
           var obj={
               index:data,
               pageData:state.pageData,
@@ -134,26 +129,34 @@ const store = new Vuex.Store({
           }
 
 
-          state.queueData.push(obj);
+          state.queueData.unshift(obj);
 
-
-          //state.pageData=state.defaultData.pageData;
+        //state.pageData={};
           state.cartData=[];
-          //Object.assign(state.cartData,state.defaultData.cartData);
-          // Object.assign(state.pageData,state.defaultData.pageData)
-          // Object.assign(state.itemData,state.defaultData.itemData);
-          // Object.assign(state.list,state.defaultData.list);
-          // Object.assign(state.cartData,state.defaultData.cartData);
-          // Object.assign(state.customData,state.defaultData.customData);
-
+          // state.customData=[];
+          // state.categoryData=[];
+          // state.itemData={
+          //     appProductDetail:{},
+          //     appSpecifications:[]
+          // };
+          // state.list={
+          //     categoryId:"",
+          //     brandId:"",
+          //     searchStr:"",
+          //     pageNum:1,
+          //     categoryName:"",
+          //     brandName:""
+          // }
 
       },
       swicthQueue (state,data){
-          console.error(state.queueData);
+
+         // alert(data);
+
           var index=data-1;
           var cacheObj=state.queueData[index];
-         // alert(index);
-          console.log(state.queueData)
+
+
           state.pageData=cacheObj.pageData;
           state.itemData=cacheObj.itemData;
           state.list=cacheObj.list;
