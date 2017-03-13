@@ -50,7 +50,29 @@
         computed: {
             listData () {
 
-                return this.$store.state.headData;
+                var cacheData;
+
+                //先获取本地
+                cacheData=this.getLocalData();
+
+                //从中间件获取
+                if(!cacheData){
+                    cacheData=this.$store.state.headData
+                }
+
+                //从本地创建新的
+                if(!cacheData){
+                    cacheData={
+                        index:0,
+                        staff:"李科兴2号",
+                        list:[]
+                    };
+                }
+
+                //同步中间件的数据
+                this.$store.state.headData=cacheData;
+
+                return cacheData;
             }
         },
         data(){
@@ -68,7 +90,6 @@
                     };
                     this.$store.state.headData=headData;
                     this.saveLocalData();
-
             },
             //获得时间信息
             getTimeData(){
@@ -96,38 +117,52 @@
             },
             addCustom(){
                 var queue={};
-
                 //记录客户当前时间
                 queue.time=this.getTimeData();
                 //记录客户名会员
                 queue.custom=this.getCustomData();
 
-
                 this.listData.list.push(queue);
                 this.listData.index=this.listData.list.length;
 
-                this.saveLocalData();
+                this.haomafan("add",this.listData.index);
+
 
             },
             removeCustom(){
                 var index=this.listData.index-1;
                 this.listData.list.splice(index,1);
-                this.saveLocalData();
+
+                this.haomafan("remove",index);
             },
             switchCustom(index){
-                alert(index);
-                this.saveLocalData();
 
                 this.listData.index=index;
+                this.haomafan("swicth",index);
             },
             getLocalData(){
-
-                this.$store.state.headData= util.pullLocal("queue");
-
+                return util.pullLocal("queue");
             },
-            saveLocalData(){
+            //好麻烦啊
+            haomafan(code,index){
+               // var newobj={}
+//                var pageData=this.$store.state.pageData;
+//                var pageData=this.$store.state.itemData;
+//                var pageData=this.$store.state.categoryData;
+//                var cartData=this.$store.state.cartData;
+//                var customData=this.$store.state.customData;
+                if(code=="add") {
+                    this.$store.commit("addQueue",1);
+                }
+                console.log( this.$store.state.queueData);
+                //newobj.pageData=pageData;
 
-                util.pushLocal("queue",this.$store.state.headData);
+                //push(newobj);
+
+
+
+
+                //util.pushLocal("queue",this.$store.state.headData);
             },
             contact(){
                 alert("连接设备");
@@ -143,12 +178,7 @@
         },
         mounted() {
 
-            if(!this.$store.state.headData){
-                this.getStaffData();
-                this.saveLocalData();
-            }else{
-                this.getLocalData();
-            }
+
 
         }
     }

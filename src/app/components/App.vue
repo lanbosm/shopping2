@@ -21,10 +21,10 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <router-view :page-size="pageSize" :product-list="productList"  @open-detail="openDetail" ></router-view>
+                                <product-list ref="list" v-if="showlist" :product-list="productList"  @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" ></Pagination>
+                                <Pagination :page="page" :product-list="productList" ></Pagination>
                             </div>
                         </div>
                     </div>
@@ -53,6 +53,8 @@
     import AppCalc from 'components/calc.vue';
     import Loading from 'components/Loading.vue';
     import ListItem from 'components/ListItem.vue';
+    import ProductList from 'components/list.vue';
+
     import layer from 'layer';
 
     export default{
@@ -61,7 +63,6 @@
 
             return {
                 pageSize:8,                 //一页显示多少个
-                page:{},
                 showCategory:false,
                 giftIndex:0,
                 cartItemIndex:0
@@ -69,10 +70,21 @@
         },
         computed: {
             //数据来自全局
+            showlist(){
+                if(this.$store.state.pageData.list){
+                    return true;
+                }else{
+                   // console.log(this.);
+                    console.log(this);
+                    this.$refs.list.fetchList();
+                }
+
+            },
             loading () {
                 return this.$store.state.loading;
             },
             productList(){
+               // console.log(this.$store.state.pageData);
                 return this.$store.state.list;
             },
             page () {
@@ -99,6 +111,7 @@
              breadcrumb,                  //面包屑
              category,                    //分类
              ListItem,                    //商品详情
+             ProductList,                 //商品列表
              searchbar,
              Loading
         },

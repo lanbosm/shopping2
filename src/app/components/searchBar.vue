@@ -40,7 +40,7 @@
                 var vm=this;
                 var str=this.searchItem.text;
 
-                this.$store.commit("setList",{"searchStr":str});
+
 
                 var apiObj={
                     url: API_URLS.products,
@@ -48,12 +48,14 @@
                         'categoryId': this.productList.categoryId,
                         'brandId': this.productList.brandId,
                         'pageNum': this.productList.pageNum,
-                        'searchStr': this.productList.searchStr
+                        'keyword': str
                     }
                 };
 
                 request.fnGet(vm,apiObj,(res)=>{
+                    this.$store.commit("setList",{"searchStr":str,"pageNum":1});
                     this.$store.commit("setPageData",res.page);
+
                 })
 
             }

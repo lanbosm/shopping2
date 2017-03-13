@@ -12,6 +12,30 @@ const store = new Vuex.Store({
     loading:false,
     mode:"order",  //模式
     headData:null,
+    //默认数据
+    defaultData:{
+        pageData:{},
+        itemData:{
+            appProductDetail:{},
+            appSpecifications:[]
+        },
+        categoryData:[],
+        list:{
+            categoryId:"",
+            brandId:"",
+            searchStr:"",
+            pageNum:1,
+            categoryName:"",
+            brandName:""
+        },
+        cartData:[
+
+        ],
+        customData: {}
+    },
+    queueData:[
+
+    ],
     pageData:{},
     itemData:{
         appProductDetail:{},
@@ -74,6 +98,31 @@ const store = new Vuex.Store({
           //     case "pageNum":
           //         state.list.pageNum=data.value;
           // }
+
+      },
+      addQueue (state,data){
+
+          var obj={
+              index:data,
+              pageData:state.pageData,
+              itemData:state.itemData,
+              list:state.list,
+              cartData:state.cartData,
+              customData:state.customData
+          }
+
+          state.queueData.push(obj);
+
+          state.pageData=state.defaultData.pageData;
+          state.itemData=state.defaultData.itemData;
+          state.list=state.defaultData.list;
+          state.cartData=state.defaultData.cartData;
+          state.customData=state.defaultData.customData;
+
+      },
+      clearData (state,data){
+
+          alert(1111);
 
       }
 

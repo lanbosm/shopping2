@@ -32,17 +32,27 @@
 
     export default {
         name: 'ProductList',
-        props:["pageSize","productList"],
+        props:["pageSize","productList","showList"],
         computed: {
             itemData () {
                 return this.$store.state.pageData.list;
             }
         },
+//        watch: {
+//            'itemData':"fetchList"
+//        },
+        watch: {
+            'showList'(){
+                //if(val){
+                    //alert(111);
+                    this.fetchList();
+                    console.log(111);
+                //}
+            }
+        },
         created(){
             this.fetchList();
-        },
-        watch: {
-            '$route': 'fetchList'
+            //alert(111);
         },
         filters: {
             currency: function (value) {
@@ -57,8 +67,6 @@
                 var apiobj={
                     url:API_URLS.products+"/"+pid,
                 };
-
-
                 request.fnGet(this,apiobj,(res)=>{
 
                     this.$store.commit("setItemData",res);
@@ -67,10 +75,6 @@
             },
             //请求列表
             fetchList() {
-                    var vm=this;
-                    var page=this.$route.query.page||1;
-
-                    this.$store.commit("setList",{"pageNum":page});
                     var apiObj={
                         url: API_URLS.products,
                         data:{
@@ -80,8 +84,7 @@
                             'searchStr': this.productList.searchStr
                         }
                     };
-
-                    request.fnGet(vm,apiObj,(res)=>{
+                    request.fnGet(this,apiObj,(res)=>{
                         this.$store.commit("setPageData",res.page);
                     })
             }

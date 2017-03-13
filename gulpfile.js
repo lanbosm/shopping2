@@ -7,7 +7,6 @@
       https://www.npmjs.com/package/gulp-webpack
  */
 "use strict";
-
 const gulp = require('gulp'),
     gutil = require('gulp-util'),
     less = require('gulp-less'),
@@ -99,6 +98,7 @@ gulp.task('copy:lib',function(){
 gulp.task('copy',['copy:css','copy:images','copy:lib','copy:data'],function() {
     console.log("copy资源完成...");
     return gulp.src('./dist');
+
 });
 
 //压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css css处理
