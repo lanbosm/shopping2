@@ -68,6 +68,7 @@
                     url:API_URLS.products+"/"+pid,
                 };
                 request.fnGet(this,apiobj,(res)=>{
+                    console.log(res);
 
                     this.$store.commit("setItemData",res);
                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据

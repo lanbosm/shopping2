@@ -53,18 +53,7 @@ const store = new Vuex.Store({
     cartData:[
 
     ],
-    customData: {
-            "id":6282,
-            "headPortrait":"http://wx.qlogo.cn/mmopen/0nn3FBrD9a3NichacG5w0ic23TUfNCuOHP7IuSN0uSrfwNnZxlcFwJTVFaicr070Id03Ne8bzlCz04IstCQN07cgKXZ76GGb9tM/0",
-            "username":"15616268045",
-            "nickname":"aoop",
-            "sex":"male",
-            "point":0,
-            "balance":0,
-            "phone":13555777222,
-            "appCoupons":[
-            ]
-    }
+    customData:[]
   },
    // 变量赋值
   mutations:{
@@ -82,6 +71,9 @@ const store = new Vuex.Store({
       },
       setCategoryData (state,data){
           state.categoryData=data;
+      },
+      setCustomData(state, data){
+          state.customData = data;
       },
       setList (state,data){   //尝试新写法
 

@@ -81,7 +81,10 @@
 
 
                 var apiobj={
-                    url:API_URLS.products+"/"+pid,
+                    url:API_URLS.products,
+                    data:{
+                        'id':pid
+                    }
                 };
 
                 request.fnGet(this,apiobj,(res)=>{

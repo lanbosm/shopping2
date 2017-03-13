@@ -7,9 +7,8 @@
                     <a class="close" data-dismiss="modal">&times;</span></a>
                 </div>
                 <div class="modal-body">
-                    <custom-search v-show="searchShow"></custom-search>
+                    <custom-search :custom="custom" :info-show="infoShow"></custom-search>
                     <custom-register v-show="registerShow"></custom-register>
-                    <custom-info v-show="infoShow"></custom-info>
                 </div>
             </div>
         </div>
@@ -93,38 +92,68 @@
 
     import CustomSearch from 'components/CustomSearch.vue';
     import CustomRegister from 'components/CustomRegister.vue';
-    import CustomInfo from 'components/CustomInfo.vue';
+    import layer from 'layer';
+
+    import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
+        mounted(){
+
+        },
         data(){
             return {
                 searchShow:true,
                 registerShow:false,
-                infoShow:false
+                infoShow:false,
+                username:'',
+                custom:{}
             }
         },
         components:{
             CustomSearch,                               //顾客查找
-            CustomRegister,                             //顾客注册
-            CustomInfo,                                 //顾客信息
+            CustomRegister                             //顾客注册
         },
         methods:{
-            //to
-            toCustom(){
-
-                $('#example').modal('show')
-
+            registerView(){
+                if(this.registerShow === true){
+                    this.searchShow=true;
+                    this.registerShow=false;
+                }else{
+                    this.searchShow=false;
+                    this.registerShow=true;
+                    this.username = '';
+                }
             },
-            //去登录
-            tologin(){
-
-
+            doSearch(){
+                let vm = this;
+                if(vm.username){
+                    let apiobj = {
+                        url : API_URLS.customers,
+                        data:{username:vm.username}
+                    };
+                    request.fnGet(vm, apiobj, function (res) {
+                        vm.custom = res;
+                        vm.infoShow = true;
+                    }, function(res){
+                        vm.custom = res;
+                        vm.infoShow = true;
+                    })
+                }else{
+                    layer.msg('请输入手机号码');
+                }
             },
-            //去注册
-            toregister(customdata){
-                 if (customdata){
-                     this.$dispatch('register', customdata)
-                 }
+            chooseThis(){
+                let vm = this;
+                let customs = vm.$store.state.customData;
+                customs.push(vm.custom.appMember);
+                // 存储到vuex
+                vm.$store.commit('setCustomData', customs);
+                // 下次进来就显示当前顾客
+                vm.infoShow = true;
+                vm.searchShow = true;
+                vm.registerShow = false;
+                //关闭弹窗
+                $('#layer-custom').modal('toggle');
             }
         }
     }

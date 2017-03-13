@@ -3,7 +3,7 @@
 		<table class="table table-bordered" >
 			<tbody >
 			<tr>
-				<td colspan="3" class="t1" @click="showCustomModal" ><span class="iconfont icon-guanliyuan"></span>顾客</td>
+				<td colspan="3" class="t1" @click="showCustomModal" ><span class="iconfont icon-guanliyuan"></span>{{custom}}</td>
 				<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
@@ -49,6 +49,16 @@
                 return '¥ ' + value.toFixed(2);
             }
         },
+		computed:{
+			custom(){
+				let customs = this.$store.state.customData;
+				if(customs && customs.length){
+					return customs[0].nickname;
+				}else{
+				    return "顾客";
+				}
+			}
+		},
         props:['cartData','cartItemIndex'],
         methods:{
             //显示会员模块
