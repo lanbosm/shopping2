@@ -26,7 +26,7 @@ export const API_URLS = {
     products: "/cashier/member/products",
     customers:"/cashier/member/customers",               //会员模块
     category:"/cashier/member/products/categories",               //会员模块
-
+    recharge:"/cashier/member/recharge",//充值
     //products: "/data/products.json", //假数据
     //products50:"/data/products50.json",
     //category:"/data/category.json",               //会员模块
@@ -168,12 +168,10 @@ Vue.http.interceptors.push(function (request, next) {
     store.state.loading=true;
     next(function (response) {
         store.state.loading=false;
-        if (response.data.code == 49001) {
-
+        if (response.data && response.data.code == 49001) {
             window.location.href = response.data.loginUrl;
             return true;
-        } else if (response.data.code == 49002) {
-
+        } else if (response.data && response.data.code == 49002) {
             window.location.href = window.host_index;
             return true;
         } else {

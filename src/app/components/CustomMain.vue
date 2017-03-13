@@ -14,7 +14,7 @@
         </div>
     </div>
 </template>
-<style  rel=”stylesheet/less”  lang="less">
+<style  rel="stylesheet/less"  lang="less">
     @import "../../css/util/skin.less";
 
     @imgPath:"../../images";

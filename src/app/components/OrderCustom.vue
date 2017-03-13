@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-nn-30">
                     <a class="btn btn-default custom-btn btn-block">
-                        <span class="glyphicon glyphicon-user"></span> 顾客
+                        <span class="glyphicon glyphicon-user"></span> {{custom.nickname}}
                     </a>
                 </div>
 
@@ -37,8 +37,15 @@
         },
         computed: {
             //数据来自全局
-            listData () {
-                return [];
+            custom () {
+                let customs = this.$store.state.customData;
+                if(customs && customs.length){
+                    return customs[0];
+                }else{
+                    return {
+                        nickname:'顾客'
+                    }
+                }
             },
         },
         components: {

@@ -81,7 +81,7 @@
     }
 </script>
 
-<style scoped rel=”stylesheet/less”  lang="less">
+<style scoped rel="stylesheet/less"  lang="less">
 
     @themeColor:#e84593;
 
