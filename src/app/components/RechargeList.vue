@@ -1,87 +1,86 @@
 //充值列表
 <template>
     <div class="rechargelist clearfix">
-        <div  class="col-nn-15">
-             <a class="btn btn-default btn-block rechargelist-btn" :class="{select:amountIndex==1}" @click="chooseAmount(1)">
-                 <span>¥ 10</span>
-                 <em>赠 ¥10</em>
+        <div  class="col-nn-15" v-for="activity in activityList">
+             <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
+                 <span>¥ {{activity.baseline}}</span>
+                 <em :style="{visibility:activity.amount?'':'hidden'}">赠 ¥{{activity.amount}}</em>
              </a>
         </div>
-        <div  class="col-nn-15">
-            <a class="btn btn-default btn-block rechargelist-btn" :class="{select:amountIndex==2}" @click="chooseAmount(2)">
-                <span>¥ 50</span>
-                <em>赠 ¥50</em>
-            </a>
-        </div>
-        <div  class="col-nn-15">
-            <a class="btn btn-default btn-block rechargelist-btn" :class="{select:amountIndex==3}" @click="chooseAmount(3)">
-                <span>¥ 100</span>
-                <em>赠 ¥100</em>
-            </a>
-        </div>
-        <div  class="col-nn-15">
-            <a class="btn btn-default btn-block rechargelist-btn" :class="{select:amountIndex==4}" @click="chooseAmount(4)">
-                <span>¥ 500</span>
-                <em>赠 ¥500</em>
-            </a>
-        </div>
-        <div  class="col-nn-15">
-            <a class="btn btn-default btn-block rechargelist-btn" :class="{select:amountIndex==5}" @click="chooseAmount(5)">
-                <span>¥ 1000</span>
-                <em>赠 ¥100</em>
-            </a>
-        </div>
         <div  class="col-nn-25">
-            <a class="btn btn-default btn-block rechargelist-btn diy" :class="{select:amountIndex==6}" @click="chooseAmount(6)">
-                 <span>¥ <input class="diy" type="text" v-model="diyamount" placeholder="自定义金额" /></span>
-                 <em>赠 {{diyamount}}</em>
+            <a class="btn btn-default btn-block rechargelist-btn diy"  :class="{select:diyamountSeleted}" >
+                 <span>¥ <input class="diy" type="tel" @keyup.enter="changeDiy" v-model="diyamount" @focus="chooseAmount()" placeholder="输入金额" /></span>
+                 <em v-show="diyamountGift.amount">赠 ¥{{diyamountGift.amount}}</em>
             </a>
         </div>
     </div>
 </template>
 
 <script>
-    import {request, API_URLS, HOST} from 'util/request.js';
+    import {request, API_URLS} from 'util/request.js';
 
     export default {
         name: 'ProductList',
         props:["pageSize"],
+        mounted(){
+            this.amountActivityList();
+        },
         computed:{
-            activity (){                //活动 充多少送多少
-                return true;
-            }
         },
         data (){
             return {
-                defaultAmount:['10','50','100','500','1000'],
-                amountIndex:0,
-                amount:0,
-                diyamount:""
-
+                activityList:[
+                    {baseline:10},
+                    {baseline:50},
+                    {baseline:100},
+                    {baseline:500},
+                    {baseline:1000}
+                ],
+                selectAmount:'',
+                diyamountSeleted:false,
+                diyamount:"",
+                diyamountGift:{}
             }
-
         },
         methods:{
             //选择充值
-            chooseAmount: function(index){
-                this.amountIndex=index;
-                if(index==6) {  //自定义充钱
-                    this.amount ="";
-                }else{
-                    this.amount = this.defaultAmount[index - 1];
+            chooseAmount(a){
+                if(a){
+                    this.selectAmount = a.baseline;
+                    this.diyamountSeleted = false;
+                }else if(this.diyamount){
+                    this.selectAmount = '';
+                    this.diyamountSeleted = true;
                 }
-
-                if(page !=  this.page.pageNum){
-
-                   // this.productParams.pageNum=page;
-                    //this.getItemList();
-                }
+            },
+            amountActivityList(){
+                let vm = this;
+                let diy = vm.diyamountSeleted;
+                let apiObj = {
+                    url: API_URLS.recharge,
+                    data:{
+                        amount: diy ? vm.diyamount : ''
+                    }
+                };
+                console.log(apiObj)
+                request.fnGet(vm, apiObj, function(res){
+                    console.log(res);
+                    if(diy && res.list && res.list.length){
+                        vm.diyamountGift = res.list[0];
+                    }else{
+                        vm.activityList = res.list;
+                    }
+                });
+            },
+            changeDiy(){
+                this.diyamountSeleted = true;
+                this.amountActivityList();
             }
         }
     }
 </script>
 
-<style scoped rel=”stylesheet/less”  lang="less">
+<style scoped rel="stylesheet/less"  lang="less">
 
     @themeColor:#e84593;
 
