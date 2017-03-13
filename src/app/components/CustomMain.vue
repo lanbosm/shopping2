@@ -98,7 +98,7 @@
 
     export default{
         mounted(){
-
+            this.custom = this.$store.state.currentPage.customData
         },
         data(){
             return {
@@ -146,10 +146,8 @@
             },
             chooseThis(){
                 let vm = this;
-                let customs = vm.$store.state.customData;
-                customs.push(vm.custom.appMember);
                 // 存储到vuex
-                vm.$store.commit('setCustomData', customs);
+                vm.$store.commit('setCustomData', vm.custom.appMember);
                 // 下次进来就显示当前顾客
                 vm.infoShow = true;
                 vm.searchShow = true;

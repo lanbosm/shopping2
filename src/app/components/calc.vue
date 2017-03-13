@@ -51,9 +51,9 @@
         },
 		computed:{
 			custom(){
-				let customs = this.$store.state.customData;
-				if(customs && customs.length){
-					return customs[0].nickname;
+				let customs = this.$store.state.currentPage.customData;
+				if(customs){
+					return customs.nickname;
 				}else{
 				    return "顾客";
 				}

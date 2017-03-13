@@ -102,7 +102,7 @@
                      return this.$store.state.categoryData;
             },
             cartData () {
-                     return this.$store.state.cartData
+                return this.$store.state.currentPage.cartData
             },
 
         },

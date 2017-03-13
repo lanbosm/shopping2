@@ -41,27 +41,14 @@ const store = new Vuex.Store({
     loading:false,
     mode:"order",  //模式
     headData:null,
-    //默认数据
-    defaultData:{
-        pageData:{},
-        itemData:{
-            appProductDetail:{},
-            appSpecifications:[]
-        },
-        categoryData:[],
-        list:{
-            categoryId:"",
-            brandId:"",
-            searchStr:"",
-            pageNum:1,
-            categoryName:"",
-            brandName:""
-        },
-        cartData:[],
-        customData: {}
-    },
-    queueData:[],
     pageData:{},
+    pageList:[],
+    currentPage:{
+        index:1
+    },
+    member:{
+        shopName:''
+    },
     itemData:{
         appProductDetail:{},
         appSpecifications:[]
@@ -74,9 +61,7 @@ const store = new Vuex.Store({
         pageNum:1,
         categoryName:"",
         brandName:""
-    },
-    cartData:[ ],
-    customData:[]
+    }
   },
    // 变量赋值
   mutations:{
@@ -96,78 +81,95 @@ const store = new Vuex.Store({
           state.categoryData=data;
       },
       setCustomData(state, data){
-          state.customData = data;
+          state.currentPage.customData = data;
       },
-      setList (state,data){   //尝试新写法
-
-
-
-          Object.assign(state.list,data); //大概就是下面的意思
-          // var type=Object.keys(data)[0]
-          //
-          // switch (type){
-          //     case "cartgoryId":
-          //         state.list.cartgoryId=data.value;
-          //     case "brandId":
-          //         state.list.brandId=data.value;
-          //     case "searchstr":
-          //         state.list.searchstr=data.value;
-          //     case "pageNum":
-          //         state.list.pageNum=data.value;
-          // }
-
+      setPageList(state, data){
+          state.pageList = data;
+          state.currentPage = state.pageList[state.pageList.length - 1];
       },
-      addQueue (state,data){
-
-          var obj={
-              index:data,
-              pageData:state.pageData,
-              itemData:state.itemData,
-              list:state.list,
-              cartData:state.cartData,
-              customData:state.customData
+      initPage(state, data){
+          console.log(state.pageList);
+          state.pageList = [];
+          state.pageList.push(defaultPage(0));
+          state.currentPage = state.pageList[state.pageList.length - 1];
+      },
+      addPage(state, data){
+          console.log("add");
+          state.pageList.push(defaultPage(state.pageList.length));
+          state.currentPage = state.pageList[state.pageList.length - 1];
+      },
+      removePage(state, data){
+          console.log("remove");
+          let index = state.currentPage.index;
+          let isDel = false;
+          let n = 0;
+          for(let i in state.pageList) {
+              if (state.pageList[i].index === index) {
+                  state.pageList.splice(i, 1);
+                  isDel = true;
+              }
+              if (isDel) {
+                  state.pageList[i].index = state.currentPage.index + n++ ;
+              }
           }
 
-
-          state.queueData.unshift(obj);
-
-        //state.pageData={};
-          state.cartData=[];
-          // state.customData=[];
-          // state.categoryData=[];
-          // state.itemData={
-          //     appProductDetail:{},
-          //     appSpecifications:[]
-          // };
-          // state.list={
-          //     categoryId:"",
-          //     brandId:"",
-          //     searchStr:"",
-          //     pageNum:1,
-          //     categoryName:"",
-          //     brandName:""
-          // }
-
+          if(!state.pageList.length){
+              state.pageList.push(defaultPage(1));
+              state.currentPage = state.pageList[state.pageList.length - 1];
+          }else{
+              state.currentPage = state.pageList[0];
+          }
       },
-      swicthQueue (state,data){
-
-         // alert(data);
-
-          var index=data-1;
-          var cacheObj=state.queueData[index];
-
-
-          state.pageData=cacheObj.pageData;
-          state.itemData=cacheObj.itemData;
-          state.list=cacheObj.list;
-          state.cartData=cacheObj.cartData;
-          state.customData=cacheObj.customData;
-
-
+      switchPage(state, index){
+          console.log("switch");
+          if(state.currentPage.index == index){
+              return;
+          }
+          for(let i in state.pageList){
+              if(state.pageList[i].index === index){
+                  state.currentPage = state.pageList[i];
+              }
+          }
       }
-
   }
-})
+});
 
+function defaultPage(len){
+    return {
+        pageData:{},
+        itemData:{
+            appProductDetail:{},
+            appSpecifications:[]
+        },
+        categoryData:[],
+            list:{
+            categoryId:"",
+            brandId:"",
+            searchStr:"",
+            pageNum:1,
+            categoryName:"",
+            brandName:""
+        },
+        cartData:[],
+        customData: {},
+        index:len + 1,
+        time:getTimeData()
+    }
+}
+function getTimeData(){
+    function nz(n){
+        if(n<10){
+            n="0"+n;
+        }else{
+            n=n+"";
+        }
+        return n;
+    }
+
+    var time=new Date();
+    var timestr=nz(time.getHours())+":"+nz(time.getMinutes());
+
+    return timestr;
+}
 
 export default store
