@@ -146,7 +146,6 @@
             if(!this.$store.state.headData){
                 this.getStaffData();
                 this.saveLocalData();
-                alert(1111);
             }else{
                 this.getLocalData();
             }
