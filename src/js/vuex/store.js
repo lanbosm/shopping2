@@ -5,6 +5,35 @@ import Vue from 'vue';
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
+
+// 对象深拷贝
+function deepCopy (origin, _copy) {
+    var self = arguments.callee,
+        type = Object.prototype.toString.call(origin),
+        copy = origin;
+    switch (type) {
+        case '[object Object]':
+            copy = _copy || {};
+            for (var k in origin) {
+                if (origin.hasOwnProperty(k)) {
+                    copy[k] = self(origin[k]);
+                }
+            }
+            break;
+        case '[object Array]':
+            copy = _copy || [];
+            for (var i = 0, l = origin.length; i < l; i++) {
+                copy[i] = self(origin[i]);
+            }
+            break;
+        case '[object Function]':
+            copy = new Function(origin.toString());
+            break;
+    }
+    return copy;
+};
+
+
 //vue 定义全局变量
 const store = new Vuex.Store({
   state: {
@@ -33,9 +62,7 @@ const store = new Vuex.Store({
         ],
         customData: {}
     },
-    queueData:[
-
-    ],
+    queueData:[],
     pageData:{},
     itemData:{
         appProductDetail:{},
@@ -77,6 +104,8 @@ const store = new Vuex.Store({
       },
       setList (state,data){   //尝试新写法
 
+
+
           Object.assign(state.list,data); //大概就是下面的意思
           // var type=Object.keys(data)[0]
           //
@@ -94,6 +123,7 @@ const store = new Vuex.Store({
       },
       addQueue (state,data){
 
+
           var obj={
               index:data,
               pageData:state.pageData,
@@ -103,18 +133,33 @@ const store = new Vuex.Store({
               customData:state.customData
           }
 
+
           state.queueData.push(obj);
 
-          state.pageData=state.defaultData.pageData;
-          state.itemData=state.defaultData.itemData;
-          state.list=state.defaultData.list;
-          state.cartData=state.defaultData.cartData;
-          state.customData=state.defaultData.customData;
+
+          //state.pageData=state.defaultData.pageData;
+          state.cartData=[];
+          //Object.assign(state.cartData,state.defaultData.cartData);
+          // Object.assign(state.pageData,state.defaultData.pageData)
+          // Object.assign(state.itemData,state.defaultData.itemData);
+          // Object.assign(state.list,state.defaultData.list);
+          // Object.assign(state.cartData,state.defaultData.cartData);
+          // Object.assign(state.customData,state.defaultData.customData);
+
 
       },
-      clearData (state,data){
+      swicthQueue (state,data){
+          console.error(state.queueData);
+          var index=data-1;
+          var cacheObj=state.queueData[index];
+         // alert(index);
+          console.log(state.queueData)
+          state.pageData=cacheObj.pageData;
+          state.itemData=cacheObj.itemData;
+          state.list=cacheObj.list;
+          state.cartData=cacheObj.cartData;
+          state.customData=cacheObj.customData;
 
-          alert(1111);
 
       }
 

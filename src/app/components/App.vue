@@ -83,7 +83,6 @@
 
             },
             loading () {
-                console.log(this);
                 return this.$store.state.loading;
             },
             productList(){

@@ -64,11 +64,10 @@
                 if(!cacheData){
                     cacheData={
                         index:0,
-                        staff:"李科兴2号",
+                        staff:"李科兴3号",
                         list:[]
                     };
                 }
-
                 //同步中间件的数据
                 this.$store.state.headData=cacheData;
 
@@ -78,6 +77,12 @@
         data(){
             return {
                 success:true
+            }
+        },
+        created(){
+
+            if(this.listData.list.length==0){
+                this.addCustom();
             }
         },
         methods:{
@@ -136,7 +141,7 @@
                 this.haomafan("remove",index);
             },
             switchCustom(index){
-
+                alert(index);
                 this.listData.index=index;
                 this.haomafan("swicth",index);
             },
@@ -145,16 +150,17 @@
             },
             //好麻烦啊
             haomafan(code,index){
-               // var newobj={}
-//                var pageData=this.$store.state.pageData;
-//                var pageData=this.$store.state.itemData;
-//                var pageData=this.$store.state.categoryData;
-//                var cartData=this.$store.state.cartData;
-//                var customData=this.$store.state.customData;
+
                 if(code=="add") {
-                    this.$store.commit("addQueue",1);
+                    this.$store.commit("addQueue",index);
                 }
-                console.log( this.$store.state.queueData);
+                if(code=="swicth") {
+                    this.$store.commit("swicthQueue",index);
+                }
+                if(code=="remove") {
+                    this.$store.commit("removeQueue",index);
+                }
+                //console.log( this.$store.state.queueData);
                 //newobj.pageData=pageData;
 
                 //push(newobj);

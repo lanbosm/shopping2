@@ -1,8 +1,8 @@
 //列表组件
 <template>
-    <div class="row"  v-if="!itemData">
+    <div class="row"  v-if="itemData.length==0">
         <div class="col-xs-12">
-            数据加载中..
+            没有数据
         </div>
     </div>
     <div class="row"  v-else-if="itemData.length!=0">
