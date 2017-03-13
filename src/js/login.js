@@ -1,20 +1,20 @@
 import util from 'util/util.js';
 import Vue from 'vue'
 import layer from 'layer';
-import {request, API_URLS, HOST} from 'util/request.js';
+import {request, API_URLS} from 'util/request.js';
 import RSAKey from 'util/rsa.js';
 
 
-var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-var b64pad="=";
+let b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+let b64pad="=";
 
-var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
+let BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
 function int2char(n) { return BI_RM.charAt(n); }
 
 function hex2b64(h) {
-    var i;
-    var c;
-    var ret = "";
+    let i;
+    let c;
+    let ret = "";
 
     for(i = 0; i+3 <= h.length; i+=3) {
         c = parseInt(h.substring(i,i+3),16);
@@ -34,11 +34,11 @@ function hex2b64(h) {
 
 // convert a base64 string to hex
 function b64tohex(s) {
-    var ret = ""
-    var i;
-    var k = 0; // b64 state, 0-3
-    var slop;
-    var v;
+    let ret = ""
+    let i;
+    let k = 0; // b64 state, 0-3
+    let slop;
+    let v;
     for(i = 0; i < s.length; ++i) {
         if(s.charAt(i) == b64pad) break;
 
@@ -75,9 +75,9 @@ function b64tohex(s) {
 // convert a base64 string to a byte/number array
 function b64toBA(s) {
     //piggyback on b64tohex for now, optimize later
-    var h = b64tohex(s);
-    var i;
-    var a = new Array();
+    let h = b64tohex(s);
+    let i;
+    let a = new Array();
     for(i = 0; 2*i < h.length; ++i) {
         a[i] = parseInt(h.substring(2*i,2*i+2),16);
     }
@@ -94,11 +94,9 @@ new Vue({
 
         },
         data: {
-            publicKey:{},
             logining:false,
             username: '',
-            password: '',
-
+            password: ''
         },
         computed:{
 
@@ -111,83 +109,68 @@ new Vue({
                 }
                 else{
                     //layer.tips('请输入用户名', '#username');
-
                 }
-
             },
             'password': function (val) {
-
                 if(val){
                     //实时action
                 }
                 else{
                     //layer.tips('请输入密码', '#password');
                 }
-
             }
         },
         methods: {
-            getToken:function(){
-                var vm=this;
-                var apiobj={
+            toLogin:function(){
+                let vm=this;
+                let apiobj={
                     url:API_URLS.public_key,
                 };
 
-                if(this.logining){return false;}
-                if(!this.username){ layer.tips('请输入用户名', '#username'); return false;}
-                if(!this.password){ layer.tips('请输入密码', '#password'); return false;}
+                if(vm.logining){return false;}
+                if(!vm.username){ layer.tips('请输入用户名', '#username'); return false;}
+                if(!vm.password){ layer.tips('请输入密码', '#password'); return false;}
 
-                this.logining=true;
+                vm.logining=true;
 
                 request.fnGet(vm,apiobj,function(res) {
 
-                    vm.publicKey=res.data;
-
-                    //  $api.setStorage('tmpKey', tmpKey);
-                    //util.pushLocal('token',vm.publicKey.tmpKey);
-                    var rsaKey = new RSAKey();
-
-                    rsaKey.setPublic(b64tohex(vm.publicKey.modulus), b64tohex(vm.publicKey.exponent));
-                    vm.password = hex2b64(rsaKey.encrypt(vm.password));
-
-
-                    //console.log(hex2b64(rsaKey.encrypt(vm.password)))
-                     vm.toLogin();
-
+                    let publicKey=res.data;
+                    let rsaKey = new RSAKey();
+                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                    let enPwd = hex2b64(rsaKey.encrypt(vm.password));
+                    vm.password = enPwd;
+                    vm.doLogin(publicKey, vm.username, enPwd);
                 });
-
-
             },
-            toLogin:function() {
+            doLogin:function(publicKey, username, enPwd) {
+                if(publicKey && enPwd){
+                    let vm = this;
+                    let apiobj = {
+                        url: API_URLS.login,
+                        data: {
+                            username: username,
+                            enPasswd: enPwd,
+                            tmpKey: publicKey.tmpKey
+                        }
+                    };
 
-                var vm = this;
-                var apiobj = {
-                    url: API_URLS.login,
-                    data: {
-                        username: vm.username,
-                        enPasswd: vm.password,
-                        tmpKey: vm.publicKey.tmpKey
-                    }
-                };
+                    let loading = layer.load(2, {
+                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                    });
 
-                console.log(apiobj.data);
-                var loading = layer.load(2, {
-                    shade: [0.1,'#fff'] //0.1透明度的白色背景
-                });
-
-                request.fnPost(vm, apiobj, function (res) {
-                    layer.close(loading);
-                    console.log(res);
-                    location.href="./index.html";
-                }, function (res) {
-                    layer.close(loading);
-                    layer.msg(res.msg, {icon: 2});
-                    vm.password="";
-                    vm.logining=false;
-
-                })
-
-
+                    request.fnPost(vm, apiobj, function (res) {
+                        layer.close(loading);
+                        location.href="./index.html";
+                    }, function (res) {
+                        layer.close(loading);
+                        layer.msg(res.msg, {icon: 2});
+                        vm.password="";
+                        vm.logining=false;
+                    })
+                }else{
+                    alert('服务器链接失败');
+                }
             }
         }
     }).$mount('#main');

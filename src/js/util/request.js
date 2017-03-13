@@ -141,35 +141,32 @@ export const request = {
  */
 Vue.http.interceptors.push(function (request, next) {
 
+    let accessToken = window.localStorage.getItem("accessToken");
+    if (accessToken) {
+        Vue.http.headers.common['accessToken'] = accessToken + '';
+    }
+    let signature = getSign();
+    //
+    if (signature) {
+        Vue.http.headers.common['nonceStr'] = signature.nonceStr + '';
+        Vue.http.headers.common['timeStamp'] = signature.timeStamp + '';
+        Vue.http.headers.common['sign'] = signature.sign + '';
+    }
+    // let accessToken = window.localStorage.getItem("accessToken");
     // if (accessToken) {
-    //     Vue.http.headers.common['accessToken'] = accessToken + '';
+    //     request.headers.accessToken = accessToken;
     // }
     // let signature = getSign();
     //
+    //
     // if (signature) {
-    //     Vue.http.headers.common['nonceStr'] = signature.nonceStr + '';
-    //     Vue.http.headers.common['timeStamp'] = signature.timeStamp + '';
-    //     Vue.http.headers.common['sign'] = signature.sign + '';
+    //     request.headers.nonceStr = signature.nonceStr;
+    //     request.headers.timeStamp = signature.timeStamp;
+    //     request.headers.sign = signature.sign;
     // }
-    let accessToken = window.localStorage.getItem("accessToken");
-    if (accessToken) {
-        request.headers.accessToken = accessToken;
-    }
-    let signature = getSign();
-
-
-    if (signature) {
-        request.headers.nonceStr = signature.nonceStr;
-        request.headers.timeStamp = signature.timeStamp;
-        request.headers.sign = signature.sign;
-    }
-
 
     store.state.loading=true;
-     // console.log("token:" + accessToken);
-
     next(function (response) {
-
         store.state.loading=false;
         if (response.data.code == 49001) {
 
@@ -181,7 +178,6 @@ Vue.http.interceptors.push(function (request, next) {
             return true;
         } else {
             return response;
-
         }
     });
 });

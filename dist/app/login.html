@@ -49,11 +49,11 @@
                                             </div>
                                             <div class="register-row3-input">
                                                 <label for="password" class="password"></label>
-                                                <input type="password" name="username" id="password"  v-model="password" v-on:keyup.enter="toLogin();" placeholder="请输入密码"/>
+                                                <input type="password" name="username" id="password"  v-model="password" v-on:keyup.enter="toLogin()" placeholder="请输入密码"/>
                                             </div>
                                         </div>
                                         <div class="register-row4 pr">
-                                                <a class="btn login" @click="getToken()">登录</a>
+                                                <a class="btn login" @click="toLogin()">登录</a>
                                                 <p>如登录出现异常，请清理浏览器缓存后再尝试。</p>
                                         </div>
                                         <div class="register-row5 pr">
@@ -80,11 +80,11 @@
         var password=$("#password").val();
 
         if(!username){
-            alert("请输入用户名;")
+            alert("请输入用户名;");
             check=false;
         }
         if(!password && check){
-            alert("请输入密码;")
+            alert("请输入密码;");
             check=false;
         }
         return check;
