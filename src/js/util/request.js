@@ -25,7 +25,7 @@ export const API_URLS = {
     login_out:"/cashier/common/log_out",
     products: "/cashier/member/products",
     customers:"/cashier/member/customers",               //会员模块
-
+    category:"/cashier/member/products/categories",               //会员模块
 
     //products: "/data/products.json", //假数据
     //products50:"/data/products50.json",
