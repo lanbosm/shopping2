@@ -17,8 +17,28 @@
 	<!--http://www.iconfont.cn/plus/collections/detail?cid=20-->
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_m07tr53qrds7cik9.css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+	<style>
+		/* transition animate */
+		.fade-enter-active, .fade-leave-active {
+			transition: opacity .5s
+		}
+		.fade-enter, .fade-leave-active {
+			opacity: 0
+		}
 
 
+		.slide-enter-active {
+			transition: all .3s ease;
+		}
+		.slide-leave-active {
+			/* transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); */
+		}
+		.slide-enter, .slide-leave-active {
+			transform: translateX(10px);
+			opacity: 0;
+		}
+
+	</style>
 </head>
 
 <body>
@@ -26,10 +46,12 @@
 		<!-- container -->
 		<div class="main" id="main">
 				<app-header></app-header>
-				<app></app>
-				<!--&lt;!&ndash;  layer-item &ndash;&gt;-->
-				<!--@@include('./components/layer-item.inc')-->
-				<!--<layer-item :item-Detail="itemDetail"></layer-item>-->
+
+				<transition name="slide">
+					<keep-alive>
+						<router-view></router-view>
+					</keep-alive>
+				</transition>
 
 
 			    <!--&lt;!&ndash; custom modale &ndash;&gt;-->

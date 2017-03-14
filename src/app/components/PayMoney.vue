@@ -1,6 +1,7 @@
 <template>
                 <!--现金方式-->
-                    <div class="tab-con tab-con-2 text-center tabShow">
+                    <div class="tab-con tab-con-0 text-center tabShow">
+                        <p class="pay-tips ">现金方式</p>
                         <div class="list-box ">
                             <table class="table">
                                 <thead>

@@ -132,8 +132,9 @@
             },
             //创建订单
             buildOrder:function(cart){
-                alert("创建订单");
-                console.log(cart);
+
+                this.$store.commit("setMode",'order');
+                this.$router.push('/order');
             },
             openDetail() {
                 //是否存在赠品

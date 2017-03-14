@@ -28,9 +28,16 @@
         },
         methods:{
             toBack (){
-
                 this.$store.commit("setMode",this.back.url);
-                this.$router.go(-1);
+                if(this.back.url=="index"){
+                    this.$router.replace('/');
+                }
+                if(this.back.url=="order"){
+                    this.$router.go(-1);
+                }
+                if(this.back.url=="print"){
+                    this.$router.go(-1);
+                }
             },
             toNext (){
                 if(this.$route.name=='Recharge'){

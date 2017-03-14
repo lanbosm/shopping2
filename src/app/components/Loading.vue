@@ -30,7 +30,7 @@ export default {
     margin-top:-50px;
     margin-left:-50px;
     transform: scale(.5);
-    z-index:9999;
+    z-index:99;
 }
 .loadEffect .ld-span{
     display: inline-block;

@@ -1,9 +1,10 @@
 <template>
-        <!--刷卡方式-->
-        <div class="tab-con tab-con-1 text-center tabShow">
+   <!--刷卡方式-->
+        <div class="tab-con tab-con-0 text-center tabShow">
             <h1 class="pay-amount ">￥ 21.50</h1>
             <p class="pay-tips "> {{ message }}</p>
-            <!--<child msg="hello!"></child>-->
+            
+            <div>添加导购员</div>
         </div>
 </template> 
 
@@ -11,6 +12,7 @@
 </style>
 <script>
     export default{
+        props:['message'],
         compiled() {
 
         },
@@ -24,4 +26,4 @@
             }
         }
     }
-</script>
+</script>     

@@ -11,7 +11,7 @@
                     <div class="content">
                         <transition name="slide">
                             <keep-alive>
-                               <router-view></router-view>
+                               <router-view :message="message" :amount="amount"></router-view>
                             </keep-alive>
                         </transition>
                     </div>
@@ -21,32 +21,11 @@
     </div>
 </template>
 
-<style>
-    /* transition animate */
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
-    }
-    .fade-enter, .fade-leave-active {
-        opacity: 0
-    }
-
-
-    .slide-enter-active {
-        transition: all .3s ease;
-    }
-    .slide-leave-active {
-        /* transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); */
-    }
-    .slide-enter, .slide-leave-active {
-        transform: translateX(10px);
-        opacity: 0;
-    }
-
-</style>
 <script>
     import OrderHeader from 'components/OrderHeader.vue';
     import OrderCustom from 'components/OrderCustom.vue';
     import OrderMenu from 'components/OrderMenu.vue';
+
     export default{
         data() {
             return {
@@ -54,11 +33,9 @@
                 back:{"label":"返回","url":"index","show":true},
                 next:{"label":"打印","url":"print","show":true},
                 message: '请选择一个付款方式',
+                amount:21.50,
                 index: 0
             }
-        },
-        created(){
-            this.$store.commit("setMode",'order');
         },
         components:{
             OrderHeader,
@@ -71,21 +48,10 @@
         computed: {
             listData () {
                 return [];
-            },
+            }
         },
         methods: {
-                toBack:function(){
-                    location.href="./index.html";
-                },
-                toPrint:function(){
-                    location.href="./print.html";
-                },
-                switchPay:function (index) {
-                    this.index = index;
-                },
-                choiceDis:function(param){
-                    this.choice[param] = !this.choice[param];
-                }
+
 
         },
         mounted(){
