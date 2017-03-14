@@ -42,7 +42,7 @@
             //获取物品详情
             fetchItem:function(pid){
                 let apiobj={
-                    url:API_URLS.products50,
+                    url:API_URLS.products+"/"+pid,
                 };
                 request.fnGet(this,apiobj,(res)=>{
                     this.$store.commit("setItemData",res);

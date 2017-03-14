@@ -62,9 +62,10 @@
         methods:{
             //显示会员模块
 			showCustomModal(){
-			    var layerCustom='#layer-custom';
+
+                this.$root.showCustomModal=true;
                 function centerModals() {
-                    $(layerCustom).each(function(i) {
+                    $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');
                         var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
                         top = top > 0 ? top : 0;
@@ -72,16 +73,22 @@
                         $(this).find('.modal-content').css("margin-top", top);
                     });
                 };
-                $(layerCustom).on('show.bs.modal', centerModals);
-                //禁用空白处点击关闭
-                $(layerCustom).modal({
-                    backdrop: 'static',
-                    keyboard: false,//禁止键盘
-                    show:false
-                });
-				//页面大小变化是仍然保证模态框水平垂直居中
-                $(window).on('resize', centerModals);
-                $(layerCustom).modal('toggle');
+                this.$nextTick(()=>{
+                    var modal='#layer-custom';
+                    $(modal).on('show.bs.modal', centerModals);
+                    //禁用空白处点击关闭
+                    $(modal).modal({
+                        backdrop: 'static',
+                        keyboard: false,//禁止键盘
+                        show:false
+                    });
+                    //页面大小变化是仍然保证模态框水平垂直居中
+                    $(window).on('resize',(modal)=>centerModals);
+                    //shop_admins
+                    $(modal).modal('toggle');
+                })
+
+
 			},
             //计算器
             calc:function(keycode){

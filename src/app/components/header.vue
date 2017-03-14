@@ -58,7 +58,10 @@
             },
             member(){
                 return this.$store.state.member;
-            }
+            },
+            mode(){
+                return this.$store.state.currentPage.mode;
+            },
         },
         data(){
             return {
@@ -89,6 +92,8 @@
             },
             switchPage(index){
                 this.$store.commit('switchPage', index);
+                //切换路由
+                this.$router.replace('/'+this.mode);
             },
             getLocalData(){
                 return util.pullLocal("pageList");

@@ -3,27 +3,22 @@
         <div class="tab-con tab-con-0 text-center tabShow">
             <h1 class="pay-amount ">￥ 21.50</h1>
             <p class="pay-tips "> {{ message }}</p>
-            
-            <div>添加导购员</div>
+
+            <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
         </div>
 </template> 
 
-<style>
-</style>
+
+
 <script>
+    import shopAdminBtn from 'components/ShopAdminBtn.vue';
+
     export default{
-        props:['message'],
-        compiled() {
-
-        },
-        created() {
-
-        },
-        methods:{
-            filterList:function(id){
-
-                this.cartData.index=index;
-            }
+        name:"OrderDefault",
+        props:['message','amount','showShopAdminBtn'],
+        components:{
+            shopAdminBtn
         }
+
     }
 </script>     

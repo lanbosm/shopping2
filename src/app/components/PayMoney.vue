@@ -1,6 +1,6 @@
 <template>
                 <!--现金方式-->
-                    <div class="tab-con tab-con-0 text-center tabShow">
+                    <div class="tab-con tab-con-1 text-center tabShow">
                         <p class="pay-tips ">现金方式</p>
                         <div class="list-box ">
                             <table class="table">
@@ -42,31 +42,19 @@
                                 <li>X</li>
                             </ul>
                         </div>
-                    </div>
+                        <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
+         </div>
+
 </template>
 
 <style>
 </style>
 <script>
+    import shopAdminBtn from 'components/ShopAdminBtn.vue';
     export default{
-        compiled() {
-
-        },
-        ready(){
-            //数据传递
-            
-        },
-        computed: {
-            //数据来自全局
-            listData () {
-                return [];
-            },
-        },
-        methods:{
-            filterList:function(id){
-
-                this.cartData.index=index;
-            }
+        props:['message','amount','showShopAdminBtn'],
+        components:{
+            shopAdminBtn
         }
     }
 </script>

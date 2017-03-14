@@ -156,10 +156,15 @@ img{width:100%}
 .order .order-body .left-con .recharge-btn:active{color:#fff;padding:25px;border-color:#ccc;border-radius:5px;background:#3b8c64}
 .order .order-body .left-con .recharge-btn.select{color:#fff;padding:25px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .order .order-body .left-con .on{background-color:#6fc89c;color:#fff}
-.order .order-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;padding-bottom:40px;display:none}
+.order .order-body .tab-con{border-bottom:1px dashed #e5e5e5;border-width:2px;padding-top:40px;min-height:520px;display:none;position:relative;padding-bottom:100px}
 .order .order-body .tab-con.tabShow{display:block}
-.order .order-body .tab-con.tab-con-0 .pay-amount{color:#e84593;font-size:60px}
-.order .order-body .tab-con.tab-con-0 .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
+.order .order-body .tab-con.tabShow .pay-amount{color:#e84593;font-size:60px}
+.order .order-body .tab-con.tabShow .pay-tips{color:#e84593;margin-top:10px;font-size:16px}
+.order .order-body .tab-con .shopAdminBox{width:100%;position:absolute;bottom:0;padding-bottom:20px}
+.order .order-body .tab-con .shopAdminBox .addShopAdmin-btn{width:100%;height:80px;line-height:40px;color:#666;padding:25px;border-color:#ccc;border-radius:5px;background:#f0eeef}
+.order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:hover{color:#fff;padding:25px;border-color:#ccc;border-radius:5px;background:#6fc89c}
+.order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:active{color:#fff;padding:25px;border-color:#ccc;border-radius:5px;background:#3b8c64}
+.order .order-body .tab-con .shopAdminBox .addShopAdmin-btn.select{color:#fff;padding:25px;border-color:#ccc;border-radius:5px;background:#6fc89c}
 .order .order-body .list-box{padding-bottom:30px;border-bottom:1px dashed #e5e5e5;border-width:2px}
 .order .order-body .list-box table{border:none}
 .order .order-body .list-box table td,.order .order-body .list-box table th{width:25%;text-align:center;border:none;font-size:14px;padding:4px;line-height:30px}

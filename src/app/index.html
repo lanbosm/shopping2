@@ -14,8 +14,7 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/swiper.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-	<!--http://www.iconfont.cn/plus/collections/detail?cid=20-->
-	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_m07tr53qrds7cik9.css">
+	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_893jjv518nbnvcxr.css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
 	<style>
 		/* transition animate */
@@ -53,10 +52,10 @@
 					</keep-alive>
 				</transition>
 
-
-			    <!--&lt;!&ndash; custom modale &ndash;&gt;-->
-				<!--&lt;!&ndash;@@include('./components/layer-custom.inc')&ndash;&gt;-->
-				<layer-custom ></layer-custom>
+				<!--顾客-->
+				<layer-custom v-if="showCustomModal"></layer-custom>
+				<!--导购员-->
+				<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
 			</div>
 		</div>
 

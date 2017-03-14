@@ -19,7 +19,7 @@
 <script>
     export default{
         name: 'OrderHeader',
-        props:["title","back","next"],
+        props:["title","back","next","mode"],
         computed: {
             //数据来自全局
             listData () {
@@ -28,6 +28,7 @@
         },
         methods:{
             toBack (){
+                //alert(this.mode);
                 this.$store.commit("setMode",this.back.url);
                 if(this.back.url=="index"){
                     this.$router.replace('/');

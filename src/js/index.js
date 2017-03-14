@@ -3,7 +3,6 @@ import Vue from 'vue';
 
 import appHeader from 'components/header.vue'
 import App from 'components/App.vue'
-import CustomModal from 'components/CustomMain.vue';
 import OrderMain from 'components/OrderMain.vue'
 import OrderDefault from 'components/OrderDefault.vue';
 import OrderPrint from 'components/OrderPrint.vue'
@@ -15,7 +14,8 @@ import RechargeDefault from 'components/RechargeDefault.vue'
 
 
 import NoPage from 'components/NoPage.vue'
-
+import CustomModal from 'components/CustomMain.vue';
+import ShopAdminModal from 'components/ShopAdminMain.vue';
 
 import store from './vuex/store'
 import VueRouter from 'vue-router'
@@ -27,12 +27,12 @@ import VueRouter from 'vue-router'
 //定义头组件
 Vue.component('app-header',appHeader);
 
-//定义根组件
-
 
 //定义顾客组件
 Vue.component('layer-custom',CustomModal);
 
+//定义导购组件
+Vue.component('layer-shopadmin',ShopAdminModal);
 
 //路由配置
 Vue.use(VueRouter)
@@ -42,12 +42,14 @@ Vue.use(VueRouter)
 //路由配置
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
 const router = new VueRouter({
-   // mode: 'history',
+     //mode: 'history',
     routes: [
+
             {
                 path: '/',
                 component:  App,
             },
+             { path: '/index', redirect: '/' },
             {
                 path: '/order',
                 name: 'OrderMain',
@@ -130,7 +132,9 @@ var vm =new Vue({
     store,
     el:'#main',
     router,
-    computed: {
+    data:{          //这里不是组件模式 不return
+            showShopAdminModal:false,
+            showCustomModal:true
 
     },
     watch: {
@@ -145,7 +149,7 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
         //起始路由
-        this.$router.push('/');
+        //this.$router.push('/');
     }
 })
 

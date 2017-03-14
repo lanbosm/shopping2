@@ -3,12 +3,12 @@
             <div class="row">
                 <div class="col-nn-30">
                     <a class="btn btn-default custom-btn btn-block">
-                        <span class="glyphicon glyphicon-user"></span> {{custom.nickname}}
+                        <span class="iconfont icon-guanliyuan"></span> {{custom.nickname}}
                     </a>
                 </div>
 
-                <info-list v-if="showInfo"></info-list>
-                <recharge-list v-if="showRecharge"></recharge-list>
+                <info-list v-if="mode=='order'"></info-list>
+                <recharge-list v-if="mode=='recharge'"></recharge-list>
 
             </div>
         </div>
@@ -22,7 +22,7 @@
 
     export default{
         name: 'OrderHeader',
-        props:["showInfo","showRecharge"],
+        props:["mode"],
         data() {
             return {
                 message: '请选择一个付款方式',

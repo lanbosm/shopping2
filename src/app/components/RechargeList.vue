@@ -4,13 +4,15 @@
         <div  class="col-nn-15" v-for="activity in activityList">
              <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
                  <span>¥ {{activity.baseline}}</span>
-                 <em :style="{visibility:activity.amount?'':'hidden'}">赠 ¥{{activity.amount}}</em>
+                 <em v-if="activity.amount">赠 ¥{{activity.amount}}</em>
+                 <em v-else class="dis">无赠送活动</em>
              </a>
         </div>
         <div  class="col-nn-25">
             <a class="btn btn-default btn-block rechargelist-btn diy"  :class="{select:diyamountSeleted}" >
                  <span>¥ <input class="diy" type="tel" @keyup.enter="changeDiy" v-model="diyamount" @focus="chooseAmount()" placeholder="输入金额" /></span>
-                 <em v-show="diyamountGift.amount">赠 ¥{{diyamountGift.amount}}</em>
+                 <em v-if="diyamountGift.amount">赠 ¥{{diyamountGift.amount}}</em>
+                 <em v-else class="dis">无赠送活动</em>
             </a>
         </div>
     </div>
@@ -20,8 +22,7 @@
     import {request, API_URLS} from 'util/request.js';
 
     export default {
-        name: 'ProductList',
-        props:["pageSize"],
+        name: 'RechargeList',
         mounted(){
             this.amountActivityList();
         },
@@ -98,12 +99,6 @@
         &.select{.class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
     }
 
-    .rechargelist-btn{
-        font-size: 18px;
-        .order-custom-btn;
-
-    }
-
 
     .col-nn-15{
          width: 15%;
@@ -122,8 +117,13 @@
         float: left;
         width: 70%;
         .rechargelist-btn{
+            font-size: 18px;
+            .order-custom-btn;
             span{display: block; position: relative; }
-            em{display: block; color: #999999; font-size: 14px; line-height: 30px;}
+            em{display: block; color: @themeColor; font-size: 14px; line-height: 30px;
+                &.dis{opacity: 0.5;}
+            }
+
             &.diy{
                 input{ width: 80%; text-align: right;}
 

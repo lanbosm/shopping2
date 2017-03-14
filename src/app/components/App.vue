@@ -20,6 +20,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
+                                <div  v-if="!showlist">载入中...</div>
                                 <product-list  v-if="showlist" :product-params="productParams"  @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
@@ -132,7 +133,8 @@
             },
             //创建订单
             buildOrder:function(cart){
-
+                //alert(this.mode);
+                //this.mode="order"
                 this.$store.commit("setMode",'order');
                 this.$router.push('/order');
             },

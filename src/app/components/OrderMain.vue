@@ -1,17 +1,17 @@
 <template>
     <div class="order">
-        <order-header :title="title" :back="back" :next="next"></order-header>
-        <order-custom :show-info="true" :show-recharge="false"></order-custom>
+        <order-header :title="title" :back="back" :next="next" mode="mode"></order-header>
+        <order-custom :mode="mode"></order-custom>
         <div class="container order-body">
             <div class="row">
                 <div class="col-nn-30  left-con">
-                     <order-menu :show-recharge-btn="true"></order-menu>
+                    <order-menu :mode="mode"></order-menu>
                 </div>
                 <div class="col-nn-70 right-con">
                     <div class="content">
                         <transition name="slide">
                             <keep-alive>
-                               <router-view :message="message" :amount="amount"></router-view>
+                               <router-view :message="message" :amount="amount" :show-shop-admin-btn="true"></router-view>
                             </keep-alive>
                         </transition>
                     </div>
@@ -46,12 +46,12 @@
            // '$route': 'fetchData'
         },
         computed: {
-            listData () {
-                return [];
+            //数据来自全局
+            mode(){
+                return this.$store.state.currentPage.mode;
             }
         },
         methods: {
-
 
         },
         mounted(){
