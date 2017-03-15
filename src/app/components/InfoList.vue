@@ -24,7 +24,7 @@
 
     export default {
         name: 'ProductList',
-        props:["pageSize"],
+        props:["custom"],
         computed:{
             activity (){                //活动 充多少送多少
                 return true;
@@ -73,7 +73,6 @@
                        break;
                }
 
-               console.log(this.$root);
                 //vmb.$emit('change','hehe'); //Hub触发事件
 
             }

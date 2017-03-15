@@ -1,7 +1,7 @@
 
 <template>
     <div class="print">
-        <order-header :title="title" :back="back" :next="next" mode="mode"></order-header>
+        <app-center-header :title="title" :back="back" :next="next" mode="mode"></app-center-header>
         <div class="container order-custom">
             <div class="row">
                 <div class="col-xs-12">
@@ -32,37 +32,25 @@
                             <tr>
                                 <td colspan="2">顾客：luc</td>
                             </tr>
-                            <tr class="split">
-                                <td><span>完达山奶粉奶粉三段</span><span>*5</span></td>
-                                <td>¥ 15.00</td>
-                            </tr>
-                            <tr>
-                                <td><span>商品2</span><span>*1</span></td>
-                                <td>¥ 15.00</td>
-                            </tr>
-                            <tr>
-                                <td><span>商品2</span><span>*1</span></td>
-                                <td>¥ 15.00</td>
-                            </tr>
-                            <tr>
-                                <td><span>商品2</span><span>*1</span></td>
-                                <td>¥ 15.00</td>
+                            <tr class="split" v-for="(item,index) in currentPage.cartData">
+                                <td><span>{{item.name}}</span><span>*{{item.amount}}</span></td>
+                                <td>¥ {{item.price}}</td>
                             </tr>
                             <tr class="split">
                                 <td>小计 </td>
-                                <td>¥ 15.00</td>
+                                <td>¥ {{totalPrice}}</td>
                             </tr>
                             <tr>
                                 <td>优惠券 </td>
-                                <td>¥ 15.00</td>
+                                <td>¥ {{currentPage.couponPay}}</td>
                             </tr>
                             <tr>
                                 <td>积分</td>
-                                <td>¥ 15.00</td>
+                                <td>¥ {{currentPage.pointPay}}</td>
                             </tr>
                             <tr class="strong split">
                                 <td>价格</td>
-                                <td>¥ 60.00</td>
+                                <td>¥ {{totalPrice}}</td>
                             </tr>
                             <tr class="split">
                                 <td>现金支付</td>
@@ -129,36 +117,51 @@
 </style>
 
 <script>
-    import OrderHeader from 'components/OrderHeader.vue';
-    import OrderCustom from 'components/OrderCustom.vue';
-    import OrderMenu from 'components/OrderMenu.vue';
+    import AppCenterHeader from 'components/AppCenterHeader.vue';
+    import AppCenterCustom from 'components/AppCenterCustom.vue';
+    import AppCenterMenu from 'components/AppCenterMenu.vue';
 
     export default{
         data() {
             return {
                 title:"价格",
                 back:{"label":"返回","url":"order","show":false},
-                next:{"label":"下个订单","url":"index","show":true},
+                next:{"label":"下个订单","url":"index","show":true,"cb":this.clearOrder},
                 message: '请选择一个付款方式',
                 amount:0,
                 index: 0
             }
         },
         components:{
-            OrderHeader,
-            OrderMenu,
-            OrderCustom
-        },
-        watch: {
-           // '$route': 'fetchData'
+            AppCenterHeader,
+            AppCenterMenu,
+            AppCenterCustom
         },
         computed: {
             //数据来自全局
             mode(){
                 return this.$store.state.currentPage.mode;
+            },
+            currentPage(){
+                return this.$store.state.currentPage;
+            },
+            //数据来自全局
+            totalPrice () {
+                var total=0;
+                this.currentPage.cartData.forEach(function(e,i){
+                    total+=e.price*e.amount;
+                })
+                return total;
             }
         },
         methods: {
+            clearOrder(){
+                var curPage=this.$store.state.currentPage.index;
+                this.$store.commit('removePage', curPage);
+                this.$store.commit('switchPage', curPage);
+                //切换路由
+                this.$router.replace('/'+this.mode);
+            },
             printPage(){
 
                 var obj=document.getElementById('printDiv');
@@ -192,7 +195,7 @@
             }
         },
         mounted(){
-
+           // console.log(this.currentPage);
         }
     }
 </script>

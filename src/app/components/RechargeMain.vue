@@ -1,11 +1,11 @@
 <template>
     <div class="order">
-        <order-header :title="title" :back="back" :next="next" :mode="mode"></order-header>
-        <order-custom  :mode="mode" :message="message" :amount="amount" :gift-amount="giftAmount"></order-custom>
+        <app-center-header :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+        <app-center-custom :mode="mode" :message="message" :amount="amount"></app-center-custom>
         <div class="container order-body">
             <div class="row">
                 <div class="col-nn-30  left-con">
-                     <order-menu :mode="mode"></order-menu>
+                    <app-center-menu :mode="mode"></app-center-menu>
                 </div>
                 <div class="col-nn-70 right-con">
                     <div class="content">
@@ -22,9 +22,10 @@
 </template>
 
 <script>
-    import OrderHeader from 'components/OrderHeader.vue';
-    import OrderCustom from 'components/OrderCustom.vue';
-    import OrderMenu from 'components/OrderMenu.vue';
+    import AppCenterHeader from 'components/AppCenterHeader.vue';
+    import AppCenterCustom from 'components/AppCenterCustom.vue';
+    import AppCenterMenu from 'components/AppCenterMenu.vue';
+
     export default{
         data() {
             return {
@@ -40,9 +41,9 @@
 
         },
         components:{
-            OrderHeader,
-            OrderMenu,
-            OrderCustom
+            AppCenterHeader,
+            AppCenterMenu,
+            AppCenterCustom
         },
         computed: {
             //数据来自全局

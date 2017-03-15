@@ -12,7 +12,8 @@
                 </div>
             </div>
         </div>
-</template> 
+</template>
+
 
 <style>
 </style>
@@ -25,14 +26,18 @@
                 var msg="确定"+this.back.label+"吗?";
                 var a= confirm(msg);
                 if(a){
+                    if(this.back.cb){this.back.cb();}
                     this.$store.commit("setMode",this.back.url);
+                    this.$router.replace(this.back.url);
                 }
             },
             toNext (){
                 var msg="确定"+this.next.label+"吗?";
                 var a= confirm(msg);
                 if(a){
+                    if(this.next.cb){this.next.cb();}
                     this.$store.commit("setMode",this.next.url);
+                    this.$router.replace(this.next.url);
                 }
             }
         }

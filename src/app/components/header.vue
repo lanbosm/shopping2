@@ -99,7 +99,7 @@
                 return util.pullLocal("pageList");
             },
             contact(){
-                alert("连接设备");
+                //alert("连接设备");
             },
             exit(){
                 let vm = this;

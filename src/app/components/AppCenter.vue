@@ -1,21 +1,26 @@
 <template>
 	 <div class="appCenter">
-		 <order-main v-if="mode=='order'"></order-main>
+		 <app-center-loading v-if="appLoading"></app-center-loading>
+		 <order-main v-if="mode=='order'" ></order-main>
 
 		 <recharge-main v-if="mode=='recharge'"></recharge-main>
 
 		 <print-main v-if="mode=='print'"></print-main>
-
 	 </div>
 </template>
 
 <style>
+
 </style>
 <script>
+
+    import AppCenterLoading from 'components/AppCenterloading.vue'
 
     import OrderMain from 'components/OrderMain.vue'
     import RechargeMain from 'components/RechargeMain.vue'
     import PrintMain from 'components/PrintMain.vue'
+
+
 
     export default{
         name: 'appCenter',
@@ -23,13 +28,16 @@
             //数据来自全局
 			mode(){
 				return this.$store.state.currentPage.mode;
-			}
-
+			},
+            appLoading(){
+                return this.$store.state.appLoading;
+            }
         },
         components: {
             OrderMain,
             RechargeMain,
-            PrintMain
+            PrintMain,
+            AppCenterLoading
         },
         watch:{
             'mode':"routerGo"

@@ -17,8 +17,8 @@ Vue.use(VueResource)
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-//export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
-export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
+export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
+//export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
 
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
@@ -28,10 +28,10 @@ export const API_URLS = {
     customers:"/cashier/member/customers",               //会员模块
     category:"/cashier/member/products/categories",               //会员模块
     recharge:"/cashier/member/recharge",//充值
-    shop_admins:'/cashier/member/shop_admins'       //员工
-   // products: "/data/products.json", //假数据
-   // products50:"/data/products50.json",
-   // category:"/data/category.json",               //会员模块
+    shop_admins:'/cashier/member/shop_admins',       //员工
+    products: "/data/products.json", //假数据
+    products50:"/data/products50.json",
+    category:"/data/category.json",               //会员模块
 };
 
 //Vue.http.options.emulateJSON = true; //json模式

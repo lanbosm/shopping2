@@ -9,7 +9,6 @@ import PayScan from 'components/PayScan.vue'
 import PayCard from 'components/PayCard.vue'
 import PayMoney from 'components/PayMoney.vue'
 import RechargeDefault from 'components/RechargeDefault.vue'
-import OrderPrint from 'components/OrderPrint.vue'
 
 import NoPage from 'components/NoPage.vue'
 import CustomModal from 'components/CustomMain.vue';
@@ -40,26 +39,26 @@ Vue.use(VueRouter)
 //路由配置
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
 const router = new VueRouter({
-     //mode: 'history',
+   // mode: 'history',
     routes: [
-
             {
                 path: '/',
                 component:  App,
             },
             { path: '/index', redirect: '/' },
             {
-                path: '/order',
+                path: '/app',
+                alias:['/order','/recharge','/print'],            //中心有 订单 充值 打印
                 name: 'AppCenter',
                 component: AppCenter,
                 children: [
                     {
-                        path: '/',                          //支付
+                        path: '/order/',                          //默认支付
                         name: 'OrderDefault',
                         component: OrderDefault,
                     },
                     {
-                        path: '/recharge',
+                        path: '/recharge/',                      //默认充值
                         name: 'RechargeDefault',
                         component: RechargeDefault,
                     },
@@ -86,79 +85,19 @@ const router = new VueRouter({
                 component: NoPage
             }
 
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 })
 
 
-// {
-//                 path: '/order',
-//                 name: 'OrderMain',
-//                 component:OrderMain,
-//                 children: [
-//                     {
-//                         path:'/',
-//                         name: 'OrderDefault',
-//                         component:OrderDefault,
-//                     },
-//                     {
-//                         path:'/scan',
-//                         name: 'PayScan',
-//                         component: PayScan,
-//                     },
-//                     {
-//                         path:'/card',
-//                         name: 'PayCard',
-//                         component: PayCard,
-//                     },
-//                     {
-//                         path:'/money',
-//                         name: 'PayMoney',
-//                         component: PayMoney,
-//                     }
-//                 ],
-
-//             },
-//             //充值
-//             {
-//                 path:'/recharge',
-//                 name: 'Recharge',
-//                 component:RechargeMain,
-//                 children: [
-//                     {
-//                         path:'/',
-//                         name: 'RechargeDefault',
-//                         component:RechargeDefault,
-//                     },
-//                     {
-//                         path:'/scan',
-//                         name: 'PayScan',
-//                         component: PayScan,
-//                     },
-//                     {
-//                         path:'/card',
-//                         name: 'PayCard',
-//                         component: PayCard,
-//                     },
-//                     {
-//                         path:'/money',
-//                         name: 'PayMoney',
-//                         component: PayMoney,
-//                     }
-//                 ]
-
-//             },
-//             //订单打印
-//             {
-//                 path: '/print',
-//                 name: 'OrderPrint',
-//                 component:OrderPrint
-//             },
-//             // 404 page
-//             {   path: '*',
-//                 name: '404',
-//                 component: NoPage
-//             }
-
+router.afterEach(route => {
+    store.state.appLoading=true;
+    setTimeout(()=>{
+        store.state.appLoading=false;
+    },100)
+})
 //vue实例
 var vm =new Vue({
     created:function(){
@@ -170,7 +109,7 @@ var vm =new Vue({
     router,
     data:{          //这里不是组件模式 不return
             showShopAdminModal:false,
-            showCustomModal:true
+            showCustomModal:false
 
     },
     watch: {

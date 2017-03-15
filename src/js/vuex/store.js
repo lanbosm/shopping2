@@ -11,7 +11,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     loading:false,
-    mode:"order",  //模式
+    appLoading:false,
     headData:null,
     pageData:{},
     pageList:[],
@@ -138,6 +138,9 @@ function defaultPage(len){
             categoryName:"",        //分类名称
             brandName:""            //品牌名称
         },
+        isPay:false,                //是否完成支付
+        couponPay:0.00,                //优惠券抵扣
+        pointPay:0.00,                 //积分抵扣
         cartData:[],                //购物车数据
         customData: {},             //顾客数据
         shopAdminData:{},           //导购员数据
