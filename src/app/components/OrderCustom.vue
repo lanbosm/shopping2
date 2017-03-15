@@ -7,8 +7,8 @@
                     </a>
                 </div>
 
-                <info-list v-if="mode=='order'"></info-list>
-                <recharge-list v-if="mode=='recharge'"></recharge-list>
+                <info-list v-if="mode=='order'" :amount="amount" :message="message"></info-list>
+                <recharge-list v-if="mode=='recharge'" :amount="amount" :message="message"></recharge-list>
 
             </div>
         </div>
@@ -22,18 +22,7 @@
 
     export default{
         name: 'OrderHeader',
-        props:["mode"],
-        data() {
-            return {
-                message: '请选择一个付款方式',
-                index: 0,
-                choice: {
-                    'fir': true,
-                    'sec': false,
-                    'thr': false
-                }
-            }
-        },
+        props:["mode","amount","message"],
         computed: {
             //数据来自全局
             custom () {
@@ -50,19 +39,6 @@
         components: {
             RechargeList,
             InfoList
-        },
-        methods: {
-
-                toPrint:function(){
-                    location.href="./print.html";
-                },
-                switchPay:function (index) {
-                    this.index = index;
-                },
-                choiceDis:function(param){
-                    this.choice[param] = !this.choice[param];
-                }
-
         }
     }
 </script>

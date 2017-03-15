@@ -1,7 +1,7 @@
 <template>
     <div class="order">
         <order-header :title="title" :back="back" :next="next" mode="mode"></order-header>
-        <order-custom :mode="mode"></order-custom>
+        <order-custom :mode="mode" :message="message" :amount="amount"></order-custom>
         <div class="container order-body">
             <div class="row">
                 <div class="col-nn-30  left-con">

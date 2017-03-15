@@ -3,15 +3,13 @@ import Vue from 'vue';
 
 import appHeader from 'components/header.vue'
 import App from 'components/App.vue'
-import OrderMain from 'components/OrderMain.vue'
+import AppCenter from 'components/AppCenter.vue'
 import OrderDefault from 'components/OrderDefault.vue';
-import OrderPrint from 'components/OrderPrint.vue'
 import PayScan from 'components/PayScan.vue'
 import PayCard from 'components/PayCard.vue'
 import PayMoney from 'components/PayMoney.vue'
-import RechargeMain from 'components/RechargeMain.vue'
 import RechargeDefault from 'components/RechargeDefault.vue'
-
+import OrderPrint from 'components/OrderPrint.vue'
 
 import NoPage from 'components/NoPage.vue'
 import CustomModal from 'components/CustomMain.vue';
@@ -49,79 +47,112 @@ const router = new VueRouter({
                 path: '/',
                 component:  App,
             },
-             { path: '/index', redirect: '/' },
+            { path: '/index', redirect: '/' },
             {
                 path: '/order',
-                name: 'OrderMain',
-                component:OrderMain,
+                name: 'AppCenter',
+                component: AppCenter,
                 children: [
                     {
-                        path:'/',
+                        path: '/',                          //支付
                         name: 'OrderDefault',
-                        component:OrderDefault,
+                        component: OrderDefault,
                     },
                     {
-                        path:'/scan',
-                        name: 'PayScan',
-                        component: PayScan,
-                    },
-                    {
-                        path:'/card',
-                        name: 'PayCard',
-                        component: PayCard,
-                    },
-                    {
-                        path:'/money',
-                        name: 'PayMoney',
-                        component: PayMoney,
-                    }
-                ],
-
-            },
-            //充值
-            {
-                path:'/recharge',
-                name: 'Recharge',
-                component:RechargeMain,
-                children: [
-                    {
-                        path:'/',
+                        path: '/recharge',
                         name: 'RechargeDefault',
-                        component:RechargeDefault,
+                        component: RechargeDefault,
                     },
                     {
-                        path:'/scan',
+                        path: '/scan',
                         name: 'PayScan',
                         component: PayScan,
                     },
                     {
-                        path:'/card',
+                        path: '/card',
                         name: 'PayCard',
                         component: PayCard,
                     },
                     {
-                        path:'/money',
+                        path: '/money',
                         name: 'PayMoney',
                         component: PayMoney,
                     }
                 ]
-
-            },
-            //订单打印
-            {
-                path: '/print',
-                name: 'OrderPrint',
-                component:OrderPrint
-            },
-            // 404 page
-            {   path: '*',
-                name: '404',
-                component: NoPage
             }
 
     ]
 })
 
+
+// {
+//                 path: '/order',
+//                 name: 'OrderMain',
+//                 component:OrderMain,
+//                 children: [
+//                     {
+//                         path:'/',
+//                         name: 'OrderDefault',
+//                         component:OrderDefault,
+//                     },
+//                     {
+//                         path:'/scan',
+//                         name: 'PayScan',
+//                         component: PayScan,
+//                     },
+//                     {
+//                         path:'/card',
+//                         name: 'PayCard',
+//                         component: PayCard,
+//                     },
+//                     {
+//                         path:'/money',
+//                         name: 'PayMoney',
+//                         component: PayMoney,
+//                     }
+//                 ],
+
+//             },
+//             //充值
+//             {
+//                 path:'/recharge',
+//                 name: 'Recharge',
+//                 component:RechargeMain,
+//                 children: [
+//                     {
+//                         path:'/',
+//                         name: 'RechargeDefault',
+//                         component:RechargeDefault,
+//                     },
+//                     {
+//                         path:'/scan',
+//                         name: 'PayScan',
+//                         component: PayScan,
+//                     },
+//                     {
+//                         path:'/card',
+//                         name: 'PayCard',
+//                         component: PayCard,
+//                     },
+//                     {
+//                         path:'/money',
+//                         name: 'PayMoney',
+//                         component: PayMoney,
+//                     }
+//                 ]
+
+//             },
+//             //订单打印
+//             {
+//                 path: '/print',
+//                 name: 'OrderPrint',
+//                 component:OrderPrint
+//             },
+//             // 404 page
+//             {   path: '*',
+//                 name: '404',
+//                 component: NoPage
+//             }
 
 //vue实例
 var vm =new Vue({

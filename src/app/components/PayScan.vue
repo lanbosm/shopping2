@@ -2,7 +2,8 @@
    	  <!--默认无选择-->
         <div class="tab-con tab-con-0 text-center tabShow">
             <h1 class="pay-amount ">￥ {{amount}}</h1>
-            <p class="pay-tips ">扫码方式</p>
+            <p class="pay-gift-amount" v-if="giftAmount" >{{giftAmount}}</p>
+            <p class="txt">请对准门店二维码扫描,成功后打印收据</p>
             <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
         </div>
 </template>
@@ -12,7 +13,7 @@
 <script>
     import shopAdminBtn from 'components/ShopAdminBtn.vue';
     export default{
-        props:['message','amount','showShopAdminBtn'],
+        props:['message','amount','giftAmount','showShopAdminBtn'],
         components:{
             shopAdminBtn
         }

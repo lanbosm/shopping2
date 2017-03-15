@@ -123,7 +123,7 @@ const store = new Vuex.Store({
 
 function defaultPage(len){
     return {
-        mode:"order",               //默认首页
+        mode:"index",               //默认首页
         pageData:{},                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},

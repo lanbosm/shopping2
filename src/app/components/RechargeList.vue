@@ -11,7 +11,7 @@
         <div  class="col-nn-25">
             <a class="btn btn-default btn-block rechargelist-btn diy"  :class="{select:diyamountSeleted}" >
                  <span>¥ <input class="diy" type="tel" @keyup.enter="changeDiy" v-model="diyamount" @focus="chooseAmount()" placeholder="输入金额" /></span>
-                 <em v-if="diyamountGift.amount">赠 ¥{{diyamountGift.amount}}</em>
+                 <em v-if="diyamountGift.amount">{{diyamountGift.name}}</em>
                  <em v-else class="dis">无赠送活动</em>
             </a>
         </div>
@@ -25,9 +25,13 @@
         name: 'RechargeList',
         mounted(){
             this.amountActivityList();
+
         },
-        computed:{
-        },
+        props:[
+            "amount",
+            "message",
+            "giftAmount"
+        ],
         data (){
             return {
                 activityList:[
@@ -43,12 +47,32 @@
                 diyamountGift:{}
             }
         },
+        computed: {
+            //数据来自全局
+            rechargeMain(){
+                return  this.$parent.$parent;
+            }
+        },
+        created(){
+           // alert(this.message)  ;
+           // this.mmm="222";
+        },
         methods:{
             //选择充值
             chooseAmount(a){
                 if(a){
                     this.selectAmount = a.baseline;
                     this.diyamountSeleted = false;
+
+                    this.rechargeMain.amount=this.selectAmount;
+
+                    //有赠送活动
+                    if(a.amount){
+                        this.rechargeMain.giftAmount="赠送 ¥ "+a.amount;
+                    }else{
+                        this.rechargeMain.giftAmount="无赠送活动";
+                    }
+
                 }else if(this.diyamount){
                     this.selectAmount = '';
                     this.diyamountSeleted = true;
@@ -68,6 +92,8 @@
                     console.log(res);
                     if(diy && res.list && res.list.length){
                         vm.diyamountGift = res.list[0];
+                        vm.rechargeMain.amount=vm.diyamountGift.baseline;
+                        vm.rechargeMain.giftAmount="赠送 ¥"+ vm.diyamountGift.amount;
                     }else{
                         vm.activityList = res.list;
                     }

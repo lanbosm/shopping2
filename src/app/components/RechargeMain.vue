@@ -1,7 +1,7 @@
 <template>
     <div class="order">
         <order-header :title="title" :back="back" :next="next" :mode="mode"></order-header>
-        <order-custom :show-info="false" :mode="mode"></order-custom>
+        <order-custom  :mode="mode" :message="message" :amount="amount" :gift-amount="giftAmount"></order-custom>
         <div class="container order-body">
             <div class="row">
                 <div class="col-nn-30  left-con">
@@ -11,7 +11,7 @@
                     <div class="content">
                         <transition name="slide">
                             <keep-alive>
-                               <router-view></router-view>
+                               <router-view :message="message" :amount="amount" :gift-amount="giftAmount"></router-view>
                             </keep-alive>
                         </transition>
                     </div>
@@ -32,12 +32,11 @@
                 back:{"label":"返回","url":"order","show":true},
                 next:{"label":"打印","url":"print","show":true},
                 message: '请选择一个充值方式',
-                index: 0
+                amount:0,
+                giftAmount:0
             }
         },
         created(){
-
-            this.$store.commit("setMode",'recharge');
 
         },
         components:{
@@ -52,18 +51,6 @@
             }
         },
         methods: {
-                toBack:function(){
-                    location.href="./index.html";
-                },
-                toPrint:function(){
-                    location.href="./print.html";
-                },
-                switchPay:function (index) {
-                    this.index = index;
-                },
-                choiceDis:function(param){
-                    this.choice[param] = !this.choice[param];
-                },
 
 
         },

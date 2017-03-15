@@ -1,7 +1,9 @@
 <template>
                 <!--现金方式-->
                     <div class="tab-con tab-con-1 text-center tabShow">
-                        <p class="pay-tips ">现金方式</p>
+                        <h1 class="pay-amount ">￥ {{amount}}</h1>
+                        <p class="pay-gift-amount" v-if="giftAmount">{{giftAmount}}</p>
+
                         <div class="list-box ">
                             <table class="table">
                                 <thead>
@@ -27,18 +29,14 @@
                                 <li>1</li>
                                 <li>2</li>
                                 <li>3</li>
-                                <li>+10</li>
-                                <li>2</li>
-                                <li>3</li>
                                 <li>4</li>
-                                <li>+20</li>
+                                <li>5</li>
+                                <li>6</li>
                                 <li>7</li>
                                 <li>8</li>
                                 <li>9</li>
-                                <li>+50</li>
                                 <li>C</li>
                                 <li>0</li>
-                                <li>.</li>
                                 <li>X</li>
                             </ul>
                         </div>
@@ -52,7 +50,7 @@
 <script>
     import shopAdminBtn from 'components/ShopAdminBtn.vue';
     export default{
-        props:['message','amount','showShopAdminBtn'],
+        props:['message','amount','giftAmount','showShopAdminBtn'],
         components:{
             shopAdminBtn
         }

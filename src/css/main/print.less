@@ -23,7 +23,7 @@
 
 .print-wrap{background: #f0eeef; }
 .print{
-
+   background-color: #f0eeef;
   .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
   .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
   .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
@@ -37,8 +37,8 @@
     position:relative;
 
   }
-  .print-header{
-    padding: 15px;
+  .order-header{
+    padding:  15px;
     position: relative;
     .order-row;
     h3{
@@ -50,11 +50,10 @@
         .order-header-btn;
     }
   }
-  .print-custom{
-     padding: 30px 15px;
+  .order-custom{
+     padding: 30px 30px;
      position: relative;
-     width: 60%;
-    .order-row;
+     width: 768px;
     .print-btn{
          font-size: 18px;
         .order-print-btn;
@@ -66,10 +65,14 @@
   .print-body{
       position: relative;
       .order-row;
-      width: 60%;
+      width: 768px;
       height:900px;
       .print-box{
-          padding-top: 15px;
+          margin: 0 auto;
+          width: 640px;
+          border: solid 1px #dddddd;
+          border-radius: 5px;
+          padding: 15px;
           display: none;
           &.show{display: block;}
 
