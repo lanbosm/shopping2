@@ -31,9 +31,16 @@
             RechargeMain,
             PrintMain
         },
-		watch:{
-          	'mode'(val){
-                if(val=="index"){
+        watch:{
+            'mode':"routerGo"
+        },
+		created(){
+            this.routerGo();
+		},
+		methods:{
+
+		    routerGo(){
+                if(this.mode=="index"){
                     this.$router.replace('/');
                 }
 			}

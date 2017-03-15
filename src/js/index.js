@@ -79,6 +79,11 @@ const router = new VueRouter({
                         component: PayMoney,
                     }
                 ]
+            },
+            // 404 page
+            {   path: '*',
+                name: '404',
+                component: NoPage
             }
 
     ]
