@@ -17,7 +17,7 @@
 <style  rel="stylesheet/less"  lang="less">
     @import "../../css/util/skin.less";
 
-    @imgPath:"../../images";
+    @imgPath:"/images";
 
     /*!custom modale*/
     .custom-layer {
@@ -136,6 +136,7 @@
                     request.fnGet(vm, apiobj, function (res) {
                         vm.custom = res;
                         vm.infoShow = true;
+
                     }, function(res){
                         vm.custom = res;
                         vm.infoShow = true;

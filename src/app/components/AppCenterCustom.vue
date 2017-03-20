@@ -7,7 +7,7 @@
                     </a>
                 </div>
 
-                <info-list v-if="mode=='order'" :amount="amount" :message="message" :custom="custom"></info-list>
+                <info-list v-if="mode=='order'" :amount="amount" :message="message" :custom="custom" :order="order"></info-list>
                 <recharge-list v-if="mode=='recharge'" :amount="amount" :message="message"></recharge-list>
 
             </div>
@@ -22,29 +22,34 @@
 
     export default{
         name: 'OrderHeader',
-        props:["mode","amount","message"],
+        props:["mode","amount","message","order"],
         computed: {
             //数据来自全局
             custom () {
-                let customs = this.$store.state.customData;
-                if(customs && customs.length){
-                    return customs[0];
+                let customs = this.$store.state.currentPage.customData;
+                if(customs.nickname){
+                    return this.$store.state.currentPage.customData;
                 }else{
                     return {
                         nickname:'顾客'
                     }
                 }
-            },
+            }
         },
         components: {
             RechargeList,
             InfoList
         },
+        created(){
+
+
+        },
         methods:{
 
             //显示会员模块
             showCustomModal(){
-
+                //
+                return false;
                 this.$root.showCustomModal=true;
                 function centerModals() {
                     $(this).each(function(i) {

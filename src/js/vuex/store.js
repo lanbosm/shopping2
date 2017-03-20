@@ -56,6 +56,12 @@ const store = new Vuex.Store({
       setProductParams (state,data){
           state.productParams=data;
       },
+      setOrderParams(state,data){
+          Object.assign(state.currentPage.orderParams,data);
+      },
+      setOrderData(state, data){
+          state.currentPage.orderData = data;
+      },
       setCustomData(state, data){
           state.currentPage.customData = data;
       },
@@ -129,6 +135,17 @@ function defaultPage(len){
             appProductDetail:{},
             appSpecifications:[]
         },
+        orderParams: {
+            cartParam:"",
+            couponCodeId:null,
+            usePoint:false,
+            useBalance:false,
+            memberId:null,
+            guiderId:null,
+            paymentMethodId:null
+        },
+        orderData:{},               //订单数据
+        printData:{},               //打印数据
         categoryData:[],            //分类数据
         list:{
             categoryId:"",          //分类Id
@@ -138,9 +155,6 @@ function defaultPage(len){
             categoryName:"",        //分类名称
             brandName:""            //品牌名称
         },
-        isPay:false,                //是否完成支付
-        couponPay:0.00,                //优惠券抵扣
-        pointPay:0.00,                 //积分抵扣
         cartData:[],                //购物车数据
         customData: {},             //顾客数据
         shopAdminData:{},           //导购员数据

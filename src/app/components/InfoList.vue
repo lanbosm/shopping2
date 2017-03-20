@@ -2,18 +2,18 @@
 <template>
     <div class="infolist clearfix">
         <div class="col-nn-23 ">
-            <a class="btn btn-default  coupon-btn btn-block" :class={cur:usecoupon} @click="chooseThis('coupon')">
-                <b>优惠券</b><span>- {{infodata.couponvalue | currency}}</span>
+            <a class="btn btn-default  coupon-btn btn-block" :class={cur:order.couponCodeId!=null} @click="chooseCoupon()">
+                <b>优惠券</b><span v-if="!order.couponCodeId">{{order.canChooseCouponCodes.length}}张</span>
             </a>
         </div>
         <div class="col-nn-23">
-            <a class="btn btn-default  point-btn btn-block" :class={cur:usepoint} @click="chooseThis('point')">
-                <b>{{infodata.point}}积分</b><span>- {{infodata.pointvalue | currency}}</span>
+            <a class="btn btn-default  point-btn btn-block" :class={cur:order.usePoint} @click="choosePoint()">
+                <b>{{order.canUsePoint}}积分</b><span>{{order.canPointDiscount | dikou }}</span>
             </a>
         </div>
         <div class="col-nn-23">
-            <a class="btn btn-default  balance-btn btn-block" :class={cur:usebalance} @click="chooseThis('balance')">
-                <b>{{infodata.balancevalue | currency}}余额</b><span>- {{infodata.balancevalue | currency}}</span>
+            <a class="btn btn-default  balance-btn btn-block" :class={cur:order.useBalance} @click="chooseBalance()">
+                <b>{{order.canUseBalance}}余额</b><span>{{order.canUseBalance | dikou }}</span>
             </a>
         </div>
     </div>
@@ -23,60 +23,69 @@
     import {request, API_URLS, HOST} from 'util/request.js';
 
     export default {
-        name: 'ProductList',
-        props:["custom"],
+        name: 'CustomList',
+        props:["custom","order"],
         computed:{
-            activity (){                //活动 充多少送多少
-                return true;
+            usePoint (){                //活动 充多少送多少
+                return this.$store.state.currentPage.orderParams.usePoint;
+            },
+            useBalance (){                //活动 充多少送多少
+                return this.$store.state.currentPage.orderParams.useBalance;
+            },
+            couponCodeId (){                //活动 充多少送多少
+                return this.$store.state.currentPage.orderParams.couponCodeId;
             }
-        },
-        created(){
-            this.getInfoData();
-        },
-        data (){
-            return {
-                usecoupon:false,
-                usepoint:false,
-                usebalance:false,
-                infodata:{}
-
-            }
-
         },
         filters: {
+            dikou:function(value){
+                if(value==0){
+                    return  '0.00';
+                }
+                return '- ' + value;
+            },
             currency: function (value) {
                 if (!value) return '';
                 return '¥ ' + value;
             }
         },
         methods:{
-            getInfoData:function(){
-                   this.infodata={
-                       couponvalue:"200.00",
-                       point:100,
-                       pointvalue:"10.00",
-                       balancevalue:"1000.00",
-                       balance:1000
-                   }
+            //选择使用
+            chooseCoupon(){
+
+                var  couponCodeId=18;
+                this.$store.commit("setOrderParams",{
+                    couponCodeId: couponCodeId
+                })
+                this.refreshOrder();
             },
-            //选择充值
-            chooseThis: function(c){
-               switch (c){
-                   case 'coupon':
-                       this.usecoupon=!this.usecoupon
-                       break;
-                   case 'point':
-                       this.usepoint=!this.usepoint
-                       break;
-                   case 'balance':
-                       this.usebalance=!this.usebalance
-                       break;
-               }
+            choosePoint(){
+                var usePoint=!this.usePoint;
+                this.$store.commit("setOrderParams",{
+                    usePoint:usePoint
+                })
+                this.refreshOrder();
+            },
+            chooseBalance(){
+                var useBalance=!this.useBalance;
+                this.$store.commit("setOrderParams",{
+                    useBalance:useBalance,
+                })
+                this.refreshOrder();
+            },
+            //刷新订单
+            refreshOrder(){
 
-                //vmb.$emit('change','hehe'); //Hub触发事件
+                var apiObj={
+                    url:API_URLS.b2b_orders+"/build",
+                    data:this.$store.state.currentPage.orderParams
+                }
 
+                request.fnPost(this,apiObj,(res)=>{
+                    this.$store.commit("setOrderData",res.appOrderConfirmBean);
+                })
             }
-        }
+        },
+
     }
 </script>
 

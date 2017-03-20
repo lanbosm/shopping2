@@ -27,30 +27,38 @@
                                 <td colspan="2">阿喔优品公司</td>
                             </tr>
                             <tr>
-                                <td colspan="2">营业员：张山</td>
+                                <td colspan="2">营业员：{{order.cashierName}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">顾客：luc</td>
                             </tr>
-                            <tr class="split" v-for="(item,index) in currentPage.cartData">
-                                <td><span>{{item.name}}</span><span>*{{item.amount}}</span></td>
+                            <tr>
+                                <td colspan="2">导购员：{{order.guiderName}}</td>
+                            </tr>
+
+                            <tr class="split" v-for="(item,index) in order.appOrderItemConfirms">
+                                <td><span>{{item.name}}</span><span>*{{item.quantity}}</span></td>
                                 <td>¥ {{item.price}}</td>
                             </tr>
                             <tr class="split">
                                 <td>小计 </td>
-                                <td>¥ {{totalPrice}}</td>
+                                <td>¥ {{order.totalOrderAmount}}</td>
                             </tr>
                             <tr>
                                 <td>优惠券 </td>
-                                <td>¥ {{currentPage.couponPay}}</td>
+                                <td>¥ {{order.couponDiscount}}</td>
                             </tr>
                             <tr>
                                 <td>积分</td>
-                                <td>¥ {{currentPage.pointPay}}</td>
+                                <td>¥ {{order.pointDiscount}}</td>
+                            </tr>
+                            <tr>
+                                <td>余额</td>
+                                <td>¥ {{order.balanceAmount}}</td>
                             </tr>
                             <tr class="strong split">
                                 <td>价格</td>
-                                <td>¥ {{totalPrice}}</td>
+                                <td>¥ {{order.totalAmountPayable}}</td>
                             </tr>
                             <tr class="split">
                                 <td>现金支付</td>
@@ -65,7 +73,7 @@
                                     <p>
                                         感谢您的光临<br/>
                                         关注二维码 更多优惠</p>
-                                    <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1761723146,2435534986&fm=58"   />
+                                    <img :src=qrcUrl   />
                                 </td>
                             </tr>
                             </tbody>
@@ -85,7 +93,7 @@
                         .print-box  table:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                         .print-box  table{*zoom:1;}
                         .print-box  table td:first-child{display: block; width: 60%;float: left; position: relative;}
-                        .print-box  table span:last-child{display: inline-block; width:20%; float:right;  text-align: right;}
+                        .print-box  table span:last-child{display: inline-block; width:20%; float:right;  text-align: center;}
                         .print-box  table span:first-child{display: inline-block; width:80%; float: left;}
                         .print-box  table td.block{width:100%; padding: 20px;  }
                         .print-box  table img{ width: 100px;  margin:0 auto; display:block;}
@@ -146,12 +154,11 @@
                 return this.$store.state.currentPage;
             },
             //数据来自全局
-            totalPrice () {
-                var total=0;
-                this.currentPage.cartData.forEach(function(e,i){
-                    total+=e.price*e.amount;
-                })
-                return total;
+            order () {
+                return this.$store.state.currentPage.orderData;
+            },
+            qrcUrl(){
+                return "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1761723146,2435534986&fm=58";
             }
         },
         methods: {
@@ -193,6 +200,9 @@
 
 
             }
+        },
+        created(){
+            console.log(this.order);
         },
         mounted(){
            // console.log(this.currentPage);

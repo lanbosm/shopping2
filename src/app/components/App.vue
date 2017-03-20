@@ -102,6 +102,10 @@
             cartData () {
                 return this.$store.state.currentPage.cartData
             },
+            //数据来自全局
+            customData () {
+                return this.$store.state.currentPage.customData;
+            },
 
         },
         components: {
@@ -134,9 +138,45 @@
             //创建订单
             buildOrder:function(cart){
                 //alert(this.mode);
-                //this.mode="order"
-                this.$store.commit("setMode",'order');
-                this.$router.push('/order');
+                if(!this.customData.id){
+                    alert("请先选择会员");
+                    return false;
+                }
+                var cartParam={itemParams:[]};
+
+                cart.forEach(function(ele,index){
+
+                    cartParam.itemParams.push(
+                        {"productId":ele.id,"quantity":ele.amount}
+                    )
+                });
+
+
+                this.$store.commit("setOrderParams",{
+                        cartParam:JSON.stringify(cartParam),
+                        couponCodeId:null,
+                        usePoint:false,
+                        useBalance:false,
+                        memberId:this.customData.id,
+                        guiderId:null
+                })
+
+
+
+                var apiObj={
+                    url:API_URLS.b2b_orders+"/build",
+                    data:this.$store.state.currentPage.orderParams
+                }
+
+                request.fnPost(this,apiObj,(res)=>{
+                     this.$store.commit("setMode",'order');
+                     this.$store.commit("setOrderData",res.appOrderConfirmBean);
+                     this.$router.push('/order');
+                })
+
+
+
+
             },
             openDetail() {
                 //是否存在赠品

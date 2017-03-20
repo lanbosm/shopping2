@@ -120,10 +120,15 @@
                             break;
                     }
                 }else{
-                    if(amount){
-                        amount+=keycode+'';
+                    if(amount==1){
+                        if(keycode==1){
+                            amount+=keycode+'';
+						}else{
+                            amount=keycode+'';
+						}
+
                     }else{
-                        amount=keycode;
+                        amount+=keycode+'';
                     }
                     this.cartData[index].amount=parseInt(amount);
 

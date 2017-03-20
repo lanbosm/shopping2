@@ -84,6 +84,7 @@ function b64toBA(s) {
     return a;
 }
 
+Vue.islogin=false;
 
 new Vue({
         compiled:function(){
@@ -161,6 +162,7 @@ new Vue({
 
                     request.fnPost(vm, apiobj, function (res) {
                         layer.close(loading);
+                        window.localStorage.setItem("accessToken",res.accessToken);
                         location.href="./index.html";
                     }, function (res) {
                         layer.close(loading);

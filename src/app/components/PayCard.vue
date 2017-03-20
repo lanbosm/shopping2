@@ -18,5 +18,6 @@
         components:{
             shopAdminBtn
         }
+
     }
 </script>

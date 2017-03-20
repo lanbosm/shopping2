@@ -17,9 +17,9 @@ Vue.use(VueResource)
 const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
-export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
+//export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
 //export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
-
+var HOST="";
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
     login:"/cashier/login",
@@ -29,9 +29,11 @@ export const API_URLS = {
     category:"/cashier/member/products/categories",               //会员模块
     recharge:"/cashier/member/recharge",//充值
     shop_admins:'/cashier/member/shop_admins',       //员工
-    products: "/data/products.json", //假数据
-    products50:"/data/products50.json",
-    category:"/data/category.json",               //会员模块
+    b2b_orders:'/cashier/member/b2b_orders/'                   //订单模块
+
+// products: "/data/products.json", //假数据
+   // products50:"/data/products50.json",
+   // category:"/data/category.json",               //会员模块
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
@@ -48,7 +50,7 @@ export const request = {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'},
         }).then((response) => { //成功
-                console.log(response);
+                //console.log(response);
                 if (response.data.code == 20000) {
                     if (success) {
                         success(response.data);
@@ -144,12 +146,13 @@ export const request = {
 Vue.http.interceptors.push(function (request, next) {
 
     let accessToken = window.localStorage.getItem("accessToken");
-    if (accessToken) {
-        Vue.http.headers.common['accessToken'] = accessToken + '';
+
+    if (request.params && accessToken  ) {
+        request.params['accessToken'] =accessToken + '';
     }
     let signature = getSign();
-    //
-    if (signature) {
+
+    if (signature && Vue.islogin) {
         Vue.http.headers.common['nonceStr'] = signature.nonceStr + '';
         Vue.http.headers.common['timeStamp'] = signature.timeStamp + '';
         Vue.http.headers.common['sign'] = signature.sign + '';
@@ -171,12 +174,17 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
         store.state.loading=false;
         if (response.data && response.data.code == 49001) {
-            window.location.href = response.data.loginUrl;
+            window.location.href = './login.html';
             return true;
+
         } else if (response.data && response.data.code == 49002) {
-            window.location.href = window.host_index;
+            //window.location.href = './login.html';
             return true;
-        } else {
+        } else if (response.data && response.data.code ==  45004) {
+            alert("商品库存不足")
+            return true;
+        }
+        else {
             return response;
         }
     });

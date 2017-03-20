@@ -39,7 +39,7 @@ Vue.use(VueRouter)
 //路由配置
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
 const router = new VueRouter({
-   // mode: 'history',
+    //mode: 'history',
     routes: [
             {
                 path: '/',
@@ -98,6 +98,8 @@ router.afterEach(route => {
         store.state.appLoading=false;
     },100)
 })
+
+Vue.islogin=true;
 //vue实例
 var vm =new Vue({
     created:function(){
@@ -124,7 +126,7 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
         //起始路由
-        //this.$router.push('/');
+        this.$router.push('/');
     }
 })
 

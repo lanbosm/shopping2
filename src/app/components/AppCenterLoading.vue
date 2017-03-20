@@ -32,7 +32,7 @@ export default {
     .apploadEffect { width:100px; height: 100px;  position: fixed; padding: 18px;
         top:50%; left: 50%; margin-left: -35px; margin-top:-35px; background: #ffffff; border-radius: 5px; }
     .loading-circle{width: 100%; height: 100%; position: relative}
-    .outer { position: absolute; width: 100%; height: 100%; background: url('../../images/icon-spin-s.png') no-repeat; animation: spin 800ms infinite linear; }
+    .outer { position: absolute; width: 100%; height: 100%; background: url('/images/icon-spin-s.png') no-repeat; animation: spin 800ms infinite linear; }
     .inner, .inner2 { position: absolute; width: 38px; height: 38px; border-radius: 40px; overflow: hidden; left: 13px; top: 13px; }
     .inner { opacity: 1; background-color: #89abdd; animation: second-half-hide 1.6s steps(1, end) infinite; }
     .inner2 { opacity: 0; background-color: #4b86db; animation: second-half-show 1.6s steps(1, end) infinite; }

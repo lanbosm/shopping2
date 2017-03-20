@@ -271,13 +271,13 @@ gulp.task('webpackDevServer',function(){
         hot: true,
         compress: false,
         stats: { colors: true },
-        // proxy: {
-        //     '/data/*': {
-        //         target: 'http://localhost:3000/',
-        //         changeOrigin: true,
-        //         secure: false
-        //     }
-        // }
+        proxy: {
+            '/cashier/*': {
+                target: 'http://192.168.1.199:82',
+                changeOrigin: true,
+                secure: false
+            }
+        }
 
 
         });

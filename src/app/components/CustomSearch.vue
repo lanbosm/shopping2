@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-5 col-xs-offset-3">
                     <div class="input-group searchCustom">
-                            <span class="input-group-btn"><button class="btn btn-default" ><span class="glyphicon glyphicon-search" ></span></button>
+                            <span class="input-group-btn"><button class="btn btn-default" @click="$parent.doSearch" ><span class="glyphicon glyphicon-search" ></span></button>
                             </span>
                         <input type="text" v-model="$parent.username" class="form-control" @keyup.enter="$parent.doSearch" placeholder="搜索顾客">
                     </div>

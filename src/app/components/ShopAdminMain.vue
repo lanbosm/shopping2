@@ -98,7 +98,6 @@
                         data:{keyword:this.keyword}
                     };
                     request.fnGet(this, apiobj, (res)=>{
-                            console.log(res.data);
                             this.listData=res.list
                     },(res)=>{
                        alert("获取失败")
@@ -107,6 +106,9 @@
             checkShopAdmin(){
                 var shopAdmin=this.listData[this.shopAdminIndex];
                 this.$store.commit("setShopAdminData",shopAdmin);
+                this.$store.commit("setOrderParams",{
+                    guiderId:shopAdmin.id,
+                })
                 var modal='#layer-showAdmin';
                 $(modal).modal('hide');
                 //this.$root.showShopAdminModal=false; 如果要每次刷新
