@@ -83,22 +83,24 @@
 
                     <div style="display: none" id="styles">
                         *{padding:0; margin:0;}
-                        .print-box {width: 100%; padding:70px 0;}
-                        .print-box  table{ width: 100%; display: block;position: relative; line-height: 20pt; font-size: 12px; font-family:'微软雅黑' }
+                        .print-box {width: 160px; padding:70px 15px; margin:0 auto;}
+                        .print-box  table{ width: 100%; display: block;position: relative; line-height: 18px; font-size: 8px; font-family:'微软雅黑' }
                         .print-box  table tbody,.print-box  table caption{display: block;}
-                        .print-box  table .text-center {text-align: center;}
                         .print-box  table .strong{font-weight: bold; font-size: 16px;}
-                        .print-box  table .split{ padding-top: 20px;  }
+                        .print-box  table .split{   }
                         .print-box  table tr{ display:block;clear: left;}
                         .print-box  table:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                         .print-box  table{*zoom:1;}
+                        .print-box  table td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
                         .print-box  table td:first-child{display: block; width: 60%;float: left; position: relative;}
-                        .print-box  table span:last-child{display: inline-block; width:20%; float:right;  text-align: center;}
+                        .print-box  table span:last-child{display: inline-block; width:20%; float:right;  }
                         .print-box  table span:first-child{display: inline-block; width:80%; float: left;}
-                        .print-box  table td.block{width:100%; padding: 20px;  }
+                        .print-box  table td.block{width:100% !important;   clear:both; text-align:center;  }
                         .print-box  table img{ width: 100px;  margin:0 auto; display:block;}
+                        .print-box  table .text-center {text-align: center !important;}
+                        .print-box  table .text-right {text-align: right !important;}
+                        .print-box  table .text-left {text-align: left !important;}
                     </div>
-
 
                 </div>
             </div>
@@ -107,20 +109,25 @@
 </template>
 
 <style >
-      .print-box {width: 640px;}
-      .print-box  table{ width: 100%; display: block;position: relative; line-height: 24px; font-size: 14px; }
-      .print-box  table tbody,.print-box  table caption{display: block;}
-      .print-box  table .text-center {text-align: center;}
-      .print-box  table .strong{font-weight: bold; font-size: 24px;}
-      .print-box  table .split{ padding-top: 40px;  }
-      .print-box  table tr{ display:block;clear: left;}
-      .print-box  table:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-      .print-box  table{*zoom:1;}
-      .print-box  table td:first-child{display: block; width: 75%;float: left; position: relative;}
-      .print-box  table span:last-child{display: inline-block; width:20%; float:right;  text-align: right;}
-      .print-box  table span:first-child{display: inline-block; width:80%; float: left;}
-      .print-box  table td.block{width:100%; padding: 20px;  }
-      .print-box  table img{ width: 100px;  margin:0 auto;}
+    *{padding:0; margin:0;}
+    .print-box {width: 100%; padding:70px 15px; margin:0 auto;}
+    .print-box  table{ width: 100%; display: block;position: relative; line-height: 20pt; font-size: 14px; font-family:'微软雅黑' }
+    .print-box  table tbody,.print-box  table caption{display: block;}
+    .print-box  table .strong{font-weight: bold; font-size: 16px;}
+    .print-box  table .split{ padding-top: 20px;  }
+    .print-box  table tr{ display:block;clear: left;}
+    .print-box  table:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+    .print-box  table{*zoom:1;}
+    .print-box  table td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
+    .print-box  table td:first-child{display: block; width: 60%;float: left; position: relative;}
+
+    .print-box  table span:last-child{display: inline-block; width:20%; float:right;  }
+    .print-box  table span:first-child{display: inline-block; width:80%; float: left;}
+    .print-box  table td.block{width:100% !important; padding: 20px !important; clear:both; text-align:center;  }
+    .print-box  table img{ width: 100px;  margin:0 auto; display:block;}
+    .print-box  table .text-center {text-align: center !important;}
+    .print-box  table .text-right {text-align: right !important;}
+    .print-box  table .text-left {text-align: left !important;}
 
 </style>
 

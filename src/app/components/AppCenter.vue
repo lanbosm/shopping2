@@ -1,10 +1,7 @@
 <template>
 	 <div class="appCenter">
 		 <app-center-loading v-if="waiting"></app-center-loading>
-		 <order-main v-if="mode=='order'" ></order-main>
-
-		 <recharge-main v-if="mode=='recharge'"></recharge-main>
-
+		 <order-main v-if="mode=='order'"></order-main>
 		 <print-main v-if="mode=='print'"></print-main>
 	 </div>
 </template>
@@ -46,13 +43,13 @@
             'mode':"routerGo"
         },
 		created(){
-           // this.routerGo();
+            this.routerGo();
 		},
 		methods:{
 
 		    routerGo(){
                 if(this.mode=="index"){
-                    this.$router.replace('/');
+                    //this.$router.replace('/');
                 }
 			}
 

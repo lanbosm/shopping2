@@ -33,7 +33,7 @@
 
     @imgPath:"../../images";
 
-    /*!custom modale*/
+    /*!showAdmin modale*/
     .showAdmin-layer {
         .modal-dialog{width: 400px;}
         border-bottom:solid 3px #93d6b3;padding:10px 30px;
@@ -70,8 +70,6 @@
                 background:@green; color: #ffffff; padding:10px 50px;
             }
         }
-
-
     }
 </style>
 

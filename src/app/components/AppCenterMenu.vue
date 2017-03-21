@@ -3,7 +3,7 @@
             <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==12}" @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
             <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==10}" @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
             <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==11}" @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
-            <a v-if="mode!='recharge'" class="btn btn-default recharge-btn btn-block" @click="goRecharge" ><span class="iconfont icon-jizhang" aria-hidden="true"></span>充值</a>
+            <a  :class="{on:recharge}" class="btn btn-default recharge-btn btn-block" @click="goRecharge" ><span class="iconfont icon-jizhang" aria-hidden="true"></span>充值</a>
         </div>
 </template>
 
@@ -15,7 +15,8 @@
         props:["mode"],
         data(){
             return {
-                menuIndex:1
+                menuIndex:1,
+                recharge:false
             }
         },
         computed:{
@@ -26,18 +27,21 @@
         methods:{
             //扫码支付
             payScan() {
+                this.recharge=false;
                 this.$store.commit("setOrderParams",{
                     paymentMethodId:12,
                 })
                 this.$router.replace('/scan');
             },
             payMoney() {
+                this.recharge=false;
                 this.$store.commit("setOrderParams",{
                     paymentMethodId:10,
                 })
                 this.$router.replace('/money');
             },
             payCard() {
+                this.recharge=false;
                 this.$store.commit("setOrderParams",{
                     paymentMethodId:11,
                 })
@@ -45,7 +49,7 @@
             },
             //去充钱
             goRecharge() {
-               // this.$store.commit("setMode","recharge");
+                this.recharge=true;
                //  this.$router.replace('/recharge');
                 this.$root.showRechargeModal=true;
                 function centerModals() {
@@ -58,10 +62,11 @@
                     });
                 };
                 this.$nextTick(()=>{
+                    var vm=this;
                     var modal='#layer-recharge';
                     $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
-                        this.$root.showRechargeModal=false;
+                        vm.$root.showRechargeModal=false;
                     });
                     //禁用空白处点击关闭
                     $(modal).modal({

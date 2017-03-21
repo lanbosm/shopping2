@@ -8,8 +8,6 @@
                 </div>
 
                 <info-list v-if="mode=='order'" :amount="amount" :message="message" :custom="custom" :order="order"></info-list>
-                <recharge-list v-if="mode=='recharge'" :amount="amount" :message="message"></recharge-list>
-
             </div>
         </div>
 </template>
@@ -18,7 +16,6 @@
 </style>
 <script>
     import InfoList from 'components/InfoList.vue';
-    import RechargeList from 'components/RechargeList.vue';
 
     export default{
         name: 'OrderHeader',
@@ -37,7 +34,6 @@
             }
         },
         components: {
-            RechargeList,
             InfoList
         },
         created(){

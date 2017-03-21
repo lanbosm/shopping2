@@ -39,6 +39,7 @@ img{width:100%}
 .f_Yahei{font-family:Microsoft YaHei,\5FAE\8F6F\96C5\9ED1,SimHei,\9ED1\4F53}
 /*!bootstrap*/
 .navbar-brand{padding:0}
+.col-fixed-3,.col-nn-23,.col-nn-30,.col-nn-70{padding-left:15px;padding-right:15px}
 .navbar-inverse .navbar-brand,.navbar-inverse .navbar-nav>li>a{color:#fff!important}
 .index{height:auto;max-width:1400px;margin:0 auto}
 .modal-backdrop.in{opacity:.5}
@@ -57,7 +58,10 @@ img{width:100%}
 .btn-lightgreen:active,.btn-lightgreen:focus,.btn-lightgreen:hover{color:#fff;background-color:#539776}
 .primary{color:#ec86b6}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{background:#6fc89c;color:#fff}
-.col-fixed-3{padding-left:15px;width:300px;padding-right:15px;position:fixed;margin-top:0}
+.col-fixed-3{width:300px;position:fixed;margin-top:0}
+.col-nn-30{float:left;width:30%}
+.col-nn-23{float:left;width:23%}
+.col-nn-70{float:left;width:70%}
 @media (min-width:768px){.col-sm-33{width:33%;float:left}
 }
 @media (min-width:992px){.col-md-50{width:20%;float:left}
@@ -117,14 +121,10 @@ img{width:100%}
 .shoppingCalc{width:100%}
 .shoppingCalc .table .t1{width:40%;cursor:pointer}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
-.order .col-nn-23,.order .col-nn-30,.order .col-nn-70{padding-left:15px;padding-right:15px;float:left}
 .shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
 .shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
 .order-wrap{background:#f0eeef}
 .order{background:#efefef}
-.order .col-nn-30{width:30%}
-.order .col-nn-23{width:23%}
-.order .col-nn-70{width:70%}
 .order .container{background-color:#fff;border-left:1px dashed #e5e5e5;border-right:1px dashed #e5e5e5}
 .order .btn{position:relative}
 .order .order-header{padding:15px;position:relative;border-bottom:1px dashed #e5e5e5;border-width:2px}

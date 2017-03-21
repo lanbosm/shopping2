@@ -1,19 +1,16 @@
 //充值列表
 <template>
     <div class="rechargelist clearfix">
-        <div  class="col-nn-15" v-for="activity in activityList">
-             <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
-                 <span>¥ {{activity.baseline}}</span>
-                 <em v-if="activity.amount">赠 ¥{{activity.amount}}</em>
-                 <em v-else class="dis">无赠送活动</em>
-             </a>
-        </div>
-        <div  class="col-nn-25">
-            <a class="btn btn-default btn-block rechargelist-btn diy"  :class="{select:diyamountSeleted}" >
-                 <span>¥ <input class="diy" type="tel" @keyup.enter="changeDiy" v-model="diyamount" @focus="chooseAmount()" placeholder="输入金额" /></span>
-                 <em v-if="diyamountGift.amount">{{diyamountGift.name}}</em>
-                 <em v-else class="dis">无赠送活动</em>
-            </a>
+        <div class="row">
+             <p v-if="!activityList">加载中...</p>
+             <p v-else-if="activityList.length==0">没有活动</p>
+             <div v-else class="col-nn-15" v-for="activity in activityList">
+                     <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
+                         <span>¥ {{activity.baseline}}</span>
+                         <em v-if="activity.amount">赠 ¥{{activity.amount}}</em>
+                         <em v-else class="dis">无赠送活动</em>
+                     </a>
+             </div>
         </div>
     </div>
 </template>
@@ -23,23 +20,21 @@
 
     export default {
         name: 'RechargeList',
-        mounted(){
-            this.amountActivityList();
 
-        },
         props:[
             "amount",
             "message",
-            "giftAmount"
+            "giftAmount",
+            "diySeleted"
         ],
         data (){
             return {
                 activityList:[
-                    {baseline:10},
-                    {baseline:50},
-                    {baseline:100},
-                    {baseline:500},
-                    {baseline:1000}
+                    {baseline:null},
+                    {baseline:null},
+                    {baseline:null},
+                    {baseline:null},
+                    {baseline:null}
                 ],
                 selectAmount:'',
                 diyamountSeleted:false,
@@ -50,12 +45,18 @@
         computed: {
             //数据来自全局
             rechargeMain(){
-                return  this.$parent.$parent;
+                return  this.$parent;
             }
         },
         created(){
-           // alert(this.message)  ;
-           // this.mmm="222";
+
+
+                this.selectAmount=this.amount;
+                this.diyamount=this.amount;
+                //this.diyamountSeleted = this.diySeleted;
+                this.amountActivityList();
+
+
         },
         methods:{
             //选择充值
@@ -79,6 +80,7 @@
                 }
             },
             amountActivityList(){
+
                 let vm = this;
                 let diy = vm.diyamountSeleted;
                 let apiObj = {
@@ -87,19 +89,21 @@
                         amount: diy ? vm.diyamount : ''
                     }
                 };
-                console.log(apiObj)
+               // console.log(apiObj)
                 request.fnGet(vm, apiObj, function(res){
                     console.log(res);
                     if(diy && res.list && res.list.length){
                         vm.diyamountGift = res.list[0];
-                        vm.rechargeMain.amount=vm.diyamountGift.baseline;
+                        vm.rechargeMain.amount=vm.diyamount;
                         vm.rechargeMain.giftAmount="赠送 ¥"+ vm.diyamountGift.amount;
+                       // vm.activityList = res.list;
                     }else{
                         vm.activityList = res.list;
                     }
                 });
             },
             changeDiy(){
+                this.selectAmount=0;
                 this.diyamountSeleted = true;
                 this.amountActivityList();
             }
@@ -127,21 +131,22 @@
 
 
     .col-nn-15{
-         width: 15%;
+         width: 33%;
          float: left;
          padding-left: 8px;
          padding-right: 7px;
+         margin: 10px 0;
      }
     .col-nn-25{
-        width: 25%;
+        width: 50%;
         float: left;
         padding-left: 8px;
         padding-right: 7px;
-
+        margin: 10px 0;
     }
     .rechargelist{
         float: left;
-        width: 70%;
+        width: 100%;
         .rechargelist-btn{
             font-size: 18px;
             .order-custom-btn;

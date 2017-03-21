@@ -147,9 +147,13 @@ Vue.http.interceptors.push(function (request, next) {
 
     let accessToken = window.localStorage.getItem("accessToken");
 
-    if (request.params && accessToken  ) {
+    if (request && accessToken  ) {
+        if(!request.params){
+            request.params = {};
+        }
         request.params['accessToken'] =accessToken + '';
     }
+
     let signature = getSign();
 
     if (signature && Vue.islogin) {
