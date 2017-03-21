@@ -2,8 +2,10 @@
 <template>
     <div class="infolist clearfix">
         <div class="col-nn-23 ">
-            <a class="btn btn-default  coupon-btn btn-block" :class={cur:order.couponCodeId!=null} @click="chooseCoupon()">
-                <b>优惠券</b><span v-if="!order.couponCodeId">{{order.canChooseCouponCodes.length}}张</span>
+            <a class="btn btn-default  coupon-btn btn-block" :class={cur:order.couponCodeId} @click="chooseCoupon()">
+                <b>优惠券</b>
+                <span v-if="order.canChooseCouponCodes && !order.couponCodeId">{{order.canChooseCouponCodes.length}}张</span>
+                <span v-else-if="order.couponCodeId">已选：{{order.couponName}}</span>
             </a>
         </div>
         <div class="col-nn-23">
@@ -53,8 +55,8 @@
             //选择使用
             chooseCoupon(){
 
-                var  couponCodeId=18;
-                this.$root.showCouponModal=true;
+                let vm = this;
+                vm.$root.showCouponModal=true;
                 function centerModals() {
                     $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');
@@ -64,11 +66,11 @@
                         $(this).find('.modal-content').css("margin-top", top);
                     });
                 };
-                this.$nextTick(()=>{
+                vm.$nextTick(()=>{
                     var modal='#layer-coupon';
                     $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
-                        this.$root.showCouponModal=false;
+                        vm.$root.showCouponModal=false;
                     });
                     //禁用空白处点击关闭
                     $(modal).modal({
@@ -80,11 +82,6 @@
                     $(window).on('resize',(modal)=>centerModals);
                     //shop_admins
                     $(modal).modal('toggle');
-                })
-
-                return false;
-                this.$store.commit("setOrderParams",{
-                    couponCodeId: couponCodeId
                 })
                 this.refreshOrder();
             },
