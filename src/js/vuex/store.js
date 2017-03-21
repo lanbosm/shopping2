@@ -99,11 +99,7 @@ const store = new Vuex.Store({
               if (state.pageList[i].index === index) {
                   state.pageList.splice(i, 1);
                   isDel = true;
-
-                  state.currentPage = state.pageList[index-2];
-                  console.log(state.currentPage.mode);
-
-
+                  state.currentPage = state.pageList[i-1];
               }
               if (isDel && state.pageList[i]) { //更换数组下标
                   state.pageList[i].index = state.currentPage.index + n++ ;
