@@ -13,6 +13,8 @@ import RechargeDefault from 'components/RechargeDefault.vue'
 import NoPage from 'components/NoPage.vue'
 import CustomModal from 'components/CustomMain.vue';
 import ShopAdminModal from 'components/ShopAdminMain.vue';
+import CouponModal from 'components/CouponMain.vue';
+import RechargeModal from 'components/RechargeMain.vue';
 
 import store from './vuex/store'
 import VueRouter from 'vue-router'
@@ -24,16 +26,20 @@ import VueRouter from 'vue-router'
 //定义头组件
 Vue.component('app-header',appHeader);
 
-
 //定义顾客组件
 Vue.component('layer-custom',CustomModal);
 
 //定义导购组件
 Vue.component('layer-shopadmin',ShopAdminModal);
 
+//定义优惠券组件
+Vue.component('layer-coupon',CouponModal);
+
+//定义充值组件
+Vue.component('layer-recharge',RechargeModal);
+
 //路由配置
 Vue.use(VueRouter)
-
 
 
 //路由配置
@@ -111,8 +117,9 @@ var vm =new Vue({
     router,
     data:{          //这里不是组件模式 不return
             showShopAdminModal:false,
-            showCustomModal:false
-
+            showCustomModal:false,
+            showCouponModal:true,
+            showRechargeModal:false
     },
     watch: {
 

@@ -49,10 +49,40 @@
             }
         },
         methods:{
+
             //选择使用
             chooseCoupon(){
 
                 var  couponCodeId=18;
+                this.$root.showCouponModal=true;
+                function centerModals() {
+                    $(this).each(function(i) {
+                        var $clone = $(this).clone().css('display','block').appendTo('body');
+                        var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                        top = top > 0 ? top : 0;
+                        $clone.remove();
+                        $(this).find('.modal-content').css("margin-top", top);
+                    });
+                };
+                this.$nextTick(()=>{
+                    var modal='#layer-coupon';
+                    $(modal).on('show.bs.modal', centerModals);
+                    $(modal).on('hidden.bs.modal',function(){
+                        this.$root.showCouponModal=false;
+                    });
+                    //禁用空白处点击关闭
+                    $(modal).modal({
+                        backdrop: 'static',
+                        keyboard: false,//禁止键盘
+                        show:false
+                    });
+                    //页面大小变化是仍然保证模态框水平垂直居中
+                    $(window).on('resize',(modal)=>centerModals);
+                    //shop_admins
+                    $(modal).modal('toggle');
+                })
+
+                return false;
                 this.$store.commit("setOrderParams",{
                     couponCodeId: couponCodeId
                 })
@@ -80,8 +110,10 @@
                     data:this.$store.state.currentPage.orderParams
                 }
 
+                this.$store.commit("show_waiting");
                 request.fnPost(this,apiObj,(res)=>{
                     this.$store.commit("setOrderData",res.appOrderConfirmBean);
+                    this.$store.commit("hide_waiting");
                 })
             }
         },

@@ -1,13 +1,13 @@
 <template>
-    <div role="dialog" class="modal fade coupon-layer" id="layer-recharge">
+    <div role="dialog" class="modal fade coupon-layer" id="layer-coupon">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">充值</h4>
+                    <h4 class="modal-title">优惠券</h4>
                     <a class="close" data-dismiss="modal">&times;</span></a>
                 </div>
                 <div class="modal-body">
-                    充值模块
+                	选择优惠券
                    <!--  <custom-search :custom="custom" :info-show="infoShow"></custom-search>
                     <custom-register v-show="registerShow"></custom-register> -->
                 </div>
@@ -20,8 +20,8 @@
 
     @imgPath:"/images";
 
-    /*!Recharge modale*/
-    .recharge-layer {
+    /*!Coupon modale*/
+    .coupon-layer {
         border-bottom:solid 3px #93d6b3;padding:10px 30px;
         .modal-header{
             border-bottom: solid 3px @green;
@@ -160,4 +160,5 @@
         }
     }
 </script>
+
 

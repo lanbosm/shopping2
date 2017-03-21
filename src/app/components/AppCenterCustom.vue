@@ -48,8 +48,6 @@
 
             //显示会员模块
             showCustomModal(){
-                //
-                return false;
                 this.$root.showCustomModal=true;
                 function centerModals() {
                     $(this).each(function(i) {
@@ -74,8 +72,6 @@
                     //shop_admins
                     $(modal).modal('toggle');
                 })
-
-
             }
 
         }

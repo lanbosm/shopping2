@@ -49,11 +49,11 @@
 
         computed: {
             pageList(){
-                console.log("pageList");
+                //console.log("pageList");
                 return this.$store.state.pageList;
             },
             currentPage(){
-              console.log("currentPage");
+              //console.log("currentPage");
               return this.$store.state.currentPage;
             },
             member(){
@@ -88,6 +88,8 @@
                 layer.confirm('确定要删除吗？删除后数据将丢失！', function(index){
                     vm.$store.commit('removePage', 1);
                     layer.close(index);
+
+                    vm.$router.replace('/'+vm.mode);
                 });
             },
             switchPage(index){

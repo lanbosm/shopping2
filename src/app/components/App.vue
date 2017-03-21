@@ -56,6 +56,7 @@
     import ProductList from 'components/list.vue';
 
     import layer from 'layer';
+    import util from 'util/util.js';
     import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
@@ -142,6 +143,7 @@
                     alert("请先选择会员");
                     return false;
                 }
+
                 var cartParam={itemParams:[]};
 
                 cart.forEach(function(ele,index){
@@ -181,9 +183,28 @@
             openDetail() {
                 //是否存在赠品
                 let vm=this;
-                let itemGift = !!vm.$store.state.itemData.appProductDetail.appGiftActivity;
+                let item=this.$store.state.itemData.appProductDetail;
+                let itemGift = !!item.appGiftActivity;
+                let itemSpec = item.appSpecificationValues;
                 let itemswiper = '';
 
+                //如果该商品没有规格和赠品 直接加入购物车    appGiftActivity appSpecificationValue
+                if(!itemGift && itemSpec.length==0){
+
+                    var newitem = {};
+                    Object.assign(newitem, item);
+                    newitem.selectDate = util.getSelectDate(); //自动获取选择日期
+                    newitem.amount = 1; //数量默认为1
+                    this.pushCart(newitem);
+                    return false;
+                }
+
+
+
+                //(
+               // console.log(vm.$store.state.itemData.appProductDetail);
+
+                //console.log(
                 vm.$nextTick(() => {
                     //弹出页面层
                     layer.open({

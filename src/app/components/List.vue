@@ -9,11 +9,11 @@
         <div class="col-lg-50 col-md-50 col-sm-33 col-xs-12 item" v-for="(item,index) in itemData ">
              <div class="thumbnail" @click="fetchItem(item.id);">
                  <a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
-                 <div class="prcie primary">{{item.price | currency }}元</div>
+                 <div class="prcie primary">{{item.price | currency }}元 <span class="stock">库存：{{item.stock}}件</span> </div>
                  <div class="photo"  >
                  <img class="img-responsive" :src="item.image" :alt="item.title" :title="item.title" />
              </div>
-             <div class="caption"><p>{{item.name}}</p></div>
+             <div class="caption"><p>{{item.name}}{{item.specDesc}}</p></div>
                 <a  class="buy-btn" role="button"   v-show="item.giftType!='none'"><span class="iconfont icon-baobei"></span></a>
              </div>
         </div>

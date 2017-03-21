@@ -1,6 +1,6 @@
 <template>
 	 <div class="appCenter">
-		 <app-center-loading v-if="appLoading"></app-center-loading>
+		 <app-center-loading v-if="waiting"></app-center-loading>
 		 <order-main v-if="mode=='order'" ></order-main>
 
 		 <recharge-main v-if="mode=='recharge'"></recharge-main>
@@ -31,7 +31,10 @@
 			},
             appLoading(){
                 return this.$store.state.appLoading;
-            }
+            },
+			waiting: function() {
+                    return this.$store.state.currentPage.waiting
+            },
         },
         components: {
             OrderMain,
@@ -43,7 +46,7 @@
             'mode':"routerGo"
         },
 		created(){
-            this.routerGo();
+           // this.routerGo();
 		},
 		methods:{
 

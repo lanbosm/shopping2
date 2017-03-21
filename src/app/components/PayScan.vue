@@ -3,7 +3,7 @@
         <div class="tab-con tab-con-0 text-center tabShow">
             <h1 class="pay-amount ">￥ {{amount}}</h1>
             <p class="pay-gift-amount" v-if="giftAmount" >{{giftAmount}}</p>
-            <p class="txt">请对准门店二维码扫描,成功后打印收据</p>
+            <p class="txt">请打印收据后 扫描收据上的二维码</p>
             <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
         </div>
 </template>

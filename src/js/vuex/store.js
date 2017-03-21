@@ -89,6 +89,7 @@ const store = new Vuex.Store({
               state.pageList = [];
               state.pageList.push(defaultPage(0));
               state.currentPage = state.pageList[state.pageList.length - 1];
+            //  console.log(state.currentPage);
               return;
           }
           let index = state.currentPage.index;
@@ -98,6 +99,11 @@ const store = new Vuex.Store({
               if (state.pageList[i].index === index) {
                   state.pageList.splice(i, 1);
                   isDel = true;
+
+                  state.currentPage = state.pageList[index-2];
+                  console.log(state.currentPage.mode);
+
+
               }
               if (isDel && state.pageList[i]) { //更换数组下标
                   state.pageList[i].index = state.currentPage.index + n++ ;
@@ -123,8 +129,28 @@ const store = new Vuex.Store({
                   console.log(state.currentPage);
               }
           }
+      },
+      // 显示和隐藏waiting
+      show_waiting(state){
+          state.currentPage.waiting = true;
+      },
+      hide_waiting(state){
+          state.currentPage.waiting = false;
       }
-  }
+    },
+    actions: {
+        rebulid({commit}, value){
+            commit("show_waiting");
+            return new Promise((resolve, reject) => {
+               // console.log(value);
+                commit("setProductParams",value);
+                setTimeout(function() {
+                       commit("hide_waiting");
+                       resolve()
+                }, 50)
+            })
+        }
+    }
 });
 
 function defaultPage(len){
@@ -135,6 +161,7 @@ function defaultPage(len){
             appProductDetail:{},
             appSpecifications:[]
         },
+        waiting: false,            //等待
         orderParams: {
             cartParam:"",
             couponCodeId:null,

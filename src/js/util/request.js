@@ -37,7 +37,7 @@ export const API_URLS = {
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
-Vue.http.options.timeout = 500;  //500超时
+Vue.http.options.timeout = 1000;  //500超时
 /**
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
