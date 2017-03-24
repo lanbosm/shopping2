@@ -49,7 +49,7 @@
 
 		    routerGo(){
                 if(this.mode=="index"){
-                    //this.$router.replace('/');
+                    this.$router.replace('/');
                 }
 			}
 

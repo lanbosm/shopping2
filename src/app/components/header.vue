@@ -6,7 +6,7 @@
             </div>
 
             <div class="header-nav navbar " id="header-nav">
-                <div class="staff">{{member.shopName}}</div>
+                <div class="staff">{{shopData.adminName}}</div>
                 <div class="navbar-header">
                     <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -48,6 +48,9 @@
     export default{
 
         computed: {
+            shopData(){
+                return this.$store.state.shopData;
+            },
             pageList(){
                 //console.log("pageList");
                 return this.$store.state.pageList;
@@ -69,9 +72,15 @@
             }
         },
         created(){
+
+            //获取门店信息
+            var shopData= util.pullLocal("shopData");
+            this.$store.commit('setShopData', shopData);
+
             //先获取本地
             let localData=this.getLocalData();
-            //从中间件获取
+           // let localData="";
+//            //从中间件获取
             if(localData && localData.length){
                 this.$store.commit("setPageList", localData);
             }
@@ -82,23 +91,33 @@
         methods:{
             addPage(){
                 this.$store.commit('addPage', 1);
+                this.$router.replace('/'+this.mode);
+                this.saveLocalData()
             },
             removePage(){
                 let vm = this;
                 layer.confirm('确定要删除吗？删除后数据将丢失！', function(index){
                     vm.$store.commit('removePage', 1);
                     layer.close(index);
-
                     vm.$router.replace('/'+vm.mode);
+
+                    vm.saveLocalData();
                 });
+
+
+
             },
             switchPage(index){
                 this.$store.commit('switchPage', index);
                 //切换路由
                 this.$router.replace('/'+this.mode);
+                this.saveLocalData();
             },
             getLocalData(){
                 return util.pullLocal("pageList");
+            },
+            saveLocalData(){
+                util.pushLocal("pageList", this.pageList);
             },
             contact(){
                 //alert("连接设备");
@@ -106,7 +125,9 @@
             exit(){
                 let vm = this;
                 layer.confirm('确定要退出吗？', function(index){
-                    util.pushLocal("pageList", vm.pageList);
+                    vm.saveLocalData();
+                    util.delLocal("accessToken");
+                    util.delLocal("shopData");
                     location.href="./login.html";
                     layer.close(index);
                 });

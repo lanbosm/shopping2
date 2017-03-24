@@ -17,16 +17,17 @@
         width:100%;font-weight:700;line-height:20px;margin-bottom:0;
        clear: both;
       }
-      .shoppingCart-item p.small{
+      .shoppingCart-item p.small , .shoppingCart-item p.total{
           span{
             display: block;
             &:first-child{float: left;}
             &:last-child{float: right;}
           }
-          font-size:.9rem;color:#666
+          font-size:.9rem;color:#666;
+          .tips{  color: @themeColor;}
       }
 
-      .shoppingCart-item p.total{font-weight:700;color:#666;text-align:right;}
+
   }
 }
 

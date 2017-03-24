@@ -14,7 +14,7 @@
                                     <div class="col-xs-4 col-md-2 col-lg-2">
                                         <a class="btn btn-lightgreen shuaixuan"  @click="showCategory=!showCategory" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
-                                    <div class="col-xs-6 col-md-3 col-xs-offset-2 col-lg-offset-7">
+                                    <div class="col-xs-6 col-md-3 col-xs-offset-2 col-md-offset-7 ">
                                         <searchbar  :product-params="productParams"></searchbar>
                                     </div>
                                 </div>
@@ -139,10 +139,13 @@
             //创建订单
             buildOrder:function(cart){
                 //alert(this.mode);
-                if(!this.customData.id){
-                    alert("请先选择会员");
-                    return false;
-                }
+
+                console.log(cart);
+
+//                if(!this.customData.id){
+//                    alert("请先选择会员");
+//                    return false;
+//                }
 
                 var cartParam={itemParams:[]};
 
@@ -201,10 +204,6 @@
 
 
 
-                //(
-               // console.log(vm.$store.state.itemData.appProductDetail);
-
-                //console.log(
                 vm.$nextTick(() => {
                     //弹出页面层
                     layer.open({
@@ -221,11 +220,16 @@
 
                             if (itemGift){  //如果存在赠品
                                 itemswiper = new Swiper('.gift-detail-item', {
-                                     pagination: '.gift-detail-item-pagination',
+                                    initialSlide :0,
+                                    pagination: '.gift-detail-item-pagination',
                                     paginationClickable: true,
-                                    spaceBetween: 10
-
+                                    spaceBetween: 10,
+                                    onInit:function(swiper){
+                                        vm.giftIndex=swiper.activeIndex;
+                                    }
                                 });
+
+
                               itemswiper.on('onSlideChangeEnd', function (swiper) {
                                    //some code
                                   $(".gift-detail-tab").find('a').removeClass('selected');
@@ -234,15 +238,18 @@
                               });
                               $(".gift-detail-tab").find('a').eq(0).addClass('selected');
                               $(".gift-detail-tab").find('a').on('click',function(){
-
+                                     $(".gift-detail-tab").find('a').removeClass('selected');
                                      itemswiper.slideTo($(this).index());//
+                                  
                                      vm.giftIndex=$(this).index();
-                               })
+                                   //  $(".gift-detail-tab").find('a').eq(vm.giftIndex).addClass('selected');
+                              })
                             }
                         },
                         end: function () {
                             if(itemGift){
-                                itemswiper.destroy();
+                                itemswiper.destroy(true,true);
+                                itemswiper=null;
                                 $(".gift-detail-tab").find('a').off().removeClass('selected');
                             }
                         }
@@ -254,8 +261,29 @@
                 layer.closeAll();
                 this.pushCart(item);
             },
+            //判断如何加入购物车
             pushCart(item){
-                this.cartData.push(item);
+
+                var find=false;
+
+
+
+                if(this.cartData.length>0){
+                    for (var i in this.cartData) {
+
+                        if (this.cartData[i].id == item.id) {
+                            if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
+                                this.cartData[i].amount++;
+                                find=true;
+                            }
+                        }
+                    }
+                }
+
+                if(!find){
+                    this.cartData.push(item);
+                }
+
             }
         },
         created(){

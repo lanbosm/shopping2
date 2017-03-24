@@ -2,7 +2,7 @@
    	<ol class="breadcrumb">
         <li>
             <span  class="glyphicon glyphicon-home"></span>
-            <a>首页</a>
+            <a @click="fetchCategory(null)">首页</a>
         </li>
         <li v-show="productParams.categoryName">
             <a @click="fetchCategory(productParams.categoryId)"> {{productParams.categoryName}}</a>
@@ -25,11 +25,11 @@
         },
         methods:{
             fetchCategory(cid){
-                //TODO 要改
-                let vm = this;
-                vm.$parent.productParams.categoryId=cid;
-                vm.$parent.productParams.brandId='';
-                vm.$parent.fetchList();
+
+//                let vm = this;
+//                vm.$parent.productParams.categoryId=cid;
+//                vm.$parent.productParams.brandId='';
+//                vm.$parent.fetchList();
             }
         }
     }

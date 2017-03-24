@@ -24,26 +24,18 @@
             //数据来自全局
             custom () {
                 let customs = this.$store.state.currentPage.customData;
-                if(customs.nickname){
-                    return this.$store.state.currentPage.customData;
-                }else{
-                    return {
-                        nickname:'顾客'
-                    }
-                }
+
+                return this.$store.state.currentPage.customData;
             }
         },
         components: {
             InfoList
         },
-        created(){
-
-
-        },
         methods:{
 
             //显示会员模块
             showCustomModal(){
+                var vm=this;
                 this.$root.showCustomModal=true;
                 function centerModals() {
                     $(this).each(function(i) {
@@ -57,6 +49,9 @@
                 this.$nextTick(()=>{
                     var modal='#layer-custom';
                     $(modal).on('show.bs.modal', centerModals);
+                    $(modal).on('hidden.bs.modal',function(){
+                        vm.$root.showCustomModal=false;
+                    });
                     //禁用空白处点击关闭
                     $(modal).modal({
                         backdrop: 'static',

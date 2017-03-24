@@ -17,8 +17,8 @@
                                 <tbody class="text-left">
                                 <tr>
                                     <td>{{amount}}</td>
-                                    <td>{{rmb}}</td>
-                                    <td>{{change}}</td>
+                                    <td><span class="rmb">{{rmb}}</span></td>
+                                    <td>{{cash}}</td>
                                     <td>现金</td>
                                 </tr>
                                 </tbody>
@@ -47,6 +47,7 @@
 </template>
 
 <style>
+    .rmb{background: #fff; color: #6fc89c;}
 </style>
 <script>
     import shopAdminBtn from 'components/ShopAdminBtn.vue';
@@ -62,10 +63,11 @@
             mode(){
                 return this.$store.state.currentPage.mode;
             },
-            change(){
+            cash(){
                 var b=this.rmb-this.amount;
                 if(b<0){b=0;}
-                return b;
+                this.$store.commit("setOrderParams",{ rmb:this.rmb,cash:b});
+                return this.$store.state.currentPage.orderParams.cash;
             }
 
         },
@@ -82,6 +84,9 @@
                         case 'x':   //close
                             var str=this.rmb+"";
                             this.rmb=str.substring(0,str.length-1);
+                            if(!this.rmb){
+                                this.rmb=0;
+                            }
                             break;
                         case '.':   //close
                             var str=this.rmb+".";

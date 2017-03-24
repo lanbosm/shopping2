@@ -2,14 +2,14 @@
     <div class="categroy row" v-if="showCategory">
         <div class="col-xs-12 category-list clearfix" @mouseleave="outcheck" >
         <div class="menu"  >
+            <a class="sub all"  :class="{cur:!productParams.categoryId}" href="javascript:void(0)"  @click="fetchAllBrand()">全部分类</a>
             <a  class="sub" href="javascript:void(0)"
                 :class="{cur:item.id==productParams.categoryId}"
                 v-for="(item,index) in productCategories"
                 @click="fetchCategory(item.id,item.name)">{{item.name}}</a>
         </div>
-        <div class="sub-menu" >
-                    <div v-show="!subCategory || !subCategory.length"><p> 数据加载中...</p></div>
-
+        <div class="sub-menu" v-if="showSubMenu">
+                     <div v-show="!subCategory || !subCategory.length"><p> 数据加载中...</p></div>
                      <div class="l" v-for="(item,index) in subCategory">
                         <div class="l-t">{{item.name}}</div>
                         <div class="l-c">
@@ -34,7 +34,8 @@
         props:['showCategory','productCategories','productParams'],
         data(){
           return {
-              cacheload:false
+              cacheload:false,
+              showSubMenu:false
           }
         },
         computed: {
@@ -53,39 +54,67 @@
             'showCategory'(val){
                 if(val && !this.cacheload){
                     this.cacheload=true;
-                    this.fetchCategory(this.productParams.categoryId);
+                    this.fetchCategory(null);
+
                 }
             }
         },
         methods:{
-            outcheck:function(){
+            outcheck(){
                 let out=true;
                 let lock=function(){
                     out=false;
                 };
-                document.querySelector('.category-list').addEventListener('mouseover',lock,false);
-                setTimeout(()=> {
-                    if(out){
-                        document.querySelector('.category-list').addEventListener('mouseover',lock,false);
-                        this.$parent.showCategory = false;
-                    }
-                },500);
+                if(document.querySelector('.category-list')) {
+                    document.querySelector('.category-list').addEventListener('mouseover', lock, false);
+                    setTimeout(() => {
+                        if (out && document.querySelector('.category-list')) {
+                            document.querySelector('.category-list').addEventListener('mouseover', lock, false);
+                            this.$parent.showCategory = false;
+                        }
+                    }, 500);
+                }
             },
-            fetchCategory:function(cid,cname){
+            fetchCategory(cid,cname){
+                if(cid){this.showSubMenu=true;}
+
                 let apiobj={
                     url:API_URLS.category,
                     data:{"productCategoryId":cid}
                 };
                 request.fnGet(this,apiobj,(res)=>{
                     if(!cid){
-                        cid=res.appProductCategories[0].id;
-                        cname=res.appProductCategories[0].name;
+                      //  cid=res.appProductCategories[0].id;
+                       // cname=res.appProductCategories[0].name;
                     }
                     this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
                     this.$store.commit("setCategoryData",res.appProductCategories);
                 })
             },
-            fetchBrand:function(bid,bname){
+            fetchAllBrand(){
+
+
+                let vm = this;
+                let apiobj={
+                    url:API_URLS.products,
+                    data:{
+                        'categoryId': null,
+                        'brandId': null,
+                        'pageNum':  1,
+                        'searchStr': null
+                    }
+                };
+                request.fnGet(this,apiobj,(res)=>{
+                    this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
+                    this.$store.commit("setPageData",res.page);
+                    this.showSubMenu=false;
+                    setTimeout(()=> {
+                        this.$parent.showCategory = false;
+                    },300);
+                })
+
+            },
+            fetchBrand(bid,bname){
                 let vm = this;
                 let apiobj={
                     url:API_URLS.products,
@@ -99,7 +128,6 @@
                 request.fnGet(this,apiobj,(res)=>{
                     this.$store.commit("setProductParams",{"categoryId": vm.productParams.categoryId, "categoryName": vm.productParams.categoryName, "brandId":bid,"brandName":bname,"pageNum":1})
                     this.$store.commit("setPageData",res.page);
-
                     this.$parent.showCategory=false;
                 })
             },

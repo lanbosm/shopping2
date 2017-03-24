@@ -10,8 +10,10 @@
 								</p>
 								<p class="small">
 									<span>数量 :{{item.amount}} * 单价 {{item.price  }}</span><span></span>
+									<span class="tips">{{item | stocktips}}</span>
 								</p>
 								<p class="total">
+									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
 									<span>{{item.amount*item.price | currency }}</span>
 								</p>
 							</div>
@@ -19,7 +21,7 @@
 					</ul>
 				</div>
 				<div class="totalprice">
-					总价 <span class="primary">¥ {{totalprice}}</span>
+					总价 <span class="primary">{{totalprice | currency }}</span>
 				</div>
 	</div>
 </template>
@@ -30,6 +32,8 @@
     import util from 'util/util.js';
     import $ from 'jquery';
 
+
+
     /**
      * [设置购物车的高]
      */
@@ -37,13 +41,22 @@
         name:"cart",
         filters: {
             currency: function (value) {
-                if (!value) return '';
+                if (!value) return '¥ 0.00';
                 return '¥ ' + value.toFixed(2);
+            },
+            stocktips: function (value) {
+               // console.log(value.id);
+                if(value.amount>value.stock) {
+                    return "库存不足";
+                }else{
+                    return "";
+				}
             }
         },
 		props:['cartData','cartItemIndex'],
 
         created(){
+
             //this.setCartHeight();
             //window.onresize=this.setCartHeight;
         },
@@ -56,6 +69,7 @@
                 })
                 return total;
             }
+
         },
         methods:{
             //自适应高
@@ -76,7 +90,7 @@
 
 			},
             checkCartItem:function(index){
-
+				console.log(this.cartData);
                 this.$parent.cartItemIndex=index;
             }
         }

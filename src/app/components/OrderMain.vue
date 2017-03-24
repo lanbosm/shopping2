@@ -25,7 +25,10 @@
     import AppCenterHeader from 'components/AppCenterHeader.vue';
     import AppCenterCustom from 'components/AppCenterCustom.vue';
     import AppCenterMenu from 'components/AppCenterMenu.vue';
+
     import {request, API_URLS, HOST} from 'util/request.js';
+    import layer from 'layer';
+    import $ from 'jquery';
 
     export default{
         data() {
@@ -42,7 +45,7 @@
             AppCenterCustom
         },
         watch: {
-           // '$route': 'fetchData'
+
         },
         computed: {
             //数据来自全局cartData:[],
@@ -59,25 +62,43 @@
                 return this.$store.state.currentPage.orderData;
             },
             amount(){
-                return this.order.totalOrderAmount;
+                return this.order.totalAmountPayable;
+            },
+            orderParams(){
+
+                return this.$store.state.currentPage.orderParams;
             }
         },
         methods: {
             createOrder(){
+                //console.log(this.$store.state.currentPage.orderParams);
+                if(!this.orderParams.paymentMethodId){
+                    layer.msg("请选择一种付款方式", {icon: 2});
+                    return false;
+                }
+
+                if(this.orderParams.paymentMethodId==10&&this.orderParams.rmb<=this.amount){
+                    layer.msg("现金支付付款不能为零", {icon: 2});
+                    return false;
+                }
+
+
                 var apiObj={
                     url:API_URLS.b2b_orders+"/create",
                     data:this.$store.state.currentPage.orderParams
                 }
+
+                this.$store.commit("show_waiting");
                 request.fnPost(this,apiObj,(res)=>{
+                    this.$store.commit("hide_waiting");
                     this.$store.commit("setOrderData",res.appOrderConfirmBean);
+                    this.$store.commit("setPrintData",res.appOrderConfirmBean);
+                    this.$store.commit("setMode","print");
+                    this.$router.replace("print");
+                },()=>{
+                    this.$store.commit("hide_waiting");
                 })
             }
-        },
-        created(){
-
-        },
-        mounted(){
-
         }
     }
 </script>

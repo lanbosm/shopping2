@@ -8,6 +8,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
+
 //http请求
 Vue.use(VueResource)
 /**
@@ -18,8 +19,8 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
 //export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
-//export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
-var HOST="";
+export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
+//const HOST="";
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
     login:"/cashier/login",
@@ -29,15 +30,16 @@ export const API_URLS = {
     category:"/cashier/member/products/categories",               //会员模块
     recharge:"/cashier/member/recharge",//充值
     shop_admins:'/cashier/member/shop_admins',       //员工
-    b2b_orders:'/cashier/member/b2b_orders/'                   //订单模块
+    b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
+    payments:'/cashier/member/payments'                        //验证支付
 
-// products: "/data/products.json", //假数据
+    // products: "/data/products.json", //假数据
    // products50:"/data/products50.json",
    // category:"/data/category.json",               //会员模块
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
-Vue.http.options.timeout = 1000;  //500超时
+//Vue.http.options.timeout = 1000;  //500超时
 /**
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
@@ -63,8 +65,8 @@ export const request = {
                 }
             })
             .catch(function (response) { //失败
-                console.log(response);
-                console.log("服务器连接失败");
+                error(response.data);
+                alert("服务器连接失败");
             })
     },
     fnPost: function (vm, apiObj, success, error) {
@@ -87,8 +89,8 @@ export const request = {
                 }
             })
             .catch(function (response) { //失败
-                console.log(response);
-                console.log("服务器连接失败");
+                error(response.data);
+                alert("服务器连接失败");
             })
     },
     fnPut: function (vm, apiObj, success, error) {
@@ -109,8 +111,8 @@ export const request = {
                 }
             })
             .catch(function (response) { //失败
-                console.log(response);
-                console.log("服务器连接失败");
+                error(response.data);
+                alert("服务器连接失败");
             })
     },
     fnDelete: function (vm, apiObj, success, error) {
@@ -133,8 +135,8 @@ export const request = {
                 }
             })
             .catch(function (response) { //失败
-                console.log(response);
-                console.log("服务器连接失败");
+                error(response.data);
+                alert("服务器连接失败");
             })
     }
 };
@@ -146,6 +148,7 @@ export const request = {
 Vue.http.interceptors.push(function (request, next) {
 
     let accessToken = window.localStorage.getItem("accessToken");
+
 
     if (request && accessToken  ) {
         if(!request.params){
@@ -178,10 +181,14 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
         store.state.loading=false;
         if (response.data && response.data.code == 49001) {
+            alert("访问令牌过期 请从新登录");
             window.location.href = './login.html';
             return true;
+        }else if (response.data && response.data.code == 40001) {
 
-        } else if (response.data && response.data.code == 49002) {
+            return true;
+        }
+        else if (response.data && response.data.code == 49002) {
             //window.location.href = './login.html';
             return true;
         } else if (response.data && response.data.code ==  45004) {

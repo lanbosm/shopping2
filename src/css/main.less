@@ -90,7 +90,13 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
       line-height: 40px;
       color: #333333;
       &:after {
-        content: ">";
+        content: "»";
+        position: absolute;
+        right: 10px;
+        top: 0;
+      }
+      &.all:after {
+        content: "";
         position: absolute;
         right: 10px;
         top: 0;

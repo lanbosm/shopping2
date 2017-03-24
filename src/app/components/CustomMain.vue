@@ -7,7 +7,7 @@
                     <a class="close" data-dismiss="modal">&times;</span></a>
                 </div>
                 <div class="modal-body">
-                    <custom-search :custom="custom" :info-show="infoShow"></custom-search>
+                    <custom-search :custom="tempcustom" :info-show="infoShow"></custom-search>
                     <custom-register v-show="registerShow"></custom-register>
                 </div>
             </div>
@@ -97,21 +97,35 @@
     import {request, API_URLS} from '../../js/util/request.js';
 
     export default{
-        mounted(){
-            this.custom = this.$store.state.currentPage.customData
-        },
+
         data(){
             return {
                 searchShow:true,
                 registerShow:false,
                 infoShow:false,
                 username:'',
-                custom:{}
+                tempcustom:'',
+            }
+        },
+        computed: {
+            custom (){
+                return  this.$store.state.currentPage.customData;
             }
         },
         components:{
             CustomSearch,                               //顾客查找
             CustomRegister                             //顾客注册
+        },
+        created(){
+            if(this.custom.id){
+                // 下次进来就显示当前顾客
+                this.infoShow = true;
+                this.searchShow = true;
+                this.registerShow = false;
+                this.tempcustom={"appMember":this.custom};
+            }else{
+
+            }
         },
         methods:{
             registerView(){
@@ -134,12 +148,12 @@
                         data:{username:vm.username}
                     };
                     request.fnGet(vm, apiobj, function (res) {
-                        vm.custom = res;
+                        vm.tempcustom = res;
                         vm.infoShow = true;
 
                     }, function(res){
-                        vm.custom = res;
-                        vm.infoShow = true;
+                        vm.tempcustom = res;
+                        vm.infoShow = false;
                     })
                 }else{
                     layer.msg('请输入手机号码');
@@ -148,11 +162,8 @@
             chooseThis(){
                 let vm = this;
                 // 存储到vuex
-                vm.$store.commit('setCustomData', vm.custom.appMember);
-                // 下次进来就显示当前顾客
-                vm.infoShow = true;
-                vm.searchShow = true;
-                vm.registerShow = false;
+                vm.$store.commit('setCustomData', vm.tempcustom.appMember );
+
                 //关闭弹窗
                 $('#layer-custom').modal('toggle');
             }

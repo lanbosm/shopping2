@@ -3,7 +3,7 @@
 		<table class="table table-bordered" >
 			<tbody >
 			<tr>
-				<td colspan="3" class="t1" @click="showCustomModal" ><span class="iconfont icon-guanliyuan"></span>{{custom}}</td>
+				<td colspan="3" class="t1" @click="showCustomModal" ><span class="iconfont icon-guanliyuan"></span>{{customName}}</td>
 				<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
@@ -49,12 +49,10 @@
             }
         },
 		computed:{
-			custom(){
+			customName(){
 				let customs = this.$store.state.currentPage.customData;
 				if(customs.nickname){
 					return customs.nickname;
-				}else{
-				    return "顾客";
 				}
 			}
 		},
@@ -62,7 +60,7 @@
         methods:{
             //显示会员模块
 			showCustomModal(){
-
+			    var vm=this;
                 this.$root.showCustomModal=true;
                 function centerModals() {
                     $(this).each(function(i) {
@@ -76,6 +74,9 @@
                 this.$nextTick(()=>{
                     var modal='#layer-custom';
                     $(modal).on('show.bs.modal', centerModals);
+                    $(modal).on('hidden.bs.modal',function(){
+                        vm.$root.showCustomModal=false;
+                    });
                     //禁用空白处点击关闭
                     $(modal).modal({
                         backdrop: 'static',
@@ -103,10 +104,15 @@
                 //选中的数量
                 var amount=this.cartData[index].amount;
 
+                if (!this.cartData[index].amountDiy) {
+                    amount = "";
+                    this.cartData[index].amountDiy=true;
+                }
                 if(isNaN(keycode)){
                     switch (keycode) {
                         case 'qty': //resize
                             this.cartData[index].amount=1;
+                            this.cartData[index].amountDiy=false;
                             break;
                         case 'x':   //close
                             var str=amount+"";
@@ -120,16 +126,9 @@
                             break;
                     }
                 }else{
-                    if(amount==1){
-                        if(keycode==1){
-                            amount+=keycode+'';
-						}else{
-                            amount=keycode+'';
-						}
 
-                    }else{
-                        amount+=keycode+'';
-                    }
+					amount+=keycode+'';
+
                     this.cartData[index].amount=parseInt(amount);
 
                 }

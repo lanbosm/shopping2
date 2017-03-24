@@ -1,7 +1,8 @@
-import util from 'util/util.js';
+
 import Vue from 'vue'
 import layer from 'layer';
 import {request, API_URLS} from 'util/request.js';
+import util from 'util/util.js';
 import RSAKey from 'util/rsa.js';
 
 
@@ -85,6 +86,24 @@ function b64toBA(s) {
 }
 
 Vue.islogin=false;
+//设置cookie,增加到vue实例方便全局调用
+//vue全局调用的理由是，有些组件所用到的接口可能需要session验证，session从cookie获取
+//当然，如果session保存到vuex的话除外
+Vue.prototype.setCookie = (c_name, value, expiredays) => {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+//获取cookie
+Vue.prototype.getCookie = (name) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg))
+        return (arr[2]);
+    else
+        return null;
+}
+
 
 new Vue({
         compiled:function(){
@@ -100,6 +119,12 @@ new Vue({
             password: ''
         },
         computed:{
+
+        },
+        created(){
+
+          this.lastUserName=  this.getCookie("username") ;
+          this.username=this.lastUserName;
 
         },
         watch: {
@@ -162,14 +187,30 @@ new Vue({
 
                     request.fnPost(vm, apiobj, function (res) {
                         layer.close(loading);
-                        window.localStorage.setItem("accessToken",res.accessToken);
+                        window.localStorage.setItem("accessToken",res.accessToken)
+                        util.pushLocal("shopData",{
+                            "name":res.name,
+                            "adminName":res.adminName
+                        });
+
+
+                       //TODO
+                       // if("username"!=)
+                       if(this.lastUserName==this.username){
+                           //clear
+                       }
+
+
+                        vm.setCookie("username",username,7)
                         location.href="./index.html";
+
                     }, function (res) {
                         layer.close(loading);
                         layer.msg(res.msg, {icon: 2});
                         vm.password="";
                         vm.logining=false;
                     })
+
                 }else{
                     alert('服务器链接失败');
                 }

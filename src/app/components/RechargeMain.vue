@@ -21,82 +21,80 @@
                     </div>
                 </div>
                 <div class="modal-foot">
-                    <a class="btn btn-default recharge-layer-ok" @click="rechargePrint">打印</a>
+                    <a class="btn btn-default recharge-layer-ok" @click="rechargePrint">确定</a>
                     <a class="btn btn-default recharge-layer-cancel" @click="closeRechargeModal" >取消</a>
                 </div>
 
 
             </div>
         </div>
-        <div class="printDiv" id="printDiv" style="position:absolute; display: none; width: 640px;  z-index:9999; left: 0; top:0; background: #ffffff">
+        <div class="printDiv" id="printDiv" style="position:absolute; display: none;  pointer-events: none; width: 320px; font-size:12px;   z-index:9999; left: 0; top:0; background: #ffffff">
             <div class="print-box show" >
-                <table>
+
+                <table class="printtable">
                     <caption class="text-left">
-                        <h5>11/23/2016 上午 10：00</h5>
-                        <h5>订单号 620101021001201</h5>
+                        <h5>{{printData.DateTime}}</h5>
+                        <h5>订单号 {{printData.sn}}</h5>
                     </caption>
                     <tbody >
                     <tr>
                         <td colspan="2" class="text-left block">阿喔优品公司</td>
                     </tr>
-                    <tr>
-                        <td colspan="2" class="text-left block">营业员：luc</td>
+                    <tr v-show="printData.cashierName">
+                        <td colspan="2" class="text-left block">营业员：{{printData.cashierName}}</td>
                     </tr>
-                    <tr>
-                        <td colspan="2" class="text-left block">顾客：luc</td>
+                    <tr v-show="printData.customer">
+                        <td colspan="2" class="text-left block">顾客：{{printData.customer}}</td>
                     </tr>
-                    <tr>
-                        <td colspan="2" class="text-left  block">导购员：luc</td>
+                    <tr v-show="printData.guiderName">
+                        <td colspan="2" class="text-left  block">导购员：{{printData.guiderName}}</td>
                     </tr>
                     <tr class="split">
                         <td>充值</td>
-                        <td>¥ 500</td>
+                        <td>¥ {{printData.amount}}</td>
                     </tr>
                     <tr class="split">
-                        <td>现金支付</td>
-                        <td>¥ 100.00</td>
+                        <td>返利</td>
+                        <td>¥ {{printData.giftAmount}}</td>
                     </tr>
                     <tr class="split">
-                        <td>找零</td>
-                        <td>¥ 30.00</td>
-                    </tr>
-                    <tr style="clear: both; ">
-                        <td colspan="2" class="text-center split block" >
-                            <p>扫码支付</p>
-                            <img :src="qrcUrl"  />
-                        </td>
+                        <td>付款方式</td>
+                        <td>{{printData.paymentName}}</td>
                     </tr>
                     </tbody>
                 </table>
+
+                <p class="text-center" v-if="printData.wechatCodeUrl">请微信扫码付款</p>
+                <div id="qrcCode"></div>
 
             </div>
         </div>
 
         <div style="display: none" id="styles">
             *{padding:0; margin:0;}
-            .print-box {width: 160px; padding:70px 15px; margin:0 auto;}
-            .print-box  table{ width: 100%; display: block;position: relative; line-height: 18px; font-size: 8px; font-family:'微软雅黑' }
-            .print-box  table tbody,.print-box  table caption{display: block;}
-            .print-box  table .strong{font-weight: bold; font-size: 16px;}
-            .print-box  table .split{   }
-            .print-box  table tr{ display:block;clear: left;}
-            .print-box  table:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-            .print-box  table{*zoom:1;}
-            .print-box  table td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
-            .print-box  table td:first-child{display: block; width: 60%;float: left; position: relative;}
-            .print-box  table span:last-child{display: inline-block; width:20%; float:right;  }
-            .print-box  table span:first-child{display: inline-block; width:80%; float: left;}
-            .print-box  table td.block{width:100% !important;   clear:both; text-align:center;  }
-            .print-box  table img{ width: 100px;  margin:0 auto; display:block;}
-            .print-box  table .text-center {text-align: center !important;}
-            .print-box  table .text-right {text-align: right !important;}
-            .print-box  table .text-left {text-align: left !important;}
+            .print-box {width: 260px; padding:100px 15px; margin:0 auto; font-size: 16px; }
+            .print-box  h5{font-size: 18px; line-height:30px;}
+            .print-box  table.printtable{ width: 100%; display: block;position: relative; line-height: 24px; font-family:'黑体' }
+            .print-box  table.printtable tbody,.print-box  table.printtable caption{display: block; font-size: 18px;}
+            .print-box  table.printtable .strong{font-weight: bold; font-size: 16px;}
+            .print-box  table.printtable .split{   }
+            .print-box  table.printtable tr{ display:block;clear: left;}
+            .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+            .print-box  table.printtable{*zoom:1;}
+            .print-box  table.printtable td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
+            .print-box  table.printtable td:first-child{display: block; width: 60%;float: left; position: relative;}
+            .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
+            .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+            .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
+            .print-box  .text-center {text-align: center !important;}
+            .print-box  .text-right {text-align: right !important;}
+            .print-box  .text-left {text-align: left !important;}
+            .print-box  p {margin-top:10px;}
+            .print-box  #qrcCode{ margin-left:0px; margin-top:10px; }
         </div>
     </div>
 </template>
-<style  rel="stylesheet/less"  lang="less">
-
-
+<style  rel="stylesheet/less"  scope lang="less">
 
 
     @import "../../css/util/skin.less";
@@ -206,12 +204,14 @@
     import PayScan from 'components/PayScan.vue'
 
     import layer from 'layer';
+    import $ from 'jquery';
 
     import {request, API_URLS} from '../../js/util/request.js';
 
+
     export default{
         mounted(){
-            this.custom = this.$store.state.currentPage.customData
+
         },
         data(){
             return {
@@ -221,7 +221,31 @@
                 giftAmount:0,
                 diySeleted:false,
                 payMethod:null,
-                qrcUrl:"https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1761723146,2435534986&fm=58"
+            }
+        },
+        computed:{
+            custom (){
+               return this.$store.state.currentPage.customData;
+            },
+            order(){
+               return  this.$store.state.currentPage.orderData;
+            },
+            shopAdminData(){
+                return  this.$store.state.currentPage.shopAdminData;
+            },
+            printData(){
+
+                var print=this.$store.state.currentPage.printData;
+
+                var nowDate = new Date();
+                var myDate=nowDate.toLocaleDateString();
+                var myTime=nowDate.toLocaleTimeString();     //获取当前时间
+
+                print.cashierName=this.order.cashierName;
+                print.guiderName=this.shopAdminData.cashierName;
+                print.DateTime=myDate+" "+myTime;
+
+                return  print;
             }
         },
         components:{
@@ -247,42 +271,60 @@
                 var modal='#layer-recharge';
                 $(modal).modal('hide');
             },
-            rechargePrint(){
-                //if(this.payMethod==null){ alert("请选择充值方式"); return false;}
-                //if(this.amount<=0){ alert("请输入正确的金额"); return false;}
-                this.printPage();
-                //alert("打印");
-                //var a=confirm("确认打印吗？");
 
-//                if(a){
-//                    var apiObj={
-//                        url:API_URLS.recharge,
-//                        data:{
-//                            phone:13636574272,
-//                            amount:this.amount,
-//                            paymentMethodId: this.payMethod
-//
-//                        }
-//                    }
-//
-//                    request.fnPost(this,apiObj,function(res){
-//                            console.log(res);
-//
-//                    })
-//
-//
-//                }
+            toPrint(){
+                var apiObj={
+                    url:API_URLS.recharge,
+                    data:{
+                        phone:this.custom.username,
+                        amount:this.amount,
+                        paymentMethodId: this.payMethod
+
+                    }
+                }
+                var vm=this;
+
+                request.fnPost(this,apiObj,function(res){
+                    //console.log(res.appOrderPayment);
+                    vm.$store.commit("setPrintData",res.appOrderPayment);
+                    vm.$nextTick(function() {
+
+                        $('#qrcCode').html("");
+                        //有链接就生成
+                        if(res.appOrderPayment.wechatCodeUrl) {
+                            $('#qrcCode').qrcode({
+                                render: "table",
+                                text: res.appOrderPayment.wechatCodeUrl,
+                                width: 260,  //260内扫不出
+                                height: 260
+                            });
+                        }
+                        vm.printPage();
+                    });
+                })
+
+            },
+            rechargePrint(){
+                if(this.payMethod==null){ layer.msg("请选择充值方式", {icon: 2}); return false;}
+                if(this.amount<=0){ layer.msg("请选择充值金额", {icon: 2}); return false;}
+
+
+                var vm=this;
+                //询问框
+                layer.confirm("确认打印吗？", {
+                    btn: ['确定'] //按钮
+                }, function(index){
+                    vm.toPrint();
+                    layer.close(index);
+                });
 
 
             },
             printPage(){
-
                 var obj=document.getElementById('printDiv');
-
-                //alert(document.getElementById('printDiv'));
                 var docStr = obj.innerHTML;
 
-                var newWindow=window.open("/print.html","_blank");
+                var newWindow=window.open("./print.html","_blank");
 
                 var styles=document.getElementById("styles").innerHTML;
 
@@ -297,14 +339,17 @@
                     '</style>'+
                     '</head>'+
                     '<body>';
-                console.log(header);
+
                 var footer='</body>'+
                     '</html>';
                 docStr=header+docStr+footer;
 
+
+
                 newWindow.document.write(docStr);
-                newWindow.document.close();
+
                 newWindow.print();
+                newWindow.document.close();
                 newWindow.close();
 
 

@@ -64,7 +64,8 @@
                  newitem.selectDate = util.getSelectDate(); //自动获取选择日期
                  newitem.amount = 1; //数量默认为1
                  if(this.productDetail.giftType!='none') {
-                    newitem.appGiftId = this.productDetail.appGiftActivity.appGifts[this.giftIndex]      //选择的赠品id
+                    newitem.appGiftItem = this.productDetail.appGiftActivity.appGifts[this.giftIndex]     //选择的赠品id
+
                  }
 
                 return newitem;
@@ -78,6 +79,7 @@
         },
         methods:{
             fetchItem:function(pid){
+
 
 
                 var apiobj={

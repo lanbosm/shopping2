@@ -10,12 +10,12 @@
         </div>
         <div class="col-nn-23">
             <a class="btn btn-default  point-btn btn-block" :class={cur:order.usePoint} @click="choosePoint()">
-                <b>{{order.canUsePoint}}积分</b><span>{{order.canPointDiscount | dikou }}</span>
+                <b>{{custom.point}}积分</b><span>{{order.canPointDiscount | dikou }}</span>
             </a>
         </div>
         <div class="col-nn-23">
             <a class="btn btn-default  balance-btn btn-block" :class={cur:order.useBalance} @click="chooseBalance()">
-                <b>{{order.canUseBalance}}余额</b><span>{{order.canUseBalance | dikou }}</span>
+                <b>{{custom.balance}}余额</b><span>{{order.canUseBalance | dikou }}</span>
             </a>
         </div>
     </div>
@@ -36,14 +36,17 @@
             },
             couponCodeId (){                //活动 充多少送多少
                 return this.$store.state.currentPage.orderParams.couponCodeId;
-            }
+            },
+        },
+        created(){
+
         },
         filters: {
             dikou:function(value){
                 if(value==0){
                     return  '0.00';
                 }
-                return '- ' + value;
+                return '可抵扣 ' + value +"元";
             },
             currency: function (value) {
                 if (!value) return '';
@@ -54,7 +57,9 @@
 
             //选择使用
             chooseCoupon(){
-
+                if(this.order.canChooseCouponCodes.length==0){
+                    return false;
+                }
                 let vm = this;
                 vm.$root.showCouponModal=true;
                 function centerModals() {
@@ -86,6 +91,9 @@
                 this.refreshOrder();
             },
             choosePoint(){
+                if(this.custom.point==0){
+                    return false;
+                }
                 var usePoint=!this.usePoint;
                 this.$store.commit("setOrderParams",{
                     usePoint:usePoint
@@ -93,6 +101,9 @@
                 this.refreshOrder();
             },
             chooseBalance(){
+                if(this.custom.balance==0){
+                    return false;
+                }
                 var useBalance=!this.useBalance;
                 this.$store.commit("setOrderParams",{
                     useBalance:useBalance,

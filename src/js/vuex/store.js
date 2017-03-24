@@ -12,9 +12,12 @@ const store = new Vuex.Store({
   state: {
     loading:false,
     appLoading:false,
-    headData:null,
+    shopData:{
+        "name":"",
+        "adminName":""
+    },
     pageData:{},
-    pageList:[],
+    pageList:[],  //页
     currentPage:{
         index:1,
         mode:"index",
@@ -39,7 +42,10 @@ const store = new Vuex.Store({
    // 变量赋值
   mutations:{
       setLoading(state,data){
-        state.loading=data;
+         state.loading=data;
+      },
+      setShopData(state,data){
+          state.shopData=data;
       },
       setMode(state,data){
           state.currentPage.mode=data;
@@ -62,8 +68,12 @@ const store = new Vuex.Store({
       setOrderData(state, data){
           state.currentPage.orderData = data;
       },
+      setPrintData(state, data){
+          state.currentPage.printData = data;
+      },
       setCustomData(state, data){
           state.currentPage.customData = data;
+          state.currentPage.orderParams.memberId = data.id;
       },
       setShopAdminData(state, data){
           state.currentPage.shopAdminData = data;
@@ -79,8 +89,12 @@ const store = new Vuex.Store({
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
       addPage(state, data){
-         // console.log("add");
-          state.pageList.push(defaultPage(state.pageList.length));
+           // console.log("add");
+          if(!state.pageList.length){
+            state.pageList.push(defaultPage(0));
+          }else{
+            state.pageList.push(defaultPage(state.pageList[state.pageList.length-1].index));
+          }
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
       removePage(state, data){
@@ -93,25 +107,33 @@ const store = new Vuex.Store({
               return;
           }
           let index = state.currentPage.index;
+          let preIndex = index;
+
           let isDel = false;
-          let n = 0;
+
           for(let i in state.pageList) {
               if (state.pageList[i].index === index) {
                   state.pageList.splice(i, 1);
+                  preIndex = i;
                   isDel = true;
-                  state.currentPage = state.pageList[i-1];
+                 // state.currentPage = state.pageList[i-1];
               }
               if (isDel && state.pageList[i]) { //更换数组下标
-                  state.pageList[i].index = state.currentPage.index + n++ ;
+                  //state.pageList[i].index = state.currentPage.index + n++ ;
               }
           }
+
 
           //如果删完了
           if(!state.pageList.length){
               state.pageList.push(defaultPage(1));
               state.currentPage = state.pageList[state.pageList.length - 1];
-          }else{
-              state.currentPage = state.pageList[0];
+          }else{ //切回
+              var newIndex=preIndex;
+              if(newIndex >= state.pageList.length) newIndex = state.pageList.length - 1;
+              if(newIndex<0){newIndex=0;}
+              state.currentPage = state.pageList[newIndex];
+
           }
       },
       switchPage(state, index){
@@ -151,7 +173,7 @@ const store = new Vuex.Store({
 
 function defaultPage(len){
     return {
-        mode:"order",               //默认首页
+        mode:"index",               //默认首页
         pageData:{},                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},
@@ -165,7 +187,9 @@ function defaultPage(len){
             useBalance:false,
             memberId:null,
             guiderId:null,
-            paymentMethodId:null
+            paymentMethodId:null,   //支付方式
+            cash:0,                 //找零
+            rmb:0                   //现金
         },
         orderData:{},               //订单数据
         printData:{},               //打印数据
@@ -179,7 +203,15 @@ function defaultPage(len){
             brandName:""            //品牌名称
         },
         cartData:[],                //购物车数据
-        customData: {},             //顾客数据
+        customData: {                //顾客数据
+            id:null,
+            nickname:'顾客',
+            username: null,
+            point: 0,
+            balance:0,
+            appCoupons: [],
+            headPortrait: "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png",
+        },
         shopAdminData:{},           //导购员数据
         index:len + 1,              //头部索引
         time:getTimeData()          //时间戳

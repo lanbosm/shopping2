@@ -35,6 +35,7 @@ const webpackConfigPro=require("./webpack.production.config.js");
 var browserSync = require('browser-sync').create();
 
 var host = {
+    domain:"192.168.1.32",
     path: 'dist/',
     port: 3000,
     html: 'index.html'
@@ -253,7 +254,7 @@ gulp.task('webpackDevServer',function(){
 
     for(var i in config.entry){ //给每个多入口添加监听器
       //  console.log(i);
-       config.entry[i].unshift("webpack-dev-server/client?http://localhost:"+host.port+"/", "webpack/hot/dev-server");
+       config.entry[i].unshift("webpack-dev-server/client?http://"+host.domain+":"+host.port+"/", "webpack/hot/dev-server");
     }
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
@@ -273,7 +274,7 @@ gulp.task('webpackDevServer',function(){
         stats: { colors: true },
         proxy: {
             '/cashier/*': {
-                target: 'http://192.168.1.199:82',
+                target: 'http://zgq2017-xwbz.tunnel.qydev.com',
                 changeOrigin: true,
                 secure: false
             }
@@ -281,11 +282,11 @@ gulp.task('webpackDevServer',function(){
 
 
         });
-    server.listen( host.port, "localhost", function(err) {
+    server.listen( host.port, host.domain, function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening
         console.log("listen successful , port at 3000");
-        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://localhost:3000'}));
+        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://192.168.1.32:3000'}));
 
 
     });

@@ -18,27 +18,48 @@
 <style>
 </style>
 <script>
+
+    import layer from 'layer';
+    import $ from 'jquery';
+
     export default{
         name: 'OrderHeader',
         props:["title","back","next","mode"],
         methods:{
             toBack (){
                 var msg="确定"+this.back.label+"吗?";
-                var a= confirm(msg);
-                if(a){
-                    if(this.back.cb){this.back.cb();}
-                    this.$store.commit("setMode",this.back.url);
-                    this.$router.replace(this.back.url);
-                }
+
+                var vm=this;
+                //询问框
+                layer.confirm(msg, {
+                    btn: ['确定'] //按钮
+                }, function(index){
+                    if(vm.back.cb){
+                        vm.back.cb();
+                    }else {
+                        vm.$store.commit("setMode", vm.back.url);
+                        vm.$router.replace(vm.back.url);
+                    }
+                    layer.close(index);
+                });
             },
             toNext (){
                 var msg="确定"+this.next.label+"吗?";
-                var a= confirm(msg);
-                if(a){
-                    if(this.next.cb){this.next.cb();}
-                    this.$store.commit("setMode",this.next.url);
-                    this.$router.replace(this.next.url);
-                }
+                var vm=this;
+                //询问框
+                layer.confirm(msg, {
+                    btn: ['确定'] //按钮
+                }, function(index){
+                    if(vm.next.cb){
+                        vm.next.cb();
+                    }else {
+                        vm.$store.commit("setMode",vm.next.url);
+                        vm.$router.replace(vm.next.url);
+                    }
+                    layer.close(index);
+                });
+
+
             }
         }
     }

@@ -3,7 +3,6 @@
         <div class="tab-con tab-con-0 text-center tabShow">
             <h1 class="pay-amount ">{{amount | currency}}</h1>
             <p class="pay-tips "> {{ message }}</p>
-
             <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
         </div>
 </template> 
@@ -21,7 +20,6 @@
         },
         filters: {
             currency: function (value) {
-                if (!value) return '';
                 return '¥ ' + value;
             }
         }
