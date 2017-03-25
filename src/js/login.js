@@ -116,7 +116,8 @@ new Vue({
         data: {
             logining:false,
             username: '',
-            password: ''
+            password: '',
+            lastUserName:""
         },
         computed:{
 
@@ -187,19 +188,17 @@ new Vue({
 
                     request.fnPost(vm, apiobj, function (res) {
                         layer.close(loading);
-                        window.localStorage.setItem("accessToken",res.accessToken)
-                        util.pushLocal("shopData",{
+                        window.localStorage.setItem("accessToken",res.accessToken);
+                        util.pushLocal('shopData',{
                             "name":res.name,
                             "adminName":res.adminName
                         });
 
+                        //util.pushLocal("lastUserName",res.adminName);
 
-                       //TODO
-                       // if("username"!=)
-                       if(this.lastUserName==this.username){
-                           //clear
+                       if(vm.lastUserName!=vm.username){
+                           util.pushLocal("pageList", []);
                        }
-
 
                         vm.setCookie("username",username,7)
                         location.href="./index.html";

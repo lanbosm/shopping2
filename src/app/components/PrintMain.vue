@@ -82,14 +82,14 @@
 
                     <div style="display: none" id="styles">
                         *{padding:0; margin:0;}
-                        body{width: 290px;}
-                        .print-box {width: 290px; padding:100px 15px; margin:0 auto; font-size: 12px; }
+                        body{width: 260px;}
+                        .print-box {width: 260px; padding:100px 15px; margin:0 auto; font-size: 12pt; }
                         .print-box  h5{font-size: 14px; line-height:20px; display:block;  }
                         .print-box  table.printtable{ width: 100%; display: block;position: relative; line-height: 24px; font-family:'黑体' }
                         .print-box  table.printtable tbody{display: block;}
                         .print-box  table.printtable caption{display:block;}
                         .print-box  table.printtable .strong{font-weight: bold; font-size: 16px;}
-                        .print-box  table.printtable .split{   }
+                        .print-box  table.printtable .split{ margin-top:10px;   }
                         .print-box  table.printtable tr{ display:block;clear: left;}
                         .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                         .print-box  table.printtable{*zoom:1;}
@@ -115,7 +115,7 @@
 
     .payres-txt{color: #e84593; margin-top: 10px; font-size: 16px;}
     .payres-txt.success{  color: #6fc89c;}
-    .print-box {width: 290px; padding:50px 15px 100px 15px; margin:0 auto; font-size: 14px;
+    .print-box {width: 260px; padding:50px 15px 100px 15px; margin:0 auto; font-size: 14px;
         display: block;
         border: solid 1px #dddddd;
         border-radius: 5px;
@@ -129,7 +129,7 @@
     .print-box  table.printtable tbody{display: block;}
     .print-box  table.printtable caption{display:block;}
     .print-box  table.printtable .strong{font-weight: bold; font-size: 16px;}
-    .print-box  table.printtable .split{   }
+    .print-box  table.printtable .split{ margin-top: 10px;   }
     .print-box  table.printtable tr{ display:block;clear: left;}
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
@@ -217,8 +217,8 @@
                     $('#qrcCode').qrcode({
                         render: "table",
                         text: this.printData.wechatCodeUrl,
-                        width: 260,  //260内扫不出
-                        height: 260
+                        width: 230,  //230内扫不出
+                        height: 230
                     });
 
                     this.scanResListen();

@@ -157,8 +157,21 @@
                 });
 
 
+                var giftParam={giftIds:[]};
+
+                cart.forEach(function(ele,index){
+
+                    if(ele.appGiftItem) {
+                        giftParam.giftIds.push(
+                            {"productId": ele.appGiftItem.id, "quantity": ele.appGiftItem.amount}
+                        )
+                    }
+                });
+
+
                 this.$store.commit("setOrderParams",{
                         cartParam:JSON.stringify(cartParam),
+                        giftIds:JSON.stringify(giftParam),
                         couponCodeId:null,
                         usePoint:false,
                         useBalance:false,
@@ -272,9 +285,17 @@
                     for (var i in this.cartData) {
 
                         if (this.cartData[i].id == item.id) {
-                            if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
+
+                            //如果没赠品直接找到
+                            if(!this.cartData[i].appGiftItem){
                                 this.cartData[i].amount++;
                                 find=true;
+                            }
+
+                            else if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
+                                this.cartData[i].amount++;
+                                find=true;
+                                //break;
                             }
                         }
                     }
@@ -282,6 +303,7 @@
 
                 if(!find){
                     this.cartData.push(item);
+
                 }
 
             }

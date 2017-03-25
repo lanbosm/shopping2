@@ -17,7 +17,9 @@
                 </div>
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
-                        <li v-for="item in pageList"><a class="custom" :class="{cur: currentPage && (currentPage.index == item.index)}" @click="switchPage(item.index)"><span class="num">{{item.index}}</span><span class="time">{{item.time}}</span></a></li>
+                        <template v-if="item" v-for="item in pageList">
+                            <li ><a class="custom"  :class="{cur: currentPage && (currentPage.pageIndex == item.pageIndex)}" @click="switchPage(item.pageIndex)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
+                        </template>
                     </ul>
                     <a class="custom-add" @click="addPage()">+</a>
                     <a class="custom-remove" @click="removePage()">-</a>
@@ -85,7 +87,7 @@
                 this.$store.commit("setPageList", localData);
             }
             if(!this.pageList || !this.pageList.length){
-                this.$store.commit('initPage', 1);
+                this.$store.commit('initPage');
             }
         },
         methods:{
@@ -128,6 +130,7 @@
                     vm.saveLocalData();
                     util.delLocal("accessToken");
                     util.delLocal("shopData");
+                    util.delLocal("pageList");
                     location.href="./login.html";
                     layer.close(index);
                 });

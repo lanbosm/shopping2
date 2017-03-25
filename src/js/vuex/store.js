@@ -17,9 +17,9 @@ const store = new Vuex.Store({
         "adminName":""
     },
     pageData:{},
-    pageList:[],  //页
-    currentPage:{
-        index:1,
+    pageList:[],  //头部数组
+    currentPage:{   //当前节点
+        index:0,
         mode:"index",
     },
     member:{
@@ -83,68 +83,100 @@ const store = new Vuex.Store({
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
       initPage(state, data){
-          console.log(state.pageList);
+         // console.log(state.pageList);
           state.pageList = [];
           state.pageList.push(defaultPage(0));
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
       addPage(state, data){
            // console.log("add");
-          if(!state.pageList.length){
-            state.pageList.push(defaultPage(0));
-          }else{
-            state.pageList.push(defaultPage(state.pageList[state.pageList.length-1].index));
-          }
+          state.pageList.push(defaultPage(state.pageList.length));
           state.currentPage = state.pageList[state.pageList.length - 1];
+          console.log(state.pageList);
       },
-      removePage(state, data){
+      removePage(state, data){ //data =>index
           console.log("remove");
-          if(state.pageList.length === 1){
-              state.pageList = [];
-              state.pageList.push(defaultPage(0));
-              state.currentPage = state.pageList[state.pageList.length - 1];
-            //  console.log(state.currentPage);
-              return;
-          }
-          let index = state.currentPage.index;
-          let preIndex = index;
 
-          let isDel = false;
+          if( state.pageList.length<2){
 
-          for(let i in state.pageList) {
-              if (state.pageList[i].index === index) {
-                  state.pageList.splice(i, 1);
-                  preIndex = i;
-                  isDel = true;
-                 // state.currentPage = state.pageList[i-1];
-              }
-              if (isDel && state.pageList[i]) { //更换数组下标
-                  //state.pageList[i].index = state.currentPage.index + n++ ;
-              }
+              state.pageList[state.currentPage.pageIndex]=state.currentPage=defaultPage(0);
+          }else{
+             var  tempIndex=state.currentPage.pageIndex;
+             state.pageList[tempIndex]=null;
+
+
+            //  console.log(tempIndex);
+             state.currentPage=findNode(state.pageList,tempIndex);
+             // console.log( state.currentPage);
+             if(!state.currentPage){
+                 state.pageList[tempIndex]=state.currentPage=defaultPage(0);
+                 state.pageList[tempIndex].pageIndex=tempIndex;
+                 state.pageList[tempIndex].title=tempIndex+1;
+             }
+             //console.log(state.currentPage);
+             return false;
           }
 
+         // console.log(state.pageList);
+          //state.pageList[]
 
-          //如果删完了
-          if(!state.pageList.length){
-              state.pageList.push(defaultPage(1));
-              state.currentPage = state.pageList[state.pageList.length - 1];
-          }else{ //切回
-              var newIndex=preIndex;
-              if(newIndex >= state.pageList.length) newIndex = state.pageList.length - 1;
-              if(newIndex<0){newIndex=0;}
-              state.currentPage = state.pageList[newIndex];
-
-          }
+          // if(state.pageList.length === 1){
+          //    // state.pageList = [];
+          //     state.pageList.push(defaultPage(0));
+          //     state.currentPage = state.pageList[state.pageList.length - 1];
+          //   //  console.log(state.currentPage);
+          //     return;
+          // }
+          // let index = state.currentPage.pageIndex;
+          // let preIndex = index;
+          //
+          // let isDel = false;
+          //
+          // for(let i in state.pageList) {
+          //     if (state.pageList[i].index === index) {
+          //         state.pageList.splice(i, 1);
+          //         preIndex = i;
+          //         isDel = true;
+          //        // state.currentPage = state.pageList[i-1];
+          //     }
+          //     if (isDel && state.pageList[i]) { //更换数组下标
+          //         //state.pageList[i].index = state.currentPage.pageIndex + n++ ;
+          //     }
+          // }
+          //
+          //
+          // //如果删完了
+          // if(!state.pageList.length){
+          //     state.pageList.push(defaultPage(1));
+          //     state.currentPage = state.pageList[state.pageList.length - 1];
+          // }else{ //切回
+          //     var newIndex=preIndex;
+          //     if(newIndex >= state.pageList.length) newIndex = state.pageList.length - 1;
+          //     if(newIndex<0){newIndex=0;}
+          //     state.currentPage = state.pageList[newIndex];
+          //
+          // }
       },
       switchPage(state, index){
+
+
+          var tempPageIndex=index;
+
           console.log("switch");
-          if(state.currentPage.index == index){
+          if(state.currentPage.pageIndex ==tempPageIndex){
               return;
           }
-          for(let i in state.pageList){
-              if(state.pageList[i].index === index){
-                  state.currentPage = state.pageList[i];
-                  console.log(state.currentPage);
+
+
+
+          for(var i=0; i<state.pageList.length; i++){
+              if(state.pageList[i]) {
+
+                  if (i === tempPageIndex) {
+
+                      state.currentPage = state.pageList[i];
+                      console.log(state.currentPage);
+                  }
               }
           }
       },
@@ -172,6 +204,7 @@ const store = new Vuex.Store({
 });
 
 function defaultPage(len){
+
     return {
         mode:"index",               //默认首页
         pageData:{},                //商品数据
@@ -213,7 +246,8 @@ function defaultPage(len){
             headPortrait: "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png",
         },
         shopAdminData:{},           //导购员数据
-        index:len + 1,              //头部索引
+        pageIndex:len,              //头部索引
+        title:len+1,
         time:getTimeData()          //时间戳
     }
 }
@@ -233,6 +267,31 @@ function getTimeData(){
     return timestr;
 }
 
+function findNode(arr,index){
+        var res=null;
+
+        if(index>0) {
+            for (var i = index - 1; i >= 0; i--) {
+
+                if (arr[i]) {
+                    res = arr[i];
+                    break;
+                }
+            }
+        }
+
+        if(!res) {
+            if(index<arr.length-1) {
+                for (var k = index + 1; k < arr.length; k++) {
+                    if (arr[k]) {
+                        res = arr[k];
+                        break;
+                    }
+                }
+            }
+        }
+    return  res
+}
 // 对象深拷贝
 function deepCopy (origin, _copy) {
     var self = arguments.callee,
