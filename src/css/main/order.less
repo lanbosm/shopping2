@@ -1,32 +1,4 @@
 
-.order-row(){
-  border-bottom: @borderDashedStyle;
-  border-width: 2px;
-}
-
-.order-custom-btn(){
-  .class-order-btn(#666666,#ffffff,#cccccc);
-  &:hover{ .class-order-btn(#666666,#ffffff,#999999);}
-  &:active{ .class-order-btn(#666666,#ffffff,#999999);}
-  &.select{.class-order-btn(#666666,#ffffff,#999999);}
-}
-
-
-.order-header-btn(){
-  .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
-  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
-}
-
-.order-left-btn(){
-  .class-order-btn(#666666,#f0eeef,#cccccc);
-  &:hover{ .class-order-btn(#ffffff,@green,#cccccc);}
-  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc);}
-  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
-}
-
-
 .order-wrap{background: #f0eeef;}
 .order{
   background: #efefef;
@@ -39,16 +11,16 @@
     position:relative;
   }
   .order-header{
-    padding: 15px;
-    position: relative;
-    .order-row;
-    h3{
-      font-size: 18px; line-height: 30px; margin: 0;
-    }
-    .ok-btn,.back-btn{
-        .order-header-btn;
-    }
-  }
+     padding: 15px;
+     position: relative;
+     .order-row;
+     h3{
+       font-size: 18px; line-height: 30px; margin: 0;
+     }
+     .ok-btn,.back-btn{
+       .order-header-btn;
+     }
+   }
 
   .order-custom{
      padding: 30px 15px;

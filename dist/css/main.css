@@ -1,9 +1,9 @@
 /*!reset css*/
 article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
 .btn,img{-webkit-user-select:none}
+.breadcrumb li a:hover,.category-list .menu .sub,.header .header-nav .menu-box .contact-btn:hover,.header .header-nav .menu-box .exit-btn:hover,.header .header-nav .menu-box .msg-btn:hover,.left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn,.shoppingCalc .table .num-btn,a{text-decoration:none}
 body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
 b,em{font-style:normal}
-a{text-decoration:none}
 button,input,select,textarea{font-size:100%;outline:0}
 table{border-collapse:collapse;border-spacing:0}
 fieldset,img{border:0}
@@ -47,7 +47,6 @@ img{width:100%}
 .breadcrumb{background:0 0;margin-bottom:10px;font-size:.9rem}
 .breadcrumb>li+li:before{content:" » "}
 .breadcrumb li a{color:#333}
-.breadcrumb li a:hover{text-decoration:none}
 .breadcrumb li.active a{color:#539776}
 .pagination>li>a,.pagination>li>span{color:#333}
 .pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{background:#6fc89c;color:#fff;border-color:#6fc89c}
@@ -65,7 +64,7 @@ img{width:100%}
 .col-nn-70{float:left;width:70%}
 @media (min-width:768px){.col-sm-33{width:33%;float:left}
 }
-@media (min-width:992px){.col-md-50{width:20%;float:left}
+@media (min-width:992px){.col-md-50{width:25%;float:left}
 }
 @media (min-width:1200px){.col-lg-50{width:20%;float:left}
 }
@@ -78,7 +77,6 @@ img{width:100%}
 .header{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#393939}
 .header .logo{float:left;margin-left:-15px}
 .header .header-nav{margin:0;border:none}
-.header .header-nav .menu-box .contact-btn,.header .header-nav .menu-box .exit-btn{line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;cursor:pointer}
 .header .header-nav .staff{position:relative;display:block;padding-top:15px;padding-bottom:15px;height:100%;width:15%;margin-right:10px;float:left;color:#fff;text-align:center}
 .header .header-nav .navbar-toggle{background-color:#333}
 .header .header-nav .navbar-toggle .icon-bar{background-color:#fff}
@@ -92,15 +90,13 @@ img{width:100%}
 .header .header-nav .navbar-collapse .custom-add,.header .header-nav .navbar-collapse .custom-remove{color:#eee;background:#777!important;width:40px;font-size:28px;text-align:center;margin-top:10px;padding-top:0;padding-bottom:0;display:inline-block;border-top-left-radius:5px;border-top-right-radius:5px}
 .header .header-nav .navbar-collapse .custom-add:hover,.header .header-nav .navbar-collapse .custom-remove:hover{text-decoration:none;cursor:pointer}
 .header .header-nav .menu-box{float:right}
-.header .header-nav .menu-box .contact-btn{display:inline-block;margin-left:20px;color:#999}
+.header .header-nav .menu-box .contact-btn{display:inline-block;line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;margin-left:20px;cursor:pointer;color:#999}
 .header .header-nav .menu-box .contact-btn:after{content:" 正在连接设备"}
-.header .header-nav .menu-box .contact-btn:hover{text-decoration:none}
 .header .header-nav .menu-box .contact-btn.success{color:#37D7A9}
 .header .header-nav .menu-box .contact-btn.success:after{content:" 扫描连接成功"}
 .header .header-nav .menu-box .contact-btn.error{color:#D72940}
+.header .header-nav .menu-box .exit-btn,.header .header-nav .menu-box .msg-btn{display:inline-block;line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;color:#999;margin-left:20px;cursor:pointer}
 .header .header-nav .menu-box .contact-btn.error:after{content:" 扫描连接失败"}
-.header .header-nav .menu-box .exit-btn{display:inline-block;margin-left:20px;color:#999}
-.header .header-nav .menu-box .exit-btn:hover{text-decoration:none}
 /*!购物车*/
 .shoppingCart{width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:0}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
@@ -122,7 +118,7 @@ img{width:100%}
 .shoppingCalc{width:100%}
 .shoppingCalc .table .t1{width:40%;cursor:pointer}
 .shoppingCalc .table td{width:40px;height:40px;text-align:center!important;vertical-align:middle!important;position:relative;padding:0!important}
-.shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;text-decoration:none;display:inline-block}
+.shoppingCalc .table .num-btn{line-height:40px;width:100%;height:100%;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;display:inline-block}
 .shoppingCalc .table .settle-accounts-btn{width:60px;height:86px;background:url(../images/jiezhang.png) no-repeat;background-size:100%;display:inline-block}
 .order-wrap{background:#f0eeef}
 .order{background:#efefef}
@@ -209,7 +205,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 .left-con .panel-heading .nav-tabs>li>a{width:120px}
 .left-con .item{padding-left:7px;padding-right:8px;margin-bottom:15px}
 .left-con .item .thumbnail{position:relative;margin-bottom:0;padding:15px}
-.left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:#e84593}
+.left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn{display:inline-block;width:20px;height:20px;position:absolute;color:#e84593}
 .left-con .item .thumbnail .prcie{font-size:.9rem}
 .left-con .item .thumbnail .stock{color:#999}
 .left-con .item .thumbnail .caption{position:relative;padding:5px 20px 5px 5px;height:3.2rem;line-height:1.6rem;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
@@ -225,7 +221,7 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;f
 /*!分类列表*/
 .category-list{width:73%;color:#333;position:absolute;z-index:30;height:auto;top:100%;left:0}
 .category-list .menu{width:20%;float:left;height:auto;padding-top:1px;margin-left:-15px;border:1px solid #e5e5e5}
-.category-list .menu .sub{width:100%;display:block;text-decoration:none;height:40px;text-align:center;background:#fff;position:relative;line-height:40px;color:#333}
+.category-list .menu .sub{width:100%;display:block;height:40px;text-align:center;background:#fff;position:relative;line-height:40px;color:#333}
 .category-list .menu .sub:after{content:"»";position:absolute;right:10px;top:0}
 .category-list .menu .sub.all:after{content:"";position:absolute;right:10px;top:0}
 .category-list .menu .sub.cur{color:#6fc89c}

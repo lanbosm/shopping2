@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="utf-8"/>
-	<title>首页</title>
+	<title>阿喔优品收银系统</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -19,7 +19,7 @@
 	<style>
 		/* transition animate */
 		.fade-enter-active, .fade-leave-active {
-			transition: opacity .5s
+			transition: opacity .3s
 		}
 		.fade-enter, .fade-leave-active {
 			opacity: 0
@@ -42,24 +42,32 @@
 
 <body>
 	<div class="wrap">
-		<!-- container -->
-		<div class="main" id="main">
-				<app-header></app-header>
+			<!-- container -->
+			<div class="main" id="main">
+					<!--头导航-->
+					<app-header></app-header>
 
-				<transition name="slide">
-						<router-view></router-view>
-				</transition>
+					<!--主体-->
+					<transition name="slide">
+							<router-view></router-view>
+					</transition>
 
-				<!--顾客-->
-				<layer-custom v-if="showCustomModal"></layer-custom>
-				<!--导购员-->
-				<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
+					<!--顾客-->
+					<layer-custom v-if="showCustomModal"></layer-custom>
+					<!--导购员-->
+					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
 
-				<!--优惠券-->
-				<layer-coupon v-if="showCouponModal"></layer-coupon>
+					<!--优惠券-->
+					<layer-coupon v-if="showCouponModal"></layer-coupon>
 
-				<!--充值-->
-				<layer-recharge v-if="showRechargeModal"></layer-recharge>
+					<!--充值-->
+					<layer-recharge v-if="showRechargeModal"></layer-recharge>
+
+					<!--消息-->
+					<transition name="fade">
+						<layer-msg v-if="showMsgModal"></layer-msg>
+					</transition>
+
 			</div>
 		</div>
 
@@ -75,8 +83,6 @@
 <script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 
 <script type="text/javascript" src="/js/common.js"></script>
-
-<script type="text/javascript" src="/js/header.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
 
 

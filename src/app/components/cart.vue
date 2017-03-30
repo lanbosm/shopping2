@@ -10,7 +10,7 @@
 								</p>
 								<p class="small">
 									<span>数量 :{{item.amount}} * 单价 {{item.price  }}</span><span></span>
-									<span class="tips">{{item | stocktips}}</span>
+									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
 								</p>
 								<p class="total">
 									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
@@ -90,9 +90,15 @@
 
 			},
             checkCartItem:function(index){
-				console.log(this.cartData);
+				//console.log(this.cartData);
                 this.$parent.cartItemIndex=index;
-            }
+            },
+            openStock:function(item){
+                if(item){
+                	this.$emit('open-stock',item);
+                }
+
+			}
         }
     }
 </script>

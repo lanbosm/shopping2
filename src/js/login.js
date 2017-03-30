@@ -195,7 +195,6 @@ new Vue({
                         });
 
                         //util.pushLocal("lastUserName",res.adminName);
-
                        if(vm.lastUserName!=vm.username){
                            util.pushLocal("pageList", []);
                        }

@@ -24,8 +24,8 @@
                     <a class="custom-add" @click="addPage()">+</a>
                     <a class="custom-remove" @click="removePage()">-</a>
                     <div class="menu-box">
-                        <a class="contact-btn" :class="{success:contact}" @click="contact()">
-                            <i class="icon icon-snan"></i>
+                        <a class="msg-btn"  @click="msg()">
+                            消息
                         </a>
                         <a class="exit-btn" @click="exit()">
                             <i class="icon icon-exit"></i>
@@ -106,8 +106,6 @@
                     vm.saveLocalData();
                 });
 
-
-
             },
             switchPage(index){
                 this.$store.commit('switchPage', index);
@@ -121,7 +119,9 @@
             saveLocalData(){
                 util.pushLocal("pageList", this.pageList);
             },
-            contact(){
+            msg(){
+                this.$store.commit("setMode","message");
+                this.$router.replace('/message');
                 //alert("连接设备");
             },
             exit(){

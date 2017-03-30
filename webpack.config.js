@@ -88,7 +88,7 @@ module.exports = {
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
             components : srcDir + "/app/components",
-            vue: 'vue/dist/vue'
+            vue$: 'vue/dist/vue'
         }
     },
     plugins: [

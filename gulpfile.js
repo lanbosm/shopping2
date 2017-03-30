@@ -274,7 +274,7 @@ gulp.task('webpackDevServer',function(){
         stats: { colors: true },
         proxy: {
             '/cashier/*': {
-                target: 'http://zgq2017-xwbz.tunnel.qydev.com',
+                target: 'http://192.168.1.199:82',
                 changeOrigin: true,
                 secure: false
             }

@@ -32,12 +32,15 @@
                
                 <div class="col-sm-4  col-md-3 right-con" >
                     <!-- 购物车 -->
-                    <cart :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
+                    <cart @open-stock="openStock" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
                     <calc @trigger-build-order="buildOrder" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
             <list-item :product-detail="productDetail" :specifications="specifications" :gift-index="giftIndex" @close-detail="closeDetail"></list-item>
+
+            <stock-item v-if="showStockItem" :product-detail="productDetail"  @close-stock="closeStock"></stock-item>
+
     </div>
 </template>
 
@@ -53,7 +56,9 @@
     import AppCalc from 'components/calc.vue';
     import Loading from 'components/Loading.vue';
     import ListItem from 'components/ListItem.vue';
-    import ProductList from 'components/list.vue';
+    import StockItem from 'components/StockItem.vue';
+    import ProductList from 'components/List.vue';
+
 
     import layer from 'layer';
     import util from 'util/util.js';
@@ -66,7 +71,8 @@
                 pageSize:8,                 //一页显示多少个
                 showCategory:false,
                 giftIndex:0,
-                cartItemIndex:0
+                cartItemIndex:0,
+                showStockItem:false,
             }
         },
         computed: {
@@ -116,6 +122,7 @@
              breadcrumb,                  //面包屑
              category,                    //分类
              ListItem,                    //商品详情
+             StockItem,                   //库存详情
              ProductList,                 //商品列表
              searchbar,
              Loading
@@ -141,12 +148,6 @@
                 //alert(this.mode);
 
                 console.log(cart);
-
-//                if(!this.customData.id){
-//                    alert("请先选择会员");
-//                    return false;
-//                }
-
                 var cartParam={itemParams:[]};
 
                 cart.forEach(function(ele,index){
@@ -196,6 +197,7 @@
 
 
             },
+            //打开详情
             openDetail() {
                 //是否存在赠品
                 let vm=this;
@@ -203,6 +205,7 @@
                 let itemGift = !!item.appGiftActivity;
                 let itemSpec = item.appSpecificationValues;
                 let itemswiper = '';
+
 
                 //如果该商品没有规格和赠品 直接加入购物车    appGiftActivity appSpecificationValue
                 if(!itemGift && itemSpec.length==0){
@@ -214,8 +217,6 @@
                     this.pushCart(newitem);
                     return false;
                 }
-
-
 
                 vm.$nextTick(() => {
                     //弹出页面层
@@ -274,12 +275,45 @@
                 layer.closeAll();
                 this.pushCart(item);
             },
+            //打开仓库详情
+            openStock(item) {
+                //是否存在赠品
+                this.showStockItem=true;
+
+                let vm=this;
+                vm.$nextTick(() => {
+                    //弹出页面层
+                    layer.open({
+                        id: 'layui-layer-stock',
+                        type: 1,            //1 普通层
+                        shade: 0.01,  //遮罩
+                        anim: 0,
+                        zIndex: 1000,
+                        closeBtn: 2,
+                        title: false,
+                        area: ['auto', 'auto'], //宽高
+                        content: $('#layer-stock-box'),
+                        success: function () {
+
+
+                        },
+                        end: function () {
+                            vm.showStockItem=false;
+                        }
+                    });
+
+                })
+            },
+            //关闭仓库详情
+            closeStock(item){
+
+                console.log(item);
+                layer.closeAll();
+            },
             //判断如何加入购物车
             pushCart(item){
 
                 var find=false;
-
-
 
                 if(this.cartData.length>0){
                     for (var i in this.cartData) {
