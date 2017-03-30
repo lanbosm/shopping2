@@ -74,7 +74,7 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
         //起始路由
-        this.$router.push('/message');
+        this.$router.push('/');
     }
 })
 

@@ -277,6 +277,7 @@
             },
             //打开仓库详情
             openStock(item) {
+                return false;
                 //是否存在赠品
                 this.showStockItem=true;
 

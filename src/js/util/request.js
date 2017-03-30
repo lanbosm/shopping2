@@ -8,6 +8,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
+import layer from 'layer';
 
 //http请求
 Vue.use(VueResource)
@@ -20,7 +21,11 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 //export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
 //export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
-export const HOST="";
+export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
+
+
+
+//export const HOST="";
 export const API_URLS = {
     public_key:"/cashier/common/public_key",
     login:"/cashier/login",
@@ -31,8 +36,8 @@ export const API_URLS = {
     recharge:"/cashier/member/recharge",//充值
     shop_admins:'/cashier/member/shop_admins',       //员工
     b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
-    payments:'/cashier/member/payments'                        //验证支付
-
+    payments:'/cashier/member/payments',                        //验证支付
+    log_out:'/cashier/common/log_out'
     // products: "/data/products.json", //假数据
    // products50:"/data/products50.json",
    // category:"/data/category.json",               //会员模块
@@ -67,7 +72,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                alert("服务器连接失败");
+                layer.alert("服务器连接失败");
             })
     },
     fnPost: function (vm, apiObj, success, error) {
@@ -91,7 +96,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                alert("服务器连接失败");
+                layer.alert("服务器连接失败");
             })
     },
     fnPut: function (vm, apiObj, success, error) {
@@ -113,7 +118,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                alert("服务器连接失败");
+                layer.alert("服务器连接失败");
             })
     },
     fnDelete: function (vm, apiObj, success, error) {
@@ -137,7 +142,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                alert("服务器连接失败");
+                layer.alert("服务器连接失败");
             })
     }
 };
@@ -182,7 +187,7 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
         store.state.loading=false;
         if (response.data && response.data.code == 49001) {
-            alert("访问令牌过期 请从新登录");
+            layer.alert("访问令牌过期 请从新登录");
             window.location.href = './login.html';
             return true;
         }else if (response.data && response.data.code == 40001) {
@@ -193,7 +198,7 @@ Vue.http.interceptors.push(function (request, next) {
             //window.location.href = './login.html';
             return true;
         } else if (response.data && response.data.code ==  45004) {
-            alert("商品库存不足")
+            layer.alert("商品库存不足")
             return true;
         }
         else {

@@ -45,6 +45,7 @@
 <script>
 
     import util from '../../js/util/util.js';
+    import {request, API_URLS, HOST} from 'util/request.js';
     import layer from 'layer';
 
     export default{
@@ -120,6 +121,7 @@
                 util.pushLocal("pageList", this.pageList);
             },
             msg(){
+                return false;
                 this.$store.commit("setMode","message");
                 this.$router.replace('/message');
                 //alert("连接设备");
@@ -127,12 +129,21 @@
             exit(){
                 let vm = this;
                 layer.confirm('确定要退出吗？', function(index){
-                    vm.saveLocalData();
-                    util.delLocal("accessToken");
-                    util.delLocal("shopData");
-                    util.delLocal("pageList");
-                    location.href="./login.html";
-                    layer.close(index);
+
+                    var apiObj={
+                        url: API_URLS.log_out
+                    }
+                    request.fnGet(vm,apiObj,(res)=>{
+
+                            layer.closeAll();
+                            util.delLocal("accessToken");
+                            util.delLocal("shopData");
+                            util.delLocal("pageList");
+                            vm.saveLocalData();
+                            location.href = "./login.html";
+
+                        }
+                    )
                 });
             },
         },
