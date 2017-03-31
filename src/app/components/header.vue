@@ -75,21 +75,19 @@
             }
         },
         created(){
-
             //获取门店信息
             var shopData= util.pullLocal("shopData");
             this.$store.commit('setShopData', shopData);
 
-            //先获取本地
+            //先获取本地商品记录
             let localData=this.getLocalData();
-           // let localData="";
-//            //从中间件获取
             if(localData && localData.length){
                 this.$store.commit("setPageList", localData);
             }
             if(!this.pageList || !this.pageList.length){
                 this.$store.commit('initPage');
             }
+
         },
         methods:{
             addPage(){
@@ -120,6 +118,13 @@
             saveLocalData(){
                 util.pushLocal("pageList", this.pageList);
             },
+            delLocalData(){
+                this.$store.commit("setPageList", []);
+                this.$store.commit('setShopData', {});
+                util.delLocal("accessToken");
+                util.delLocal("shopData");
+                util.delLocal("pageList");
+            },
             msg(){
                 return false;
                 this.$store.commit("setMode","message");
@@ -133,14 +138,11 @@
                     var apiObj={
                         url: API_URLS.log_out
                     }
-                    request.fnGet(vm,apiObj,(res)=>{
+                    request.fnGet(vm,apiObj,res=>{
 
-                            layer.closeAll();
-                            util.delLocal("accessToken");
-                            util.delLocal("shopData");
-                            util.delLocal("pageList");
-                            vm.saveLocalData();
-                            location.href = "./login.html";
+                             vm.delLocalData();
+                             layer.closeAll();
+                             location.href = "./login.html";
 
                         }
                     )

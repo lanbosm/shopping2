@@ -12,10 +12,7 @@ const store = new Vuex.Store({
   state: {
     loading:false,
     appLoading:false,
-    shopData:{
-        "name":"",
-        "adminName":""
-    },
+    shopData:{},
     pageData:{},
     pageList:[],  //头部数组
     currentPage:{   //当前节点

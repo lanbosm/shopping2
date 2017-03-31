@@ -16,9 +16,9 @@
                                 </thead>
                                 <tbody class="text-left">
                                 <tr>
-                                    <td>{{amount}}</td>
-                                    <td><span class="rmb">{{rmb}}</span></td>
-                                    <td>{{cash}}</td>
+                                    <td>{{amount | currency }}</td>
+                                    <td><span class="rmb">{{rmb | currency  }}</span></td>
+                                    <td>{{cash | currency  }}</td>
                                     <td>现金</td>
                                 </tr>
                                 </tbody>
@@ -52,6 +52,13 @@
 <script>
     import shopAdminBtn from 'components/ShopAdminBtn.vue';
     export default{
+        name:"PayMoney",
+        filters: {
+            currency: function (value) {
+                if (!value) return '0.00';
+                return '¥ ' + Number(value).toFixed(2);
+            },
+        },
         props:['message','amount','giftAmount','showShopAdminBtn'],
         data(){
             return {

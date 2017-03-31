@@ -27,7 +27,7 @@
        <div class="login_main" id="main">
            <div class="container" >
                 <div class="row">
-                     <div class="left-con col-md-6 ">
+                     <div class="left-con col-sm-6 hidden-xs">
                      </div>
 
                      <div class="right-con col-md-6 col-xs-12">
@@ -74,27 +74,7 @@
 <script type="text/javascript" src="/js/login.js"></script>
 <script>
 
-    function checkLogin(){
-        var check=true;
-        var username=$("#username").val();
-        var password=$("#password").val();
 
-        if(!username){
-            alert("请输入用户名;");
-            check=false;
-        }
-        if(!password && check){
-            alert("请输入密码;");
-            check=false;
-        }
-        return check;
-    }
-
-    $(function(){
-
-
-
-    });
 
 </script>
 </html>

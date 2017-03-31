@@ -11,16 +11,22 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <a v-if="$parent.searchShow" class="btn add-custom" @click="$parent.registerView"></a>
-                    <a v-else class="btn cancel-custom" @click="$parent.registerView">取消</a>
-                    <a class="btn select-ticket btn-lightgreen" v-show="$parent.searchShow && custom && custom.appMember && custom.appMember.id" @click="$parent.chooseThis">选择</a>
+                    <a v-if="searchShow" class="btn add-custom" @click="$parent.registerView"></a>
+                    <a v-else class="btn cancel-custom" @click="$parent.cancelView">取消</a>
+                    <a class="btn select-ticket btn-lightgreen" v-show="infoShow && custom && custom.appMember && custom.appMember.id" @click="$parent.chooseThis">选择</a>
                 </div>
              </div>
         </div>
-        <div class="custom-table-body" v-show="$parent.searchShow">
-            <div class="normal" v-if="!infoShow">
+        <div class="custom-table-body" v-if="searchShow">
+            <div class="normal" >
+                <transition name="fade">
+                    <p class="text-center bg-warning" v-if="$parent.searching" >没有找到此会员</p>
+                </transition>
+
             </div>
-            <custom-info v-else :member="custom.appMember"></custom-info>
+        </div>
+        <div class="custom-table-body" v-if="infoShow">
+             <custom-info  :member="custom.appMember"></custom-info>
         </div>
     </div>
 </template>
@@ -47,7 +53,11 @@
 //                return this.$parent.searchShow === true ? "" : 'cancel-custom';
 //            }
         },
-        props:["custom", "infoShow"],
+        created(){
+
+
+        },
+        props:["custom", "infoShow","searchShow"],
         methods:{
         }
     }

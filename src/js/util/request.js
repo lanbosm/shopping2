@@ -66,7 +66,6 @@ export const request = {
                     if (error) {
                         error(response.data);
                         store.state.loading=false;
-
                     }
                 }
             })
@@ -187,7 +186,7 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
         store.state.loading=false;
         if (response.data && response.data.code == 49001) {
-            layer.alert("访问令牌过期 请从新登录");
+            layer.alert("访问令牌过期 请从新登录",{anim:-1});
             window.location.href = './login.html';
             return true;
         }else if (response.data && response.data.code == 40001) {

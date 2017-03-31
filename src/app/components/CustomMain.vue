@@ -7,7 +7,7 @@
                     <a class="close" data-dismiss="modal">&times;</span></a>
                 </div>
                 <div class="modal-body">
-                    <custom-search :custom="tempcustom" :info-show="infoShow"></custom-search>
+                    <custom-search :custom="tempcustom" :info-show="infoShow" :search-show="searchShow"></custom-search>
                     <custom-register v-show="registerShow"></custom-register>
                 </div>
             </div>
@@ -100,11 +100,12 @@
 
         data(){
             return {
-                searchShow:true,
+                searching:false,
                 registerShow:false,
+                searchShow:true,
                 infoShow:false,
                 username:'',
-                tempcustom:'',
+                tempcustom:null,
             }
         },
         computed: {
@@ -119,8 +120,9 @@
         created(){
             if(this.custom.id){
                 // 下次进来就显示当前顾客
+                this.searching=false;
                 this.infoShow = true;
-                this.searchShow = true;
+                this.searchShow = false;
                 this.registerShow = false;
                 this.tempcustom={"appMember":this.custom};
             }else{
@@ -128,15 +130,19 @@
             }
         },
         methods:{
+            cancelView(){
+
+                this.registerShow=false;
+                this.infoShow=false;
+                this.searchShow=true;
+                this.username = '';
+            },
             registerView(){
-                if(this.registerShow === true){
-                    this.searchShow=true;
-                    this.registerShow=false;
-                }else{
-                    this.searchShow=false;
-                    this.registerShow=true;
-                    this.username = '';
-                }
+
+                this.registerShow=!this.registerShow;
+                this.infoShow=false;
+                this.searchShow=false;
+
             },
             doSearch(){
                 let vm = this;
@@ -149,12 +155,14 @@
                     };
                     request.fnGet(vm, apiobj, function (res) {
                         vm.tempcustom = res;
+                        vm.searching=false;
+                        vm.searchShow=false;
                         vm.infoShow = true;
+                    }, function(res) {
+                        vm.searching = true;
 
-                    }, function(res){
-                        vm.tempcustom = res;
-                        vm.infoShow = false;
-                    })
+                        setTimeout(() => vm.searching = false, 3000);
+                    });
                 }else{
                     layer.msg('请输入手机号码');
                 }

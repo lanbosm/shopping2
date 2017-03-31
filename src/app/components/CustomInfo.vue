@@ -1,9 +1,6 @@
 <!-- info -->
 <template>
-    <div class="normal" v-if="!member || !member.id">
-        <p class="text-center bg-warning" >没有找到此会员</p>
-    </div>
-    <div class="info" v-else>
+    <div class="info" >
             <div class="custom-member">
                 <div class="row">
                 <div class="col-xs-12 col-sm-12 clearfix">

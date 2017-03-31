@@ -41,8 +41,8 @@
         name:"cart",
         filters: {
             currency: function (value) {
-                if (!value) return '¥ 0.00';
-                return '¥ ' + value.toFixed(2);
+                if (!value) return '0.00';
+                return '¥ ' + Number(value).toFixed(2);
             },
             stocktips: function (value) {
                // console.log(value.id);
