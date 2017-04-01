@@ -2,17 +2,22 @@ import Vue from 'vue';
 import VueRouter from 'vue-router'
 
 
-import App from 'components/App.vue'
-import AppCenter from 'components/AppCenter.vue'
-import MsgCenter from 'components/MsgMain.vue';
+import App from 'views/App.vue'
+import AppCenter from 'views/AppCenter.vue'
+import MsgCenter from 'components/message/MsgMain.vue';
 
-import OrderDefault from 'components/OrderDefault.vue';
-import PayScan from 'components/PayScan.vue'
-import PayCard from 'components/PayCard.vue'
-import PayMoney from 'components/PayMoney.vue'
-import RechargeDefault from 'components/RechargeDefault.vue'
+import OrderDefault from 'views/order/OrderDefault.vue';
+import PayScan from 'views/pay/PayScan.vue'
+import PayCard from 'views/pay/PayCard.vue'
+import PayMoney from 'views/pay/PayMoney.vue'
+import RechargeDefault from 'components/recharge/RechargeDefault.vue'
 
-import NoPage from 'components/NoPage.vue'
+
+import LogCenter from 'components/log/LogMain.vue';
+
+
+
+import NoPage from 'views/NoPage.vue'
 
 
 
@@ -34,6 +39,33 @@ const router = new VueRouter({
             name: 'MsgCenter',
             component: MsgCenter,
         },
+        {
+            path: '/log',
+            name: 'logCenter',
+            component:LogCenter
+        },
+        {
+            path: '/log/:type',
+            name: 'logCenterList',
+            component:LogCenter
+        },        //消息中心
+        // { path: '/log2',
+        //     name: 'LogCenter',
+        //     component: LogCenter,
+        //
+        //     children: [
+        //         {
+        //             path: 'cash',
+        //             name: 'LogCash',
+        //             component: LogCash,
+        //         },
+        //         {
+        //             path: 'recharge',
+        //             name: 'LogRecharge',
+        //             component: LogRecharge,
+        //         }
+        //     ]
+        // },
         {
             path: '/appCenter',
             alias:['/order','/recharge','/print'],            //中心有 订单 充值 打印

@@ -50,7 +50,7 @@
     .rmb{background: #fff; color: #6fc89c;}
 </style>
 <script>
-    import shopAdminBtn from 'components/ShopAdminBtn.vue';
+    import shopAdminBtn from 'components/shopAdmin/ShopAdminBtn.vue';
     export default{
         name:"PayMoney",
         filters: {
@@ -72,7 +72,7 @@
             },
             cash(){
                 var b=this.rmb-this.amount;
-                if(b<0){b=0;}
+                if(b<0){b=0 ;}
                 this.$store.commit("setOrderParams",{ rmb:this.rmb,cash:b});
                 return this.$store.state.currentPage.orderParams.cash;
             }

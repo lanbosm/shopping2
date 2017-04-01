@@ -1,13 +1,15 @@
 
 import Vue from 'vue';
 
-import appHeader from 'components/header.vue'
+import appHeader from 'views/header.vue'
 
-import CustomModal from 'components/CustomMain.vue';
-import ShopAdminModal from 'components/ShopAdminMain.vue';
-import CouponModal from 'components/CouponMain.vue';
-import RechargeModal from 'components/RechargeMain.vue';
-import MsgModal from 'components/MsgModal.vue';
+import CustomModal from 'components/custom/CustomMain.vue';
+import ShopAdminModal from 'components/shopAdmin/ShopAdminMain.vue';
+import CouponModal from 'components/coupon/CouponMain.vue';
+import RechargeModal from 'components/recharge/RechargeMain.vue';
+import MsgModal from 'components/message/MsgModal.vue';
+import LogModal from 'components/log/LogModal.vue';
+import CashModal from 'components/cash/CashModal.vue';
 
 import store from './vuex/store'
 import router from './router'
@@ -33,7 +35,11 @@ Vue.component('layer-recharge',RechargeModal);
 //定义msg组件
 Vue.component('layer-msg',MsgModal);
 
+//定义日记组件
+Vue.component('layer-log',LogModal);
 
+//定义备用金组件
+Vue.component('layer-cash',CashModal);
 
 //自定义属性
 Vue.islogin=true;
@@ -59,14 +65,9 @@ var vm =new Vue({
             showCustomModal:false,
             showCouponModal:false,
             showRechargeModal:false,
-            showMsgModal:false
-    },
-    watch: {
-
-
-    },
-    methods: {
-
+            showMsgModal:false,
+            showLogModal:false,
+            showCashModal:false
     },
     mounted() {
         // 关闭窗口时弹出确认提示
@@ -74,7 +75,7 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
         //起始路由
-        this.$router.push('/');
+        this.$router.push('/log/cash');
     }
 })
 

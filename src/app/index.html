@@ -11,6 +11,10 @@
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
+	<!--[if lt IE 9]>
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
 
 	<link rel="stylesheet" type="text/css" href="/css/swiper.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
@@ -67,6 +71,12 @@
 					<transition name="fade">
 						<layer-msg v-if="showMsgModal"></layer-msg>
 					</transition>
+					<!--日记-->
+					<layer-log v-if="showLogModal"></layer-log>
+
+					<!--备用金-->
+					<layer-cash v-if="showCashModal"></layer-cash>
+
 
 			</div>
 		</div>
@@ -88,7 +98,7 @@
 
 <script type="text/javascript">
 
-
+//统计代码
 
 	
 </script>

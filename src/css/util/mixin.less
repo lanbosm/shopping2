@@ -13,6 +13,15 @@
   border-width: 2px;
 }
 
+
+.green-btn(){
+  .class-order-btn(#ffffff,@green,#cccccc,3px,12px);
+  &:hover{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
+  &:active{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
+  &.select{.class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
+}
+
+
 .order-custom-btn(){
   .class-order-btn(#666666,#ffffff,#cccccc);
   &:hover{ .class-order-btn(#666666,#ffffff,#999999);}
@@ -33,4 +42,10 @@
   &:hover{ .class-order-btn(#ffffff,@green,#cccccc);}
   &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc);}
   &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+}
+
+
+.clearfix(){
+   &:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+   *zoom:1;
 }

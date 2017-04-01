@@ -65,7 +65,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
-                        store.state.loading=false;
+
                     }
                 }
             })
@@ -89,7 +89,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
-                        store.state.loading=false;
+
                     }
                 }
             })
@@ -111,7 +111,7 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
-                        store.state.loading=false;
+
                     }
                 }
             })
@@ -135,7 +135,6 @@ export const request = {
                 } else {
                     if (error) {
                         error(response.data);
-                        store.state.loading=false;
                     }
                 }
             })
@@ -145,6 +144,7 @@ export const request = {
             })
     }
 };
+
 
 
 /**
@@ -182,9 +182,9 @@ Vue.http.interceptors.push(function (request, next) {
     //     request.headers.sign = signature.sign;
     // }
 
-    store.state.loading=true;
+
     next(function (response) {
-        store.state.loading=false;
+
         if (response.data && response.data.code == 49001) {
             layer.alert("访问令牌过期 请从新登录",{anim:-1});
             window.location.href = './login.html';

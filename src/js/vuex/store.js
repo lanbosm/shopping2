@@ -3,6 +3,7 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex'
+import {request, API_URLS} from 'util/request.js';
 
 Vue.use(Vuex)
 
@@ -12,7 +13,10 @@ const store = new Vuex.Store({
   state: {
     loading:false,
     appLoading:false,
-    shopData:{},
+    shopData:{
+        "name":"",
+        "adminName":""
+    },
     pageData:{},
     pageList:[],  //头部数组
     currentPage:{   //当前节点
@@ -57,7 +61,7 @@ const store = new Vuex.Store({
           state.categoryData=data;
       },
       setProductParams (state,data){
-          state.productParams=data;
+          Object.assign(state.productParams,data);
       },
       setOrderParams(state,data){
           Object.assign(state.currentPage.orderParams,data);
@@ -165,7 +169,6 @@ const store = new Vuex.Store({
           }
 
 
-
           for(var i=0; i<state.pageList.length; i++){
               if(state.pageList[i]) {
 
@@ -183,6 +186,11 @@ const store = new Vuex.Store({
       },
       hide_waiting(state){
           state.currentPage.waiting = false;
+      },
+
+      // 显示和隐藏waiting
+      set_list_waiting(state,value){
+          state.loading = value;
       }
     },
     actions: {
@@ -195,6 +203,23 @@ const store = new Vuex.Store({
                        commit("hide_waiting");
                        resolve()
                 }, 50)
+            })
+        },
+        fetchList({commit,state},value){
+            commit("set_list_waiting",true);
+            let apiObj={
+                url: API_URLS.products,
+                data:{
+                    'categoryId': state.productParams.categoryId,
+                    'brandId': state.productParams.brandId,
+                    'pageNum': state.productParams.pageNum,
+                    'keyword': state.productParams.searchStr
+                }
+            };
+            request.fnGet(value,apiObj,(res)=>{
+                console.log(res);
+                commit("set_list_waiting",false);
+                commit("setPageData",res.page);
             })
         }
     }
@@ -231,6 +256,9 @@ function defaultPage(len){
             pageNum:1,              //页码
             categoryName:"",        //分类名称
             brandName:""            //品牌名称
+        },
+        logData:{                   //日记数据
+
         },
         cartData:[],                //购物车数据
         customData: {                //顾客数据
