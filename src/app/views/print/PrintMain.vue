@@ -69,6 +69,10 @@
                                 <td>{{printData.paymentName}}</td>
                             </tr>
                             <tr class="split">
+                                <td>现金支付</td>
+                                <td>¥ {{printData.rmb}}</td>
+                            </tr>
+                            <tr class="split">
                                 <td>找零</td>
                                 <td>¥ {{printData.cash}}</td>
                             </tr>
@@ -164,7 +168,8 @@
                 next:{"label":"下个订单","url":"index","show":true,"cb":this.clearOrder},
                 message: '等待付款',
                 amount:0,
-                payStatus:"wait"
+                payStatus:"wait",
+                timer:null
 
             }
         },
@@ -194,11 +199,11 @@
                 var myTime=nowDate.toLocaleTimeString();     //获取当前时间
 
 
-                var paymentName={12:"扫码支付",10:"现在支付",11:"刷卡支付"};
+                var paymentName={12:"扫码支付",10:"现金支付",11:"刷卡支付"};
 
                 print.paymentName=paymentName[this.orderParams.paymentMethodId];
-                print.cash=this.orderParams.cash || 0;
-
+                print.cash=this.orderParams.cash || 0.00;
+                print.rmb=this.orderParams.rmb || 0.00;
                 print.DateTime=myDate+" "+myTime;
 
 
@@ -231,6 +236,9 @@
                 var curPage=this.$store.state.currentPage.index;
                 this.$store.commit('removePage', curPage);
                 this.$store.commit('switchPage', curPage);
+                this.payStatus="success";
+                clearInterval(this.timer);
+
                 //切换路由
                 this.$router.replace('/'+this.mode);
             },
@@ -263,7 +271,6 @@
                 newWindow.close();
 
 
-
             },
             scanResListen(){
                     var apiObj={
@@ -271,13 +278,13 @@
                         data:{r:Math.random()}
                     }
 
-                    request.fnGet(this,apiObj,(res)=>{
+                    request.fnGet(apiObj).then(res=>{
                         console.log(this.payStatus);
                         this.payStatus=res.status;
-                    })
+                    });
 
                     if(this.payStatus=="wait"){
-                        setTimeout(()=> {              //每5秒一次请求
+                        this.timer=setTimeout(()=> {              //每5秒一次请求
                             this.scanResListen();
                         },5000);
                     }else{

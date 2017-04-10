@@ -145,27 +145,24 @@
 
             },
             doSearch(){
-                let vm = this;
-                this.searchShow=true;
-                this.registerShow=false;
-                if(vm.username){
-                    let apiobj = {
-                        url : API_URLS.customers,
-                        data:{username:vm.username}
-                    };
-                    request.fnGet(vm, apiobj, function (res) {
-                        vm.tempcustom = res;
-                        vm.searching=false;
-                        vm.searchShow=false;
-                        vm.infoShow = true;
-                    }, function(res) {
-                        vm.searching = true;
+                    let vm = this;
 
+                    if(!vm.username){
+
+                        layer.msg('请输入手机号码');
+                        return false;
+                    }
+                    this.searchShow=true;
+                    this.registerShow=false;
+                    this.$store.dispatch("fetchCustom",vm.username).then(res=>{
+                          vm.tempcustom = res;
+                          vm.searching=false;
+                          vm.searchShow=false;
+                          vm.infoShow = true;
+                    }).catch(res=>{
+                        vm.searching = true;
                         setTimeout(() => vm.searching = false, 3000);
-                    });
-                }else{
-                    layer.msg('请输入手机号码');
-                }
+                    })
             },
             chooseThis(){
                 let vm = this;

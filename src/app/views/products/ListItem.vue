@@ -9,7 +9,7 @@
                     <img class="img-responsive  center-block" :src="productDetail.image" :alt="productDetail.title" :title="productDetail.title">
                     <p class="name">{{productDetail.name}} {{productDetail.specDesc}}</p>
                     <p class="gift primary" v-if="productDetail.appGiftActivity">{{productDetail.appGiftActivity.name}}</p>
-                    <p class="stock">库存：{{productDetail.stock}}件</p>
+                    <p class="stock">库存：{{productDetail.availableStock}}件</p>
                 </div>
                 <div class="specs-box">
                     <div class="clearfix" v-for="(item,index ) in specifications" >

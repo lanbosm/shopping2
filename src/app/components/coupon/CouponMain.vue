@@ -21,7 +21,7 @@
                                 <span class="u">满{{coupon.conditionLine}}可用</span>
                             </div>
                             <div class="right">
-                            <span style="color: #cccccc">有效期
+                            <span style="color: @border-color">有效期
                             <em class="primary">{{coupon.endDate}}</em>
                             </span>
                                 <span class="l2">{{coupon.toSbName}}</span>

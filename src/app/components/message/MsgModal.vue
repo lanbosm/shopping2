@@ -1,22 +1,26 @@
 <template>
-   	    <div class="msg-pop">
+   	    <div class="msg-pop" v-if="msgList.length>0">
+             <div v-for="(item,index) in msgList">
                 <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                <h3>某某商铺申请调拨</h3>
+                <h3>{{item.shopName}}的申请调拨</h3>
                 <div class="c">
-                    <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
+                    <p>{{item.productName}}</p>
+                    <p>备注：{{item.applyMemo}}</p>
+                    <span>数量 {{item.num}}</span>
+                    <span>{{item.createDate}}</span>
                 </div>
-                <span>数量 55</span>
                 <div class="r">
-                    <a class="btn btn-agree">同意</a>
-                    <a class="btn btn-refuse">拒绝</a>
+                    <a class="btn btn-agree" @click="checkAllocation(item.id,'agreed',index)">同意</a>
+                    <a class="btn btn-refuse" @click="checkAllocation(item.id,'refused',index)">拒绝</a>
                 </div>
+             </div>
         </div>
 </template>
 
 <style>
 </style>
 <script>
-    import {request, API_URLS} from 'util/request.js';
+    import layer from 'layer';
 
     export default{
         name:"MsgPop",
@@ -25,7 +29,14 @@
 
           }
         },
-       watch:{
+        created(){
+        },
+        computed: {
+            //数据来自全局
+            msgList(){
+                    console.log(this.$store.state.msgData.appUnconfirmList);
+                    return this.$store.state.msgData.appUnconfirmList;
+            },
         },
         methods:{
             //请求列表
@@ -50,10 +61,34 @@
                     vm.$store.commit("setPageData", res.page);
                 })
             },
+            checkAllocation(allocationId,status,mindex){
+
+                if(!allocationId){
+                    layer.alert("该批准号无效",{icon:2});
+                    return false;
+                }
+                var params={
+                    'allocationId':allocationId,
+                    'status':status,
+                    'memo':''
+                }
+
+                this.$store.dispatch("approvalAllocation",params).then(res=>{
+                    layer.alert("批准成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    this.memo='';
+                    this.msgList.splice(mindex,1);
+
+                }).catch(res=>{
+                    layer.alert("批准失败",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    this.memo='';
+                });
+            },
+
             closeMsg(){
 
                 this.$root.showMsgModal=false;
-                //alert("关闭");
+                this.$root.$refs.addMsglistener();
+
             }
         }
     }
@@ -94,6 +129,11 @@
             p{
                 width: 85%;
                 color: #333333;
+            }
+            span{
+                display: block;
+                color: #999999;
+                margin-top: 5px;
             }
             .c{ height: 80px; line-height: 20px; overflow: hidden;  }
             .r{text-align: right; }

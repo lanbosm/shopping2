@@ -124,7 +124,7 @@
     }
 
     .order-custom-btn(){
-        .class-order-btn(#666666,#ffffff,#cccccc,5px,10px);
+        .class-order-btn(#666666,#ffffff,@border-color,5px,10px);
         &:active{ .class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
         &.select{.class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
     }

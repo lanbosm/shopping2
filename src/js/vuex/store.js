@@ -3,13 +3,16 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex'
-import {request, API_URLS} from 'util/request.js';
+import {request, API_URLS, HOST} from 'util/request.js';
+import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js';
 
 Vue.use(Vuex)
 
 
 //vue 定义全局变量
 const store = new Vuex.Store({
+
+  //共有数据
   state: {
     loading:false,
     appLoading:false,
@@ -17,11 +20,10 @@ const store = new Vuex.Store({
         "name":"",
         "adminName":""
     },
-    pageData:{},
-    pageList:[],  //头部数组
-    currentPage:{   //当前节点
-        index:0,
-        mode:"index",
+      //消息数据
+    msgData:{
+        appUnconfirmList:[],
+        msgNum:0
     },
     member:{
         shopName:''
@@ -30,15 +32,12 @@ const store = new Vuex.Store({
         appProductDetail:{},
         appSpecifications:[]
     },
-    categoryData:[],
-    productParams:{
-        categoryId:"",
-        brandId:"",
-        searchStr:"",
-        pageNum:1,
-        categoryName:"",
-        brandName:""
-    }
+      //子类数据
+    pageList:[],  //头部数组
+    currentPage:{   //当前节点
+          index:0,
+          mode:"index",
+    },
   },
    // 变量赋值
   mutations:{
@@ -46,13 +45,18 @@ const store = new Vuex.Store({
          state.loading=data;
       },
       setShopData(state,data){
-          state.shopData=data;
+          Object.assign(state.shopData,data);
+      },
+      setMsgData(state,data){
+          state.msgData.appUnconfirmList=state.msgData.appUnconfirmList.concat(data.appUnconfirmList);
+          state.msgData.msgNum=data.msgNum;
       },
       setMode(state,data){
           state.currentPage.mode=data;
       },
       setPageData (state,data){
-          state.pageData=data;
+
+          state.currentPage.pageData=data;
       },
       setItemData (state,data){
           state.itemData=data;
@@ -61,7 +65,7 @@ const store = new Vuex.Store({
           state.categoryData=data;
       },
       setProductParams (state,data){
-          Object.assign(state.productParams,data);
+          Object.assign(state.currentPage.list,data);
       },
       setOrderParams(state,data){
           Object.assign(state.currentPage.orderParams,data);
@@ -78,6 +82,10 @@ const store = new Vuex.Store({
       },
       setShopAdminData(state, data){
           state.currentPage.shopAdminData = data;
+      },
+      setLogData(state,data){
+
+          state.currentPage.logData = data;
       },
       setPageList(state, data){
           state.pageList = data;
@@ -194,6 +202,78 @@ const store = new Vuex.Store({
       }
     },
     actions: {
+        //获得公有秘钥
+        getPublicKey({commit}){
+            commit("show_waiting");
+            var  apiObj={
+                url:API_URLS.public_key,
+            };
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res); //这里可以尝试扩展备用接口
+                })
+            });
+        },
+        addSpareCash({dispatch,commit},value){
+            return dispatch('getPublicKey').then(res => {
+                  var  publicKey=res.data;
+                  var  rsaKey = new RSAKey();
+                  rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                  var  enPwd = hex2b64(rsaKey.encrypt(value.password));
+
+                  var  apiObj={
+                        url:API_URLS.cashier_shift,
+                        data:{
+                            'enPasswd':enPwd,
+                            'tmpKey':publicKey.tmpKey,
+                            'spareCash':value.spareCash
+                        }
+                  };
+
+                return new Promise((resolve, reject) => {
+
+                    request.fnPost2(apiObj).then(res => { //成功
+                        if(res.code=="20000"){
+                            commit("hide_waiting");
+
+                            resolve(res);
+                        }else{
+                            commit("hide_waiting");
+                            reject(res);
+                        }
+                    }).catch( res=> { //失败
+                        commit("hide_waiting");
+                        reject(res); //这里可以尝试扩展备用接口
+                    })
+                });
+
+            })
+        },
+        //退出
+        logout({commit},value){
+            commit("show_waiting");
+            var apiObj={
+                url: API_URLS.log_out
+            }
+            return new Promise((resolve, reject) => {
+                window.localStorage.setItem('currentShiftId',value);
+                request.fnGet(apiObj).then(res => { //成功
+                    if(res.code=="20000"){
+                        commit("hide_waiting");
+                        resolve(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res);
+                })
+            });
+        },
+        //重建订单
         rebulid({commit}, value){
             commit("show_waiting");
             return new Promise((resolve, reject) => {
@@ -205,37 +285,306 @@ const store = new Vuex.Store({
                 }, 50)
             })
         },
+        //获取商品列表
         fetchList({commit,state},value){
             commit("set_list_waiting",true);
+            if(value){
+                commit("setProductParams",value);
+            }
+
+
             let apiObj={
                 url: API_URLS.products,
                 data:{
-                    'categoryId': state.productParams.categoryId,
-                    'brandId': state.productParams.brandId,
-                    'pageNum': state.productParams.pageNum,
-                    'keyword': state.productParams.searchStr
+                    'categoryId': state.currentPage.list.categoryId,
+                    'brandId': state.currentPage.list.brandId,
+                    'pageNum': state.currentPage.list.pageNum,
+                    'keyword': state.currentPage.list.searchStr
                 }
             };
-            request.fnGet(value,apiObj,(res)=>{
-                console.log(res);
-                commit("set_list_waiting",false);
-                commit("setPageData",res.page);
-            })
-        }
+
+
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    //console.log(response)
+                    commit("set_list_waiting",false);
+                    if(res.code=="20000"){
+                        commit("setPageData",res.page);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                })
+                .catch(res=> { //失败
+                    commit("set_list_waiting",false);
+                    reject(res);
+                 })
+            });
+        },
+        //获取商品详情
+        fetchItem:function({commit,state},pid){
+            commit("set_list_waiting",true);
+            let apiObj={
+                url:API_URLS.products+"/"+pid,
+            };
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("set_list_waiting",false);
+                    if(res.code=="20000"){
+                        commit("setItemData",res);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                })
+                 .catch(res=> { //失败
+                        commit("set_list_waiting",false);
+                        reject(res);
+                    })
+            });
+        },
+        //获取分类
+        fetchCategory({commit,state},value){
+            commit("set_list_waiting",true);
+            let apiObj={
+                url:API_URLS.category,
+                data:{"productCategoryId":value}
+            };
+
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("set_list_waiting",false);
+                    if(res.code=="20000"){
+                        commit("setCategoryData",res.appProductCategories);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                })
+                .catch( res=> { //失败
+                        commit("set_list_waiting",false);
+                        reject(res);
+                })
+            });
+        },
+        //获取会员信息
+        fetchCustom({commit},value){
+            commit("show_waiting");
+            let apiObj = {
+                url : API_URLS.customers,
+                data:{username:value}
+            };
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch(res=> { //失败
+                        commit("hide_waiting");
+                        reject(res); //这里可以尝试扩展备用接口
+                })
+            });
+
+        },
+        //获取班次信息
+        fetchLog({commit},value){
+
+            commit("show_waiting");
+            let apiObj={
+                url: API_URLS.cashier_shift,
+                data:value
+            };
+
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        commit("setLogData",res.appShiftInfo);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                })
+                .catch( res=> { //失败
+                        commit("hide_waiting");
+                        reject(res);
+                    })
+
+            });
+
+        },
+        //获取零售列表
+        fetchShiftList({commit,state},value){
+            commit("show_waiting");
+            let apiObj={
+                url: API_URLS.cashier_shift+'/products',
+                data:value
+            };
+
+            return new Promise((resolve, reject) => {
+                commit("hide_waiting");
+                request.fnGet(apiObj).then(res => { //成功
+                    if(res.code=="20000"){
+                        commit("setLogData",res.page);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                })
+                 .catch( res=> { //失败
+                        commit("hide_waiting");
+                        reject(res);
+                 })
+            });
+        },
+        exportProducts({commit},value){
+            commit("show_waiting");
+            var apiObj={
+                url: HOST+API_URLS.cashier_shift+'/products_export',
+            }
+            var accessToken=window.localStorage.getItem('accessToken');
+
+            return new Promise((resolve, reject) => {
+
+                var link=apiObj.url+"?accessToken="+accessToken;
+
+                commit("hide_waiting");
+
+                if(link) {
+                    resolve(link);
+                }
+            });
+        },
+        //获取调拨门店列表
+        fetchAllocationList({commit},value){
+            commit("show_waiting");
+            var apiObj= {
+                url: API_URLS.products + '/allocation',
+                data: value
+            }
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch( res=> { //失败
+                        commit("hide_waiting");
+                        reject(res);
+                 })
+            });
+
+        },
+        //检测调拨信息()
+        addListenAllocation({commit},value){
+            var apiObj = {
+                url: API_URLS.products + '/allocation/unconfirm_list',
+                data: ''
+            }
+
+
+            return new Promise((resolve, reject) => {
+                request.fnPost2(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        commit("setMsgData",res);
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res);
+                })
+            });
+
+
+        },
+        //申请调拨
+        applyAllocation({commit},value){
+            commit("show_waiting");
+            var apiObj= {
+                url: API_URLS.products +'/'+value.id+ '/allocation',
+                data: value
+            }
+
+            return new Promise((resolve, reject) => {
+                request.fnPost2(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res);
+                })
+            });
+        },
+        //批准调拨
+        approvalAllocation({commit},value){
+            commit("show_waiting");
+            var apiObj= {
+                url: API_URLS.products +'/allocation',
+                data: value
+            }
+            return new Promise((resolve, reject) => {
+                request.fnPost2(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res);
+                })
+            });
+        },
+        //获取消息
+        fetchMsgList({commit},value){
+            commit("show_waiting");
+            var apiObj= {
+                url: API_URLS.products +'/allocation/msg',
+                data: value
+            }
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    reject(res);
+                })
+            });
+        },
+
+
     }
 });
 
 function defaultPage(len){
-
+    //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失
     return {
-        mode:"index",               //默认首页
+        waiting: false,            //等待
+        mode:"index",               //状态模式
         pageData:{},                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},
             appSpecifications:[]
         },
-        waiting: false,            //等待
-        orderParams: {
+        orderParams: {              //订单页面参数
             cartParam:"",
             couponCodeId:null,
             usePoint:false,
@@ -249,16 +598,17 @@ function defaultPage(len){
         orderData:{},               //订单数据
         printData:{},               //打印数据
         categoryData:[],            //分类数据
-        list:{
-            categoryId:"",          //分类Id
-            brandId:"",             //品牌Id
-            searchStr:"",           //关键字
-            pageNum:1,              //页码
-            categoryName:"",        //分类名称
-            brandName:""            //品牌名称
+        list:{                      //商品列表参数
+            categoryId:"",
+            brandId:"",
+            searchStr:"",
+            pageNum:1,
+            categoryName:"",
+            brandName:""
         },
         logData:{                   //日记数据
-
+            list:[],
+            pageNUm:1
         },
         cartData:[],                //购物车数据
         customData: {                //顾客数据
@@ -272,7 +622,7 @@ function defaultPage(len){
         },
         shopAdminData:{},           //导购员数据
         pageIndex:len,              //头部索引
-        title:len+1,
+        title:len+1,                //头部名称
         time:getTimeData()          //时间戳
     }
 }

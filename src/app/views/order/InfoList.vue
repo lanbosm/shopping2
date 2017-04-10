@@ -131,7 +131,8 @@
 
 <style scoped rel="stylesheet/less"  lang="less">
 
-    @themeColor:#e84593;
+    @import "../../../css/util/skin.less";
+    @import "../../../css/util/mixin.less";
 
     .class-order-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:25px){
         color: @fontColor;
@@ -142,7 +143,7 @@
     }
 
     .order-custom-btn(){
-        .class-order-btn(#666666,#ffffff,#cccccc,5px,10px);
+        .class-order-btn(#666666,#ffffff,@border-color,5px,10px);
         &:active{ .class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
         &.select{.class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
     }

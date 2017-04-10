@@ -30,10 +30,7 @@
         methods:{
             //请求列表
             fetchList() {
-                let vm = this;
-                this.$store.commit("setProductParams", {"searchStr": vm.searchItem.keyword, "pageNum": 1});
-                this.$store.dispatch('fetchList', this)
-
+                this.$store.dispatch('fetchList', {"searchStr": this.searchItem.keyword, "pageNum": 1})
             }
         }
     }

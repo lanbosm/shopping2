@@ -90,7 +90,7 @@
                     }
                 };
                // console.log(apiObj)
-                request.fnGet(vm, apiObj, function(res){
+                request.fnGet(apiObj).then(res=>{
                     console.log(res);
                     if(diy && res.list && res.list.length){
                         vm.diyamountGift = res.list[0];
@@ -113,21 +113,9 @@
 
 <style scoped rel="stylesheet/less"  lang="less">
 
-    @themeColor:#e84593;
+    @import "../../../css/util/skin.less";
+    @import "../../../css/util/mixin.less";
 
-    .class-order-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:25px){
-        color: @fontColor;
-        padding: @padding;
-        border-color:@borderColor;
-        border-radius: @radius;
-        background: @bgcolor;
-    }
-
-    .order-custom-btn(){
-        .class-order-btn(#666666,#ffffff,#cccccc,5px,10px);
-        &:active{ .class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
-        &.select{.class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
-    }
 
 
     .col-nn-15{
@@ -149,7 +137,7 @@
         width: 100%;
         .rechargelist-btn{
             font-size: 18px;
-            .order-custom-btn;
+            .order-custom-btn2;
             span{display: block; position: relative; }
             em{display: block; color: @themeColor; font-size: 14px; line-height: 30px;
                 &.dis{opacity: 0.5;}

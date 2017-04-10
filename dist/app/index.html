@@ -49,12 +49,15 @@
 			<!-- container -->
 			<div class="main" id="main">
 					<!--头导航-->
-					<app-header></app-header>
+					<app-header ref="header"></app-header>
+
+					<app-center-loading v-if="waiting"></app-center-loading>
 
 					<!--主体-->
 					<transition name="slide">
 							<router-view></router-view>
 					</transition>
+
 
 					<!--顾客-->
 					<layer-custom v-if="showCustomModal"></layer-custom>

@@ -1,13 +1,15 @@
 <template>
    	  <div class="log">
-
         <app-center-header  :title="title" :back="back" :next="next" mode="mode"></app-center-header>
-
         <div class="log-body">
 
-              <div v-if="!listType">没有日记</div>
+              <div v-if="!listType">没有记录</div>
               <log-cash v-if="listType=='cash'"></log-cash>
+              <log-sales v-if="listType=='sales'"></log-sales>
               <log-recharge v-if="listType=='recharge'"></log-recharge>
+              <log-products v-if="listType=='products'"></log-products>
+              <log-promotion v-if="listType=='promotion'"></log-promotion>
+
         </div>
     </div>
 
@@ -102,14 +104,17 @@
 
 </style>
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
 
+    import AppCenterHeader from 'views/AppCenterHeader.vue';
 
     import LogCash from 'components/log/LogCash.vue';
     import LogRecharge from 'components/log/LogRecharge.vue';
-
+    import LogProducts from 'components/log/LogProducts.vue';
+    import LogPromotion from 'components/log/LogPromotion.vue';
+    import LogSales from 'components/log/LogSales.vue';
 
     import {request, API_URLS} from 'util/request.js';
+    import uti from 'util/request.js';
     import layer from 'layer';
     import $ from 'jquery';
 
@@ -127,39 +132,52 @@
         components:{
             AppCenterHeader,
             LogCash,
-            LogRecharge
-
+            LogRecharge,
+            LogSales,
+            LogProducts,
+            LogPromotion
         },
         watch: {
-            '$route':'fetchList'
+            '$route':'fetchType'
         },
         created(){
-                this.fetchList();
-        },
-        computed: {
-
+                this.fetchType();
         },
         methods:{
-            fetchList(){
+            fetchType(){
                 this.listType=this.$route.params.type;
 
-
                 if(this.listType=="cash"){
-
-                    this.title="现金收款";
+                    this.title="现金记录";
                 }
 
                 if(this.listType=="recharge"){
-
-                    this.title="会员充值";
+                    this.title="充值记录";
                 }
 
+                if(this.listType=="sales"){
+                    this.title="销售记录";
+                }
 
+                if(this.listType=="promotion"){
+                    this.title="促销记录";
+                }
 
+                if(this.listType=="products"){
 
-
+                    this.title="销售商品报表";
+                    this.back={"label":"返回","url":"/index","show":true};
+                    this.next={"label":"导出","url":"#export","show":true,"cb":this.exportProducts};
+                }
 
               //  alert( this.listType);
+            },
+            exportProducts(){
+
+
+                this.$store.dispatch("exportProducts").then(res=>{
+                    window.open(res);
+                })
             }
         }
     }

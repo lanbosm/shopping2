@@ -48,24 +48,7 @@ const router = new VueRouter({
             path: '/log/:type',
             name: 'logCenterList',
             component:LogCenter
-        },        //消息中心
-        // { path: '/log2',
-        //     name: 'LogCenter',
-        //     component: LogCenter,
-        //
-        //     children: [
-        //         {
-        //             path: 'cash',
-        //             name: 'LogCash',
-        //             component: LogCash,
-        //         },
-        //         {
-        //             path: 'recharge',
-        //             name: 'LogRecharge',
-        //             component: LogRecharge,
-        //         }
-        //     ]
-        // },
+        },
         {
             path: '/appCenter',
             alias:['/order','/recharge','/print'],            //中心有 订单 充值 打印

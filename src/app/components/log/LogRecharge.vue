@@ -1,158 +1,157 @@
 <template>
-   	  <div class="log-cash">
-			充值记录2
-      </div>
-
-
+	<div class="log-recharge container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-header">
+					<div class="list-row">
+						<span>会员</span>
+						<span>支付方式</span>
+						<span>充值金额</span>
+						<span>充值时间</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-body" v-if="!listData.list">
+					加载中...
+                </div>
+				<div class="list-body" v-else-if="listData.list.length==0">
+					<div class="no-list"></div>
+				</div>
+				<div class="list-body" v-else>
+					<!--list-->
+					<div class="list-row"  v-for="(item,index) in listData.list">
+						<div class="col-xs-12">
+							<span>{{item.username}}</span>
+							<span>{{item.paymentMethod}}</span>
+							<span>{{item.amount | currency }}</span>
+							<span>{{item.date}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<pagination :page="listData" :go-callback="goCallback"></pagination>
+				<!--listData-->
+			</div>
+		</div>
+		<div class="row list-footer" v-if="shiftInfo.totalRecharge">
+			<div class="col-xs-12">
+				总充值<span>{{shiftInfo.totalRecharge | currency }}</span>元
+			</div>
+		</div>
+	</div>
 </template>
 
 <style  rel="stylesheet/less"  lang="less">
 
-    @import "../../../css/util/skin.less";
-    @import "../../../css/util/mixin.less";
+	@import "../../../css/util/skin.less";
+	@import "../../../css/util/mixin.less";
 
-    .log{
-        background: #efefef;
-        .order-header{
-            padding: 15px;
-            position: relative;
-            .order-row;
-            h3{
-                font-size: 18px; line-height: 30px; margin: 0;
-            }
-            .ok-btn,.back-btn{
-                .order-header-btn;
-            }
-        }
+	.log-recharge{
+		position: relative;
+		.list-row{
 
-        .page-con{height: 588px;}
-        .page-bar{}
+			clear: both;
+			span{ display: block; width: 25%; float: left; text-align: center;}
+			.clearfix;
+		}
 
-        .container{
-            background-color:#ffffff;
-            border-left: @borderDashedStyle;
-            border-right: @borderDashedStyle;
-        }
-        .btn{
-            position:relative;
-        }
-        .m-box{
-            height: auto;
-            background: #fff;
-            z-index: 9999;
-            border: solid 1px #ddd;
-            margin-top: 12px;
-            margin-bottom: 12px;
-            border-radius: 3px;
-            padding: 12px;
-            color: #333333;
+		.list-header {
+			.list-row{
+				line-height: 50px;
+				font-size: 18px;
+			}
+		}
 
-            .msg-pop-close{
-                right: 12px;
-                top:12px;
-                position: absolute;
-            }
-            h3{
-                color: @themeColor;
-                margin: 0;
-                font-size: 18px;
-                line-height: 30px;
-                width: 85%;
-            }
-            em{
-                position: absolute;
-                right: 24px;
-                top:45px;
-            }
-            p{
-                width: 85%;
-                color: #333333;
-            }
-            .c{ height: 80px; line-height: 20px; overflow: hidden;  }
-            .r{text-align: right; }
-            .btn-agree{
-                border: solid 1px @green;
-                color: @green;
-                position: relative;
-                display: inline;
-                margin-right: 12px;
-                margin-left: 12px;
-            }
+		.list-body {
+			height: 600px;
+			.list-row{
+				border: solid 1px  @border-color;
+				line-height: 100px;
+				font-size: 20px;
+				margin-top:@gutter;
+				margin-bottom: @gutter;
+				color: @thinColor;
+				border-radius: 5px;
+				clear: both;
+				span:nth-child(3){color:@themeColor;  font-size: 28px;}
+				span:nth-child(4){color:#999999;}
+			}
+		}
 
-            .btn-refuse{
-                border: solid 1px @themeColor;
-                color: @themeColor;
-                position: relative;
-                display: inline;
-                margin-right: 12px;
-                margin-left: 12px;
+		.list-footer{
+			height: 90px;
+			width: 100%;
+			line-height: 90px;
+			text-align: center;
+			color: @themeColor;
+			font-size: 16px;
+			border-top: @borderDashedStyle;
+			border-width: 2px;
+			span{font-size: 36px; padding-left: 12px; padding-right: 12px;}
+		}
 
-            }
-
-        }
-    }
+	}
 
 
 </style>
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
 
-    import {request, API_URLS} from 'util/request.js';
-    import layer from 'layer';
-    import $ from 'jquery';
+    import Pagination from 'components/pagination/Pagination.vue';
 
     export default{
         name:"log",
-        data() {
+        data(){
+
             return {
-                title:"消息",
-                back:{"label":"返回","url":"index","show":true},
-                next:{"label":"打印","url":"print","show":false},
-                message: '请选择一个付款方式',
-                page:{
-
-                    hasPreviousPage:true,
-                    hasNextPage:true,
-                    pages:3,
-                    pageNum:1,
-
-                }
+                listData:{},
+                shiftInfo:{},
+                pageNum:1,                 //一页显示多少个
             }
+
         },
         components:{
-            AppCenterHeader,
+            Pagination
         },
-        watch: {
+        filters: {
+            currency: function (value) {
+                if (!value) return '0.00';
+                return '¥ ' + Number(value).toFixed(2);
+            }
+        },
+        computed:{
+            totalCash(){
+                var sum=0;
+                this.listData.list.forEach((ele,index)=>{
+
+                    sum+=Number(ele.amountPaid);
+                })
+                return sum;
+            }
 
         },
-        computed: {
-
+        created(){
+            this.fetchList()
         },
         methods:{
             //
-            pageTo(n){
-                alert(n);
+            goCallback(pageIndex){
+                this.pageNum=pageIndex;
+                this.fetchList();
+                window.scrollTo(0,0);
             },
             //请求列表
             fetchList() {
-                if(!this.searchItem.keyword){
-                    return;
-                }
-                let vm=this;
+                this.$store.dispatch('fetchLog',{"type":"recharge","pageNum":this.pageNum}).then(res=>{
+                    this.listData=res.page;
+                    this.shiftInfo=res.appShiftInfo;
 
-                let apiObj={
-                    url: API_URLS.products,
-                    data:{
-                        'categoryId': vm.productParams.categoryId,
-                        'brandId': vm.productParams.brandId,
-                        'pageNum': 1,
-                        'keyword': vm.searchItem.keyword
-                    }
-                };
-
-                request.fnGet(vm,apiObj,(res)=>{
-                    vm.$store.commit("setProductParams",{"searchStr":vm.searchItem.keyword,"pageNum":1});
-                    vm.$store.commit("setPageData", res.page);
+                    console.log(this.shiftInfo);
                 })
             }
         }

@@ -39,7 +39,7 @@
             </div>
             <list-item :product-detail="productDetail" :specifications="specifications" :gift-index="giftIndex" @close-detail="closeDetail"></list-item>
 
-            <stock-item v-if="showStockItem" :product-detail="productDetail"  @close-stock="closeStock"></stock-item>
+            <stock-item v-if="showStockItem" :product-detail="productDetail"  :app-repertories="appRepertories" :need-quantity="needQuantity" @close-stock="closeStock"></stock-item>
 
     </div>
 </template>
@@ -68,21 +68,22 @@
         name: 'app',
         data() {
             return {
-                pageSize:8,                 //一页显示多少个
                 showCategory:false,
                 giftIndex:0,
                 cartItemIndex:0,
                 showStockItem:false,
+                needQuantity:0,
+                appRepertories:[]  //调拨仓库
             }
         },
         computed: {
             //数据来自全局
             showlist(){
-                if(this.$store.state.pageData.list){
+                if(this.$store.state.currentPage.pageData.list){
                     return true;
                 }else{
                    // console.log(this.);
-                    console.log(this);
+                   // console.log(this);
                     this.fetchList();
                     return false;
                 }
@@ -92,10 +93,11 @@
                 return this.$store.state.loading;
             },
             productParams(){
-                return this.$store.state.productParams;
+                console.log(this.$store.state.currentPage.list);
+                return this.$store.state.currentPage.list;
             },
             page () {
-                return this.$store.state.pageData
+                return this.$store.state.currentPage.pageData;
             },
             productDetail (){
                     return this.$store.state.itemData.appProductDetail;
@@ -131,14 +133,7 @@
             //请求列表
             fetchList() {
 
-
-                this.$store.dispatch('fetchList',this)
-
-                //this.$store.commit("setLoading",true);
-
-//                request.fnGet(this,apiObj,(res)=>{
-//                    this.$store.commit("setPageData",res.page);
-//                })
+                this.$store.dispatch('fetchList',"");
             },
             //创建订单
             buildOrder:function(cart){
@@ -274,39 +269,66 @@
             },
             //打开仓库详情
             openStock(item) {
-                return false;
-                //是否存在赠品
-                this.showStockItem=true;
 
                 let vm=this;
-                vm.$nextTick(() => {
-                    //弹出页面层
-                    layer.open({
-                        id: 'layui-layer-stock',
-                        type: 1,            //1 普通层
-                        shade: 0.01,  //遮罩
-                        anim: 0,
-                        zIndex: 1000,
-                        closeBtn: 2,
-                        title: false,
-                        area: ['auto', 'auto'], //宽高
-                        content: $('#layer-stock-box'),
-                        success: function () {
+                var params={
+                    barcode:item.barCode,
+                    quantity:item.amount-item.availableStock
+                }
 
+                this.needQuantity=item.amount-item.availableStock;
 
-                        },
-                        end: function () {
-                            vm.showStockItem=false;
-                        }
-                    });
+                this.$store.dispatch("fetchAllocationList",params).then(res=>{
+                    this.appRepertories=res.appRepertories;
+                    this.showStockItem=true;
+                    vm.$nextTick(() => {
+                        //弹出页面层
+                        layer.open({
+                            id: 'layui-layer-stock',
+                            type: 1,            //1 普通层
+                            shade: 0.01,  //遮罩
+                            anim: 0,
+                            zIndex: 1000,
+                            closeBtn: 2,
+                            title: false,
+                            area: ['auto', 'auto'], //宽高
+                            content: $('#layer-stock-box'),
+                            success: function () {
 
+                            },
+                            end: function () {
+                                vm.appRepertories=[];
+                                vm.needQuantity=0;
+                                vm.showStockItem=false;
+                            }
+                        });
+
+                    })
+                }).catch(res=>{
+                    layer.alert("获取仓库信息失败",{"icon":2})
                 })
+                return false;
+
+
+
+
+
             },
             //关闭仓库详情
-            closeStock(item){
+            closeStock(params){
 
-                console.log(item);
-                layer.closeAll();
+                if(!params.shopRepertoryId){
+                    //layer.closeAll();  //没有仓库
+                    layer.alert("请选择调拨门店",{icon:2});
+                }else{
+                    this.$store.dispatch("applyAllocation",params).then(res=> {
+                        layer.alert("调拨申请成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    }).catch(res=> {
+                        layer.alert("调拨申请失败",{icon:2 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    });
+                }
+
+
             },
             //判断如何加入购物车
             pushCart(item){

@@ -99,7 +99,7 @@
         .stock-detail-con {
             position: relative; width: 100%;  height:100%;
 
-            .stock-list-box{ width: 100%; height: 180px; padding-bottom: 15px; overflow: auto; border-bottom: solid 1px #cccccc;}
+            .stock-list-box{ width: 100%; height: 180px; padding-bottom: 15px; overflow: auto; border-bottom: solid 1px @border-color;}
             .stock-list-box p{  text-align: center; margin-top: 30px;}
             .stock-list-box ul{ padding: 0; margin: 0;}
             .stock-list-box li{ margin: 15px 0px ; color: #999999;

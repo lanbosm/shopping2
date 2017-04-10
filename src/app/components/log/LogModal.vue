@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="grid">
-                    <div class="t">应有现金 <span>106.20</span></div>
+                    <div class="t">应有现金 <span>{{logData.endSpareCash | currency}}</span></div>
                     <div class="c">
-                        <p>店内订单现金收款： 0</p>
+                        <p>店内订单现金收款： {{logData.orderCashPay | currency}}</p>
                         <a class="more" @click="logTo('cash')">查看详细 ></a>
                     </div>
                 </div>
@@ -13,38 +13,36 @@
 
             <div class="col-xs-6">
                 <div class="grid">
-                    <div class="t">充值 <span>106.20</span></div>
+                    <div class="t">总销售额 <span>{{logData.totalSales | currency}}</span></div>
                     <div class="c">
-                        <p>店内订单现金收款： 0</p>
+                        <p>收银端销售额： {{logData.totalSales | currency}}</p>
+                        <a class="more" @click="logTo('sales')">查看详细 ></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="grid">
+                    <div class="t">充值 <span>{{logData.totalRecharge | currency}}</span></div>
+                    <div class="c">
+                        <p>店内订单现金收款： {{logData.rechargeCashPay | currency}}</p>
                         <a class="more" @click="logTo('recharge')">查看详细 ></a>
                     </div>
                 </div>
             </div>
-
             <div class="col-xs-6">
                 <div class="grid">
-                    <div class="t">应有现金 <span>106.20</span></div>
+                    <div class="t">促销统计 <span>{{logData.promotion | currency}}</span></div>
                     <div class="c">
-                        <p>店内订单现金收款： 0</p>
-                        <a class="more">查看详细 ></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xs-6">
-                <div class="grid">
-                    <div class="t">应有现金 <span>106.20</span></div>
-                    <div class="c">
-                        <p>店内订单现金收款： 0</p>
-                        <a class="more">查看详细 ></a>
+                        <a class="more" @click="logTo('promotion')">查看详细 ></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn log-table">销售商品报表</a>
-                <a class="btn log-out">交接班并登出</a>
+                <a class="btn log-table" @click="logTo('products')">销售商品报表</a>
+                <a class="btn log-out" @click="logOut()">交接班并登出</a>
             </div>
         </div>
     </div>
@@ -67,7 +65,7 @@
             height:  120px;
             margin-top: 12px;
             margin-bottom: 12px;
-            border: solid 1px #eeeeee;
+            border: solid 1px @border-color;
             border-radius: 3px;
             .t{
                 padding: 6px;
@@ -77,7 +75,7 @@
                 position: relative;
             }
             .c{
-                border-top:solid 1px #eeeeee;
+                border-top:solid 1px @border-color;
                 position: relative;
                 line-height: 20px;
                 height: 80px;
@@ -97,6 +95,11 @@
             .green-btn();
             padding-left: 60px;
             padding-right: 60px;
+
+            &:hover,&:active{
+                padding-left: 60px;
+                padding-right: 60px;
+            }
         }
 
     }
@@ -116,39 +119,60 @@
     export default{
         name:"LogModal",
         computed: {
-
-
-        },
-        data(){
-            return {
-                stockQuantity:0,
-                shopRepository:{},
-                shopRepositoryList:null
-
+            shopData(){
+                return this.$store.state.shopData;
             }
 
         },
         filters: {
             currency: function (value) {
-                if (!value) return '';
-                return '¥ ' + value;
+                if (!value) return '0.00';
+                return '¥ ' + Number(value).toFixed(2);
             }
         },
+        data(){
+            return {
+                logData:{}
+
+            }
+
+        },
         created(){
-           
+            this.fetchLog()
         },
         methods:{
-
             logTo (type){
-
                 layer.closeAll();
                 this.$store.commit("setMode",'log/'+type);
                 this.$router.replace('/log/'+type);
 
+            },
+            //请求列表
+            fetchLog() {
+                this.$store.dispatch('fetchLog',{"type":"all"}).then(res=>{
+                    this.logData=res.appShiftInfo;
+                    console.log(res);
+                })
+            },
+            delLocalData(){
+                this.$store.commit("setPageList", []);
+                this.$store.commit('setShopData', {});
+                util.delLocal("accessToken");
+                util.delLocal("shopData");
+                util.delLocal("pageList");
+            },
+            logOut(){
+                let vm = this;
+                layer.confirm('确定要退出吗？', function(index){
+                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=>{
+                            vm.delLocalData();
+                            layer.closeAll();
+                            location.href = "./login.html";
+                        }
+                    )
+                });
+
             }
-
-
-
         }
     }
 </script>

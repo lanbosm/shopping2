@@ -1,7 +1,7 @@
 /*!reset css*/
 article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
 .btn,img{-webkit-user-select:none}
-.breadcrumb li a:hover,.category-list .menu .sub,.header .header-nav .menu-box .contact-btn:hover,.header .header-nav .menu-box .exit-btn:hover,.header .header-nav .menu-box .msg-btn:hover,.left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn,.shoppingCalc .table .num-btn,a{text-decoration:none}
+.breadcrumb li a:hover,.category-list .menu .sub,.header .header-nav .menu-box .cash-btn:hover,.header .header-nav .menu-box .contact-btn:hover,.header .header-nav .menu-box .exit-btn:hover,.header .header-nav .menu-box .log-btn:hover,.header .header-nav .menu-box .msg-btn:hover,.left-con .item .thumbnail .buy-btn,.left-con .item .thumbnail .list-btn,.shoppingCalc .table .num-btn,a{text-decoration:none}
 body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
 b,em{font-style:normal}
 button,input,select,textarea{font-size:100%;outline:0}
@@ -72,11 +72,14 @@ img{width:100%}
 .footer{padding:12px 0 18px;line-height:24px}
 /*!导航栏*/
 .icon{display:inline-block;overflow:hidden;vertical-align:middle;background-repeat:no-repeat!important;background-position:50% 50%!important;width:50px;height:50px}
-.icon-snan{background:url(../images/icon_scan.png) no-repeat}
+.icon-log{background:url(../images/icon_scan.png) no-repeat}
+.icon-cash{background:url(../images/icon_cash.jpg) no-repeat}
 .icon-exit{background:url(../images/icon_exit.png) no-repeat}
-.header{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#393939}
+.menu-box a{padding-left:15px;padding-right:15px}
+.header{position:relative;z-index:100;width:100%;min-height:50px;background-color:#393939}
 .header .logo{float:left;margin-left:-15px}
 .header .header-nav{margin:0;border:none}
+.header .header-nav .menu-box .contact-btn,.header .header-nav .menu-box .exit-btn{line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;cursor:pointer}
 .header .header-nav .staff{position:relative;display:block;padding-top:15px;padding-bottom:15px;height:100%;width:15%;margin-right:10px;float:left;color:#fff;text-align:center}
 .header .header-nav .navbar-toggle{background-color:#333}
 .header .header-nav .navbar-toggle .icon-bar{background-color:#fff}
@@ -90,13 +93,15 @@ img{width:100%}
 .header .header-nav .navbar-collapse .custom-add,.header .header-nav .navbar-collapse .custom-remove{color:#eee;background:#777!important;width:40px;font-size:28px;text-align:center;margin-top:10px;padding-top:0;padding-bottom:0;display:inline-block;border-top-left-radius:5px;border-top-right-radius:5px}
 .header .header-nav .navbar-collapse .custom-add:hover,.header .header-nav .navbar-collapse .custom-remove:hover{text-decoration:none;cursor:pointer}
 .header .header-nav .menu-box{float:right}
-.header .header-nav .menu-box .contact-btn{display:inline-block;line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;margin-left:20px;cursor:pointer;color:#999}
+.header .header-nav .menu-box .contact-btn{display:inline-block;margin-left:20px;color:#999}
 .header .header-nav .menu-box .contact-btn:after{content:" 正在连接设备"}
 .header .header-nav .menu-box .contact-btn.success{color:#37D7A9}
 .header .header-nav .menu-box .contact-btn.success:after{content:" 扫描连接成功"}
 .header .header-nav .menu-box .contact-btn.error{color:#D72940}
-.header .header-nav .menu-box .exit-btn,.header .header-nav .menu-box .msg-btn{display:inline-block;line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;color:#999;margin-left:20px;cursor:pointer}
 .header .header-nav .menu-box .contact-btn.error:after{content:" 扫描连接失败"}
+.header .header-nav .menu-box .cash-btn,.header .header-nav .menu-box .log-btn,.header .header-nav .menu-box .msg-btn{display:inline-block;line-height:50px;border-left:solid 1px #333;box-shadow:-1px 0 1px #666;margin-left:20px;cursor:pointer;color:#eee}
+.header .header-nav .menu-box .cash-btn,.header .header-nav .menu-box .log-btn{color:#6fc89c}
+.header .header-nav .menu-box .exit-btn{display:inline-block;margin-left:20px;color:#eee}
 /*!购物车*/
 .shoppingCart{width:100%;height:auto;border:1px solid #e5e5e5;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:0}
 .shoppingCart .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}

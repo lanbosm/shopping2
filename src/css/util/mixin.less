@@ -6,6 +6,14 @@
 	border-radius: @radius;
 	background: @bgcolor;
 }
+.class-order-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:25px){
+  color: @fontColor;
+  padding: @padding;
+  border-color:@borderColor;
+  border-radius: @radius;
+  background: @bgcolor;
+}
+
 
 
 .order-row(){
@@ -29,6 +37,12 @@
   &.select{.class-order-btn(#666666,#ffffff,#999999);}
 }
 
+.order-custom-btn2(){
+  .class-order-btn(#666666,#ffffff,@border-color,5px,10px);
+  &:active{ .class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
+  &.select{.class-order-btn(#666666,#ffffff,@themeColor,5px,10px);}
+}
+
 
 .order-header-btn(){
   .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
@@ -49,3 +63,6 @@
    &:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
    *zoom:1;
 }
+
+
+.norow(){overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}

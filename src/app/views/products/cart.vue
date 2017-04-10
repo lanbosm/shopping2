@@ -46,7 +46,7 @@
             },
             stocktips: function (value) {
                // console.log(value.id);
-                if(value.amount>value.stock) {
+                if(value.amount>value.availableStock) {
                     return "库存不足";
                 }else{
                     return "";
@@ -96,6 +96,7 @@
             openStock:function(item){
                 if(item){
                 	this.$emit('open-stock',item);
+
                 }
 
 			}

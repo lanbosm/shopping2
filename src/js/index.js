@@ -11,6 +11,8 @@ import MsgModal from 'components/message/MsgModal.vue';
 import LogModal from 'components/log/LogModal.vue';
 import CashModal from 'components/cash/CashModal.vue';
 
+import AppCenterLoading from 'views/AppCenterloading.vue'
+
 import store from './vuex/store'
 import router from './router'
 
@@ -69,13 +71,30 @@ var vm =new Vue({
             showLogModal:false,
             showCashModal:false
     },
+    components:{
+        AppCenterLoading,
+    },
+    computed: {
+        //数据来自全局
+        mode(){
+            return this.$store.state.currentPage.mode;
+        },
+        waiting: function() {
+            return this.$store.state.currentPage.waiting
+        },
+    },
     mounted() {
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
         // });
         //起始路由
-        this.$router.push('/log/cash');
+        //this.$router.push('/log/products');
+        // this.$router.push('/log/sales');
+
+        this.$router.push('/');
+
+       /// this.$router.push('/');
     }
 })
 

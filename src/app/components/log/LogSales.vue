@@ -1,69 +1,68 @@
 <template>
-   	  <div class="log-cash container">
-		  <div class="row">
-			  <div class="col-xs-12">
-				  <div class="list-header">
-					  <div class="list-row">
-						  <span>订单信息</span>
-						  <span>单价/数量</span>
-						  <span>买家</span>
-						  <span>实付金额</span>
-					  </div>
-				  </div>
-			  </div>
-		  </div>
-		  <div class="row">
-			  <div class="col-xs-12">
-				  <div class="list-body" v-if="!listData.list">
-					  加载中...
-                  </div>
-				  <div class="list-body" v-else-if="listData.list.length==0">
-					  <div class="no-list"></div>
-				  </div>
-				  <div class="list-body" v-else>
-					  <!--list-->
-					  <div class="list-row" v-for="(item,index) in listData.list">
-						  <div class="t">
-							  <span>编号： {{item.sn}} x  {{item.paymentMethod}}</span><span>{{item.createDate}}</span>
-						  </div>
-						  <div class="c">
-							  <dl class="col">
-								  <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">{{item2.name}}</dd>
-							  </dl>
-							  <dl class="col">
-								  <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">
-									  {{item2.price | currency}} x {{item2.quantity}}
+   	  <div class="log-sales container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="list-header">
+						<div class="list-row">
+							<span>订单信息</span>
+							<span>单价/数量</span>
+							<span>买家</span>
+							<span>实付金额</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="list-body" v-if="!listData.list">
+						加载中...
+                    </div>
+					<div class="list-body" v-else-if="listData.list.length==0">
+						<div class="no-list"></div>
+					</div>
+					<div class="list-body" v-else>
+						<!--list-->
+						<div class="list-row" v-for="(item,index) in listData.list">
+							<div class="t">
+								<span>编号： {{item.sn}} x  {{item.paymentMethod}}</span><span>{{item.createDate}}</span>
+							</div>
+							<div class="c">
+									<dl class="col">
+										<dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">{{item2.name}}</dd>
+									</dl>
+									<dl class="col">
+										<dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">
+											{{item2.price}} x {{item2.quantity}}
 										</dd>
-							  </dl>
-							  <span class="col">{{item.username}}</span>
-							  <span class="col">{{item.amountPaid | currency}}</span>
-						  </div>
-					  </div>
+									</dl>
+									<span class="col">{{item.username}}</span>
+									<span class="col">{{item.amountPaid}}</span>
+							</div>
+						</div>
 
-				  </div>
-			  </div>
-		  </div>
-		  <div class="row">
-			  <div class="col-xs-12">
-				  <pagination :page="listData" :go-callback="goCallback"></pagination>
-				  <!--listData-->
-			  </div>
-		  </div>
-		  <div class="row list-footer">
-			  <div class="col-xs-12">
-				  总现在收入<span>{{totalCash | currency }}</span>元
+					</div>
+				</div>
+			</div>
+		  	<div class="row">
+				<div class="col-xs-12">
+					<pagination :page="listData" :go-callback="goCallback"></pagination>
+				<!--listData-->
+				</div>
+			</div>
+		  <div class="row list-footer" v-if="shiftInfo.totalSales">
+				<div class="col-xs-12">
+					总销售额<span>{{shiftInfo.totalSales | currency }}</span>元
 				</div>
 		  </div>
-
       </div>
 </template>
 
 <style  rel="stylesheet/less"  lang="less">
 
-	@import "../../../css/util/skin.less";
-	@import "../../../css/util/mixin.less";
+    @import "../../../css/util/skin.less";
+    @import "../../../css/util/mixin.less";
 
-	.log-cash{
+    .log-sales{
 		position: relative;
 
 
@@ -119,7 +118,7 @@
 						float: left;
 						text-align: center;
 						color: @color;
-						
+
 						dd{line-height: 20px;
 							.norow;
 							&.single{ line-height: 60px;}
@@ -155,7 +154,7 @@
 			span{font-size: 36px; padding-left: 12px; padding-right: 12px;}
 		}
 
-	}
+    }
 
 
 </style>
@@ -164,7 +163,7 @@
     import Pagination from 'components/pagination/Pagination.vue';
 
     export default{
-        name:"logCash",
+        name:"logSales",
         data(){
 
             return {
@@ -173,24 +172,13 @@
                 pageNum:1,                 //一页显示多少个
             }
 
-        },
+		},
         filters: {
             currency: function (value) {
                 if (!value) return '0.00';
                 return '¥ ' + Number(value).toFixed(2);
             }
         },
-        computed:{
-            totalCash(){
-                var sum=0;
-                this.listData.list.forEach((ele,index)=>{
-
-                    sum+=Number(ele.amountPaid);
-                })
-				return sum;
-			}
-
-		},
         components:{
             Pagination
         },
@@ -198,17 +186,18 @@
 			this.fetchList()
         },
         methods:{
+            //
             goCallback(pageIndex){
                 this.pageNum=pageIndex;
                 this.fetchList()
             },
             //请求列表
             fetchList() {
-                this.$store.dispatch('fetchLog',{"type":"cash","pageNum":this.pageNum}).then(res=>{
-                    this.listData=res.page;
-                    this.shiftInfo=res.appShiftInfo;
-                    console.log(this.shiftInfo);
-                })
+
+                    this.$store.dispatch('fetchLog',{"type":"sales","pageNum":this.pageNum}).then(res=>{
+                         this.listData=res.page;
+                         this.shiftInfo=res.appShiftInfo;
+                    })
             }
         }
     }

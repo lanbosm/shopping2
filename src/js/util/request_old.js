@@ -20,7 +20,7 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
 //export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
-export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
+export const HOST = "http://192.168.1.199:82"; //http://192.168.1.199:82/
 //export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
 
 
@@ -38,50 +38,42 @@ export const API_URLS = {
     b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
     payments:'/cashier/member/payments',                        //验证支付
     log_out:'/cashier/common/log_out',
-    cashier_shift:'/cashier/member/cashier_shift'                      //零售订单
-
+    cashier_shift:'member/cashier_shift'                      //零售订单
     // products: "/data/products.json", //假数据
    // products50:"/data/products50.json",
    // category:"/data/category.json",               //会员模块
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
-Vue.http.options.timeout = 3000;  //500超时
+//Vue.http.options.timeout = 1000;  //500超时
 /**
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
  */
 export const request = {
 
-    fnGet (apiObj) {
-        return new Promise((resolve, reject) => {
-            Vue.http.get(HOST+apiObj.url, {
-               params: apiObj.data,
-               headers: {'Content-Type': 'application/json'},
-            }).then(response => { //成功
-                 //  console.log(response)
-                    resolve(response.data);
-               })
-               .catch(response=> { //失败
-                    reject(response);
-                    layer.alert("服务器连接失败");
-               })
-        });
-    },
-    fnPost2 (apiObj) {
-        return new Promise((resolve, reject) => {
-            Vue.http.post(HOST+apiObj.url, apiObj.data, {
-                params: apiObj.data,
-                headers: {'Content-Type': 'application/json'}
-            }).then(response => { //成功
-                //  console.log(response)
-                 resolve(response.data);
-                 })
-                .catch(response=>{ //失败
-                    reject(response.data);
-                    layer.alert("服务器连接失败");
-                })
-        });
+    fnGet: function (vm, apiObj, success, error) {
+
+        vm.$http.get(HOST+apiObj.url, {
+            params: apiObj.data,
+            headers: {'Content-Type': 'application/json'},
+        }).then((response) => { //成功
+                //console.log(response);
+                if (response.data.code == 20000) {
+                    if (success) {
+                        success(response.data);
+                    }
+                } else {
+                    if (error) {
+                        error(response.data);
+
+                    }
+                }
+            })
+            .catch(function (response) { //失败
+                error(response.data);
+                layer.alert("服务器连接失败");
+            })
     },
     fnPost: function (vm, apiObj, success, error) {
 
@@ -197,17 +189,17 @@ Vue.http.interceptors.push(function (request, next) {
         if (response.data && response.data.code == 49001) {
             layer.alert("访问令牌过期 请从新登录",{anim:-1});
             window.location.href = './login.html';
-            return response;
+            return true;
         }else if (response.data && response.data.code == 40001) {
 
-            return response;
+            return true;
         }
         else if (response.data && response.data.code == 49002) {
             //window.location.href = './login.html';
-            return  response;
+            return true;
         } else if (response.data && response.data.code ==  45004) {
             layer.alert("商品库存不足")
-            return response;
+            return true;
         }
         else {
             return response;

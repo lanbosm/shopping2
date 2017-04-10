@@ -27,7 +27,6 @@
 
 </style>
 <script>
-    import {request, API_URLS} from 'util/request.js';
 
     export default{
         name:"category",
@@ -77,48 +76,44 @@
             },
             fetchCategory(cid,cname){
                 if(cid){this.showSubMenu=true;}
+                this.$store.dispatch('fetchCategory',cid).then(res=>{
+                         if(!cid){
+//                               cid=res.appProductCategories[0].id;
+//                              cname=res.appProductCategories[0].name;
+                         }
+                         this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
+                });
 
-                let apiobj={
-                    url:API_URLS.category,
-                    data:{"productCategoryId":cid}
-                };
-                request.fnGet(this,apiobj,(res)=>{
-                    if(!cid){
-                      //  cid=res.appProductCategories[0].id;
-                       // cname=res.appProductCategories[0].name;
-                    }
-                    this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
-                    this.$store.commit("setCategoryData",res.appProductCategories);
-                })
             },
             fetchAllBrand(){
-                let vm = this;
-                let apiobj={
-                    url:API_URLS.products,
-                    data:{
-                        'categoryId': null,
-                        'brandId': null,
-                        'pageNum':  1,
-                        'searchStr': null
-                    }
-                };
-                request.fnGet(this,apiobj,(res)=>{
-                    this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
-                    this.$store.commit("setPageData",res.page);
+
+
+                var params={
+                    'categoryId': null,
+                    'brandId': null,
+                    'pageNum':  1,
+                    'searchStr': null,
+                    "categoryName": null,
+                    "brandName":null
+                }
+
+                this.$store.dispatch('fetchList',params).then(res=>{
                     this.showSubMenu=false;
                     setTimeout(()=> {
                         this.$parent.showCategory = false;
                     },300);
+
                 })
+
+//
 
             },
             fetchBrand(bid,bname){
 
-                let vm = this;
-                this.$store.commit("setProductParams",{"categoryId": vm.productParams.categoryId, "categoryName": vm.productParams.categoryName, "brandId":bid,"brandName":bname,"pageNum":1})
-                this.$store.dispatch('fetchList',this)
-                this.$parent.showCategory=false;
-
+                var params={"categoryId": this.productParams.categoryId, "categoryName": this.productParams.categoryName, "brandId":bid,"brandName":bname,"pageNum":1};
+                this.$store.dispatch('fetchList',params).then(res=>{
+                    this.$parent.showCategory=false;
+                })
 
             },
         }

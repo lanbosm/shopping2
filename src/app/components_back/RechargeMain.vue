@@ -117,7 +117,7 @@
                         color: #666;
                         padding: 15px;
                         position: relative;
-                        border-color: #ccc;
+                        border-color: @border-color;
                         border-radius: 5px;
                         background: #f0eeef;
                         margin-top: 15px;
@@ -164,12 +164,12 @@
                 padding-top: 15px;
                 padding-bottom: 30px;
                 ul {
-                    width: 180px; background: #eeeeee; border-left: solid 1px #cccccc; border-top: solid 1px #cccccc;
+                    width: 180px; background: #ffffff; border-left: solid 1px @border-color; border-top: solid 1px @border-color;
                     margin: 0; padding: 0;
                     li {
                         box-sizing: border-box;
-                        border-right: solid 1px #cccccc;
-                        border-bottom: solid 1px #cccccc;
+                        border-right: solid 1px @border-color;
+                        border-bottom: solid 1px @border-color;
                         width: 33%;
                         height: 60px;
                         line-height: 60px;
@@ -181,7 +181,7 @@
 
         }
         .modal-foot{
-            border-top:1px dashed #e5e5e5;
+            border-top:1px dashed @border-color;
             padding:10px 0px; text-align: center;
             .recharge-layer-ok{display: inline-block;
                 background:@green; color: #ffffff; padding:10px 50px;

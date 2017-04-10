@@ -93,14 +93,11 @@
 			},
             //计算器
             calc:function(keycode){
-                var vm=this;
+
                 if(this.cartData.length==0){return;}
 
                 var index=this.cartItemIndex;
 
-
-                //选中的单价
-                var price=this.cartData[index].price;
                 //选中的数量
                 var amount=this.cartData[index].amount;
 

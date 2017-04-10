@@ -9,7 +9,7 @@
         <div class="col-lg-50 col-md-50 col-sm-33 col-xs-12 item" v-for="(item,index) in itemData ">
              <div class="thumbnail" @click="fetchItem(item.id);">
                  <a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
-                 <div class="prcie primary">{{item.price | currency }}元 <span class="stock">库存：{{item.stock}}件</span> </div>
+                 <div class="prcie primary">{{item.price | currency }}元 <span class="stock">库存：{{item.availableStock}}件</span> </div>
                  <div class="photo"  >
                  <img class="img-responsive" :src="item.image" :alt="item.title" :title="item.title" />
              </div>
@@ -22,14 +22,14 @@
 
 <script>
 
-    import {request, API_URLS} from 'util/request.js';
+   // import {request, API_URLS} from 'util/request.js';
 
     export default {
         name: 'ProductList',
         props:["pageSize","productParams","showList"],
         computed: {
             itemData () {
-                return this.$store.state.pageData.list;
+                return this.$store.state.currentPage.pageData.list;
             }
         },
         filters: {
@@ -38,18 +38,19 @@
                 return '¥ ' + value;
             }
         },
+        created(){
+
+            //console.log(this.$store.state.currentPage.pageData);
+
+        },
         methods:{
             //获取物品详情
             fetchItem:function(pid){
-                let apiobj={
-                    url:API_URLS.products+"/"+pid,
-                     //url:API_URLS.products50,
-                };
-                request.fnGet(this,apiobj,(res)=>{
-                    this.$store.commit("setItemData",res);
-                    this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
+                this.$store.dispatch('fetchItem',pid).then(res=>{
+                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
                 })
             }
+
         }
     }
 </script>

@@ -29,7 +29,7 @@
                             <span class="u">满{{coupon.conditionLine}}可用</span>
                             </div>
                             <div class="right">
-                            <span style="color: #cccccc">有效期
+                            <span class="yxq" >有效期
                             <em class="primary">{{coupon.endDate}}</em>
                             </span>
                             <span class="l2">{{coupon.toSbName}}</span>
@@ -41,8 +41,11 @@
             </div>
     </div>
 </template>
-<style>
-    
+<style  rel="stylesheet/less"  lang="less">
+    @import "../../../css/util/skin.less";
+    @import "../../../css/util/mixin.less";
+
+    .yxq{color: @border-color;}
 </style>
 
 <script>

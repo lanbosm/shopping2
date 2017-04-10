@@ -64,7 +64,7 @@
 
         }
         .modal-foot{
-            border-top:1px dashed #e5e5e5;
+            border-top:1px dashed @border-color;
             padding:10px 0px; text-align: center;
             .showAdmin-layer-close{display: inline-block;
                 background:@green; color: #ffffff; padding:10px 50px;

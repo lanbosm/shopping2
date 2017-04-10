@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
     .apploading{width: 100%; height: 100%; position: fixed;
-        top:0; background: none;z-index:99;}
+        top:0; background: none;z-index:9999;}
     .apploadEffect { width:100px; height: 100px;  position: fixed; padding: 18px;
         top:50%; left: 50%; margin-left: -35px; margin-top:-35px; background: #ffffff; border-radius: 5px; }
     .loading-circle{width: 100%; height: 100%; position: relative}

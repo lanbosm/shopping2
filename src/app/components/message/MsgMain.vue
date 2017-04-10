@@ -1,105 +1,50 @@
 <template>
    	  <div class="message">
 
-        <app-center-header  :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+            <app-center-header  :title="title" :back="back" :next="next" mode="mode"></app-center-header>
 
-        <div class="container message-body" >
-            <div class="row page-con">
-                <div class="col-xs-6">
-                    <div class="m-box">
-                        <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                        <h3>某某商铺申请调拨</h3>
-                        <div class="c">
-                            <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
-                        </div>
-                        <em>数量 55</em>
-                        <div class="r">
-                            <a class="btn btn-agree">同意</a>
-                            <a class="btn btn-refuse">拒绝</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="m-box">
-                        <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                        <h3>某某商铺申请调拨</h3>
-                        <div class="c">
-                            <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
-                        </div>
-                        <em>数量 55</em>
-                        <div class="r">
-                            <a class="btn btn-agree">同意</a>
-                            <a class="btn btn-refuse">拒绝</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="m-box">
-                        <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                        <h3>某某商铺申请调拨</h3>
-                        <div class="c">
-                            <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
-                        </div>
-                        <em>数量 55</em>
-                        <div class="r">
-                            <a class="btn btn-agree">同意</a>
-                            <a class="btn btn-refuse">拒绝</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="m-box">
-                        <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                        <h3>某某商铺申请调拨</h3>
-                        <div class="c">
-                            <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
-                        </div>
-                        <em>数量 55</em>
-                        <div class="r">
-                            <a class="btn btn-agree">同意</a>
-                            <a class="btn btn-refuse">拒绝</a>
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-xs-6">
-                        <div class="m-box">
-                            <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                            <h3>某某商铺申请调拨</h3>
+            <div class="container message-body" >
+                <div class="row page-con">
+                    <div class="col-xs-6" v-for="(item,index) in listData.list">
+                        <div class="m-box" >
+                            <a class="btn msg-pop-close" @click="closeMsg" style="display: none;">&times;</a>
+                            <h3>{{item.shopName}}</h3>
                             <div class="c">
-                                <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
+                                <p>{{item.productName}}</p>
+                                <p class="memo">申请者备注：{{item.applyMemo}}</p>
+                                <p class="memo">接收者备注：{{item.approvalMemo}}</p>
                             </div>
-                            <em>数量 55</em>
+                            <em>数量 {{item.num}}</em>
+                            <span class="date">2017-04-07 09:12</span>
                             <div class="r">
-                                <a class="btn btn-agree">同意</a>
-                                <a class="btn btn-refuse">拒绝</a>
+                                <a class="btn btn-agree"  v-if="item.agreeBtn" @click="showComfirmBox(item.id,'agree')">同意</a>
+                                <a class="btn btn-refuse"  v-if="item.refuseBtn" @click="showComfirmBox(item.id,'refuse')">拒绝</a>
+                                <a class="btn" :class="{'btn-success':true,'btn-danger':item.status=='refused'}" v-if="!item.agreeBtn && !item.refuseBtn" >{{item.statusStr}}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        <div class="m-box">
-                            <a class="btn msg-pop-close" @click="closeMsg">&times;</a>
-                            <h3>某某商铺申请调拨</h3>
-                            <div class="c">
-                                <p>xxxx商品xxxx商品 3段 900gxxxx商品 3段 900g</p>
-                            </div>
-                            <em>数量 55</em>
-                            <div class="r">
-                                <a class="btn btn-agree">同意</a>
-                                <a class="btn btn-refuse">拒绝</a>
-                        </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <pagination :page="listData" :go-callback="goCallback"></pagination>
                     </div>
                 </div>
+
             </div>
 
 
-            <div class="page-bar">
-                    <ul class="pagination">
-                        <li><span class="pagination-label">第 {{page.pageNum}} 页,共 {{page.pages}} 页</span></li>
-                        <li v-if="page.hasPreviousPage"><a @click="pageTo(page.pageNum-1)">上一页</a></li>
-                        <li v-for=" index in page.pages" :class="{active:index==page.pageNum}"  @click="pageTo(index)"><a>{{ index }}</a></li>
-                        <li v-if="page.hasNextPage"><a @click="pageTo(page.pageNum+1)">下一页</a></li>
-                    </ul>
-            </div>
+          <div id="layer-comfirm-box" class="layer-comfirm-box">
+              <div class="t">
+                   {{comfirmTitle}}
+              </div>
+              <div class="c form-horizontal">
+                  <textarea class="form-control" rows="4" v-model="memo" placeholder="请填写备注"></textarea>
+              </div>
+              <div class="f text-center">
+                  <a class="btn comfirm-ok" @click="checkAllocation()">确认</a>
+              </div>
+          </div>
 
         </div>
 
@@ -114,6 +59,38 @@
     @import "../../../css/util/mixin.less";
 
     .message{
+
+        .btn-normal{background: @themeColor; color: #ffffff;}
+        .layer-comfirm-box{
+            width: 400px;
+            padding: @gutter;
+            display: none;
+            .t{
+                padding: @gutter;
+                text-align: center;
+                font-size: 16px;
+            }
+            .c{
+                padding-left: @gutter;
+                padding-right: @gutter;
+            }
+            .f{
+                padding: @gutter;
+                text-align: center;
+                .comfirm-ok{
+                    .green-btn;
+                    padding-left: 60px;
+                    padding-right: 60px;
+                    &:hover,&:active{
+                        padding-left: 60px;
+                        padding-right: 60px;
+                    }
+                }
+            }
+
+        }
+
+
         background: #efefef;
         .order-header{
             padding: 15px;
@@ -137,18 +114,28 @@
         }
         .btn{
             position:relative;
+            display: inline-block;
         }
         .m-box{
             height: auto;
             background: #fff;
-            z-index: 9999;
+            position: relative;
             border: solid 1px #ddd;
             margin-top: 12px;
             margin-bottom: 12px;
             border-radius: 3px;
             padding: 12px;
             color: #333333;
-
+            .memo{
+                margin-top: 5px;
+                margin-bottom: 5px;
+                color: @thinColor;
+            }
+            .date{
+                color: @thinColor;
+                position: absolute;
+                z-index:10;
+            }
             .msg-pop-close{
                 right: 12px;
                 top:12px;
@@ -176,18 +163,21 @@
                 border: solid 1px @green;
                 color: @green;
                 position: relative;
-                display: inline;
+                display: inline-block;
                 margin-right: 12px;
                 margin-left: 12px;
+
+
             }
 
             .btn-refuse{
                 border: solid 1px @themeColor;
                 color: @themeColor;
                 position: relative;
-                display: inline;
-                margin-right: 12px;
+                display: inline-block;
                 margin-left: 12px;
+                position: relative;
+                margin-right: 12px;
 
             }
 
@@ -197,11 +187,15 @@
 
 </style>
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
 
-    import {request, API_URLS} from 'util/request.js';
+
+
+    import AppCenterHeader from 'views/AppCenterHeader.vue';
+    import Pagination from 'components/pagination/Pagination.vue';
+
+
     import layer from 'layer';
-    import $ from 'jquery';
+
 
     export default{
         name:"searchbar",
@@ -210,51 +204,101 @@
                 title:"消息",
                 back:{"label":"返回","url":"index","show":true},
                 next:{"label":"打印","url":"print","show":false},
-                message: '请选择一个付款方式',
-                page:{
+                listData:{},
+                pageNum:1,
+                comfirmTitle:"无标题",
+                memo:'',
+                allocationId:''
 
-                    hasPreviousPage:true,
-                    hasNextPage:true,
-                    pages:3,
-                    pageNum:1,
-
-                }
             }
         },
         components:{
-            AppCenterHeader,
+            Pagination,
+            AppCenterHeader
         },
         watch: {
 
+        },
+        created(){
+            this.fetchList();
         },
         computed: {
 
         },
         methods:{
-            //
-            pageTo(n){
-                alert(n);
+
+            showComfirmBox(id,type){
+
+                   this.allocationId=id;
+                    if(type=="agree"){
+                        this.comfirmTitle="同意调货";
+                        this.allocationStatus="agreed";
+                    }else{
+                        this.comfirmTitle="拒绝调货";
+                        this.allocationStatus="refused";
+                    }
+                    layer.open({
+                        id: 'layui-layer-comfirm',
+                        type: 1,            //1 普通层
+                        shade: 0.01,  //遮罩
+                        anim: 0,
+                        zIndex: 1000,
+                        closeBtn: 2,
+                        title: false,
+                        area: ['auto', 'auto'], //宽高
+                        content: $('#layer-comfirm-box'),
+                        success: function () {
+
+                        },
+                        end: function () {
+
+                        }
+                    });
+
+
+            },
+            closeMsg(){
+
+
+            },
+            checkAllocation(){
+
+                if(!this.allocationId){
+                    layer.alert("该批准号无效",{icon:2});
+                    return false;
+                }
+                var params={
+                    'allocationId':this.allocationId,
+                    'status':this.allocationStatus,
+                    'memo':this.memo
+                }
+
+                this.$store.dispatch("approvalAllocation",params).then(res=>{
+                    layer.alert("批准成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    this.memo='';
+                    this.allocationId='';
+                    this.fetchList();
+                }).catch(res=>{
+                    layer.alert("批准失败",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    this.memo='';
+                    this.allocationId='';
+                    this.fetchList();
+                });
+            },
+            goCallback(pageIndex){
+                this.pageNum=pageIndex;
+                this.fetchList()
             },
             //请求列表
             fetchList() {
-                if(!this.searchItem.keyword){
-                    return;
-                }
-                let vm=this;
 
-                let apiObj={
-                    url: API_URLS.products,
-                    data:{
-                        'categoryId': vm.productParams.categoryId,
-                        'brandId': vm.productParams.brandId,
-                        'pageNum': 1,
-                        'keyword': vm.searchItem.keyword
-                    }
-                };
+                this.$store.dispatch("fetchMsgList",{"pageNum":this.pageNum}).then(res=>{
+                        console.log(res);
+                        this.listData=res.page;
 
-                request.fnGet(vm,apiObj,(res)=>{
-                    vm.$store.commit("setProductParams",{"searchStr":vm.searchItem.keyword,"pageNum":1});
-                    vm.$store.commit("setPageData", res.page);
+                }).catch(res=>{
+
+
                 })
             }
         }

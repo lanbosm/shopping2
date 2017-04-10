@@ -30,11 +30,10 @@
          },
 
         delLocal:function (key){
-           var str=localStorage.removeItem(key);
-           return str;
+           localStorage.removeItem(key);
         },
 
-        initLocal:function(key){
+        initLocal:function(){
                localStorage.clear();
 
         },

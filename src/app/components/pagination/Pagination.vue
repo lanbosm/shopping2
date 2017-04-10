@@ -19,6 +19,7 @@
             paginationList: function(){
                     var left = 1;
                     var right = this.page.pages;
+
                     var ar = [];
                     var disNum=10;
                     if(this.page.pages>= disNum){
@@ -42,7 +43,7 @@
                         ar.push(left)
                         left ++
                     }
-                    console.log(ar);
+                    //console.log(ar);
                     return ar
                 }
 
@@ -50,6 +51,7 @@
         methods:{
             //页码点击事件
             pageTo: function(index){
+
                 if(index !=  this.page.pageNum){
                     //this.productParams.pageNum=index;
                     this.goCallback(index)
@@ -69,7 +71,7 @@
             }
         },
         mounted(){
-            console.log(this.page)
+
             //console.log(this.page);
         }
     }

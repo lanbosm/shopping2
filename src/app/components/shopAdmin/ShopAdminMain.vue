@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title text-center">选择导购员</h4>
-                    <a class="close" data-dismiss="modal">&times;</span></a>
+                    <a class="close" data-dismiss="modal">&times;</a>
                 </div>
                 <div class="modal-body">
                     <div class="shop-admin-list">
@@ -63,7 +63,7 @@
 
         }
         .modal-foot{
-            border-top:1px dashed #e5e5e5;
+            border-top:1px dashed @border-color;
             padding:10px 0px; text-align: center;
             .showAdmin-layer-close{display: inline-block;
                 background:@green; color: #ffffff; padding:10px 50px;
@@ -94,13 +94,14 @@
                         url : API_URLS.shop_admins+'/'+this.type,
                         data:{keyword:this.keyword}
                     };
-                    request.fnGet(this, apiobj, (res)=>{
+                    request.fnGet(apiobj).then(res=>{
                             this.listData=res.list
-                    },(res)=>{
+                    }).catch(res=>{
                        alert("获取失败")
                     })
             },
             checkShopAdmin(){
+                if(!this.shopAdminIndex){return false;}
                 var shopAdmin=this.listData[this.shopAdminIndex];
                 this.$store.commit("setShopAdminData",shopAdmin);
                 this.$store.commit("setOrderParams",{

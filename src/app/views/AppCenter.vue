@@ -25,9 +25,6 @@
 			mode(){
 				return this.$store.state.currentPage.mode;
 			},
-            appLoading(){
-                return this.$store.state.appLoading;
-            },
 			waiting: function() {
                     return this.$store.state.currentPage.waiting
             },

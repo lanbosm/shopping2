@@ -25,15 +25,15 @@
                     <a class="custom-remove" @click="removePage()">-</a>
                     <div class="menu-box">
                         <a class="msg-btn"  @click="msg()">
-                            <i class="icon icon-exit"></i>
                             消息
+                            <span class="badge">{{msgData.msgNum}}</span>
                         </a>
-                        <a class="msg-btn"  @click="cash()">
-                            <i class="icon icon-exit"></i>
+                        <a class="cash-btn"  @click="cash()">
+                            <i class="icon icon-cash"></i>
                             备用金
                         </a>
-                        <a class="msg-btn"  @click="log()">
-                            <i class="icon icon-exit"></i>
+                        <a class="log-btn"  @click="log()">
+                            <i class="icon icon-log"></i>
                             营业状态
                         </a>
                         <a class="exit-btn" @click="exit()">
@@ -53,7 +53,7 @@
 </style>
 <script>
 
-    import util from '../../js/util/util.js';
+    import util from 'util/util.js';
     import {request, API_URLS, HOST} from 'util/request.js';
     import layer from 'layer';
 
@@ -62,6 +62,9 @@
         computed: {
             shopData(){
                 return this.$store.state.shopData;
+            },
+            msgData(){
+                return this.$store.state.msgData;
             },
             pageList(){
                 //console.log("pageList");
@@ -88,6 +91,18 @@
             var shopData= util.pullLocal("shopData");
             this.$store.commit('setShopData', shopData);
 
+
+            //判断备用金 只填写一次
+            if(this.shopData.needSpareCash){
+
+                this.shopData.needSpareCash=false;
+                util.pushLocal("shopData",this.shopData);
+                setTimeout(() => {
+                    this.cash();
+                },300);
+            }
+            this.$store.dispatch("addListenAllocation");
+
             //先获取本地商品记录
             let localData=this.getLocalData();
             if(localData && localData.length){
@@ -97,6 +112,7 @@
                 this.$store.commit('initPage');
             }
 
+            this.addMsglistener();
         },
         methods:{
             addPage(){
@@ -116,8 +132,15 @@
 
             },
             switchPage(index){
+
+
                 this.$store.commit('switchPage', index);
+
+
                 //切换路由
+
+
+                this.mode= this.mode.replace(/\//i,"");
                 this.$router.replace('/'+this.mode);
                 this.saveLocalData();
             },
@@ -170,6 +193,34 @@
                 this.$router.replace('/message');
                 //alert("连接设备");
             },
+            //消息检测
+            addMsglistener(){
+
+                var delay=10000;
+                var roopOver=false;
+
+                var roopAction=()=>{
+                    setTimeout(()=> {
+                            console.log("发生请求包");
+                           this.$store.dispatch("addListenAllocation").then(res => {
+                               if(res.appUnconfirmList.length>0){
+                                   this.$root.showMsgModal=true;
+                                   roopOver=true;
+//                                   setTimeout(()=>{
+//                                       this.$root.showMsgModal=false;
+//                                   },4000);
+                               }
+
+                            if(!roopOver){
+                                roopAction();
+                            }
+                        })
+                    }, delay);
+
+                }
+
+                roopAction();
+            },
             log(){
 
                 var vm=this;
@@ -190,7 +241,6 @@
                         content: $('#layer-log-box'),
                         success: function () {
 
-
                         },
                         end: function () {
 
@@ -202,17 +252,12 @@
             },
             exit(){
                 let vm = this;
+                console.log(this.shopData);
                 layer.confirm('确定要退出吗？', function(index){
-
-                    var apiObj={
-                        url: API_URLS.log_out
-                    }
-                    request.fnGet(vm,apiObj,res=>{
-
+                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=>{
                              vm.delLocalData();
                              layer.closeAll();
                              location.href = "./login.html";
-
                         }
                     )
                 });
