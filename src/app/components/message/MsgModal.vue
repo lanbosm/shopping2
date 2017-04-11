@@ -74,12 +74,12 @@
                 }
 
                 this.$store.dispatch("approvalAllocation",params).then(res=>{
-                    layer.alert("批准成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    layer.alert("操作成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
                     this.memo='';
                     this.msgList.splice(mindex,1);
 
                 }).catch(res=>{
-                    layer.alert("批准失败",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
+                    layer.alert("操作失败",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
                     this.memo='';
                 });
             },

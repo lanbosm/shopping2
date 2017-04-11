@@ -226,7 +226,7 @@
             //确认仓库
             checkRepository: function () {
 
-                this.allocationParams.id=this.shopRepository.productId;
+                this.allocationParams.id=this.productDetail.id;
                 this.allocationParams.shopRepertoryId=this.shopRepository.shopRepertoryId;
                 this.allocationParams.quantity=this.needStock;
                 this.allocationParams.memo=this.memo;

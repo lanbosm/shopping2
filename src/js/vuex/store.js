@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex'
 import {request, API_URLS, HOST} from 'util/request.js';
 import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js';
+import util from 'util/util.js';
 
 Vue.use(Vuex)
 
@@ -20,7 +21,6 @@ const store = new Vuex.Store({
         "name":"",
         "adminName":""
     },
-      //消息数据
     msgData:{
         appUnconfirmList:[],
         msgNum:0
@@ -32,11 +32,13 @@ const store = new Vuex.Store({
         appProductDetail:{},
         appSpecifications:[]
     },
-      //子类数据
-    pageList:[],  //头部数组
-    currentPage:{   //当前节点
+    localList:[], //本地数据集合
+    pageList:[],  //内存数据集合
+
+    //子类数据
+    currentPage:{   //当前数据节点
           index:0,
-          mode:"index",
+          mode:"index"
     },
   },
    // 变量赋值
@@ -55,8 +57,9 @@ const store = new Vuex.Store({
           state.currentPage.mode=data;
       },
       setPageData (state,data){
+          state.currentPage.pageData=data; //存在内存
 
-          state.currentPage.pageData=data;
+
       },
       setItemData (state,data){
           state.itemData=data;
@@ -84,47 +87,22 @@ const store = new Vuex.Store({
           state.currentPage.shopAdminData = data;
       },
       setLogData(state,data){
-
           state.currentPage.logData = data;
       },
       setPageList(state, data){
           state.pageList = data;
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
-      initPage(state, data){
-         // console.log(state.pageList);
+
+      initPage(state){
           state.pageList = [];
           state.pageList.push(defaultPage(0));
           state.currentPage = state.pageList[state.pageList.length - 1];
       },
-      addPage(state, data){
-           // console.log("add");
-          state.pageList.push(defaultPage(state.pageList.length));
-          state.currentPage = state.pageList[state.pageList.length - 1];
-          console.log(state.pageList);
-      },
       removePage(state, data){ //data =>index
           console.log("remove");
 
-          if( state.pageList.length<2){
 
-              state.pageList[state.currentPage.pageIndex]=state.currentPage=defaultPage(0);
-          }else{
-             var  tempIndex=state.currentPage.pageIndex;
-             state.pageList[tempIndex]=null;
-
-
-            //  console.log(tempIndex);
-             state.currentPage=findNode(state.pageList,tempIndex);
-             // console.log( state.currentPage);
-             if(!state.currentPage){
-                 state.pageList[tempIndex]=state.currentPage=defaultPage(0);
-                 state.pageList[tempIndex].pageIndex=tempIndex;
-                 state.pageList[tempIndex].title=tempIndex+1;
-             }
-             //console.log(state.currentPage);
-             return false;
-          }
 
          // console.log(state.pageList);
           //state.pageList[]
@@ -167,8 +145,6 @@ const store = new Vuex.Store({
           // }
       },
       switchPage(state, index){
-
-
           var tempPageIndex=index;
 
           console.log("switch");
@@ -188,17 +164,212 @@ const store = new Vuex.Store({
               }
           }
       },
-      // 显示和隐藏waiting
+      // 全局waiting
       show_waiting(state){
           state.currentPage.waiting = true;
       },
       hide_waiting(state){
           state.currentPage.waiting = false;
       },
-
-      // 显示和隐藏waiting
+      // 列表waiting
       set_list_waiting(state,value){
           state.loading = value;
+      },
+      getLocalList(state){
+          state.localList=[{
+              "waiting": false,
+              "mode": "index",
+              "pageData": {
+                  "pageNum": 1,
+                  "pageSize": 10,
+                  "size": 10,
+                  "orderBy": null,
+                  "startRow": 1,
+                  "endRow": 10,
+                  "total": 14,
+                  "pages": 2,
+                  "list": [{
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-02-22/c45e8dca-2108-4d7f-91c2-96ac77bf90ec.png",
+                      "name": "测试商品",
+                      "barCode": "111321312",
+                      "price": "0.01",
+                      "id": 71,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 7,
+                      "availableStock": 6
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png",
+                      "name": "小包子",
+                      "barCode": "1111111111111111111111",
+                      "price": "1.00",
+                      "id": 329,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 11,
+                      "availableStock": 11
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/8e139603-acc7-4cd7-a625-9be5aa7dc396.png",
+                      "name": "中包子",
+                      "barCode": "1111111111111111111111",
+                      "price": "1.00",
+                      "id": 330,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 11,
+                      "availableStock": 11
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/91f95e92-290c-4c75-8055-cd6b319bf2e3.png",
+                      "name": "测试商品1",
+                      "barCode": "1111111111111111111111",
+                      "price": "1.00",
+                      "id": 331,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 1
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/6ba6bc36-15fd-4012-a410-0f79c87f32e4.png",
+                      "name": "测试商品2",
+                      "barCode": "1",
+                      "price": "1.00",
+                      "id": 332,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 1
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/b65cb7bf-6b3f-443b-a3fd-51034f4972f2.png",
+                      "name": "测试商品3",
+                      "barCode": "1",
+                      "price": "1.00",
+                      "id": 333,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 1
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/9defe8af-b775-472f-88e4-d46a8d723580.png",
+                      "name": "测试商品4",
+                      "barCode": "1",
+                      "price": "1.00",
+                      "id": 334,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 1
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/65540691-d72f-4880-bc28-30f333fdefee.png",
+                      "name": "测试商品5",
+                      "barCode": "1",
+                      "price": "1.00",
+                      "id": 335,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 1
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/7fd5d91b-1bb0-49e3-a421-be55f7891284.png",
+                      "name": "测试商品6",
+                      "barCode": "1",
+                      "price": "1.00",
+                      "id": 336,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 10,
+                      "availableStock": 10
+                  }, {
+                      "image": "http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/ed725141-dae8-497c-a478-6916d2159aa9.png",
+                      "name": "测试商品7",
+                      "barCode": "222",
+                      "price": "10000.00",
+                      "id": 337,
+                      "giftType": "none",
+                      "brandName": "合生元奶粉",
+                      "textTagStr": null,
+                      "specDesc": null,
+                      "stock": 1,
+                      "availableStock": 0
+                  }],
+                  "firstPage": 1,
+                  "prePage": 0,
+                  "nextPage": 2,
+                  "lastPage": 2,
+                  "isFirstPage": true,
+                  "isLastPage": false,
+                  "hasPreviousPage": false,
+                  "hasNextPage": true,
+                  "navigatePages": 8,
+                  "navigatepageNums": [1, 2]
+              },
+              "itemData": {
+                  "appProductDetail": {},
+                  "appSpecifications": []
+              },
+              "orderParams": {
+                  "cartParam": "",
+                  "couponCodeId": null,
+                  "usePoint": false,
+                  "useBalance": false,
+                  "memberId": null,
+                  "guiderId": null,
+                  "paymentMethodId": null,
+                  "cash": 0,
+                  "rmb": 0
+              },
+              "orderData": {},
+              "printData": {},
+              "categoryData": [],
+              "list": {
+                  "categoryId": "",
+                  "brandId": "",
+                  "searchStr": "",
+                  "pageNum": 1,
+                  "categoryName": "",
+                  "brandName": ""
+              },
+              "logData": {
+                  "list": [],
+                  "pageNUm": 1
+              },
+              "cartData": [],
+              "customData": {
+                  "id": null,
+                  "nickname": "顾客",
+                  "username": null,
+                  "point": 0,
+                  "balance": 0,
+                  "appCoupons": [],
+                  "headPortrait": "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png"
+              },
+              "shopAdminData": {},
+              "pageIndex": 0,
+              "title": 1,
+              "time": "18:38"
+          },null];
+
+      },
+      setLocalList(state,value){
+          state.localList=value;
+          util.pushLocal('pageList',value);
       }
     },
     actions: {
@@ -273,6 +444,56 @@ const store = new Vuex.Store({
                 })
             });
         },
+
+        loadLastData({commit,state}){
+            commit("show_waiting");
+            //先获取本地商品记录
+            commit("getLocalList");
+            if(state.localList && state.localList.length){
+                commit("setPageList", state.localList);
+            }
+            //如果本地没有
+            if(!state.pageList || !state.pageList.length){
+                commit('initPage');
+            }
+            commit("hide_waiting");
+        },
+        //头部添加
+        addPage({state,commit,dispatch}, value){
+            commit("show_waiting");
+            state.pageList.push(defaultPage(state.pageList.length));
+            state.currentPage = state.pageList[state.pageList.length - 1];
+            dispatch("fetchList");
+            commit('setLocalList',state.pageList);    //存储本地
+            commit("hide_waiting");
+        },
+        removePage({state,commit,dispatch},value){
+            commit("show_waiting");
+
+            if( state.pageList.length<2){
+
+                state.pageList[state.currentPage.pageIndex]=state.currentPage=defaultPage(0);
+                commit("hide_waiting");
+                commit('setLocalList',state.pageList);    //存储本地
+            }else{
+                var  tempIndex=state.currentPage.pageIndex;
+                state.pageList[tempIndex]=null;
+
+                //  console.log(tempIndex);
+                state.currentPage=findNode(state.pageList,tempIndex); //这里找要有点时间
+                // console.log( state.currentPage);
+                if(!state.currentPage){
+                    state.pageList[tempIndex]=state.currentPage=defaultPage(0);
+                    state.pageList[tempIndex].pageIndex=tempIndex;
+                    state.pageList[tempIndex].title=tempIndex+1;
+                }
+                //console.log(state.currentPage);
+                commit("hide_waiting");
+                commit('setLocalList',state.pageList);    //存储本地
+                return false;
+            }
+
+        },
         //重建订单
         rebulid({commit}, value){
             commit("show_waiting");
@@ -289,9 +510,10 @@ const store = new Vuex.Store({
         fetchList({commit,state},value){
             commit("set_list_waiting",true);
             if(value){
+                var oldPageData=state.currentPage.pageData;
                 commit("setProductParams",value);
+                commit("setPageData",{});
             }
-
 
             let apiObj={
                 url: API_URLS.products,
@@ -303,15 +525,15 @@ const store = new Vuex.Store({
                 }
             };
 
-
             return new Promise((resolve, reject) => {
                 request.fnGet(apiObj).then(res => { //成功
                     //console.log(response)
                     commit("set_list_waiting",false);
-                    if(res.code=="20000"){
+                    if(res.code=="20000"){                //新数据
                         commit("setPageData",res.page);
                         resolve(res);
-                    }else{
+                    }else{                                //旧数据
+                        commit("setPageData",oldPageData);
                         reject(res);
                     }
                 })
@@ -573,6 +795,7 @@ const store = new Vuex.Store({
 
     }
 });
+
 
 function defaultPage(len){
     //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失

@@ -19,6 +19,7 @@ ol,ul{list-style:none}
 q:after,q:before{content:''}
 sup{vertical-align:text-top}
 sub{vertical-align:text-bottom}
+*{webkit-user-select:none;padding:0;margin:0;box-sizing:border-box}
 a,input{-webkit-tap-highlight-color:transparent}
 .hide{display:none}
 .ti{text-indent:-999em}
@@ -31,7 +32,6 @@ a,input{-webkit-tap-highlight-color:transparent}
 #main,#wrap{height:auto;position:relative}
 .hid{display:none!important}
 .poniterNone{pointer-events:none}
-*{padding:0;margin:0;box-sizing:border-box}
 body{background:#fff;color:#333;font-size:12px;font-family:"黑体"}
 body::-webkit-scrollbar{display:none}
 #wrap{max-width:1920px;margin:0 auto}

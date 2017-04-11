@@ -25,7 +25,7 @@
                 <div class="grid">
                     <div class="t">充值 <span>{{logData.totalRecharge | currency}}</span></div>
                     <div class="c">
-                        <p>店内订单现金收款： {{logData.rechargeCashPay | currency}}</p>
+                        <p>现金充值： {{logData.rechargeCashPay | currency}}</p>
                         <a class="more" @click="logTo('recharge')">查看详细 ></a>
                     </div>
                 </div>
@@ -60,6 +60,7 @@
         position: relative;
         display: none;
         overflow: hidden;
+        background: #f7f7f7;
 
         .grid{
             height:  120px;
@@ -67,6 +68,7 @@
             margin-bottom: 12px;
             border: solid 1px @border-color;
             border-radius: 3px;
+            background: #ffffff;
             .t{
                 padding: 6px;
                 color: @thinColor;
@@ -93,12 +95,12 @@
         .log-out{
             left: 160px;
             .green-btn();
-            padding-left: 60px;
-            padding-right: 60px;
+            padding-left: 120px;
+            padding-right: 120px;
 
             &:hover,&:active{
-                padding-left: 60px;
-                padding-right: 60px;
+                padding-left:120px;
+                padding-right: 120px;
             }
         }
 

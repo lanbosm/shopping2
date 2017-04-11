@@ -92,8 +92,10 @@ module.exports = {
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
+            less: srcDir + "/css/util",
             components : srcDir + "/app/components",
-            vue: 'vue/dist/vue'
+            views : srcDir + "/app/views",
+            vue$: 'vue/dist/vue'
         }
     },
     plugins: [

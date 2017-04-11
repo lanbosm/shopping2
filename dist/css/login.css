@@ -18,6 +18,7 @@ ol,ul{list-style:none}
 q:after,q:before{content:''}
 sup{vertical-align:text-top}
 sub{vertical-align:text-bottom}
+*{webkit-user-select:none}
 a,input{-webkit-tap-highlight-color:transparent}
 img{width:100%}
 .hide{display:none}

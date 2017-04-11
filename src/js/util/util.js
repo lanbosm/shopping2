@@ -63,14 +63,34 @@
 
         },
 
-        /**
-         * [获取单件价格 ]
-         * @return {[type]} [数量*单价]
-         */
-        getItemPrice:function(){
-            var date=new Date();
-            return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+        // 对象深拷贝
+        deepCopy:function(origin, _copy)  {
+            var self = arguments.callee,
+                type = Object.prototype.toString.call(origin),
+                copy = origin;
+            switch (type) {
+                case '[object Object]':
+                    copy = _copy || {};
+                    for (var k in origin) {
+                        if (origin.hasOwnProperty(k)) {
+                            copy[k] = self(origin[k]);
+                        }
+                    }
+                    break;
+                case '[object Array]':
+                    copy = _copy || [];
+                    for (var i = 0, l = origin.length; i < l; i++) {
+                        copy[i] = self(origin[i]);
+                    }
+                    break;
+                case '[object Function]':
+                    copy = new Function(origin.toString());
+                    break;
+            }
+            return copy;
         }
+
+
 
 };
 

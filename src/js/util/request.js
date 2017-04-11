@@ -7,7 +7,6 @@
 //then http://www.zhangxinxu.com/wordpress/2014/02/es6-javascript-promise-%E6%84%9F%E6%80%A7%E8%AE%A4%E7%9F%A5/
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import store from '../vuex/store'
 import layer from 'layer';
 
 //http请求
@@ -20,8 +19,8 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 
 
 //export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
-export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
-//export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
+//export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
+export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 
 
 
@@ -39,10 +38,6 @@ export const API_URLS = {
     payments:'/cashier/member/payments',                        //验证支付
     log_out:'/cashier/common/log_out',
     cashier_shift:'/cashier/member/cashier_shift'                      //零售订单
-
-    // products: "/data/products.json", //假数据
-   // products50:"/data/products50.json",
-   // category:"/data/category.json",               //会员模块
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
@@ -195,7 +190,7 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
 
         if (response.data && response.data.code == 49001) {
-            layer.alert("访问令牌过期 请从新登录",{anim:-1});
+            layer.alert("访问令牌过期 请重新登录",{anim:-1});
             window.location.href = './login.html';
             return response;
         }else if (response.data && response.data.code == 40001) {

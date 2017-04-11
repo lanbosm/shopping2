@@ -90,56 +90,41 @@
             //获取门店信息
             var shopData= util.pullLocal("shopData");
             this.$store.commit('setShopData', shopData);
-
-
             //判断备用金 只填写一次
             if(this.shopData.needSpareCash){
-
                 this.shopData.needSpareCash=false;
                 util.pushLocal("shopData",this.shopData);
                 setTimeout(() => {
                     this.cash();
                 },300);
             }
-            this.$store.dispatch("addListenAllocation");
 
-            //先获取本地商品记录
-            let localData=this.getLocalData();
-            if(localData && localData.length){
-                this.$store.commit("setPageList", localData);
-            }
-            if(!this.pageList || !this.pageList.length){
-                this.$store.commit('initPage');
-            }
-
+            //this.$store.dispatch("addListenAllocation");
+            this.$store.dispatch("loadLastData");
             this.addMsglistener();
         },
         methods:{
             addPage(){
-                this.$store.commit('addPage', 1);
+                this.$store.dispatch('addPage');
                 this.$router.replace('/'+this.mode);
                 this.saveLocalData()
             },
             removePage(){
                 let vm = this;
                 layer.confirm('确定要删除吗？删除后数据将丢失！', function(index){
-                    vm.$store.commit('removePage', 1);
-                    layer.close(index);
-                    vm.$router.replace('/'+vm.mode);
-
-                    vm.saveLocalData();
+                    vm.$store.dispatch("removePage").then(res=> {
+                        console.log(res);
+                        layer.close(index);
+                        vm.$router.replace('/'+vm.mode);
+                    }).catch(res=>){
+                        alert(22222222222);
+                    };
                 });
 
             },
             switchPage(index){
-
-
                 this.$store.commit('switchPage', index);
-
-
                 //切换路由
-
-
                 this.mode= this.mode.replace(/\//i,"");
                 this.$router.replace('/'+this.mode);
                 this.saveLocalData();
@@ -148,7 +133,7 @@
                 return util.pullLocal("pageList");
             },
             saveLocalData(){
-                util.pushLocal("pageList", this.pageList);
+        //        util.pushLocal("pageList", this.pageList);
             },
             delLocalData(){
                 this.$store.commit("setPageList", []);

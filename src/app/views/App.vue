@@ -20,11 +20,10 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div  v-if="!showlist">载入中...</div>
-                                <product-list  v-if="showlist" :product-params="productParams"  @open-detail="openDetail" ></product-list>
+                                <product-list :page="page" :product-params="productParams"  @open-detail="openDetail" ></product-list>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" :product-params="productParams" ></Pagination>
+                                <Pagination :page="page" :go-callback="goCallback" ></Pagination>
                             </div>
                         </div>
                     </div>
@@ -51,7 +50,7 @@
     import breadcrumb from 'views/products/breadcrumb.vue';
     import searchbar from 'views/products/searchbar.vue';
     import category from 'views/products/category.vue';
-    import Pagination  from 'views/products/Pagination.vue';
+
     import AppCart from 'views/products/cart.vue';
     import AppCalc from 'views/products/calc.vue';
     import Loading from 'views/products/Loading.vue';
@@ -59,6 +58,9 @@
     import StockItem from 'views/products/StockItem.vue';
     import ProductList from 'views/products/List.vue';
 
+
+    //import Pagination  from 'views/products/Pagination.vue';
+    import Pagination from 'components/pagination/Pagination.vue';
 
     import layer from 'layer';
     import util from 'util/util.js';
@@ -73,30 +75,20 @@
                 cartItemIndex:0,
                 showStockItem:false,
                 needQuantity:0,
+                pageNum:1,
                 appRepertories:[]  //调拨仓库
             }
         },
         computed: {
             //数据来自全局
-            showlist(){
-                if(this.$store.state.currentPage.pageData.list){
-                    return true;
-                }else{
-                   // console.log(this.);
-                   // console.log(this);
-                    this.fetchList();
-                    return false;
-                }
-
-            },
             loading () {
                 return this.$store.state.loading;
             },
             productParams(){
-                console.log(this.$store.state.currentPage.list);
                 return this.$store.state.currentPage.list;
             },
             page () {
+
                 return this.$store.state.currentPage.pageData;
             },
             productDetail (){
@@ -129,11 +121,17 @@
              searchbar,
              Loading
         },
+        created(){
+            this.fetchList();
+        },
         methods:{
             //请求列表
             fetchList() {
-
-                this.$store.dispatch('fetchList',"");
+                this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
+            },
+            goCallback(pageIndex){
+                this.pageNum=pageIndex;
+                this.fetchList();
             },
             //创建订单
             buildOrder:function(cart){
@@ -361,14 +359,7 @@
                 }
 
             }
-        },
-        created(){
-        },
-        mounted(){
-
-            //组件开始挂载时获取用户信息
-            //alert(66);
-        },
+        }
     }
 </script>
 

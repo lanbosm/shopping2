@@ -11,7 +11,7 @@
                 </div>
                 <div class="form-group ">
                     <div class="col-xs-9 btn-text">
-                        <input type="tel" class="form-control text-right input-lg" v-model="spareCash" >
+                        <input type="tel" class="form-control text-right input-lg"  autocomplete="off" v-model="spareCash" >
                     </div>
                     <div class="col-xs-3 btn-group">
                         <input class="btn btn-default btn-lg" type="button" value="+" @click="add(100)" >
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input type="password" class="form-control input-lg" v-model="password" placeholder="请输入店长密码" @keyup.enter="addCash()" >
+                        <input type="password" class="form-control input-lg" v-model="password" placeholder="请输入店长密码" autocomplete="off"  @keyup.enter="addCash()" >
                     </div>
                 </div>
         </div>

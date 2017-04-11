@@ -23,7 +23,7 @@
 						  <!--list-->
 						  <div class="list-row" v-for="(item,index) in listData.list">
 							  	<div class="t">
-									编号： {{item.sn}}
+									订单号： {{item.sn}}
 								</div>
 							  	<div class="c">
 									<span>

@@ -154,6 +154,9 @@
                     }
                     this.searchShow=true;
                     this.registerShow=false;
+                    this.infoShow = false;
+                    this.searching=true;
+
                     this.$store.dispatch("fetchCustom",vm.username).then(res=>{
                           vm.tempcustom = res;
                           vm.searching=false;

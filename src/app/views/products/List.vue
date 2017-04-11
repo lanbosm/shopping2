@@ -1,6 +1,11 @@
 //列表组件
 <template>
-    <div class="row"  v-if="!itemData || !itemData.length">
+    <div class="row"  v-if="!itemData">
+        <div class="col-xs-12">
+            加载中...
+        </div>
+    </div>
+    <div class="row"  v-else-if="itemData.length == 0">
         <div class="col-xs-12">
             没有数据
         </div>
@@ -21,15 +26,12 @@
 </template>
 
 <script>
-
-   // import {request, API_URLS} from 'util/request.js';
-
     export default {
         name: 'ProductList',
-        props:["pageSize","productParams","showList"],
+        props:["productParams","page"],
         computed: {
             itemData () {
-                return this.$store.state.currentPage.pageData.list;
+                return this.page.list;
             }
         },
         filters: {
@@ -37,11 +39,6 @@
                 if (!value) return '';
                 return '¥ ' + value;
             }
-        },
-        created(){
-
-            //console.log(this.$store.state.currentPage.pageData);
-
         },
         methods:{
             //获取物品详情
