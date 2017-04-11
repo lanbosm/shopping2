@@ -17,9 +17,9 @@
                 </div>
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
-                        <template v-if="item" v-for="item in pageList">
-                            <li ><a class="custom"  :class="{cur: currentPage && (currentPage.pageIndex == item.pageIndex)}" @click="switchPage(item.pageIndex)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
-                        </template>
+
+                            <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
+
                     </ul>
                     <a class="custom-add" @click="addPage()">+</a>
                     <a class="custom-remove" @click="removePage()">-</a>
@@ -60,6 +60,9 @@
     export default{
 
         computed: {
+            headIndex(){
+                return this.$store.state.headIndex;
+            },
             shopData(){
                 return this.$store.state.shopData;
             },
@@ -105,9 +108,10 @@
         },
         methods:{
             addPage(){
-                this.$store.dispatch('addPage');
-                this.$router.replace('/'+this.mode);
-                this.saveLocalData()
+                this.$store.dispatch('addPage').then(res=> {
+                    this.$router.replace('/' + this.mode);
+                    this.saveLocalData()
+                });
             },
             removePage(){
                 let vm = this;
@@ -116,31 +120,19 @@
                         console.log(res);
                         layer.close(index);
                         vm.$router.replace('/'+vm.mode);
-                    }).catch(res=>){
-                        alert(22222222222);
-                    };
+                    });
                 });
 
             },
             switchPage(index){
-                this.$store.commit('switchPage', index);
-                //切换路由
-                this.mode= this.mode.replace(/\//i,"");
-                this.$router.replace('/'+this.mode);
-                this.saveLocalData();
-            },
-            getLocalData(){
-                return util.pullLocal("pageList");
-            },
-            saveLocalData(){
-        //        util.pushLocal("pageList", this.pageList);
+                this.$store.dispatch('switchPage', index).then(res=> {
+                    //切换路由
+                    this.mode= this.mode.replace(/\//i,"");
+                    this.$router.replace('/'+this.mode);
+                });
             },
             delLocalData(){
-                this.$store.commit("setPageList", []);
-                this.$store.commit('setShopData', {});
-                util.delLocal("accessToken");
-                util.delLocal("shopData");
-                util.delLocal("pageList");
+
             },
             cash(){
 

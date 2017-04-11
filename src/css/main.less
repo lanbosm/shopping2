@@ -24,11 +24,13 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 .product(){
   .item {
+
      padding-left:7px; padding-right:8px; ;margin-bottom:15px;
     .thumbnail{position:relative;margin-bottom:0 ;  padding: 15px;  }
     .thumbnail .buy-btn, .thumbnail .list-btn{display:inline-block;width:20px;height:20px;text-decoration:none;position:absolute;color:@themeColor}
-    .thumbnail .prcie{font-size:.9rem}
-    .thumbnail .stock{color:  #999999;}
+    .thumbnail .title{font-size:12px; line-height: 15px; height: 30px; overflow: hidden;
+      color: @themeColor;  position: relative;}
+    .thumbnail .stock{color:  #999999; position: absolute ; left: 0; bottom: 0;}
     .thumbnail .caption{
       position:relative;padding:5px 20px 5px 5px;height:3.2rem; line-height:1.6rem; font-size:.8rem; overflow: hidden;
       overflow : hidden;
@@ -36,22 +38,15 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-      @media (max-width: 768px) {
-        font-size:1.2rem;
 
-      }
     }
     .thumbnail .photo{
-      width:100%; height:5.5rem; line-height: 5.5rem;  vertical-align:middle; text-align:center;overflow:hidden;cursor:pointer;
-      @media (max-width: 768px) {
-        height: auto;
-
-      }
+      width:100%; height:100px; line-height: 100px;  vertical-align:middle; text-align:center;overflow:hidden;cursor:pointer;
     }
 
 
     .thumbnail .photo>img{display:inline-block; width: 50%;  margin: 0 auto;   background: url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
-     background-size:cover;}
+     background-size:cover; }
     .thumbnail .buy-btn{right:0;bottom: 8px;}
     .thumbnail .list-btn{right:0;top:8px; }
   }

@@ -75,13 +75,9 @@ var vm =new Vue({
         AppCenterLoading,
     },
     computed: {
-        //数据来自全局
-        mode(){
-            return this.$store.state.currentPage.mode;
-        },
         waiting: function() {
-            return this.$store.state.currentPage.waiting
-        },
+            return this.$store.state.waiting
+        }
     },
     mounted() {
         // 关闭窗口时弹出确认提示

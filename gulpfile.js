@@ -35,7 +35,7 @@ const webpackConfigPro=require("./webpack.production.config.js");
 var browserSync = require('browser-sync').create();
 
 var host = {
-    domain:"192.168.1.32",
+    domain:"localhost",
     path: 'dist/',
     port: 3000,
     html: 'index.html'
@@ -286,7 +286,7 @@ gulp.task('webpackDevServer',function(){
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening
         console.log("listen successful , port at 3000");
-        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://192.168.1.32:3000'}));
+        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://localhost:3000'}));
 
 
     });

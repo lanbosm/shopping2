@@ -6,7 +6,7 @@
                         <breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>
                     </div>
                     <div class="left-con-content">
-                        <Loading v-if="loading"></Loading>
+                        <Loading v-if="listLoading"></Loading>
                         <div class="item-box panel panel-primary">
                             <div class="panel-heading" >
                                 <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
@@ -81,8 +81,8 @@
         },
         computed: {
             //数据来自全局
-            loading () {
-                return this.$store.state.loading;
+            listLoading () {
+                return this.$store.state.currentPage.listLoading;
             },
             productParams(){
                 return this.$store.state.currentPage.list;
