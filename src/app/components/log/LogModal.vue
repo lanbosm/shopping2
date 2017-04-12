@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <a class="btn log-table" @click="logTo('products')">销售商品报表</a>
-                <a class="btn log-out" @click="logOut()">交接班并登出</a>
+                <a class="btn log-out" @click="logOut()">交接班并退出</a>
             </div>
         </div>
     </div>
@@ -156,24 +156,8 @@
                     console.log(res);
                 })
             },
-            delLocalData(){
-                this.$store.commit("setPageList", []);
-                this.$store.commit('setShopData', {});
-                util.delLocal("accessToken");
-                util.delLocal("shopData");
-                util.delLocal("pageList");
-            },
             logOut(){
-                let vm = this;
-                layer.confirm('确定要退出吗？', function(index){
-                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=>{
-                            vm.delLocalData();
-                            layer.closeAll();
-                            location.href = "./login.html";
-                        }
-                    )
-                });
-
+                this.$root.$refs.header.exit();
             }
         }
     }

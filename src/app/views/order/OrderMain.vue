@@ -77,7 +77,7 @@
                     return false;
                 }
 
-                if(this.orderParams.paymentMethodId==10&&this.orderParams.rmb<=this.amount){
+                if(this.orderParams.paymentMethodId==10&&this.orderParams.rmb>this.amount){
                     layer.msg("现金支付付款不能为零", {icon: 2});
                     return false;
                 }

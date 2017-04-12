@@ -7,8 +7,9 @@
 //then http://www.zhangxinxu.com/wordpress/2014/02/es6-javascript-promise-%E6%84%9F%E6%80%A7%E8%AE%A4%E7%9F%A5/
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import router from '../router'
+import store from '../vuex/store'
 import layer from 'layer';
-
 //http请求
 Vue.use(VueResource)
 /**
@@ -41,7 +42,7 @@ export const API_URLS = {
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
-Vue.http.options.timeout = 3000;  //500超时
+Vue.http.options.timeout = 10000;  //500超时
 /**
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
@@ -173,25 +174,15 @@ Vue.http.interceptors.push(function (request, next) {
         Vue.http.headers.common['timeStamp'] = signature.timeStamp + '';
         Vue.http.headers.common['sign'] = signature.sign + '';
     }
-    // let accessToken = window.localStorage.getItem("accessToken");
-    // if (accessToken) {
-    //     request.headers.accessToken = accessToken;
-    // }
-    // let signature = getSign();
-    //
-    //
-    // if (signature) {
-    //     request.headers.nonceStr = signature.nonceStr;
-    //     request.headers.timeStamp = signature.timeStamp;
-    //     request.headers.sign = signature.sign;
-    // }
-
 
     next(function (response) {
 
         if (response.data && response.data.code == 49001) {
-            layer.alert("访问令牌过期 请重新登录",{anim:-1});
-            window.location.href = './login.html';
+
+            layer.alert("访问令牌过期 请重新登录",{anim:-1,closeBtn: 0},function(){
+                store.dispatch("logout");
+                layer.closeAll();
+            });
             return response;
         }else if (response.data && response.data.code == 40001) {
 
@@ -201,7 +192,7 @@ Vue.http.interceptors.push(function (request, next) {
             //window.location.href = './login.html';
             return  response;
         } else if (response.data && response.data.code ==  45004) {
-            layer.alert("商品库存不足")
+            layer.alert("商品库存不足",{closeBtn: 0})
             return response;
         }
         else {

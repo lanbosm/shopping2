@@ -46,8 +46,27 @@ Vue.component('layer-cash',CashModal);
 //自定义属性
 Vue.islogin=true;
 
+router.beforeEach(({path}, from, next) => {
+
+    // const {auth = true} = meta      // meta代表的是to中的meta对象，path代表的是to中的path对象
+
+    var auth=true;
+
+    var isLogin = Boolean(store.state.login)    // true用户已登录， false用户未登录　
+
+
+    if ( auth && !isLogin  &&  path !== '/login') {   // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验
+        return next({ path: '/login' })   //  跳转到login页面
+    }
+
+    return next()   // 进行下一个钩子函数
+
+})
+
+
 router.afterEach(route => {
     store.state.appLoading=true;
+   // alert(Vue.islogin);
     setTimeout(()=>{
         store.state.appLoading=false;
     },100)
@@ -55,13 +74,9 @@ router.afterEach(route => {
 
 //vue实例
 var vm =new Vue({
-    created:function(){
-
-
-    },
     store,
-    el:'#main',
     router,
+    el:'#main',
     data:{          //这里不是组件模式 不return
             showShopAdminModal:false,
             showCustomModal:false,
@@ -75,11 +90,17 @@ var vm =new Vue({
         AppCenterLoading,
     },
     computed: {
+        login: function() {
+            return this.$store.state.login;
+        },
         waiting: function() {
-            return this.$store.state.waiting
+            return this.$store.state.waiting;
         }
     },
-    mounted() {
+    created() {
+        var accessToken = window.localStorage.getItem("accessToken");
+        this.$store.state.login=accessToken;
+
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
@@ -88,11 +109,10 @@ var vm =new Vue({
         //this.$router.push('/log/products');
         // this.$router.push('/log/sales');
 
-        this.$router.push('/');
+        //this.$router.push('/');
 
-       /// this.$router.push('/');
+        this.$router.push('/');
     }
 })
 
 
-//.$mount('#main');

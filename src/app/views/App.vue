@@ -1,10 +1,10 @@
 <template>
-	<div class="container-fluid index" >
+	<div class="container-fluid index"  >
             <div class="row" >
                 <div class="col-sm-8  col-md-9 left-con">
-                    <div class="left-con-header">
-                        <breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>
-                    </div>
+                    <!--<div class="left-con-header">-->
+                        <!--&lt;!&ndash;<breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>&ndash;&gt;-->
+                    <!--</div>-->
                     <div class="left-con-content">
                         <Loading v-if="listLoading"></Loading>
                         <div class="item-box panel panel-primary">

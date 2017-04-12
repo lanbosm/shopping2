@@ -53,7 +53,7 @@
 			<!-- container -->
 			<div class="main" id="main">
 					<!--头导航-->
-					<app-header ref="header"></app-header>
+					<app-header ref="header" v-if="login"></app-header>
 
 					<app-center-loading v-if="waiting"></app-center-loading>
 
@@ -75,7 +75,7 @@
 					<layer-recharge v-if="showRechargeModal"></layer-recharge>
 
 					<!--消息-->
-					<transition name="fade">
+					<transition name="fade" >
 						<layer-msg v-if="showMsgModal"></layer-msg>
 					</transition>
 					<!--日记-->
@@ -104,6 +104,12 @@
 
 
 <script type="text/javascript">
+
+	/* If below IE9 */
+
+    if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE6.0" || navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0" || navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0"){
+        alert("你的游览器版本过低 请升级到ie9以上 使用该系统");
+    }
 
 //统计代码
 

@@ -76,7 +76,7 @@
 		}
 
 		.list-body {
-			height: 600px;
+			height: @listHeight;
 			.list-row{
 				border: solid 1px  @border-color;
 				margin-top: @gutter;

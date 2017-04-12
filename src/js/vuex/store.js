@@ -1,20 +1,21 @@
 
 
 
-import Vue from 'vue';
+import Vue from 'vue'
 import Vuex from 'vuex'
-import {request, API_URLS, HOST} from 'util/request.js';
-import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js';
-import util from 'util/util.js';
+import {request, API_URLS, HOST} from 'util/request.js'
+import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js'
+import util from 'util/util.js'
+import router from '../router'
 
 Vue.use(Vuex)
 
 
 //vue 定义全局变量
 const store = new Vuex.Store({
-
   //共有数据
   state: {
+    login:false, //=>accessToken
     waiting:false,
     shopCount:1,
     headIndex:0,
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
         "name":"",
         "adminName":""
     },
+    msgTimer:null, //监听消息
     msgData:{
         appUnconfirmList:[],
         msgNum:0
@@ -118,7 +120,6 @@ const store = new Vuex.Store({
               'count':state.shopCount,
               'list':state.localList
           }
-
           util.pushLocal('lastData',data);
       }
     },
@@ -176,7 +177,7 @@ const store = new Vuex.Store({
             })
         },
         //退出
-        logout({commit},value){
+        logout({commit,state},value){
             commit("show_waiting");
             var apiObj={
                 url: API_URLS.log_out
@@ -185,8 +186,12 @@ const store = new Vuex.Store({
                 window.localStorage.setItem('currentShiftId',value);
                 request.fnGet(apiObj).then(res => { //成功
                     if(res.code=="20000"){
+                        state.login=false; //清除accesstoken;
+                        clearInterval(state.msgTimer);
+                        router.replace('/login');
                         commit("setPageList", []);
                         commit('setShopData', {});
+
                         util.delLocal("accessToken");
                         util.delLocal("shopData");
                         util.delLocal("lastData");
@@ -233,13 +238,16 @@ const store = new Vuex.Store({
             commit("hide_waiting");
 
         },
-        switchPage({state}, index){
+        switchPage({state,commit}, index){
             console.log("switch");
             if(state.headIndex ==index){
                 return;
             }
             state.headIndex = index;
             state.currentPage=state.pageList[index];
+
+
+            commit('setLocalList',state.pageList);    //存储本地
         },
         removePage({state,commit,dispatch},value){
             commit("show_waiting");
@@ -282,7 +290,6 @@ const store = new Vuex.Store({
                     //console.log(response)
                     if(res.code=="20000"){                //新数据
                         commit("setPageData",res.page);
-
                         resolve(res);
                     }else{                                //旧数据
                         commit("setPageData",oldPageData);

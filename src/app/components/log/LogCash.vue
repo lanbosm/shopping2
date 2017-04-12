@@ -87,7 +87,8 @@
 		}
 
 		.list-body {
-			height: 600px;
+			height: @listHeight;
+
 			.list-row{
 				border: solid 1px  @border-color;
 				margin-top: @gutter;
@@ -183,10 +184,16 @@
         computed:{
             totalCash(){
                 var sum=0;
-                this.listData.list.forEach((ele,index)=>{
+                var arr=this.listData.list;
+                if(arr.length>0) {
+                    arr.forEach((ele, index) => {
 
-                    sum+=Number(ele.amountPaid);
-                })
+                        sum += Number(ele.amountPaid);
+                    })
+                }else{
+
+
+				}
 				return sum;
 			}
 
@@ -195,6 +202,7 @@
             Pagination
         },
         created(){
+
 			this.fetchList()
         },
         methods:{
@@ -205,6 +213,7 @@
             //请求列表
             fetchList() {
                 this.$store.dispatch('fetchLog',{"type":"cash","pageNum":this.pageNum}).then(res=>{
+
                     this.listData=res.page;
                     this.shiftInfo=res.appShiftInfo;
                     console.log(this.shiftInfo);

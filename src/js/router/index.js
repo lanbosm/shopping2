@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router'
 
+import Login from 'views/login/login.vue'
 
 import App from 'views/App.vue'
 import AppCenter from 'views/AppCenter.vue'
@@ -33,6 +34,10 @@ const router = new VueRouter({
         {
             path: '/',
             component:  App,
+        },
+        { path: '/login',
+            name: 'Login',
+            component: Login
         },
         { path: '/index', redirect: '/' },
         { path: '/message',                                    //消息中心

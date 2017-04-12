@@ -1,14 +1,11 @@
-@import "util/skin";
 
-@import "util/reset";
-
-body{ background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;}
-
-.login_main{
-    .left-con{ height:900px; position: relative;
+.login{
+    font-size: 12px;
+    background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;
+    .left-con{ height:768px; position: relative;
     }
     .right-con{
-      height:900px; position: relative;}
+      height:768px; position: relative;}
     .register-box{ width: 430px;
       position: absolute;
       left:0;
@@ -24,7 +21,7 @@ body{ background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;}
              }
              .weclome{ width:280px; height: 66px; margin-left: 10px; margin-top: 10px;
                 display: block;float: left;
-                h1{ font-size: 2rem; line-height: 2rem; margin:0; margin-top: .8rem; font-weight: bold; }
+                h1{ font-size:18px; line-height:40px; margin:0; margin-top: 0px; font-weight: bold; }
                 small{}
             }
         }
@@ -32,7 +29,7 @@ body{ background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;}
       .register-row2{
 
             margin-top: 25px;
-            h3{ font-size: 1.8rem; color: @themeColor;}
+            h3{ font-size: 16px; color: @themeColor;}
       }
 
       .register-row3{
@@ -59,7 +56,8 @@ body{ background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;}
               background: url('@{imgPath}/login_pass.png') no-repeat 50% 0;
             }
           }
-            input{ width:80%; font-size:1.5rem;  padding: 10px 0;  height:100%; margin-left: 10px;   float: left;
+            input{ width:80%; font-size:12px;  padding: 10px 10px;  height:100%; margin-left: 10px;   float: left;
+                border: @borderStyle; border-radius: 3px;
           }
 
 

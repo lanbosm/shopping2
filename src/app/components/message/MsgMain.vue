@@ -15,7 +15,7 @@
                                 <p class="memo">接收者备注：{{item.approvalMemo}}</p>
                             </div>
                             <em>数量 {{item.num}}</em>
-                            <span class="date">2017-04-07 09:12</span>
+                            <span class="date">{{item.createDate}}</span>
                             <div class="r">
                                 <a class="btn btn-agree"  v-if="item.agreeBtn" @click="showComfirmBox(item.id,'agree')">同意</a>
                                 <a class="btn btn-refuse"  v-if="item.refuseBtn" @click="showComfirmBox(item.id,'refuse')">拒绝</a>
@@ -64,6 +64,7 @@
         .layer-comfirm-box{
             width: 400px;
             padding: @gutter;
+            z-index: 99;
             display: none;
             .t{
                 padding: @gutter;
@@ -287,7 +288,8 @@
             },
             goCallback(pageIndex){
                 this.pageNum=pageIndex;
-                this.fetchList()
+                this.fetchList();
+                window.scrollTo(0,0);
             },
             //请求列表
             fetchList() {

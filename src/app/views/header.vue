@@ -86,7 +86,7 @@
         },
         data(){
             return {
-                success:true
+                timer:null
             }
         },
         created(){
@@ -129,9 +129,6 @@
                     this.mode= this.mode.replace(/\//i,"");
                     this.$router.replace('/'+this.mode);
                 });
-            },
-            delLocalData(){
-
             },
             cash(){
 
@@ -176,15 +173,12 @@
                 var roopOver=false;
 
                 var roopAction=()=>{
-                    setTimeout(()=> {
+                    this.$store.state.msgTimer=setTimeout(()=> {
                             console.log("发生请求包");
                            this.$store.dispatch("addListenAllocation").then(res => {
                                if(res.appUnconfirmList.length>0){
                                    this.$root.showMsgModal=true;
                                    roopOver=true;
-//                                   setTimeout(()=>{
-//                                       this.$root.showMsgModal=false;
-//                                   },4000);
                                }
 
                             if(!roopOver){
@@ -194,7 +188,6 @@
                     }, delay);
 
                 }
-
                 roopAction();
             },
             log(){
@@ -228,18 +221,14 @@
             },
             exit(){
                 let vm = this;
-                console.log(this.shopData);
                 layer.confirm('确定要退出吗？', function(index){
-                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=>{
-                             vm.delLocalData();
-                             layer.closeAll();
-                             location.href = "./login.html";
+                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=> {
+                            layer.closeAll();
+                            vm.exitFullScreen()
                         }
                     )
                 });
             },
-        },
-        mounted() {
         }
     }
 </script>
