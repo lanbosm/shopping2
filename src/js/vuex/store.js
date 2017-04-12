@@ -248,9 +248,10 @@ const store = new Vuex.Store({
                 dispatch("addPage");
                 commit("hide_waiting");
             }else{
-                console.log(state.pageList);
+                //console.log(state.pageList);
                 state.pageList.splice(state.headIndex,1);
-                state.headIndex=state.headIndex-1;
+                var tempIndex=state.headIndex-1>0?state.headIndex-1:0;
+                state.headIndex=tempIndex;
                 state.currentPage=state.pageList[state.headIndex];
                 commit("hide_waiting");
             }

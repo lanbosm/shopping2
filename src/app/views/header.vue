@@ -110,7 +110,6 @@
             addPage(){
                 this.$store.dispatch('addPage').then(res=> {
                     this.$router.replace('/' + this.mode);
-                    this.saveLocalData()
                 });
             },
             removePage(){
