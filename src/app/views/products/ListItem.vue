@@ -3,11 +3,10 @@
         <!--商品详情	-->
         <div class="item-detail">
             <div class="item-detail-con">
-                <div class="price primary">{{productDetail.price | currency }}元</div>
-
-                <div class="product">
+                <div class="product" style="margin-top:15px;">
                     <img class="img-responsive  center-block" :src="productDetail.image" :alt="productDetail.title" :title="productDetail.title">
                     <p class="name">{{productDetail.name}} {{productDetail.specDesc}}</p>
+                    <p class="price primary">{{productDetail.price | currency }}元</p>
                     <p class="gift primary" v-if="productDetail.appGiftActivity">{{productDetail.appGiftActivity.name}}</p>
                     <p class="stock">库存：{{productDetail.availableStock}}件</p>
                 </div>

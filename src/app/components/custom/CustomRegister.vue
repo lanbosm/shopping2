@@ -39,6 +39,7 @@
 
     import {request, API_URLS} from 'util/request.js';
     import layer from 'layer';
+    import $ from  'jquery';
 
     export default{
         name:"CustomRegister",
@@ -81,8 +82,13 @@
                 };
                 request.fnPost(this,apiObj,function(res){
                     layer.msg("保存成功");
-                    vm.$parent.custom = res;
-                    vm.$parent.chooseThis();
+                    // 存储到vuex
+                    vm.$store.commit('setCustomData', res.appMember );
+                    if(vm.$store.state.currentPage.mode=="order") {
+                        vm.$store.dispatch('fetchOrder');
+                    }
+                    //关闭弹窗
+                    $('#layer-custom').modal('hide');
                 }, function (err) {
                     layer.msg(err.msg);
                 });

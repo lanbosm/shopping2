@@ -20,9 +20,8 @@
         <div class="custom-table-body" v-if="searchShow">
             <div class="normal" >
                 <transition name="fade">
-                    <p class="text-center bg-warning" v-if="$parent.searching" >没有找到此会员</p>
+                    <p class="text-center bg-warning" v-if="$parent.searching" >{{tips}}</p>
                 </transition>
-
             </div>
         </div>
         <div class="custom-table-body" v-if="infoShow">
@@ -57,7 +56,7 @@
 
 
         },
-        props:["custom", "infoShow","searchShow"],
+        props:["custom", "infoShow","searchShow",'tips'],
         methods:{
         }
     }

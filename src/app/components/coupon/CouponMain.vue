@@ -79,6 +79,7 @@
         },
         data(){
             return {
+                chooseId:null,
                 list:[]
             }
         },
@@ -92,11 +93,22 @@
         },
         methods:{
             chooseThis(id){
-                this.$store.commit("setOrderParams",{
-                    couponCodeId:id
-                });
-                //关闭弹窗
-                $('#layer-coupon').modal('toggle');
+
+                if(id==this.currentId){
+                    this.$store.state.currentPage.orderData.couponCodeId=10;
+                    this.$store.commit("setOrderParams", {
+                        couponCodeId: null
+                    });
+
+                }else {
+                    this.$store.state.currentPage.orderData.couponCodeId=id;
+                    this.$store.commit("setOrderParams", {
+                        couponCodeId: id
+                    });
+
+                    //关闭弹窗
+                   // $('#layer-coupon').modal('toggle');
+                }
             }
         },
         filters:{

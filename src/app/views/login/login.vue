@@ -2,11 +2,9 @@
     <div class="login">
         <div class="container" >
             <div class="row">
-                <div class="left-con col-sm-6 hidden-xs">
 
-                </div>
 
-                <div class="right-con col-sm-6 col-xs-12">
+                <div class="right-con col-xs-6 col-xs-offset-6">
                     <div class="register-box pr">
                         <div class="register-row1 pr" >
                             <a class="logo"></a>
@@ -189,7 +187,7 @@
                         window.localStorage.setItem("accessToken",res.accessToken);
                         util.pushLocal('shopData',res);
                         if(vm.lastUserName!=vm.username){
-                            util.pushLocal("pageList", []);
+                            util.pushLocal("lastData", []);
                         }
                         vm.setCookie("username",username,7);
                         vm.$store.state.login=res.accessToken;

@@ -35,8 +35,8 @@
                                 <li @click="calc(7);">7</li>
                                 <li @click="calc(8);">8</li>
                                 <li @click="calc(9);">9</li>
-                                <li @click="calc('.');">.</li>
                                 <li @click="calc(0);">0</li>
+                                <li @click="calc('.');">.</li>
                                 <li @click="calc('x');">X</li>
 
                             </ul>

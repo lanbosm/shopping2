@@ -118,7 +118,7 @@ const store = new Vuex.Store({
           var data={
               'index':state.headIndex,
               'count':state.shopCount,
-              'list':state.localList
+              'list':state.localList,
           }
           util.pushLocal('lastData',data);
       }
@@ -189,12 +189,15 @@ const store = new Vuex.Store({
                         state.login=false; //清除accesstoken;
                         clearInterval(state.msgTimer);
                         router.replace('/login');
-                        commit("setPageList", []);
+                        state.headIndex=1;
+                        state.currentPage={},
+                        state.pageList=[];
+                        //state.localList=[];
+                        commit("setLocalList",[]);
                         commit('setShopData', {});
 
                         util.delLocal("accessToken");
                         util.delLocal("shopData");
-                        util.delLocal("lastData");
                         commit("hide_waiting");
                         resolve(res);
                     }
@@ -211,7 +214,6 @@ const store = new Vuex.Store({
             commit("getLocalList");
             if(state.localList && state.localList.length){
                 commit("setPageList", state.localList);
-
             }
             //如果本地没有
             if(!state.pageList || !state.pageList.length){
@@ -265,7 +267,31 @@ const store = new Vuex.Store({
             }
             commit('setLocalList',state.pageList);    //存储本地
         },
-
+        //刷新订单
+        fetchOrder({state,commit,dispatch}){
+            commit("show_waiting");
+            var apiObj={
+                url:API_URLS.b2b_orders+"/build",
+                data:state.currentPage.orderParams
+            }
+            var oldOrderData=state.currentPage.orderData;
+            return new Promise((resolve, reject) => {
+                    request.fnPost2(apiObj).then(res=>{
+                        commit("hide_waiting");
+                        if(res.code=="20000"){                //新数据
+                            commit("setOrderData",res.appOrderConfirmBean);
+                            resolve(res);
+                        }else{                                //旧数据
+                            commit("setOrderData",oldOrderData);
+                            reject(res);
+                        }
+                    })
+                    .catch(res=> { //失败
+                            commit("hide_waiting");
+                            reject(res);
+                     })
+            });
+        },
         //获取商品列表
         fetchList({commit,state},value){
             if(value){
@@ -287,7 +313,7 @@ const store = new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit("set_list_waiting",true);
                 request.fnGet(apiObj).then(res => { //成功
-                    //console.log(response)
+                    commit("set_list_waiting",false);
                     if(res.code=="20000"){                //新数据
                         commit("setPageData",res.page);
                         resolve(res);
@@ -295,7 +321,7 @@ const store = new Vuex.Store({
                         commit("setPageData",oldPageData);
                         reject(res);
                     }
-                    commit("set_list_waiting",false);
+
                 })
                 .catch(res=> { //失败
                     commit("set_list_waiting",false);
@@ -509,6 +535,30 @@ const store = new Vuex.Store({
                 })
             });
         },
+        createOrder({commit,state},value){
+
+            var apiObj = {
+                url: API_URLS.b2b_orders + "/create",
+                data: state.currentPage.orderParams
+            }
+
+            commit("show_waiting");
+            return new Promise((resolve, reject) => {
+                request.fnPost2(apiObj).then(res => {
+                    commit("hide_waiting");
+                    if (res.code == "20000") {
+                        commit("setOrderData", res.appOrderConfirmBean);
+                        commit("setPrintData", res.appOrderConfirmBean);
+                        resolve(res);
+                    } else {
+                        reject(res);
+                    }
+                }).catch(res => {
+                    commit("hide_waiting");
+                    reject(res);
+                });
+            });
+        } ,
         //批准调拨
         approvalAllocation({commit},value){
             commit("show_waiting");

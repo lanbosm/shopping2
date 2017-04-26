@@ -6,7 +6,7 @@
         </div>
         <div class="c form-horizontal">
                 <div class="col-xs-12 form-title">
-                    <p>当前备用金 <span>{{shopData.spareCash | currency}}</span></p>
+                    <p>当前备用金 <span>{{shopData.spareCash }}</span></p>
                     <small>注意：备用金为0时无法现金支付找零</small>
                 </div>
                 <div class="form-group ">
@@ -123,8 +123,12 @@
 
         },
         created(){
+            this.$store.dispatch('fetchLog',{"type":"all"}).then(res=>{
 
-            this.spareCash=this.shopData.spareCash;
+                this.$store.state.shopData.spareCash=   Number(res.appShiftInfo.endSpareCash);;
+
+            })
+
         },
         filters: {
             currency: function (value) {

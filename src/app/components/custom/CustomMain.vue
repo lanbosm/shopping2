@@ -7,7 +7,7 @@
                     <a class="close" data-dismiss="modal">&times;</span></a>
                 </div>
                 <div class="modal-body">
-                    <custom-search :custom="tempcustom" :info-show="infoShow" :search-show="searchShow"></custom-search>
+                    <custom-search :tips="tips" :custom="tempcustom" :info-show="infoShow" :search-show="searchShow"></custom-search>
                     <custom-register v-show="registerShow"></custom-register>
                 </div>
             </div>
@@ -92,6 +92,7 @@
 
     import CustomSearch from './CustomSearch.vue';
     import CustomRegister from './CustomRegister.vue';
+    import $ from 'jquery';
     import layer from 'layer';
 
     import {request, API_URLS} from 'util/request.js';
@@ -106,6 +107,7 @@
                 infoShow:false,
                 username:'',
                 tempcustom:null,
+                tips:''
             }
         },
         computed: {
@@ -156,14 +158,16 @@
                     this.registerShow=false;
                     this.infoShow = false;
                     this.searching=true;
-
+                    this.tips="正在查找...";
                     this.$store.dispatch("fetchCustom",vm.username).then(res=>{
                           vm.tempcustom = res;
                           vm.searching=false;
                           vm.searchShow=false;
                           vm.infoShow = true;
+                          this.tips="";
                     }).catch(res=>{
                         vm.searching = true;
+                        this.tips="没有找到此会员";
                         setTimeout(() => vm.searching = false, 3000);
                     })
             },
@@ -171,9 +175,11 @@
                 let vm = this;
                 // 存储到vuex
                 vm.$store.commit('setCustomData', vm.tempcustom.appMember );
-
+                if(vm.$store.state.currentPage.mode=="order") {
+                    vm.$store.dispatch('fetchOrder');
+                }
                 //关闭弹窗
-                $('#layer-custom').modal('toggle');
+                $('#layer-custom').modal('hide');
             }
         }
     }

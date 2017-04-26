@@ -15,7 +15,7 @@
         <div class="col-xs-12 col-sm-4 col-md-3" v-for="(item,index) in itemData ">
                 <div class=" item" @click="fetchItem(item.id);">
                     <!--图片盒子-->
-                    <div class="c">
+                    <div class="cc">
                         <div class="photo" :style="{'background-image':'url('+item.image+')'}">
 
                             <div class="txt">
@@ -29,9 +29,9 @@
                     </div>
                         <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
                     <!--文本盒子-->
-                    <div class="t">
+                    <div class="tt">
 
-                        {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}} {{item.name}}
+                        {{item.name}}
 
                     </div>
 
@@ -59,7 +59,7 @@
         padding-bottom: 10px;
     }
 
-    .c{width: 100%; height: 200px; background: #fff;
+    .cc{width: 100%; height: 200px; background: #fff;
         top:0;
         border-radius: 5px;
         .photo{
@@ -92,7 +92,7 @@
         }
     }
 
-    .t{
+    .tt{
 
         width: 100%;  position: relative;
 

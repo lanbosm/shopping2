@@ -29,7 +29,7 @@
                             </caption>
                             <tbody >
                             <tr>
-                                <td colspan="2" class="text-left block">阿喔优品公司</td>
+                                <td colspan="2" class="text-left block">{{printData.shopName}}</td>
                             </tr>
                             <tr v-show="printData.cashierName">
                                 <td colspan="2" class="text-left block">营业员：{{printData.cashierName}}</td>
@@ -46,7 +46,7 @@
                             </tr>
                             <tr class="split">
                                 <td>小计 </td>
-                                <td>¥ {{printData.totalOrderAmount}}</td>
+                                <td>¥ {{printData.totalPrice}}</td>
                             </tr>
                             <tr>
                                 <td>优惠券 </td>
@@ -68,11 +68,11 @@
                                 <td>付款方式</td>
                                 <td>{{printData.paymentName}}</td>
                             </tr>
-                            <tr class="split">
+                            <tr class="split" v-if="orderParams.paymentMethodId == 10 ">
                                 <td>现金支付</td>
                                 <td>¥ {{printData.rmb}}</td>
                             </tr>
-                            <tr class="split">
+                            <tr class="split"  v-if="orderParams.paymentMethodId == 10 ">
                                 <td>找零</td>
                                 <td>¥ {{printData.cash}}</td>
                             </tr>
@@ -198,15 +198,15 @@
                 var myDate=nowDate.toLocaleDateString();
                 var myTime=nowDate.toLocaleTimeString();     //获取当前时间
 
-
-                var paymentName={12:"扫码支付",10:"现金支付",11:"刷卡支付"};
+                var paymentName={12:"扫码支付",10:"现金支付",11:"刷卡支付",14:"余额支付"};
 
                 print.paymentName=paymentName[this.orderParams.paymentMethodId];
-                print.cash=this.orderParams.cash || 0.00;
-                print.rmb=this.orderParams.rmb || 0.00;
+
+
+                print.cash=this.orderParams.cash ;
+                print.rmb=this.orderParams.rmb ;
                 print.DateTime=myDate+" "+myTime;
-
-
+                print.shopName=this.$store.state.shopData.name;
                 return  print;
             }
 
@@ -233,14 +233,15 @@
         },
         methods: {
             clearOrder(){
-                var curPage=this.$store.state.currentPage.index;
-                this.$store.commit('removePage', curPage);
-                this.$store.commit('switchPage', curPage);
                 this.payStatus="success";
                 clearInterval(this.timer);
+                this.$store.dispatch("removePage").then(res=> {
+                    this.$router.replace('/index');
+                });
 
-                //切换路由
-                this.$router.replace('/'+this.mode);
+               // this.$store.dispatch('switchPage',curPage-1);
+               // this.$store.commit('switchPage', curPage);
+
             },
             printPage(){
 

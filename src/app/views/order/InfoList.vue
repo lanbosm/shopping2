@@ -76,6 +76,7 @@
                     $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
                         vm.$root.showCouponModal=false;
+                        vm.$store.dispatch("fetchOrder");
                     });
                     //禁用空白处点击关闭
                     $(modal).modal({
@@ -107,22 +108,24 @@
                 var useBalance=!this.useBalance;
                 this.$store.commit("setOrderParams",{
                     useBalance:useBalance,
+                    paymentMethodId:14
                 })
                 this.refreshOrder();
             },
             //刷新订单
             refreshOrder(){
 
-                var apiObj={
-                    url:API_URLS.b2b_orders+"/build",
-                    data:this.$store.state.currentPage.orderParams
-                }
-
-                this.$store.commit("show_waiting");
-                request.fnPost(this,apiObj,(res)=>{
-                    this.$store.commit("setOrderData",res.appOrderConfirmBean);
-                    this.$store.commit("hide_waiting");
-                })
+                this.$store.dispatch("fetchOrder");
+//                var apiObj={
+//                    url:API_URLS.b2b_orders+"/build",
+//                    data:this.$store.state.currentPage.orderParams
+//                }
+//
+//                this.$store.commit("show_waiting");
+//                request.fnPost(this,apiObj,(res)=>{
+//                    this.$store.commit("setOrderData",res.appOrderConfirmBean);
+//                    this.$store.commit("hide_waiting");
+//                })
             }
         },
 

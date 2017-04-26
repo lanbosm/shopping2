@@ -45,22 +45,25 @@
 			opacity: 0;
 		}
 
+		html,body{ height: 100%; overflow: hidden;}
+		#media{
+			 width: 1440px; height: 908px;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="wrap">
+	<div class="wrap" id="media">
 			<!-- container -->
 			<div class="main" id="main">
 					<!--头导航-->
 					<app-header ref="header" v-if="login"></app-header>
 
 					<app-center-loading v-if="waiting"></app-center-loading>
-
-					<!--主体-->
-					<transition name="slide">
-							<router-view></router-view>
-					</transition>
+						<!--主体-->
+						<transition name="slide" >
+								<router-view ></router-view>
+						</transition>
 
 
 					<!--顾客-->
@@ -111,6 +114,43 @@
         alert("你的游览器版本过低 请升级到ie9以上 使用该系统");
     }
 
+
+    (function(win,doc){
+        var re=function(){
+            var wrap=doc.querySelector('#media');
+            var s=doc.querySelectorAll('.s');
+            var pw = 1200;     //设计图的宽
+            var tww = win.innerWidth
+            var twh =win.innerHeight;
+
+            var wh = twh*pw/tww;        //获取对应比例高
+
+            var wsc = tww/pw;          //获取比例
+
+            var tw = Math.min(0,(pw-tww)*0.5);  //center
+            tw=0;
+            //先宽自适应
+            wrap.style.height=wh+'px';
+            wrap.style.transformOrigin='0% 0%';
+            wrap.style.webkitTransformOrigin='0% 0%';
+            wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
+            wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
+
+
+
+//            var hsc=wh/ph;
+//            wh<ph?hsc=wh/ph:hsc=1;
+//            for(var i=0;i<s.length;i++){
+                //再高自适应
+//			       s[i].style.transform='scale('+hsc+') translateZ(0)';
+//s[i].style.webkitTransform='scale('+hsc+') translateZ(0)';
+//            }
+
+        }
+       // re();
+       // win.addEventListener('resize',re,false);
+
+    })(window,document);
 //统计代码
 
 	

@@ -194,9 +194,9 @@ img{width:100%}
 .order .order-body .list-box table tbody tr td:nth-child(2) span{background:#fff;color:#6fc89c;width:90%;display:inline-block;border-radius:4px}
 .order .order-body .list-box table tbody tr td:nth-child(3){background:#b998cd;color:#fff}
 .order .order-body .calc-box{padding-top:15px;padding-bottom:30px}
-.order .order-body .calc-box ul{width:240px;background:#eee;border-left:solid 1px #ccc;border-top:solid 1px #ccc;margin:0;padding:0}
+.order .order-body .calc-box ul{width:480px;background:#eee;border-left:solid 1px #ccc;border-top:solid 1px #ccc;margin:0;padding:0}
 .print .col-nn-23,.print .col-nn-30,.print .col-nn-70{padding-left:15px;padding-right:15px;float:left}
-.order .order-body .calc-box ul li{box-sizing:border-box;border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;width:33%;height:80px;line-height:80px;font-size:22px;float:left}
+.order .order-body .calc-box ul li{box-sizing:border-box;border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;width:16.5%;height:80px;line-height:80px;font-size:22px;float:left}
 .print-wrap{background:#f0eeef}
 .print{background-color:#f0eeef}
 .print .col-nn-30{width:30%}
