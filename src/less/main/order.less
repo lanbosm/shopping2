@@ -1,0 +1,157 @@
+
+.order-wrap{background: #f0eeef;}
+.order{
+  background: #efefef;
+  .container{
+      background-color:#ffffff;
+      border-left: @borderDashedStyle;
+      border-right: @borderDashedStyle;
+  }
+  .btn{
+    position:relative;
+  }
+  .order-header{
+     padding: 15px;
+     position: relative;
+     .order-row;
+     h3{
+       font-size: 18px; line-height: 30px; margin: 0;
+     }
+     .ok-btn,.back-btn{
+       .order-header-btn;
+     }
+   }
+
+  .order-custom{
+     padding: 20px 15px;
+     position: relative;
+    .cur{
+      border-color: @themeColor !important;
+      >span{
+        color: @themeColor !important;
+      }
+    }
+    .order-row;
+    .custom-btn{
+         font-size: 18px;
+        .order-custom-btn;
+
+    }
+    .coupon-btn,.point-btn,.balance-btn{
+         font-size: 18px;
+
+         b{
+           position: relative;
+           top: -10px;
+           font-style: normal;
+         }
+
+         span {
+           position: absolute;
+           font-size: 14px;
+           display: block;
+           text-align: center;
+           top:40px;
+           left:0;
+           right:0;
+           margin: 0 auto;
+         }
+
+         .order-custom-btn;
+         &:hover span,&.selected span{color:@themeColor; }
+
+    }
+
+
+  }
+  .order-body{
+      position: relative;
+      .order-row;
+
+      .left-con{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        height:@orderHeight;
+        border-right: @borderDashedStyle;
+        border-width: 2px;
+        position: relative;
+        .btn{
+          margin-top: 15px; margin-bottom: 30px; font-size: 18px;
+          span {margin-right: 20px;}
+        }
+        .scan-btn,.money-btn,.card-btn{
+          .order-left-btn;
+        }
+        .recharge-btn{
+          margin-top: 80px;
+          .order-left-btn;
+        }
+        .on {
+          background-color: @green;
+          color: #ffffff;
+        }
+
+      }
+
+      .tab-con{
+        border-bottom: @borderDashedStyle;
+        border-width: 2px;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        min-height: 500px;
+        display: none;
+        position: relative;
+        padding-bottom: 100px;
+        &.tabShow{display: block;
+          .pay-amount{ color: @themeColor;   font-size: 60px; }
+          .pay-gift-amount {color: @themeColor; margin-top: 10px; font-size: 16px; }
+          .pay-tips {color: @themeColor; margin-top: 10px; font-size: 16px; }
+          .txt{color: #999999; line-height: 20px;}
+        }
+
+
+        .shopAdminBox{ width:100%;   position:absolute; bottom: 0; padding-bottom: 20px;}
+        .shopAdminBox .addShopAdmin-btn{width: 100%; height: 80px; line-height: 40px;
+          .order-left-btn;
+
+
+        }
+
+      }
+
+      .list-box{
+          padding-bottom: 30px;
+          table{border: none;}
+          table td,table th{ width: 25%; text-align: center;border: none; font-size: 14px; padding: 4px; line-height: 30px; }
+          table tbody tr{ background: @green; color: #ffffff;}
+
+          table tbody tr td:nth-child(2) span {  background: #ffffff; color:@green;  width: 90%;  display: inline-block; border-radius: 4px; }
+
+          table tbody tr td:nth-child(3){ background: #b998cd; color:#ffffff;}
+
+          border-bottom: @borderDashedStyle;
+          border-width: 2px;
+      }
+
+      .calc-box{
+          padding-top: 15px;
+          padding-bottom: 30px;
+          ul {
+            width: 480px; background: #eeeeee; border-left: solid 1px #cccccc; border-top: solid 1px #cccccc;
+            margin: 0; padding: 0;
+            li {
+              box-sizing: border-box;
+              border-right: solid 1px #cccccc;
+              border-bottom: solid 1px #cccccc;
+              width: 16.5%;
+              height: 80px;
+              line-height: 80px;
+              font-size: 22px;
+              float: left;
+            }
+          }
+      }
+
+
+  }
+}

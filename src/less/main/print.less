@@ -1,0 +1,73 @@
+
+.order-row(){
+  border-bottom: @borderDashedStyle;
+  border-width: 2px;
+}
+
+
+
+.order-header-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+}
+
+.order-print-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,15px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,15px);}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,15px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc,5px,15px);}
+}
+
+
+.print-wrap{background: #f0eeef; }
+.print{
+   background-color: #f0eeef;
+  .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
+  .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
+  .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
+
+  .container{
+      background-color:#ffffff;
+      border-left: @borderDashedStyle;
+      border-right: @borderDashedStyle;
+  }
+  .btn{
+    position:relative;
+
+  }
+  .order-header{
+    padding:  15px;
+    position: relative;
+    .order-row;
+    h3{
+      font-size: 18px; line-height: 30px; margin: 0;
+      span{
+        color: @themeColor;}
+    }
+    .ok-btn,.back-btn{
+        .order-header-btn;
+    }
+  }
+  .order-custom{
+     padding: 30px 30px;
+     position: relative;
+     width: 520px;
+    .print-btn{
+         font-size: 18px;
+        .order-print-btn;
+
+    }
+
+  }
+  .print-body{
+      position: relative;
+      .order-row;
+      width: 520px;
+      height:900px;
+
+
+
+  }
+}

@@ -2,8 +2,6 @@
     <div class="login">
         <div class="container" >
             <div class="row">
-
-
                 <div class="right-con col-xs-6 col-xs-offset-6">
                     <div class="register-box pr">
                         <div class="register-row1 pr" >
@@ -31,7 +29,7 @@
                             <p>如登录出现异常，请清理浏览器缓存后再尝试。</p>
                         </div>
                         <div class="register-row5 pr">
-                            <p>Powered by ©2012-2016 aouyoupin.cn</p>
+                            <p>Powered by ©2016-2017 awo123.cn</p>
                         </div>
                     </div>
                 </div>

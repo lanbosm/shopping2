@@ -1,0 +1,84 @@
+
+.login{
+    font-size: 12px;
+    background: url("@{imgPath}/login_bg.jpg") no-repeat 50% 0;
+    .left-con{ height:768px; position: relative;
+    }
+    .right-con{
+      height:768px; position: relative;}
+    .register-box{ width: 430px;
+      position: absolute;
+      left:0;
+      right:0;
+      top:50%; margin-top:-211px;
+
+        padding:0 20px;
+
+        .register-row1{
+              height: 66px;
+             .logo{ width:101px; height:66px; display: block;float: left;
+              background: url('@{imgPath}/logo.png') no-repeat 50% 0; margin-left: -10px;
+             }
+             .weclome{ width:280px; height: 66px; margin-left: 10px; margin-top: 10px;
+                display: block;float: left;
+                h1{ font-size:18px; line-height:40px; margin:0; margin-top: 0px; font-weight: bold; }
+                small{}
+            }
+        }
+
+      .register-row2{
+
+            margin-top: 25px;
+            h3{ font-size: 16px; color: @themeColor;}
+      }
+
+      .register-row3{
+        padding-bottom:20px;
+        border-bottom: solid 2px  @themeColor;
+
+        .register-row3-input{
+          width:100%;
+          height:40px;
+          margin-top: 10px;
+
+        }
+
+
+          label{
+            float: left;
+            width: 10%;
+            height:100%;
+
+            &.username{
+              background: url('@{imgPath}/login_user.png') no-repeat 50% 0;
+            }
+            &.password{
+              background: url('@{imgPath}/login_pass.png') no-repeat 50% 0;
+            }
+          }
+            input{ width:80%; font-size:12px;  padding: 10px 10px;  height:100%; margin-left: 10px;   float: left;
+                border: @borderStyle; border-radius: 3px;
+          }
+
+
+
+      }
+
+      .register-row4{
+        .login{ width: 90%; background:@themeColor; color:#ffffff;
+          left:0; right:0;  height:40px; position: relative;
+          margin:20px auto; line-height:30px; }
+        p{
+          color: @thinColor;
+        }
+      }
+
+      .register-row5{
+        color: @thinColor;
+        padding-top: 60px;
+      }
+
+    }
+}
+
+

@@ -45,9 +45,25 @@
 			opacity: 0;
 		}
 
-		html,body{ height: 100%; overflow: hidden;}
+		html,body{ height: 100%; overflow: hidden; background: #333333;}
 		#media{
-			 width: 1440px; height: 908px;
+			 width: 1400px; height: 680px;
+
+			background: url(./test.jpg) no-repeat; background-size: 100% ;
+		}
+
+		#main{
+
+			width: 100%;
+			height:100%;
+			position: relative;
+			background: #ffffff;
+
+
+		}
+		.wrap{
+
+
 		}
 	</style>
 </head>
@@ -57,36 +73,35 @@
 			<!-- container -->
 			<div class="main" id="main">
 					<!--头导航-->
-					<app-header ref="header" v-if="login"></app-header>
+					<!--<app-header ref="header" v-if="login"></app-header>-->
 
-					<app-center-loading v-if="waiting"></app-center-loading>
-						<!--主体-->
-						<transition name="slide" >
-								<router-view ></router-view>
-						</transition>
+					<!--<app-center-loading v-if="waiting"></app-center-loading>-->
+						<!--&lt;!&ndash;主体&ndash;&gt;-->
+						<!--<transition name="slide" >-->
+								<!--<router-view ></router-view>-->
+						<!--</transition>-->
 
 
-					<!--顾客-->
-					<layer-custom v-if="showCustomModal"></layer-custom>
-					<!--导购员-->
-					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
+					<!--&lt;!&ndash;顾客&ndash;&gt;-->
+					<!--<layer-custom v-if="showCustomModal"></layer-custom>-->
+					<!--&lt;!&ndash;导购员&ndash;&gt;-->
+					<!--<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>-->
 
-					<!--优惠券-->
-					<layer-coupon v-if="showCouponModal"></layer-coupon>
+					<!--&lt;!&ndash;优惠券&ndash;&gt;-->
+					<!--<layer-coupon v-if="showCouponModal"></layer-coupon>-->
 
-					<!--充值-->
-					<layer-recharge v-if="showRechargeModal"></layer-recharge>
+					<!--&lt;!&ndash;充值&ndash;&gt;-->
+					<!--<layer-recharge v-if="showRechargeModal"></layer-recharge>-->
 
-					<!--消息-->
-					<transition name="fade" >
-						<layer-msg v-if="showMsgModal"></layer-msg>
-					</transition>
-					<!--日记-->
-					<layer-log v-if="showLogModal"></layer-log>
+					<!--&lt;!&ndash;消息&ndash;&gt;-->
+					<!--<transition name="fade" >-->
+						<!--<layer-msg v-if="showMsgModal"></layer-msg>-->
+					<!--</transition>-->
+					<!--&lt;!&ndash;日记&ndash;&gt;-->
+					<!--<layer-log v-if="showLogModal"></layer-log>-->
 
-					<!--备用金-->
-					<layer-cash v-if="showCashModal"></layer-cash>
-
+					<!--&lt;!&ndash;备用金&ndash;&gt;-->
+					<!--<layer-cash v-if="showCashModal"></layer-cash>-->
 
 			</div>
 		</div>
@@ -118,9 +133,10 @@
     (function(win,doc){
         var re=function(){
             var wrap=doc.querySelector('#media');
-            var s=doc.querySelectorAll('.s');
-            var pw = 1200;     //设计图的宽
-            var tww = win.innerWidth
+            var s=doc.querySelectorAll('#main');
+            var pw = 1400;     //设计图的宽
+            var ph = 680;     //设计图的宽
+            var tww = win.innerWidth;
             var twh =win.innerHeight;
 
             var wh = twh*pw/tww;        //获取对应比例高
@@ -130,25 +146,26 @@
             var tw = Math.min(0,(pw-tww)*0.5);  //center
             tw=0;
             //先宽自适应
-            wrap.style.height=wh+'px';
+
+           // wrap.style.height=wh+'px';
             wrap.style.transformOrigin='0% 0%';
             wrap.style.webkitTransformOrigin='0% 0%';
             wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
             wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
 
 
-
-//            var hsc=wh/ph;
-//            wh<ph?hsc=wh/ph:hsc=1;
-//            for(var i=0;i<s.length;i++){
-                //再高自适应
-//			       s[i].style.transform='scale('+hsc+') translateZ(0)';
-//s[i].style.webkitTransform='scale('+hsc+') translateZ(0)';
-//            }
+            //  再高自适应
+			var hsc= wh<ph?wh/ph:1;
+            for(var i=0;i<s.length;i++){
+				   s[i].style.transformOrigin='50% 0%';
+			       s[i].style.webkitTransformOrigin='50% 0%';
+			       s[i].style.transform='scale('+hsc+') ';
+				   s[i].style.webkitTransform='scale('+hsc+') ';
+            }
 
         }
-       // re();
-       // win.addEventListener('resize',re,false);
+        re();
+		win.addEventListener('resize',re,false);
 
     })(window,document);
 //统计代码

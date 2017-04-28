@@ -1,37 +1,5 @@
-/*!reset css*/
-article,aside,details,figcaption,figure,footer,header,hgroup,img,menu,nav,section{display:block}
-.btn,img{-webkit-user-select:none}
-.breadcrumb li a:hover,.category-list .menu .sub,.header .header-nav .menu-box .cash-btn:hover,.header .header-nav .menu-box .contact-btn:hover,.header .header-nav .menu-box .exit-btn:hover,.header .header-nav .menu-box .log-btn:hover,.header .header-nav .menu-box .msg-btn:hover,.shoppingCalc .table .num-btn,a{text-decoration:none}
-body,button,input,select,textarea{font-family:'黑体',tahoma,'\5b8b\4f53',sans-serif}
-b,em{font-style:normal}
-button,input,select,textarea{font-size:100%;outline:0}
-table{border-collapse:collapse;border-spacing:0}
-fieldset,img{border:0}
-img,input{border:none}
-address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}
-caption,th{text-align:left}
-abbr,acronym{border:0;font-variant:normal}
-input,select,textarea{font-family:inherit;font-size:inherit;font-weight:inherit}
-input{background:0 0;outline:0}
-audio,canvas,video{display:inline-block}
-ol,ul{list-style:none}
-q:after,q:before{content:''}
-sup{vertical-align:text-top}
-sub{vertical-align:text-bottom}
-*{webkit-user-select:none}
-a,input{-webkit-tap-highlight-color:transparent}
-img{width:100%}
-.hide{display:none}
-.ti{text-indent:-999em}
-.pr{position:relative}
-.btn,.pa{position:absolute}
-.fl{float:left}
-.fr{float:right}
-.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
-.btn{display:block;z-index:30;text-indent:0;-webkit-transition:all 0s;-moz-transition:all 0s;-ms-transition:all 0s;-o-transition:all 0s;transition:all 0s}
-.hid{display:none!important}
-.poniterNone{pointer-events:none}
 /*!自定义公用样式*/
+.breadcrumb li a:hover,.category-list .menu .sub,.header .header-nav .menu-box .cash-btn:hover,.header .header-nav .menu-box .contact-btn:hover,.header .header-nav .menu-box .exit-btn:hover,.header .header-nav .menu-box .log-btn:hover,.header .header-nav .menu-box .msg-btn:hover,.shoppingCalc .table .num-btn{text-decoration:none}
 .pink{color:#e84593}
 .f_12px{font-size:12px}
 .f_14px{font-size:14px}
@@ -70,6 +38,7 @@ img{width:100%}
 @media (min-width:1200px){.col-lg-50{width:20%;float:left}
 }
 /*!共有btn*/
+.btn{-webkit-transition:all 0s;-moz-transition:all 0s;-ms-transition:all 0s;-o-transition:all 0s;transition:all 0s}
 .footer{padding:12px 0 18px;line-height:24px}
 /*!导航栏*/
 .icon{display:inline-block;overflow:hidden;vertical-align:middle;background-repeat:no-repeat!important;background-position:50% 50%!important;width:50px;height:50px}
