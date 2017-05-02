@@ -2,8 +2,6 @@
     <div class="login">
         <div class="container" >
             <div class="row">
-
-
                 <div class="right-con col-xs-6 col-xs-offset-6">
                     <div class="register-box pr">
                         <div class="register-row1 pr" >

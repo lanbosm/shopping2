@@ -34,5 +34,5 @@ a,input{-webkit-tap-highlight-color:transparent}
 .poniterNone{pointer-events:none}
 body{background:#fff;color:#333;font-size:12px;font-family:"黑体"}
 body::-webkit-scrollbar{display:none}
-#wrap{max-width:1920px;margin:0 auto}
+#wrap{max-width:1920px;margin:0 auto;background:#00f}
 #main{background:#f8f8f8}

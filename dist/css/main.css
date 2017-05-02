@@ -33,6 +33,7 @@ img{width:100%}
 .poniterNone{pointer-events:none}
 /*!自定义公用样式*/
 .pink{color:#e84593}
+body{background: pink;}
 .f_12px{font-size:12px}
 .f_14px{font-size:14px}
 .f_Bold{font-weight:700}

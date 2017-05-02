@@ -35,7 +35,7 @@ const webpackConfigPro=require("./webpack.production.config.js");
 var browserSync = require('browser-sync').create();
 
 var host = {
-    domain:"192.168.1.32",
+    domain:"127.0.0.1",
     path: 'dist/',
     port: 3000,
     html: 'index.html'
@@ -114,7 +114,16 @@ gulp.task('lessmin', function (done) {
         .pipe(gulp.dest('dist/css/'))
         .on('end', done);
 });
+// scss编译后的css将注入到浏览器里实现更新
+gulp.task('less', function() {
+    return gulp.src('src/css/*.less')
+      //  .pipe(sourcemaps.init())
+       // .pipe(autoprefixer(autoprefixerConfig))
+        .pipe(less())
+      //  .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('dist/css'))
 
+});
 //用于在html文件中直接include文件 html处理
 gulp.task('fileinclude', function (done) {
 
@@ -286,7 +295,7 @@ gulp.task('webpackDevServer',function(){
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening
         console.log("listen successful , port at 3000");
-        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://192.168.1.32:3000'}));
+        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://'+host.domain+':3000'}));
 
 
     });
@@ -300,14 +309,101 @@ gulp.task('default',function(){
     console.log("如果开发请输入gulp dev 生产请输入gulp pro");
 });
 
+var express = require('express'),
+    path = require('path'),
+    consolidate = require('consolidate');
+//var isDev = process.env.NODE_ENV !== 'production';
+var isDev = true;
+var app = express();
+var port = 3000;
+app.engine('html', consolidate.ejs);
+app.set('view engine', 'html');
+app.set('views', path.resolve(__dirname, './dist/app'));
+
+
+app.locals.env = process.env.NODE_ENV || 'dev';
+app.locals.reload = false;
 
 //静态服务器开发 适合布局
-gulp.task('dev', ['clean'],function(){           //不能同时进行 所以很多start
-    gulp.start('copy',function(){
-        gulp.start('fileinclude','lessmin','build-js',function(){
-            gulp.start( 'watch','web');
-        });
+gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
+    gulp.start('copy',['fileinclude','lessmin'],function(){
+        // gulp.start('fileinclude','lessmin','build-js',function(){
+        //     gulp.start( 'watch','web');
+        // });
+        if (isDev) {
+            var webpack = require('webpack'),
+                webpackDevMiddleware = require('webpack-dev-middleware'),
+                webpackHotMiddleware = require('webpack-hot-middleware');
+              //  webpackDevConfig = require('./webpack.config.js');
+            var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
+            var config = Object.create(webpackConfigDev);
+            config.devtool = "eval";
+            config.debug = true;
+
+            for(var i in config.entry){ //给每个多入口添加监听器
+                //  console.log(i);
+                config.entry[i].unshift("webpack-hot-middleware/client?reload=true");
+            }
+
+            config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
+            var compiler = webpack(config);
+
+            app.use(webpackDevMiddleware(compiler, {
+                publicPath: config.output.publicPath,
+                noInfo: true,
+                stats: {
+                    colors: true
+                }
+            }));
+            app.use(webpackHotMiddleware(compiler));
+
+            //静态文件目录，
+            app.use(express.static(path.join(__dirname,'dist')));
+
+            app.use('/',   function(req, res) {
+                res.render('index.html');
+            });
+
+
+
+         //   app.use(express.static(path.join(__dirname, 'dist/css')));
+            // browsersync is a nice choice when modifying only views (with their css & js)
+            var bs = require('browser-sync').create();
+            app.listen(port, function(){
+                bs.init({
+                    open: false,
+                    ui: false,
+                    notify: true,
+                    proxy: 'localhost:3000',
+                    files: ['./dist/**'],
+                    port: 8080
+                });
+                console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+            });
+
+            var watcher = gulp.watch(['src/css/*.less']);
+
+            watcher.on('change', function(event) {
+                // console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+                bs.reload();
+            });
+        } else {
+            app.use(express.static(path.join(__dirname, 'public')));
+            require('./server/routes')(app);
+            app.listen(port, function () {
+                console.log('App (production) is now running on port 3000!');
+            });
+        }
+
     });
+
+
+
+    // gulp.start('copy',function(){
+    //     gulp.start('fileinclude','lessmin','build-js',function(){
+    //         gulp.start( 'watch','web');
+    //     });
+    // });
 });
 
 
