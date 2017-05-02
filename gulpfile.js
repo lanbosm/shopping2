@@ -19,8 +19,7 @@ const gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     clean = require('gulp-clean'),
     spriter = require('gulp-css-spriter'),
-    base64 = require('gulp-css-base64'),
-    open = require('gulp-open');
+    base64 = require('gulp-css-base64');
 
 
 
@@ -35,7 +34,7 @@ const webpackConfigPro=require("./webpack.production.config.js");
 var browserSync = require('browser-sync').create();
 
 var host = {
-    domain:"192.168.1.32",
+    domain:"127.0.0.1",
     path: 'dist/',
     port: 3000,
     html: 'index.html'
@@ -103,18 +102,24 @@ gulp.task('copy',['copy:css','copy:images','copy:lib','copy:data'],function() {
 });
 
 //压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css css处理
-gulp.task('lessmin', function (done) {
-    //修改源码
+// gulp.task('lessmin', function (done) {
+//     //修改源码
+//     gulp.src(['src/css/*.less'])  //main 是主入口
+//         .pipe(less())
+//         //这里可以加css sprite 让每一个css合并为一个雪碧图
+//         //.pipe(spriter({}))
+//        // .pipe(concat('style.css'))
+//         .pipe(cssmin({"keepBreaks":true}))
+//         .pipe(gulp.dest('dist/css/'))
+//         .on('end', done);
+// });
+// scss编译后的css将注入到浏览器里实现更新
+gulp.task('less', function() {
     gulp.src(['src/css/*.less'])  //main 是主入口
-        .pipe(less())
-        //这里可以加css sprite 让每一个css合并为一个雪碧图
-        //.pipe(spriter({}))
-       // .pipe(concat('style.css'))
-        .pipe(cssmin({"keepBreaks":true}))
-        .pipe(gulp.dest('dist/css/'))
-        .on('end', done);
-});
+    .pipe(less())
+    .pipe(gulp.dest('dist/css/'))
 
+});
 //用于在html文件中直接include文件 html处理
 gulp.task('fileinclude', function (done) {
 
@@ -192,7 +197,7 @@ gulp.task('rev:html', function (done) {
 
 
 //雪碧图操作，应该先拷贝图片并压缩合并css
-gulp.task('sprite', ['copy:images', 'lessmin'], function (done) {
+gulp.task('sprite', ['copy:images', 'less'], function (done) {
     var timestamp = +new Date();
     gulp.src('dist/css/style.min.css')
         .pipe(spriter({
@@ -209,18 +214,184 @@ gulp.task('sprite', ['copy:images', 'lessmin'], function (done) {
 });
 
 
-//监听事件
-gulp.task('watch', function (done) {
-    //分别对html css js 处理 本来写**/* 其他文件也会多余操作
-    gulp.watch('src/app/**/*.html', ['fileinclude']);
-    gulp.watch('src/app/**/*.inc', ['fileinclude']);
-    gulp.watch('src/css/**/*.less', ['lessmin']);
-    gulp.watch('src/js/**/*.js', ['build-js']);
+
+
+
+
+
+
+
+// //webpack服务器 万物皆模块（js） 没配好 css html 要手动刷新
+// gulp.task('webpackDevServer',function(){
+//     var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
+//     var WebpackDevServer = require("webpack-dev-server");
+//     //new HotMiddleware(compiler);                   //中间件 还没添加
+//     var config = Object.create(webpackConfigDev);
+//     config.devtool = "eval";
+//     config.debug = true;
+//
+//     for(var i in config.entry){ //给每个多入口添加监听器
+//       //  console.log(i);
+//        config.entry[i].unshift("webpack-dev-server/client?http://"+host.domain+":"+host.port+"/", "webpack/hot/dev-server");
+//     }
+//
+//     config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
+//
+//
+//     //tips
+//     //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
+//     //官网的解释是webpack-dev-server没有权限读取webpack的配置
+//
+//     var compiler = webpack(config);
+//     var server = new WebpackDevServer(compiler, {
+//         contentBase: config.output.path,
+//         publicPath: config.output.publicPath,
+//         inline:true,
+//         hot: true,
+//         compress: false,
+//         stats: { colors: true },
+//         proxy: {
+//             '/cashier/*': {
+//                 target: 'http://192.168.1.199:82',
+//                 changeOrigin: true,
+//                 secure: false
+//             }
+//         }
+//
+//
+//         });
+//     server.listen( host.port, host.domain, function(err) {
+//         if(err) throw new gutil.PluginError("webpack-dev-server", err);
+//         // Server listening
+//         console.log("listen successful , port at 3000");
+//         gulp.src('') .pipe(open({app: 'chrome', uri: 'http://'+host.domain+':3000'}));
+//
+//
+//     });
+//
+//     // server.close();
+// });
+
+
+
+gulp.task('default',function(){
+    console.log("如果开发请输入gulp dev 生产请输入gulp pro");
+});
+
+
+
+//webpack服务器开发 适合 js编译
+
+var express = require('express'),
+    path = require('path'),
+    consolidate = require('consolidate');
+//var isDev = process.env.NODE_ENV !== 'production';
+var isDev = true;
+var app = express();
+var port = 3000;
+app.engine('html', consolidate.ejs);
+app.set('view engine', 'html');
+app.set('views', path.resolve(__dirname, './dist/app'));
+
+
+app.locals.env = process.env.NODE_ENV || 'dev';
+app.locals.reload = false;
+
+//静态服务器开发 适合布局
+gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
+    gulp.start('copy',['fileinclude','less'],function(){
+        if (isDev) {
+            var webpack = require('webpack'),
+                webpackDevMiddleware = require('webpack-dev-middleware'),
+                webpackHotMiddleware = require('webpack-hot-middleware');
+
+            var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
+            var config = Object.create(webpackConfigDev);
+            //config.devtool = "eval";
+            //config.debug = true;
+
+            for(var i in config.entry){ //给每个多入口添加监听器
+                //  console.log(i);
+                config.entry[i].unshift("webpack-hot-middleware/client?reload=true");
+            }
+
+            config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
+            var compiler = webpack(config);
+
+            app.use(webpackDevMiddleware(compiler, {
+                publicPath: config.output.publicPath,
+                noInfo: true,
+                stats: {
+                    colors: true
+                }
+            }));
+            app.use(webpackHotMiddleware(compiler));
+
+            //静态文件目录，
+            app.use(express.static(path.join(__dirname,'dist')));
+
+            app.use('/',   function(req, res) {
+                res.render('index.html');
+            });
+
+            //   app.use(express.static(path.join(__dirname, 'dist/css')));
+            // browsersync is a nice choice when modifying only views (with their css & js)
+            var bs = require('browser-sync').create();
+            app.listen(port, function(){
+                bs.init({
+                    open: true,
+                    ui: false,
+                    notify: true,
+                    proxy: 'localhost:3000',
+                    files: ['./dist/**'],
+                    port: 8080
+                });
+                console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+            });
+
+
+            var  watcher= gulp.watch('src/css/**/*.less');
+            watcher.on('change', function(){
+                gulp.src(['src/css/*.less'])  //main 是主入口
+                    .pipe(less())
+                    .pipe(gulp.dest('dist/css/'))
+            })
+                   //console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+                   // gulp.start("less");
+        } else {
+            console.log("生产模式");
+            // app.use(express.static(path.join(__dirname, 'public')));
+            // require('./server/routes')(app);
+            // app.listen(port, function () {
+            //     console.log('App (production) is now running on port 3000!');
+            // });
+        }
+
+    });
 
 });
 
 
-// 静态服务器 + 监听 css/html 文件
+//生产最后的dist 适合发布 压缩
+// gulp.task('pro', ['clean'],function(){
+//     //也许你需要cdn!
+//     gulp.start('copy',function(){
+//         gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
+//             console.log("生成终了..");
+//
+//
+//         });
+//     });
+// });
+
+
+//webpack服务器开发 适合 js编译
+// gulp.task('webpack-dev', ['clean'],function(){
+//      gulp.start('copy','fileinclude','lessmin','webpackDevServer');
+// });
+
+
+// 静态服务器 
 gulp.task('web', function() {
     console.log('browser------------');
     browserSync.init({
@@ -242,96 +413,8 @@ gulp.task('web', function() {
 });
 
 
-
-//webpack服务器 万物皆模块（js） 没配好 css html 要手动刷新
-gulp.task('webpackDevServer',function(){
-    var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
-    var WebpackDevServer = require("webpack-dev-server");
-    //new HotMiddleware(compiler);                   //中间件 还没添加
-    var config = Object.create(webpackConfigDev);
-    config.devtool = "eval";
-    config.debug = true;
-
-    for(var i in config.entry){ //给每个多入口添加监听器
-      //  console.log(i);
-       config.entry[i].unshift("webpack-dev-server/client?http://"+host.domain+":"+host.port+"/", "webpack/hot/dev-server");
-    }
-
-    config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
-
-
-    //tips
-    //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
-    //官网的解释是webpack-dev-server没有权限读取webpack的配置
-
-    var compiler = webpack(config);
-    var server = new WebpackDevServer(compiler, {
-        contentBase: config.output.path,
-        publicPath: config.output.publicPath,
-        inline:true,
-        hot: true,
-        compress: false,
-        stats: { colors: true },
-        proxy: {
-            '/cashier/*': {
-                target: 'http://192.168.1.199:82',
-                changeOrigin: true,
-                secure: false
-            }
-        }
-
-
-        });
-    server.listen( host.port, host.domain, function(err) {
-        if(err) throw new gutil.PluginError("webpack-dev-server", err);
-        // Server listening
-        console.log("listen successful , port at 3000");
-        gulp.src('') .pipe(open({app: 'chrome', uri: 'http://192.168.1.32:3000'}));
-
-
-    });
-
-    // server.close();
-});
-
-
-
-gulp.task('default',function(){
-    console.log("如果开发请输入gulp dev 生产请输入gulp pro");
-});
-
-
-//静态服务器开发 适合布局
-gulp.task('dev', ['clean'],function(){           //不能同时进行 所以很多start
-    gulp.start('copy',function(){
-        gulp.start('fileinclude','lessmin','build-js',function(){
-            gulp.start( 'watch','web');
-        });
-    });
-});
-
-
-//生产最后的dist 适合发布 压缩
-gulp.task('pro', ['clean'],function(){
-    //也许你需要cdn!
-    gulp.start('copy',function(){
-        gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
-            console.log("生成终了..");
-
-
-        });
-    });
-});
-
-
 //webpack服务器开发 适合 js编译
-gulp.task('webpack-dev', ['clean'],function(){
-     gulp.start('copy','fileinclude','lessmin','webpackDevServer');
-});
-
-
-//webpack服务器开发 适合 js编译
-gulp.task('webpack-prod', ['clean'],function(){
+gulp.task('prod', ['clean'],function(){
     gulp.start('copy','rev:html','rev:css','rev:js',function(){
         console.log("打包好了");
         browserSync.init({

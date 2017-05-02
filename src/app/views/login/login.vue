@@ -137,9 +137,6 @@
         methods: {
             toLogin:function(){
 
-
-                this.fullScreen();
-
                 let vm=this;
                 let apiobj={
                     url:API_URLS.public_key,

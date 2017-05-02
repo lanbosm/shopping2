@@ -20,6 +20,12 @@
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_hpjhwe2we5e6zuxr.css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
 
+	<style>
+		.layui-layer-shade{
+			pointer-events: none !important;
+		}
+
+	</style>
 	<!--[if lt IE 9]>
 	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -45,24 +51,19 @@
 			opacity: 0;
 		}
 
-		html,body{ height: 100%; overflow: hidden; background: #333333;}
+		html,body{ height: 100%; overflow: hidden; background: #ffffff;}
 		#media{
-			 width: 1400px; height: 768px;
+			 width: 1440px; height: 900px;
 
-			background: url(./test.jpg) no-repeat; background-size: 100% ;
 		}
 
 		#main{
-
 			width: 100%;
 			height:100%;
 			position: relative;
 			background: #ffffff;
-
-
 		}
 		.wrap{
-
 
 		}
 	</style>
@@ -70,6 +71,7 @@
 
 <body>
 	<div class="wrap" id="media">
+
 			<!-- container -->
 			<div class="main" id="main">
 					<!--头导航-->
@@ -134,8 +136,8 @@
         var re=function(){
             var wrap=doc.querySelector('#media');
             var s=doc.querySelectorAll('#main');
-            var pw = 1400;     //设计图的宽
-            var ph = 768;     //设计图的宽
+            var pw = 1440;     //设计图的宽
+            var ph = 900;     //设计图的宽
             var tww = win.innerWidth;
             var twh =win.innerHeight;
 
@@ -152,7 +154,6 @@
             wrap.style.webkitTransformOrigin='0% 0%';
             wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
             wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
-
 
             //  再高自适应
 //			var hsc= wh<ph?wh/ph:1;
