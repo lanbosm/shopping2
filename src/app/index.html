@@ -53,7 +53,7 @@
 
 		html,body{ height: 100%; overflow: hidden; background: #ffffff;}
 		#media{
-			 width: 1440px; height: 900px;
+			 width: 1280px; height: 720px;
 
 		}
 
@@ -136,8 +136,8 @@
         var re=function(){
             var wrap=doc.querySelector('#media');
             var s=doc.querySelectorAll('#main');
-            var pw = 1440;     //设计图的宽
-            var ph = 900;     //设计图的宽
+            var pw = 1280;     //设计图的宽
+            var ph = 720;     //设计图的宽
             var tww = win.innerWidth;
             var twh =win.innerHeight;
 
@@ -146,27 +146,34 @@
             var wsc = tww/pw;          //获取比例
 
             var tw = Math.min(0,(pw-tww)*0.5);  //center
-            tw=0;
+            if(sc<=1) {
+                tw = 0;
+            }
             //先宽自适应
 
-           // wrap.style.height=wh+'px';
+            // wrap.style.height=wh+'px';
             wrap.style.transformOrigin='0% 0%';
             wrap.style.webkitTransformOrigin='0% 0%';
             wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
             wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
 
             //  再高自适应
-//			var hsc= wh<ph?wh/ph:1;
-//            for(var i=0;i<s.length;i++){
-//				   s[i].style.transformOrigin='50% 0%';
-//			       s[i].style.webkitTransformOrigin='50% 0%';
-//			       s[i].style.transform='scale('+hsc+') ';
-//				   s[i].style.webkitTransform='scale('+hsc+') ';
-//            }
+            if(wh<ph) {
+                var scq = wh/ph;
+            } else {
+                var scq=1;
+            }
+
+            for(var i=0;i<s.length;i++){
+                s[i].style.transformOrigin='50% 0%';
+                s[i].style.webkitTransformOrigin='50% 0%';
+                s[i].style.transform='scale('+scq+') translateZ(0)';
+                s[i].style.webkitTransform='scale('+scq+') translateZ(0)';
+            }
 
         }
         re();
-		win.addEventListener('resize',re,false);
+        win.addEventListener('resize',re,false);
 
     })(window,document);
 //统计代码

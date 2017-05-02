@@ -136,7 +136,7 @@
         },
         methods: {
             toLogin:function(){
-
+                window.print();
                 let vm=this;
                 let apiobj={
                     url:API_URLS.public_key,
@@ -160,6 +160,7 @@
                 })
             },
             doLogin:function(publicKey, username, enPwd) {
+
                 if(publicKey && enPwd){
                     let vm = this;
                     let cid=localStorage.getItem("currentShiftId");
