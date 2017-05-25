@@ -1,7 +1,7 @@
 <template>
 	<div class="container-fluid index"  >
             <div class="row" >
-                <div class="col-sm-8  col-md-9 left-con">
+                <div class="col-xs-9 left-con">
                     <!--<div class="left-con-header">-->
                         <!--&lt;!&ndash;<breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>&ndash;&gt;-->
                     <!--</div>-->
@@ -11,35 +11,36 @@
                             <div class="panel-heading" >
                                 <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
                                 <div class="row">
-                                    <div class="col-xs-4 col-md-2 col-lg-2">
-                                        <a class="btn btn-lightgreen shuaixuan"  @click="showCategory=!showCategory" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
+                                    <div class="col-xs-2">
+                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:activty==false}" @click="showCategory=!showCategory; activeTabt()" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
-                                    <div class="col-xs-6 col-md-3 col-xs-offset-2 col-md-offset-7 ">
+                                    <div class="col-xs-2 activity">
+                                        <a class="btn btn-gray shuaixuan" @click="activeTab()"  :class="{activeOn:activty==true}" ><span class="glyphicon glyphicon-fire"></span>活动专区</a>
+                                    </div>
+                                    <div class="col-xs-3  col-xs-offset-5 ">
                                         <searchbar  :product-params="productParams"></searchbar>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <product-list :page="page" :product-params="productParams"  @open-detail="openDetail" ></product-list>
+                                <active-head v-show="activty" :flag="flag"></active-head>
+                                <product-list :page="page" :product-params="productParams"  @open-detail="openDetail" v-show="flag"></product-list>
+                                <add-price :page="page" :product-params="productParams" @open-detail="openDetail" v-show="!flag"></add-price>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" :go-callback="goCallback" ></Pagination>
+                                <Pagination :page="page" :go-callback="goCallback" v-show="flag"></Pagination>
                             </div>
                         </div>
                     </div>
                 </div>
                
-                <div class="col-sm-4  col-md-3 right-con" >
+                <div class="col-xs-3 right-con" >
                     <!-- 购物车 -->
                     <cart @open-stock="openStock" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
                     <calc @trigger-build-order="buildOrder" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
-            <list-item :product-detail="productDetail" :specifications="specifications" :gift-index="giftIndex" @close-detail="closeDetail"></list-item>
-
-            <stock-item v-if="showStockItem" :product-detail="productDetail"  :app-repertories="appRepertories" :need-quantity="needQuantity" @close-stock="closeStock"></stock-item>
-
     </div>
 </template>
 
@@ -54,10 +55,11 @@
     import AppCart from 'views/products/cart.vue';
     import AppCalc from 'views/products/calc.vue';
     import Loading from 'views/products/Loading.vue';
-    import ListItem from 'views/products/ListItem.vue';
-    import StockItem from 'views/products/StockItem.vue';
-    import ProductList from 'views/products/List.vue';
 
+
+    import ProductList from 'views/products/List.vue';
+    import addPrice from 'views/products/addPrice.vue';
+    import activeHead from 'views/products/activeHead.vue';
 
     //import Pagination  from 'views/products/Pagination.vue';
     import Pagination from 'components/pagination/Pagination.vue';
@@ -71,12 +73,11 @@
         data() {
             return {
                 showCategory:false,
-                giftIndex:0,
                 cartItemIndex:0,
-                showStockItem:false,
-                needQuantity:0,
                 pageNum:1,
-                appRepertories:[]  //调拨仓库
+                activty:false,
+                flag:true
+
             }
         },
         computed: {
@@ -88,11 +89,13 @@
                 return this.$store.state.currentPage.list;
             },
             page () {
-
                 return this.$store.state.currentPage.pageData;
             },
             productDetail (){
                     return this.$store.state.itemData.appProductDetail;
+            },
+            itemRepertory (){
+                    return this.$store.state.itemRepertory;
             },
             specifications (){
                     return this.$store.state.itemData.appSpecifications;
@@ -115,16 +118,34 @@
              Pagination,                 //分页器
              breadcrumb,                  //面包屑
              category,                    //分类
-             ListItem,                    //商品详情
-             StockItem,                   //库存详情
              ProductList,                 //商品列表
              searchbar,
-             Loading
+             Loading,
+             addPrice,
+            activeHead
         },
         created(){
             this.fetchList();
         },
         methods:{
+            activeTab(){
+                this.activty=true;
+                this.showCategory=false;
+                if(this.$store.state.activeId.number==3){
+                    this.flag=false;
+                }
+//                this.$store.dispatch("demo").then(res=>{
+//
+//                }).catch(res=>{
+//
+//                })
+            },
+            activeTabt(){
+                this.activty=false;
+                this.showCategory=true;
+                this.flag=true;
+
+            },
             //请求列表
             fetchList() {
                 this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
@@ -207,8 +228,10 @@
                     this.pushCart(newitem);
                     return false;
                 }
+                this.$root.showListItem=true;
 
                 vm.$nextTick(() => {
+
                     //弹出页面层
                     layer.open({
                         id: 'layui-layer-item',
@@ -221,7 +244,6 @@
                         area: ['auto', 'auto'], //宽高
                         content: $('#layer-item-box'),
                         success: function () {
-
                             if (itemGift){  //如果存在赠品
                                 itemswiper = new Swiper('.gift-detail-item', {
                                     initialSlide :0,
@@ -234,39 +256,42 @@
                                 });
 
 
-                              itemswiper.on('onSlideChangeEnd', function (swiper) {
-                                   //some code
-                                  $(".gift-detail-tab").find('a').removeClass('selected');
-                                  $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
-                                  vm.giftIndex=swiper.activeIndex;
-                              });
-                              $(".gift-detail-tab").find('a').eq(0).addClass('selected');
-                              $(".gift-detail-tab").find('a').on('click',function(){
-                                     $(".gift-detail-tab").find('a').removeClass('selected');
-                                     itemswiper.slideTo($(this).index());//
-
-                                     vm.giftIndex=$(this).index();
-                                   //  $(".gift-detail-tab").find('a').eq(vm.giftIndex).addClass('selected');
-                              })
+                                itemswiper.on('onSlideChangeEnd', function (swiper) {
+                                    //some code
+                                    $(".gift-detail-tab").find('a').removeClass('selected');
+                                    $(".gift-detail-tab").find('a').eq(swiper.activeIndex).addClass('selected');
+                                    vm.productDetail.giftIndex=swiper.activeIndex;
+                                });
+                                $(".gift-detail-tab").find('a').eq(0).addClass('selected');
+                                $(".gift-detail-tab").find('a').on('click',function(){
+                                    $(".gift-detail-tab").find('a').removeClass('selected');
+                                    itemswiper.slideTo($(this).index());//
+                                    vm.productDetail.giftIndex=$(this).index();
+                                    //  $(".gift-detail-tab").find('a').eq(vm.giftIndex).addClass('selected');
+                                })
                             }
                         },
                         end: function () {
+
                             if(itemGift){
                                 itemswiper.destroy(true,true);
                                 itemswiper=null;
-                                $(".gift-detail-tab").find('a').off().removeClass('selected');
                             }
+                            vm.$root.showListItem=false;
+
                         }
                     });
 
                 })
             },
             closeDetail(item){
+
                 layer.closeAll();
                 this.pushCart(item);
             },
             //打开仓库详情
             openStock(item) {
+
 
                 let vm=this;
                 var params={
@@ -274,11 +299,14 @@
                     quantity:item.amount-item.availableStock
                 }
 
-                this.needQuantity=item.amount-item.availableStock;
+
+
+                this.itemRepertory.needQuantity=item.amount-item.availableStock;
 
                 this.$store.dispatch("fetchAllocationList",params).then(res=>{
-                    this.appRepertories=res.appRepertories;
-                    this.showStockItem=true;
+                    this.itemRepertory.appRepertories=res.appRepertories||[];
+                    this.$root.showStockItem=true;
+
                     vm.$nextTick(() => {
                         //弹出页面层
                         layer.open({
@@ -295,9 +323,9 @@
 
                             },
                             end: function () {
-                                vm.appRepertories=[];
-                                vm.needQuantity=0;
-                                vm.showStockItem=false;
+                                vm.itemRepertory.appRepertories=[];
+                                vm.itemRepertory.needQuantity=0;
+                                vm.$root.showStockItem=false;
                             }
                         });
 

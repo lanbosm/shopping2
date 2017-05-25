@@ -87,7 +87,6 @@
             },
             fetchAllBrand(){
 
-
                 var params={
                     'categoryId': null,
                     'brandId': null,

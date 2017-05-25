@@ -25,7 +25,8 @@
             </div>
         </div>
         <div class="custom-table-body" v-if="infoShow">
-             <custom-info  :member="custom.appMember"></custom-info>
+             <!--<custom-info  :member="custom.appMember"></custom-info>-->
+                <custom-list  :member="custom.appMember"></custom-list>
         </div>
     </div>
 </template>
@@ -34,7 +35,9 @@
 </style>
 
 <script>
-    import CustomInfo from './CustomInfo.vue';
+   // import CustomInfo from './CustomInfo.vue';
+    import CustomList from './CustomList.vue';
+
     import $ from 'jquery';
 
     export default{
@@ -45,7 +48,8 @@
             }
         },
         components:{
-            CustomInfo                                //顾客信息
+            //CustomInfo,                                //顾客信息
+            CustomList                                //顾客列表
         },
         computed: {
 //            classStatus () {

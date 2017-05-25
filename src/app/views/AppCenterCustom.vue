@@ -44,6 +44,7 @@
                         top = top > 0 ? top : 0;
                         $clone.remove();
                         $(this).find('.modal-content').css("margin-top", top);
+
                     });
                 };
                 this.$nextTick(()=>{

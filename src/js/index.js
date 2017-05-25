@@ -11,7 +11,16 @@ import MsgModal from 'components/message/MsgModal.vue';
 import LogModal from 'components/log/LogModal.vue';
 import CashModal from 'components/cash/CashModal.vue';
 
+import ChooseGifts from 'views/products/ChooseGifts.vue'
+
+import StockItem from 'views/products/StockItem.vue';
+import ListItem from 'views/products/ListItem.vue';
+
 import AppCenterLoading from 'views/AppCenterloading.vue'
+
+import AgainPass from 'components/custom/AgainPass.vue'
+
+
 
 import store from './vuex/store'
 import router from './router'
@@ -43,8 +52,21 @@ Vue.component('layer-log',LogModal);
 //定义备用金组件
 Vue.component('layer-cash',CashModal);
 
+//定义商品弹窗
+Vue.component('list-item',ListItem);
+
+//定义库存弹窗
+Vue.component('stock-item',StockItem);
+
+//定义赠品弹框
+Vue.component('choose-gifts',ChooseGifts);
+
+//定义重置密码弹框
+Vue.component('again-pass',AgainPass);
+
+
 //自定义属性
-Vue.islogin=true;
+Vue.islogin=false;
 
 router.beforeEach(({path}, from, next) => {
 
@@ -70,13 +92,13 @@ router.afterEach(route => {
     setTimeout(()=>{
         store.state.appLoading=false;
     },100)
-})
+});
 
 //vue实例
 var vm =new Vue({
     store,
     router,
-    el:'#main',
+    el:'#app',
     data:{          //这里不是组件模式 不return
             showShopAdminModal:false,
             showCustomModal:false,
@@ -84,7 +106,12 @@ var vm =new Vue({
             showRechargeModal:false,
             showMsgModal:false,
             showLogModal:false,
-            showCashModal:false
+            showCashModal:false,
+            showListItem:false,
+            showStockItem:false,
+            showChooseGifts:false,
+            showAgainPass:false,
+
     },
     components:{
         AppCenterLoading,
@@ -100,7 +127,6 @@ var vm =new Vue({
     created() {
         var accessToken = window.localStorage.getItem("accessToken");
         this.$store.state.login=accessToken;
-
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
@@ -109,9 +135,9 @@ var vm =new Vue({
         //this.$router.push('/log/products');
         // this.$router.push('/log/sales');
 
-        //this.$router.push('/');
-
         this.$router.push('/');
+        // this.$router.push('/print');
+        // this.$router.push('/');
     }
 })
 

@@ -28,7 +28,7 @@
             <div class="gift-detail-con">
                 <div class="price primary">
                     赠{{productDetail.appGiftActivity.name}} ¥ 0 /
-                    <del v-for="(item,index) in productDetail.appGiftActivity.appGifts"><span v-show="giftIndex==index">{{item.price}}</span></del>
+                    <del v-for="(item,index) in productDetail.appGiftActivity.appGifts"><span v-show="productDetail.giftIndex==index">{{item.price}}</span></del>
                 </div>
                 <!-- Swiper -->
                 <div class="gift-detail-item">
@@ -55,15 +55,20 @@
 
     export default{
         name:"ListItem",
-        props:['productDetail','specifications','giftIndex'],
         computed: {
+            specifications (){
+                return this.$store.state.itemData.appSpecifications;
+            },
+            productDetail (){
+                return this.$store.state.itemData.appProductDetail;
+            },
             cartItem(){
                  var newitem = {};
                  Object.assign(newitem, this.productDetail);
                  newitem.selectDate = util.getSelectDate(); //自动获取选择日期
                  newitem.amount = 1; //数量默认为1
                  if(this.productDetail.giftType!='none') {
-                    newitem.appGiftItem = this.productDetail.appGiftActivity.appGifts[this.giftIndex]     //选择的赠品id
+                    newitem.appGiftItem = this.productDetail.appGiftActivity.appGifts[this.productDetail.giftIndex]     //选择的赠品id
 
                  }
 
@@ -95,7 +100,7 @@
             },
             //选择物品
             checkItem: function (item) {
-                this.$emit('close-detail',item); //主动触发upup方法，'hehe'为向父组件传递的数据
+                this.$root.$refs.app.closeDetail(item);
             }
         }
     }

@@ -62,18 +62,9 @@
 			showCustomModal(){
 			    var vm=this;
                 this.$root.showCustomModal=true;
-                function centerModals() {
-                    $(this).each(function(i) {
-                        var $clone = $(this).clone().css('display','block').appendTo('body');
-                        var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
-                        top = top > 0 ? top : 0;
-                        $clone.remove();
-                        $(this).find('.modal-content').css("margin-top", top);
-                    });
-                };
+
                 this.$nextTick(()=>{
                     var modal='#layer-custom';
-                    $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
                         vm.$root.showCustomModal=false;
                     });
@@ -84,7 +75,7 @@
                         show:false
                     });
                     //页面大小变化是仍然保证模态框水平垂直居中
-                    $(window).on('resize',(modal)=>centerModals);
+                    //$(window).on('resize',(modal)=>centerModals);
                     //shop_admins
                     $(modal).modal('toggle');
                 })

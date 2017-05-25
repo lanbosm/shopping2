@@ -113,8 +113,8 @@
 
 <style scoped rel="stylesheet/less"  lang="less">
 
-    @import "../../../css/util/skin.less";
-    @import "../../../css/util/mixin.less";
+    @import "../../../less/util/skin.less";
+    @import "../../../less/util/mixin.less";
 
 
 

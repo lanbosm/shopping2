@@ -40,6 +40,10 @@
                             <i class="icon icon-exit"></i>
                             退出
                         </a>
+                        <a class="exit-btn" @click="demo()">
+                            <i class="icon icon-exit"></i>
+                            测试赠品弹框
+                        </a>
                     </div>
                 </div>
             </div>
@@ -104,7 +108,7 @@
 
             //this.$store.dispatch("addListenAllocation");
             this.$store.dispatch("loadLastData");
-            this.addMsglistener();
+//            this.addMsglistener();
         },
         methods:{
             addPage(){
@@ -129,6 +133,32 @@
                     this.mode= this.mode.replace(/\//i,"");
                     this.$router.replace('/'+this.mode);
                 });
+            },
+            demo(){
+              var vm=this;
+              this.$root. showChooseGifts=true;
+
+              this.$nextTick(()=>{
+                  layer.open({
+                      id: 'layui-choose',
+                      type: 1,            //1 普通层
+                      shade: 0.01,  //遮罩
+                      anim: 0,
+                      zIndex: 1000,
+                      closeBtn: 2,
+                      title: false,
+                      area: ['auto', 'auto'], //宽高
+                      content: $('#layer-choose'),
+                      success: function () {
+
+
+                      },
+                      end: function () {
+
+                          vm.$root. showChooseGifts=false
+                      }
+                  });
+              })
             },
             cash(){
 

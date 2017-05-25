@@ -1,7 +1,6 @@
 import BigInteger from './jsbn.js';
 import SecureRandom from './rng.js';
 
-
 // Depends on jsbn.js and rng.js
 
 // Version 1.1: support utf-8 encoding in pkcs1pad2
@@ -72,6 +71,10 @@ let b64pad="=";
 let BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
 function int2char(n) { return BI_RM.charAt(n); }
 
+/*export function de() {
+    let s=12;
+    return s;
+}*/
 export function hex2b64(h) {
     let i;
     let c;

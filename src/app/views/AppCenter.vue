@@ -38,12 +38,14 @@
             'mode':"routerGo"
         },
 		created(){
+           // this.$store.state.currentPage.mode="print";
+
             this.routerGo();
 		},
 		methods:{
 
 		    routerGo(){
-                if(this.mode=="index"){
+               if(this.mode=="index"){
                     this.$router.replace('/');
                 }
 			}

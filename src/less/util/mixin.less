@@ -64,6 +64,9 @@
    *zoom:1;
 }
 
+.halfcircle(){
+  border-top-left-radius:5px;border-top-right-radius:5px;
+}
 
 .norow(){overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
 
@@ -73,4 +76,58 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.product(){
+  .item{height: auto; position: relative;  margin-top:@gutter;
+    border:  @borderStyle; border-radius: 3px;
+    background:#ffffff  url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
+    background-size:100%;
+    padding-bottom: 10px;
+
+    .cc{width: 100%; height: 200px; background: #fff;
+      top:0;
+      border-radius: 5px;
+      .photo{
+        position: relative;
+        background-size:cover;
+        width: 100%;
+        height: 100%;
+        background-position: center center;
+      }
+      .txt{width: 100%; background: blank; height: 30px; background: rgba(0,0,0,0.5);
+        padding: 5px 10px;
+        z-index:10;
+        bottom:0; position: absolute; line-height: 20px;
+        .iconfont{
+          font-size: 12px;
+          line-height: 20px;
+          text-decoration: none;
+        }
+        .icon-liebiao{
+          font-size: 14px;
+          line-height: 22px;
+        }
+
+        color: #ffffff;
+        .norow;
+        .info{
+          float:right;}
+        .price{color:@themeColor; }
+        .stock{margin-left: 10px; color: #ffffff;}
+        .list-btn,.buy-btn{position:relative;z-index: 99;  float: left; margin-left: @gutter/2; margin-right: @gutter/2;  color: @themeColor}
+      }
+    }
+
+    .tt{
+
+      width: 100%;  position: relative;
+
+      padding: 5px;
+      z-index:10;
+      font-size: 16px;
+      position:relative;padding:5px 10px 10px 5px;height:25px; line-height:25px; font-size:12px;
+      .norow();
+    }
+  }
 }

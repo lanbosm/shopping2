@@ -23,6 +23,7 @@ const gulp = require('gulp'),
 
 
 
+
 const gulpwebpack = require('gulp-webpack');  //gulp版webpack
 const webpack = require('webpack');          //原生的webpack
 
@@ -34,7 +35,7 @@ const webpackConfigPro=require("./webpack.production.config.js");
 var browserSync = require('browser-sync').create();
 
 var host = {
-    domain:"127.0.0.1",
+    domain:"localhost",
     path: 'dist/',
     port: 3000,
     html: 'index.html'
@@ -115,7 +116,7 @@ gulp.task('copy',['copy:css','copy:images','copy:lib','copy:data'],function() {
 // });
 // scss编译后的css将注入到浏览器里实现更新
 gulp.task('less', function() {
-    gulp.src(['src/css/*.less'])  //main 是主入口
+    gulp.src(['src/less/*.less'])  //main 是主入口
     .pipe(less())
     .pipe(gulp.dest('dist/css/'))
 
@@ -128,7 +129,7 @@ gulp.task('fileinclude', function (done) {
           prefix: '@@',
           basepath: '@file'
         }))
-        .pipe(gulp.dest('dist/app'))
+        .pipe(gulp.dest('dist'))
         .on('end', done);
 });
 
@@ -169,7 +170,7 @@ gulp.task('rev:js', function (done) {
 gulp.task('rev:css', function (done) {
 
 
-    return gulp.src(['src/css/*.less'])  //第一层 是主入口
+    return gulp.src(['src/less/*.less'])  //第一层 是主入口
         .pipe(less())
         //这里可以加css sprite 让每一个css合并为一个雪碧图
         //.pipe(spriter({}))
@@ -192,7 +193,7 @@ gulp.task('rev:html', function (done) {
             basepath: '@file'
         }))
 
-        .pipe(gulp.dest('dist/app'))
+        .pipe(gulp.dest('dist'))
 });
 
 
@@ -285,13 +286,16 @@ gulp.task('default',function(){
 var express = require('express'),
     path = require('path'),
     consolidate = require('consolidate');
+
+const proxy = require('http-proxy-middleware');//引入代理中间件
+
 //var isDev = process.env.NODE_ENV !== 'production';
 var isDev = true;
 var app = express();
-var port = 3000;
+var port = host.port;
 app.engine('html', consolidate.ejs);
 app.set('view engine', 'html');
-app.set('views', path.resolve(__dirname, './dist/app'));
+app.set('views', path.resolve(__dirname, './dist'));
 
 
 app.locals.env = process.env.NODE_ENV || 'dev';
@@ -299,6 +303,7 @@ app.locals.reload = false;
 
 //静态服务器开发 适合布局
 gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
+    process.env.NODE_ENV="dev";
     gulp.start('copy',['fileinclude','less'],function(){
         if (isDev) {
             var webpack = require('webpack'),
@@ -330,29 +335,45 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
             //静态文件目录，
             app.use(express.static(path.join(__dirname,'dist')));
 
+            /*为app添加中间件处理跨域请求*/
+            app.use(function(req, res, next) {
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+                res.header("Access-Control-Allow-Headers", "X-Requested-With");
+                res.header('Access-Control-Allow-Headers', 'Content-Type');
+                next();
+            });
+
             app.use('/',   function(req, res) {
                 res.render('index.html');
             });
 
+
+
+            var bsPort=8089;
+
+            //你代理我 我代理你
+            var apiProxy = proxy('/browser-sync/*', { target: 'http://localhost:8089',changeOrigin: true });
+            app.use('/*', apiProxy);//api子目录下的都是用代理
             //   app.use(express.static(path.join(__dirname, 'dist/css')));
             // browsersync is a nice choice when modifying only views (with their css & js)
             var bs = require('browser-sync').create();
-            app.listen(port, function(){
+            app.listen(host.port, function(){
                 bs.init({
                     open: true,
                     ui: false,
                     notify: true,
-                    proxy: 'localhost:3000',
+                    proxy: host.domain+':'+host.port,
                     files: ['./dist/**'],
-                    port: 8080
+                    port: bsPort
                 });
-                console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+                console.log('App (dev) is going to be running on port '+bsPort+' (by browsersync).');
             });
 
 
-            var  watcher= gulp.watch('src/css/**/*.less');
+            var  watcher= gulp.watch('src/less/**/*.less');
             watcher.on('change', function(){
-                gulp.src(['src/css/*.less'])  //main 是主入口
+                gulp.src(['src/less/*.less'])  //main 是主入口
                     .pipe(less())
                     .pipe(gulp.dest('dist/css/'))
             })
@@ -415,6 +436,7 @@ gulp.task('web', function() {
 
 //webpack服务器开发 适合 js编译
 gulp.task('prod', ['clean'],function(){
+    process.env.NODE_ENV="production";
     gulp.start('copy','rev:html','rev:css','rev:js',function(){
         console.log("打包好了");
         browserSync.init({
@@ -429,3 +451,16 @@ gulp.task('prod', ['clean'],function(){
 
     });
 });
+
+// gulp.task("demo1",function () {
+//     console.log(222)
+// })
+// gulp.task('demo',['demo1'],function(){
+//   gulp.start("demo2",function () {
+//
+//   })
+// })
+//
+// gulp.task("demo2",function () {
+//     console.log(333)
+// })

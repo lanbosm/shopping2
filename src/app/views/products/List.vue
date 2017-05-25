@@ -11,8 +11,7 @@
         </div>
     </div>
     <div class="row"  v-else>
-
-        <div class="col-xs-12 col-sm-4 col-md-3" v-for="(item,index) in itemData ">
+        <div class="col-xs-3" v-for="(item,index) in itemData ">
                 <div class=" item" @click="fetchItem(item.id);">
                     <!--图片盒子-->
                     <div class="cc">
@@ -37,24 +36,10 @@
 
                 </div>
 
-             <!--<div class="thumbnail" @click="fetchItem(item.id);">-->
-                 <!--<a  class="list-btn" role="button"  v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>-->
-                 <!--<div class="title">{{item.price | currency }}元 <span class="stock">库存：{{item.availableStock}}件</span> </div>-->
-                 <!--<div class="photo"  >-->
-                 <!--<img class="img-responsive" :src="item.image" :alt="item.title" :title="item.title" />-->
-             <!--</div>-->
-             <!--<div class="caption"><p>{{item.name}}{{item.specDesc}}</p></div>-->
-                <!--<a  class="buy-btn" role="button"   v-show="item.giftType!='none'"><span class="iconfont icon-baobei"></span></a>-->
-             <!--</div>-->
+
         </div>
     </div>
 </template>
-<style lang="less">
-    @import "../../../css/util/skin.less";
-    @import "../../../css/util/mixin.less";
-
-
-</style>
 <script>
     export default {
         name: 'ProductList',
@@ -62,6 +47,9 @@
         computed: {
             itemData () {
                 return this.page.list;
+            },
+            activeid(){
+                return this.$store.state.activeId.number;
             }
         },
         filters: {
@@ -70,11 +58,14 @@
                 return '¥ ' + value;
             }
         },
+        created(){
+
+        },
         methods:{
             //获取物品详情
             fetchItem:function(pid){
                 this.$store.dispatch('fetchItem',pid).then(res=>{
-                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据
+                     this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据  父级传过来的方法  用$emit方法去触发
                 })
             }
 

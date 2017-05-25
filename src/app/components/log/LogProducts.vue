@@ -51,8 +51,8 @@
 
 <style  rel="stylesheet/less"  lang="less">
 
-    @import "../../../css/util/skin.less";
-    @import "../../../css/util/mixin.less";
+    @import "../../../less/util/skin.less";
+    @import "../../../less/util/mixin.less";
 
 	.no-list{ width: 100%; height:600px; background: url(/images/no_list.jpg) no-repeat 50% 0%;}
     .log-products{

@@ -22,9 +22,22 @@
                             </div>
                             <div class="input-group custom-phone custom-group">
                                 <span class="input-group-addon"><i  class="iconfont icon-mobilefill"></i></span>
-                                <input type="num" class="form-control" placeholder="手机号" maxlength="11" id="phone" v-model="newCustom.phone" @keyup.enter="doRegister" >
+                                <input type="num" class="form-control" placeholder="手机号" maxlength="11" id="phone" v-model="newCustom.phone"  >
                             </div>
-                            <a class="btn btn-lightgreen btn-block" @click="doRegister">保存</a>
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-qiahao"></i></span>
+                                <input type="num" class="form-control" placeholder="卡号"  id="card" v-model="newCustom.membeCard">
+                            </div>
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-mima"></i></span>
+                                <input type="password" class="form-control" placeholder="密码"  id="password" v-model="newCustom.password">
+                            </div>
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-querenmima"></i></span>
+                                <input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">
+                            </div>
+
+                            <a class="btn btn-lightgreen btn-block" @click="doRegister()">保存</a>
                         </div>
                     </div>
              </div>
@@ -49,7 +62,10 @@
                 newCustom:{
                     'phone':'',
                     'name':'',
-                    'sex':''
+                    'sex':'',
+                    'membeCard':'',
+                    'password':'',
+                    'passworded':''
                 }
             }
         },
@@ -76,11 +92,28 @@
                     layer.tips('手机号码不正确', '#phone');
                     return;
                 }
+                if(!/\d{8}/.test(this.newCustom.membeCard)){
+                    layer.tips('卡号不正确', '#card');
+                    return;
+                }
+                if(!this.newCustom.password){
+                    layer.tips('密码不能为空','#password')
+                    return;
+                }
+                if(!this.newCustom.passworded){
+                    layer.tips('密码不能为空','#passworded')
+                    return;
+                }
+                if(this.newCustom.password!==this.newCustom.passworded){
+                    layer.tips('请填写正确密码','#passworded')
+                    return;
+                }
                 let apiObj = {
                     url:API_URLS.customers,
                     data:this.newCustom
                 };
                 request.fnPost(this,apiObj,function(res){
+                    console.log(res);
                     layer.msg("保存成功");
                     // 存储到vuex
                     vm.$store.commit('setCustomData', res.appMember );

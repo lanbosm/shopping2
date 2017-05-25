@@ -7,9 +7,9 @@
 //then http://www.zhangxinxu.com/wordpress/2014/02/es6-javascript-promise-%E6%84%9F%E6%80%A7%E8%AE%A4%E7%9F%A5/
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import router from '../router'
 import store from '../vuex/store'
 import layer from 'layer';
+import * as data from '../util/mock';
 //http请求
 Vue.use(VueResource)
 /**
@@ -22,9 +22,12 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://localhost:3000"; //http://192.168.1.199:82/
 //export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
-export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
+// export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
+const HOST_main="http://192.168.1.69:82";              //主服务器
+const HOST_back="http://cs.awo123.cn";                 //备服务器
 
 
+export let HOST=HOST_main;
 
 //export const HOST="";
 export const API_URLS = {
@@ -39,7 +42,9 @@ export const API_URLS = {
     b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
     payments:'/cashier/member/payments',                        //验证支付
     log_out:'/cashier/common/log_out',
-    cashier_shift:'/cashier/member/cashier_shift'                      //零售订单
+    cashier_shift:'/cashier/member/cashier_shift' ,                    //零售订单
+    take_goods:'/cashier/member/consigns',   //提取货接口
+    send:'/cashier/common/send_code'
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
@@ -48,7 +53,25 @@ Vue.http.options.timeout = 10000;  //500超时
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
  */
+
 export const request = {
+
+    //通信错误方法 可扩展新进程
+    fnError(host,apiObj){
+
+        //return ("alaa");
+        if(host==HOST_main){
+            HOST=HOST_back;   //尝试链接备用服务器
+            //alert("this");
+            //再次请求
+            return this.fnGet_dev(apiObj);
+        }else{
+            return Promise.reject("ServerError");
+        }
+
+
+    },
+
 
     fnGet (apiObj) {
         return new Promise((resolve, reject) => {
@@ -65,6 +88,20 @@ export const request = {
                })
         });
     },
+
+    //开发的get方法
+    fnGet_dev(apiObj) {
+
+        return  Vue.http.get(HOST+apiObj.url, {
+                params: apiObj.data,
+                headers: {'Content-Type': 'application/json'},
+            }).catch(response=> { //失败
+               return  this.fnError(HOST,apiObj);
+            })
+
+    },
+
+
     fnPost2 (apiObj) {
         return new Promise((resolve, reject) => {
             Vue.http.post(HOST+apiObj.url, apiObj.data, {
@@ -179,7 +216,6 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
 
         if (response.data && response.data.code == 49001) {
-
             layer.alert("访问令牌过期 请重新登录",{anim:-1,closeBtn: 0},function(){
                 store.dispatch("logout");
                 layer.closeAll();

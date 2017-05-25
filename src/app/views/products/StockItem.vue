@@ -52,8 +52,8 @@
 </template>
 
 <style  rel="stylesheet/less"  lang="less">
-    @import "../../../css/util/skin.less";
-    @import "../../../css/util/mixin.less";
+    @import "../../../less/util/skin.less";
+    @import "../../../less/util/mixin.less";
 
     /*!item modale*/
     .stock-layer {
@@ -156,11 +156,9 @@
     import {request, API_URLS, HOST} from 'util/request.js';
     import util from 'util/util.js';
 
-
-
     export default{
-        name:"ListItem",
-        props:['productDetail','appRepertories','needQuantity'],
+        name:"StockItem",
+
         filters: {
             currency: function (value) {
                 if (!value) return '0.00';
@@ -168,11 +166,16 @@
             }
         },
         computed: {
+            productDetail (){
+                return this.$store.state.itemData.appProductDetail;
+            },
+            itemRepertory (){
+                return this.$store.state.itemRepertory;
+            },
             shopRepositoryList(){
 
                 var arr=[];
-
-                this.appRepertories.forEach((ele,index)=>{
+                this.itemRepertory.appRepertories.forEach((ele,index)=>{
                     if(this.needStock>ele.availableStock){
                         ele.dis=true;
                     }else{
@@ -215,7 +218,7 @@
         created(){
 
 
-           this.stockQuantity=this.needQuantity;
+           this.stockQuantity=this.itemRepertory.needQuantity;
         },
         methods:{
             //选择仓库
@@ -231,7 +234,8 @@
                 this.allocationParams.quantity=this.needStock;
                 this.allocationParams.memo=this.memo;
 
-                this.$emit('close-stock',this.allocationParams); //主动触发upup方法，'hehe'为向父组件传递的数据
+                this.$root.$refs.app.closeStock(this.allocationParams);
+
             },
 
         }

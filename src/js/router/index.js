@@ -16,9 +16,18 @@ import RechargeDefault from 'components/recharge/RechargeDefault.vue'
 
 import LogCenter from 'components/log/LogMain.vue';
 
+import member from 'components/member/MemberStockMain.vue';
+
+import membercargomain from 'components/member/MemberCargoMain.vue';
+
+import activeProductsMain from 'views/products/activeProductsMain.vue';
+
+
 
 
 import NoPage from 'views/NoPage.vue'
+
+
 
 
 
@@ -34,6 +43,21 @@ const router = new VueRouter({
         {
             path: '/',
             component:  App,
+        },
+        {
+            path:'/member',
+            name:'member',
+            component:member
+        },
+        {
+            path:'/active',
+            name:'activeproductsmain',
+            component:activeProductsMain
+        },
+        {
+            path:'/membercargo',
+            name:'membercargomain',
+            component:membercargomain
         },
         { path: '/login',
             name: 'Login',

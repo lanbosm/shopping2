@@ -97,7 +97,7 @@
 <style  rel="stylesheet/less"  scope lang="less">
 
 
-    @import "../../../css/util/skin.less";
+    @import "../../../less/util/skin.less";
 
     @imgPath:"/images";
 

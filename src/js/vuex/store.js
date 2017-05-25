@@ -8,17 +8,26 @@ import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js'
 import util from 'util/util.js'
 import router from '../router'
 
+// import actions from './action.js'
+
 Vue.use(Vuex)
 
 
 //vue 定义全局变量
 const store = new Vuex.Store({
+   // actions,
   //共有数据
   state: {
     login:false, //=>accessToken
     waiting:false,
     shopCount:1,
     headIndex:0,
+    activeId:{
+        number:1
+    },
+    flag:{
+        addflag:true
+    },
     shopData:{
         "name":"",
         "adminName":""
@@ -33,7 +42,11 @@ const store = new Vuex.Store({
     },
     itemData:{
         appProductDetail:{},
-        appSpecifications:[]
+        appSpecifications:[],
+    },
+    itemRepertory:{
+          needQuantity:0,
+          appRepertories:[]
     },
     localList:[], //本地数据集合
     pageList:[],  //内存数据集合
@@ -41,7 +54,7 @@ const store = new Vuex.Store({
     //子类数据
     currentPage:{   //当前数据节点
           index:0,
-          mode:"index"
+          mode:"index",
     },
   },
    // 变量赋值
@@ -58,6 +71,12 @@ const store = new Vuex.Store({
       },
       setMode(state,data){
           state.currentPage.mode=data;
+      },
+      setActive(state,data){
+         state.activeId=data;
+      },
+      setaddflag(state,data){
+          state.flag=data;
       },
       setPageData (state,data){
           state.currentPage.pageData=data; //存在内存
@@ -89,6 +108,15 @@ const store = new Vuex.Store({
       },
       setLogData(state,data){
           state.currentPage.logData = data;
+      },
+      setpersonalData(state,data){
+         state.currentPage.personalData=data;
+      },
+      setstockData(state,data){
+          state.currentPage.stockData=data;
+      },
+      setTakeData(state,data){
+         state.currentPage.takeData=data;
       },
       setPageList(state, data){
           state.pageList = data;
@@ -124,6 +152,7 @@ const store = new Vuex.Store({
       }
     },
     actions: {
+
         //获得公有秘钥
         getPublicKey({commit}){
             commit("show_waiting");
@@ -156,6 +185,43 @@ const store = new Vuex.Store({
                             'spareCash':value.spareCash
                         }
                   };
+
+                return new Promise((resolve, reject) => {
+
+                    request.fnPost2(apiObj).then(res => { //成功
+                        if(res.code=="20000"){
+                            commit("hide_waiting");
+
+                            resolve(res);
+                        }else{
+                            commit("hide_waiting");
+                            reject(res);
+                        }
+                    }).catch( res=> { //失败
+                        commit("hide_waiting");
+                        reject(res); //这里可以尝试扩展备用接口
+                    })
+                });
+
+            })
+        },
+        //重置密码
+        reset({dispatch,commit},value){
+            return dispatch('getPublicKey').then(res => {
+                var  publicKey=res.data;
+                var  rsaKey = new RSAKey();
+                rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                var  enPwd = hex2b64(rsaKey.encrypt(value.enPassword));
+
+                var  apiObj={
+                    url:API_URLS.customers+'/reset',
+                    data:{
+                        'enPassword':enPwd,
+                        'tmpKey':publicKey.tmpKey,
+                        'verifCode':value.verifCode,
+                        'phone':value.phone
+                    }
+                };
 
                 return new Promise((resolve, reject) => {
 
@@ -375,8 +441,31 @@ const store = new Vuex.Store({
                 })
             });
         },
-        //获取会员信息
+
         fetchCustom({commit},value){
+            commit("show_waiting");
+
+            let apiObj = {
+                url : '/testapi/',
+                data:{username:value}
+            };
+
+            return new Promise((resolve, reject) => {
+                commit("hide_waiting");
+                request.fnGet_dev(apiObj).then(res=> {
+                    if (res.data.code=="20000") {
+                         resolve(res.data);
+                    } else {
+                        reject(res.data);
+                    }
+                }).catch(res=>{
+                        reject(res.data);
+                });
+
+            });
+        },
+        //获取会员详情信息
+        fetchCustomDetail({commit},value){
             commit("show_waiting");
             let apiObj = {
                 url : API_URLS.customers,
@@ -395,8 +484,31 @@ const store = new Vuex.Store({
                         reject(res); //这里可以尝试扩展备用接口
                 })
             });
+        },
+
+        //获取会员信息
+        fetchCustom2({commit},value){
+            commit("show_waiting");
+            let apiObj = {
+                url : '/testapi',
+                data:{username:value}
+            };
+            return new Promise((resolve, reject) => {
+                request.fnGet(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.code=="20000"){
+                        resolve(res);
+                    }else{
+                        reject(res);
+                    }
+                }).catch(res=> { //失败
+                    commit("hide_waiting");
+                    reject(res); //这里可以尝试扩展备用接口
+                })
+            });
 
         },
+
         //获取班次信息
         fetchLog({commit},value){
 
@@ -424,6 +536,7 @@ const store = new Vuex.Store({
             });
 
         },
+
         //获取零售列表
         fetchShiftList({commit,state},value){
             commit("show_waiting");
@@ -447,6 +560,70 @@ const store = new Vuex.Store({
                         reject(res);
                  })
             });
+        },
+
+        // //获取个人购买商品列表
+        // personalList({commit,state},value){
+        //       commit("show_waiting");
+        //       let apiObj={
+        //           url: API_URLS.cashier_shift+'/products',
+        //           data:value
+        //       };
+        //       return new Promise((resolve,reject)=>{
+        //            commit("hide_waiting");
+        //            request.fnGet(apiObj).then(res=>{
+        //                if(res.code=="20000"){
+        //                    commit("setpersonalData",res.page);
+        //                    resolve(res);
+        //                }else {
+        //                    reject(res);
+        //                }
+        //            }).catch( res=> { //失败
+        //                commit("hide_waiting");
+        //                reject(res);
+        //            })
+        //       })
+        //
+        // },
+
+        //点击存货发送的请求取数据
+        stockGoods({commit,state},value){
+                commit("show_waiting");
+            let apiObj={
+                url:API_URLS.b2b_orders+'/findAppConsigns',
+                data:value
+            };
+            return new Promise((resolve,reject)=>{
+                commit("hide_waiting");
+                request.fnGet(apiObj).then(res=>{
+                    if(res.code=="20000"){
+                        commit("setstockData",res.appConsigns);
+                        resolve(res);
+                    }else {
+                        reject(res)
+                    }
+                })
+            })
+        },
+
+        //点击查看存货信息获取提货列表
+        fetchPickList({commit,state},value){
+            commit("show_waiting");
+            let apiObj={
+                url: API_URLS.take_goods, //请求提货地址
+                data:value
+            };
+            return new Promise((resolve,reject)=>{
+                commit("hide_waiting");
+                request.fnGet(apiObj).then(res=>{
+                    if(res.code=="20000"){
+                        commit("setTakeData",res.appConsigns);
+                        resolve(res);
+                    }else {
+                        reject(res)
+                    }
+                })
+            })
         },
         exportProducts({commit},value){
             commit("show_waiting");
@@ -602,7 +779,6 @@ const store = new Vuex.Store({
             });
         },
 
-
     }
 });
 
@@ -627,6 +803,8 @@ function defaultPage(title){
             cash:0,                 //找零
             rmb:0                   //现金
         },
+        stockData:{},               //存货数据
+        takeData:{},                //提货数据
         orderData:{},               //订单数据
         printData:{},               //打印数据
         categoryData:[],            //分类数据
@@ -638,7 +816,11 @@ function defaultPage(title){
             categoryName:"",
             brandName:""
         },
-        listLoading: false,            //等待
+        listLoading: false, //等待
+        personalData:{      //个人购买商品数据
+          list:[],
+          pageNum:1
+        },
         logData:{                   //日记数据
             list:[],
             pageNUm:1

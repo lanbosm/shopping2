@@ -48,8 +48,7 @@
     import {request, API_URLS} from 'util/request.js';
     import util from 'util/util.js';
     import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js';
-
-
+//   console.log(de);
 
 
     //设置cookie,增加到vue实例方便全局调用
@@ -136,7 +135,6 @@
         },
         methods: {
             toLogin:function(){
-                window.print();
                 let vm=this;
                 let apiobj={
                     url:API_URLS.public_key,
@@ -160,7 +158,6 @@
                 })
             },
             doLogin:function(publicKey, username, enPwd) {
-
                 if(publicKey && enPwd){
                     let vm = this;
                     let cid=localStorage.getItem("currentShiftId");
@@ -178,25 +175,45 @@
                         shade: [0.1,'#fff'] //0.1透明度的白色背景
                     });
 
-                    request.fnPost(vm, apiobj, function (res) {
-                        layer.close(loading);
-                        window.localStorage.setItem("accessToken",res.accessToken);
+//                    request.fnPost(vm, apiobj, function (res) {
+//
+//                        layer.close(loading);
+//                        window.localStorage.setItem("accessToken",res.accessToken);
+//                        util.pushLocal('shopData',res);
+//                        if(vm.lastUserName!=vm.username){
+//                            util.pushLocal("lastData", []);
+//                        }
+//                        vm.setCookie("username",username,7);
+//                        vm.$store.state.login=res.accessToken;
+//                        vm.logining=false;
+//                        vm.$router.replace('/');
+//
+//
+//                    }, function (res) {
+//                        layer.close(loading);
+//                        layer.msg(res.msg, {icon: 2});
+//                        vm.password="";
+//                        vm.logining=false;
+//                    });
+                     request.fnPost2(apiobj).then(res=>{
+                        if(res.code==20000){
+                            layer.close(loading);
+                       window.localStorage.setItem("accessToken",res.accessToken);
                         util.pushLocal('shopData',res);
                         if(vm.lastUserName!=vm.username){
                             util.pushLocal("lastData", []);
                         }
-                        vm.setCookie("username",username,7);
+                       vm.setCookie("username",username,7);
                         vm.$store.state.login=res.accessToken;
                         vm.logining=false;
                         vm.$router.replace('/');
-
-
-                    }, function (res) {
-                        layer.close(loading);
-                        layer.msg(res.msg, {icon: 2});
-                        vm.password="";
-                        vm.logining=false;
-                    })
+                        }else {
+                            layer.close(loading);
+                            layer.msg(res.msg, {icon: 2});
+                            vm.password="";
+                            vm.logining=false;
+                        }
+                     })
 
                 }else{
                     alert('服务器链接失败');
