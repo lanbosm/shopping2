@@ -17,7 +17,7 @@ var srcDir = path.resolve(process.cwd(), 'src');
 
 
 let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
-let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].less"));
 
 //获取多页面的每个入口文件，用于配置中的entry
 function getEntry() {
@@ -37,7 +37,6 @@ function getEntry() {
 
 module.exports = {
     cache: true,
-  //  devtool: "source-map",
     entry: getEntry(),
 
     output: {
@@ -60,14 +59,13 @@ module.exports = {
                     plugins:['transform-runtime']
                 }
             },
-            {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract("css-loader")
-                //loader: "style-loader!css-loader",
+            {   test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             },
+
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('css-loader!less-loader'),
+                loader: extractLess.extract('css-loader!less-loader'),
 
             },
             {
@@ -93,9 +91,11 @@ module.exports = {
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
             less: srcDir + "/css/util",
+            lib: ROOT_PATH + "/lib",
             components : srcDir + "/app/components",
             views : srcDir + "/app/views",
-            vue$: 'vue/dist/vue'
+            vue$: 'vue/dist/vue',
+            root: ROOT_PATH,
         }
     },
     plugins: [
@@ -106,7 +106,8 @@ module.exports = {
         }),
         extractCss,
         extractLess,
-       // 加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
+
+        // 加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

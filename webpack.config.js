@@ -14,7 +14,7 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 var ROOT_PATH = path.resolve(__dirname);
 var srcDir = path.resolve(process.cwd(), 'src');
 
-let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/sss.css"));
 let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
 
 //获取多页面的每个入口文件，用于配置中的entry
@@ -87,10 +87,11 @@ module.exports = {
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
-            less: srcDir + "/css/util",
+            lib: ROOT_PATH + "/lib",
             components : srcDir + "/app/components",
             views : srcDir + "/app/views",
-            vue$: 'vue/dist/vue'
+            vue$: 'vue/dist/vue',
+            root: ROOT_PATH,
         }
     },
     plugins: [

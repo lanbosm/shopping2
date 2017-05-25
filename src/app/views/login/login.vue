@@ -1,4 +1,5 @@
 <template>
+
     <div class="login">
         <div class="container" >
             <div class="row">
@@ -28,7 +29,7 @@
                             <a class="btn login" @click="toLogin()">登录</a>
                             <p>如登录出现异常，请清理浏览器缓存后再尝试。</p>
                         </div>
-                        <div class="register-row5 pr">
+                        <div class="register-row5 pr div1">
                             <p>Powered by ©2016-2017 awo123.cn</p>
                         </div>
                     </div>
@@ -43,12 +44,12 @@
 <script>
 
 
+
     import Vue from 'vue'
     import layer from 'layer';
     import {request, API_URLS} from 'util/request.js';
     import util from 'util/util.js';
     import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js';
-//   console.log(de);
 
 
     //设置cookie,增加到vue实例方便全局调用
@@ -146,9 +147,10 @@
 
                 vm.logining=true;
 
-                request.fnGet(apiobj).then(res=>{
+                this.$store.dispatch('getPublicKey').then(res=>{
 
                     let publicKey=res.data;
+
                     let rsaKey = new RSAKey();
                     rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
                     let enPwd = hex2b64(rsaKey.encrypt(vm.password));
@@ -156,6 +158,7 @@
                     vm.doLogin(publicKey, vm.username, enPwd);
 
                 })
+
             },
             doLogin:function(publicKey, username, enPwd) {
                 if(publicKey && enPwd){

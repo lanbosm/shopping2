@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8"/>
+	<title>阿喔优品收银系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+	<meta http-equiv="content-type" content="textml; charset=utf-8" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+
+
+	<link rel="stylesheet" type="text/css" href="/css/swiper.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_obtrxlrp1y808uxr.css">
+	<link rel="stylesheet" type="text/css" href="/css/global.css" />
+	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+
+	<!--[if lt IE 9]>
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<div class="wrap">
+			<!-- container -->
+			<div class="app" id="app">
+					<!--头导航-->
+					<app-header ref="header" v-if="login"></app-header>
+
+					<app-center-loading v-if="waiting"></app-center-loading>
+
+					<div class="mediascreen" id="mediascreen">
+						<div class="s">
+							<!--主体-->
+							<transition name="slide" >
+									<router-view ref="app"></router-view>
+							</transition>
+						</div>
+					</div>
+
+					<!--顾客-->
+					<layer-custom v-if="showCustomModal"></layer-custom>
+					<!--导购员-->
+					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
+
+					<!--优惠券-->
+					<layer-coupon v-if="showCouponModal"></layer-coupon>
+
+					<!--充值-->
+					<layer-recharge v-if="showRechargeModal"></layer-recharge>
+
+					<!--消息-->
+					<transition name="fade" >
+						<layer-msg v-if="showMsgModal"></layer-msg>
+					</transition>
+					<!--日记-->
+					<layer-log v-if="showLogModal"></layer-log>
+
+					<!--备用金-->
+					<layer-cash v-if="showCashModal"></layer-cash>
+
+					<!--物品详情-->
+					<list-item v-if="showListItem"></list-item>
+
+					<!--库存详情-->
+				    <stock-item v-if="showStockItem"></stock-item>
+
+				    <!--赠品弹框-->
+				    <choose-gifts v-if="showChooseGifts"></choose-gifts>
+
+				   <!--重置密码框-->
+				   <again-pass v-if="showAgainPass"></again-pass>
+			</div>
+		</div>
+
+
+		<!-- main -->
+	</div>
+
+
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
+
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+<script type="text/javascript">
+
+	/* If below IE9 */
+
+    if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE6.0" || navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0" || navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0"){
+        alert("你的游览器版本过低 请升级到ie9以上 使用该系统");
+    }
+
+
+    (function(win,doc){
+
+        var re=function(){
+            var wrap=doc.querySelector('#mediascreen');
+            var s=doc.querySelectorAll('.s');
+            var pw = 1280;     //设计图的宽
+            var ph = 720;     //设计图的高
+            var tww = win.innerWidth;
+            var twh =win.innerHeight;
+
+            var wh = twh*pw/tww;        //获取对应比例高
+
+            var wsc = tww/pw;          //获取比例
+
+            var tw = Math.min(0,Math.abs((pw-tww)*0.5));  //center
+
+            if(wsc<=1) {
+                tw = 0;
+            }
+
+
+            //先宽自适应 wscale
+			wrap.style.height=wh+'px';
+            wrap.style.transformOrigin='0% 0%';
+            wrap.style.webkitTransformOrigin='0% 0%';
+            wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
+            wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
+
+            //  再高自适应  hscale
+            if(wh<ph) {
+                var hsc = wh/ph;
+            } else {
+                var hsc=1;
+            }
+
+            for(var i=0;i<s.length;i++){
+                s[i].style.transformOrigin='50% 0%';
+                s[i].style.webkitTransformOrigin='50% 0%';
+                s[i].style.transform='scale('+hsc+') translateZ(0)';
+                s[i].style.webkitTransform='scale('+hsc+') translateZ(0)';
+            }
+
+        }
+        //re();
+        //win.addEventListener('resize',re,false);
+        doc.querySelector('#mediascreen').style.margin="0 auto";
+    })(window,document);
+
+
+//统计代码
+
+	
+</script>
+</body>
+</html>

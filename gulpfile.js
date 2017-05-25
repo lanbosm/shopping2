@@ -320,6 +320,7 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
                 config.entry[i].unshift("webpack-hot-middleware/client?reload=true");
             }
 
+            config.plugins.push(new webpack.optimize.OccurenceOrderPlugin())
             config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
             var compiler = webpack(config);
 
@@ -352,9 +353,8 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
 
             var bsPort=8089;
 
-            //你代理我 我代理你
-            var apiProxy = proxy('/browser-sync/*', { target: 'http://localhost:8089',changeOrigin: true });
-            app.use('/*', apiProxy);//api子目录下的都是用代理
+            var apiProxy = proxy('/cashier/*', { target: 'http://192.168.1.69:82',changeOrigin: true });
+            app.use('/cashier/*', apiProxy);//api子目录下的都是用代理
             //   app.use(express.static(path.join(__dirname, 'dist/css')));
             // browsersync is a nice choice when modifying only views (with their css & js)
             var bs = require('browser-sync').create();
