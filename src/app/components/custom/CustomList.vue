@@ -13,9 +13,11 @@
                         13636574272
                   </div>
               </li>
-
-
           </ul>
+            <el-pagination
+                    layout="prev, pager, next"
+                    :total="50">
+            </el-pagination>
 
 
     </div>

@@ -3,6 +3,8 @@ import {RSAKey,hex2b64,b64tohex} from 'util/rsa.js'
 import util from 'util/util.js'
 import router from '../router'
 
+
+
 const actions= {
         //获得公有秘钥
         getPublicKey({commit}){
@@ -100,7 +102,42 @@ const actions= {
 
 
         },
+        //注册
+        registerCustom({commit,state},value){
+            commit("show_waiting");
+            let apiObj = {
+                url:API_URLS.customers,
+                data:value
+            };
+            return new Promise((resolve, reject) => {
+                    request.fnPost_dev(apiObj).then(res=> {
+                        commit("hide_waiting");
+                        if (res.data.code=="20000") {
+                            commit('setCustomData', res.data.appMember );
+                            resolve(res.data);
+                        } else {
+                            reject(res.data);
+                        }
+                    }).catch(res=>{
+                        commit("hide_waiting");
+                        reject(res.data);
+                    });
+            });
+            //                request.fnPost(this,apiObj,function(res){
+//                    console.log(res);
+//                    layer.msg("保存成功");
+//                    // 存储到vuex
+//                    vm.$store.commit('setCustomData', res.appMember );
+//                    if(vm.$store.state.currentPage.mode=="order") {
+//                        vm.$store.dispatch('fetchOrder');
+//                    }
+//
+//                }, function (err) {
+//                    layer.msg(err.msg);
+//                });
 
+
+        },
 
         //退出
         logout({commit,state},value){
@@ -640,4 +677,80 @@ const actions= {
 
 }
 
+
+function getTimeData(){
+    function nz(n){
+        if(n<10){
+            n="0"+n;
+        }else{
+            n=n+"";
+        }
+        return n;
+    }
+
+    var time=new Date();
+    var timestr=nz(time.getHours())+":"+nz(time.getMinutes());
+
+    return timestr;
+}
+
+
+function defaultPage(title){
+    //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失
+    return {
+        mode:"index",               //状态模式
+        pageData:{},                //商品数据
+        itemData:{                  //商品详情数据
+            appProductDetail:{},
+            appSpecifications:[]
+        },
+        orderParams: {              //订单页面参数
+            cartParam:"",
+            couponCodeId:null,
+            usePoint:false,
+            useBalance:false,
+            memberId:null,
+            guiderId:null,
+            paymentMethodId:null,   //支付方式
+            cash:0,                 //找零
+            rmb:0                   //现金
+        },
+        stockData:{},               //存货数据
+        takeData:{},                //提货数据
+        orderData:{},               //订单数据
+        printData:{},               //打印数据
+        categoryData:[],            //分类数据
+        list:{                      //商品列表参数
+            categoryId:"",
+            brandId:"",
+            searchStr:"",
+            pageNum:1,
+            categoryName:"",
+            brandName:""
+        },
+        listLoading: false, //等待
+        personalData:{      //个人购买商品数据
+            list:[],
+            pageNum:1
+        },
+        logData:{                   //日记数据
+            list:[],
+            pageNUm:1
+        },
+        cartData:[],                //购物车数据
+        customData: {                //顾客数据
+            id:null,
+            nickname:'顾客',
+            username: null,
+            point: 0,
+            balance:0,
+            appCoupons: [],
+            headPortrait: "http://aoupprod.oss-cn-beijing.aliyuncs.com/adminhead.png",
+        },
+        shopAdminData:{},           //导购员数据
+        pageIndex:0,              //头部索引
+        title:title,                //头部名称
+        time:getTimeData()          //时间戳
+    }
+}
 export default actions;

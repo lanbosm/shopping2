@@ -1,9 +1,7 @@
 <!-- register-->
 <template>
-    <div class="custom-register">
+    <div class="register">
         <div class="custom-table-body">
-             <!--registration -->
-             <div class="registration">
                     <div class="row">
                         <div class="col-xs-8 col-xs-offset-2">
                             <div class="custom-sex clearfix text-center">
@@ -40,7 +38,6 @@
                             <a class="btn btn-lightgreen btn-block" @click="doRegister()">保存</a>
                         </div>
                     </div>
-             </div>
         </div>
     </div>
 </template>
@@ -56,6 +53,7 @@
 
     export default{
         name:"CustomRegister",
+        props:['registerCallback'],
         data(){
             return {
                 searchName:"",
@@ -108,23 +106,9 @@
                     layer.tips('请填写正确密码','#passworded')
                     return;
                 }
-                let apiObj = {
-                    url:API_URLS.customers,
-                    data:this.newCustom
-                };
-                request.fnPost(this,apiObj,function(res){
-                    console.log(res);
-                    layer.msg("保存成功");
-                    // 存储到vuex
-                    vm.$store.commit('setCustomData', res.appMember );
-                    if(vm.$store.state.currentPage.mode=="order") {
-                        vm.$store.dispatch('fetchOrder');
-                    }
-                    //关闭弹窗
-                    $('#layer-custom').modal('hide');
-                }, function (err) {
-                    layer.msg(err.msg);
-                });
+
+                this.registerCallback(this.newCustom);
+
             }
         }
     }

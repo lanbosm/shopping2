@@ -102,8 +102,18 @@ export const request = {
             })
 
     },
-
-
+    //开发的post方法
+    fnPost_dev (apiObj) {
+        console.log('post');
+        return  Vue.http.post(HOST+apiObj.url, apiObj.data, {
+                params: apiObj.data,
+                timeout:3000,
+                headers: {'Content-Type': 'application/json'}
+            }).catch(response=> { //失败
+            return  this.fnError(HOST,apiObj);
+        })
+    },
+    //开发的post方法
     fnPost2 (apiObj) {
         return new Promise((resolve, reject) => {
             Vue.http.post(HOST+apiObj.url, apiObj.data, {

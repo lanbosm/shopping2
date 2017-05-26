@@ -14,7 +14,7 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 var ROOT_PATH = path.resolve(__dirname);
 var srcDir = path.resolve(process.cwd(), 'src');
 
-let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/sss.css"));
+let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
 let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
 
 //获取多页面的每个入口文件，用于配置中的entry
@@ -57,13 +57,13 @@ module.exports = {
                 loader: 'babel',         //es6语法
                 exclude: /node_modules/, // include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
                 query: {
-                    presets: ['es2015'],//也可以通过外部配置文件.babelrc
+                    presets: ['es2015','vue-app'],//也可以通过外部配置文件.babelrc
                     plugins:['transform-runtime']
                 }
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("css-loader")
+                loader: 'style-loader!css-loader'
             },
             {
                 test: /\.less$/,
@@ -87,11 +87,10 @@ module.exports = {
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
-            lib: ROOT_PATH + "/lib",
+            less: srcDir + "/css/util",
             components : srcDir + "/app/components",
             views : srcDir + "/app/views",
-            vue$: 'vue/dist/vue',
-            root: ROOT_PATH,
+            vue$: 'vue/dist/vue'
         }
     },
     plugins: [
