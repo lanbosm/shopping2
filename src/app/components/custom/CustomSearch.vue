@@ -12,9 +12,9 @@
                 </div>
                 <div class="col-xs-4">
 
-                        <a v-if="step!='register'" class="btn add-custom" @click="toAdd()"></a>
-                        <a v-if="step=='register'" class="btn cancel-custom"  @click="toAdd()">取消</a>
-                        <a class="btn select-ticket btn-lightgreen"   @click="$parent.$parent.chooseThis">选择</a>
+                        <a v-if="step=='normal' || step=='list'" class="btn add-custom" @click="toAdd()"></a>
+                        <a v-if="step=='register' || step=='detail'" class="btn cancel-custom"  @click="toAdd()">取消</a>
+                        <a v-if="step=='detail'" class="btn select-ticket btn-lightgreen"   @click="$parent.$parent.chooseThis">选择</a>
 
                 </div>
 
@@ -40,11 +40,6 @@
                 msg:'',
                 searchstr:'',
             }
-        },
-        computed: {
-//            classStatus () {
-//                return this.$parent.searchShow === true ? "" : 'cancel-custom';
-//            }
         },
         created(){
 

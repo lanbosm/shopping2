@@ -1,99 +1,66 @@
-<!-- info -->
+<!-- list -->
 <template>
     <div class="list" >
-          <ul>
-              <li class="">
-                  <div class="item-pack item-photo">
-                        <img src=""/>
+        <div class="custom-table-body" >
+            <p class="data-placeholder" v-if="!listData.list" >数据加载中...</p>
+            <p class="data-placeholder" v-else-if="listData.list.length==0" >暂无记录</p>
+            <ul class="custom-list" v-else >
+              <li v-for="(item,index) in listData.list" :class="{select:index==currentIndex}" @click="checkCustom(index)"
+                    @dblclick="viewCustom(item,index)">
+                  <div class="item-col item-col1">
+                      <div class="item-photo">
+                        <img :src="item.headPortrait"/>
+                      </div>
                   </div>
-                  <div class="item-pack item-name">
-                        你姐
+                  <div class="item-col item-col2">
+                      <span>{{item.name}}</span>
                   </div>
-                  <div class="item-pack item-phone">
-                        13636574272
-                  </div>
+                  <div class="item-col item-col3">
+                      <span>{{item.phone}}</span>
+                </div>
               </li>
+
           </ul>
             <el-pagination
-                    layout="prev, pager, next"
-                    :total="50">
+                    @current-change="handleCurrentChange"
+                    :current-page="listData.pageNum"
+                    :page-size=listData.pageSize
+                    layout="total, prev, pager, next"
+                    :total=listData.total>
             </el-pagination>
-
-
+        </div>
     </div>
 </template>
-<style  rel="stylesheet/less"  lang="less">
-    @import "../../../less/util/skin.less";
-    @import "../../../less/util/mixin.less";
-
-
-</style>
 
 <script>
-    import layer from 'layer';
-    export default{
+        export default{
         name:"CustomList",
-        props:['member'],
+        props:['listIndex','listData','listCallback','pageTo','selectedCustom'],
         data(){
             return {
-                msg:''
+                custom:{},
+                currentIndex:1
             }
         },
         created(){
-//            console.log(this.member.id)
-        },
-        computed: {
-//            customData() {
-//                return this.$store.state.customData;
-//            }
-        },
-        filters:{
-            couponType(val){
-                if(val === 'fullReduce'){
-                    return '满减劵';
-                }else if(val === 'fullBack'){
-                    return '满返劵';
-                }else{
-                    return '';
-                }
+            this.custom=this.selectedCustom;
+
+            if(this.listIndex){
+                this.currentIndex=this.listIndex;
+            }else{
+                this.currentIndex=-1;
             }
         },
         methods:{
-            goPcikGood(){
-                var vm=this;
-                alert(vm.member.id);
-                this.$store.dispatch("fetchPickList",{"memberId":vm.member.id}).then(res=>{
-                         alert(res);
-                    this.$router.push({path:'/membercargo'});
-                    this.$root.showCustomModal=false;
-                    $("#layer-custom").modal('hide');
-                });
-
+            handleCurrentChange(index){
+                this.currentIndex=-1;
+                this.pageTo(index);
             },
-            againPass(){
-                var vm=this;
-                this.$root.showAgainPass=true;
-
-                this.$nextTick(()=>{
-                    layer.open({
-                        id: 'layer-box',
-                        type: 1,            //1 普通层
-                        shade: 0.01,  //遮罩
-                        anim: 0,
-                        zIndex: 9999,
-                        closeBtn: 1,
-                        title: false,
-                        area: ['auto', 'auto'], //宽高
-                        content: $('#layer-again-box'),
-                        success: function () {
-
-                            alert(222222222222);
-                        },
-                        end: function () {
-                            vm.$root.showAgainPass=false
-                        }
-                    });
-                })
+            checkCustom(index){
+                this.currentIndex=index;
+            },
+            viewCustom(item,index){
+                this.listCallback(item,index);
             }
         }
     }

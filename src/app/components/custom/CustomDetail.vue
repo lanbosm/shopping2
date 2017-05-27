@@ -1,6 +1,7 @@
 <!-- info -->
 <template>
-    <div class="info" >
+    <div class="detail" >
+        <div class="custom-table-body">
             <div class="custom-member">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 clearfix">
@@ -11,7 +12,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">手机号<span>{{member.username}}</span></div>
+                    <div class="col-xs-12 col-sm-6">手机号<span>{{member.phone}}</span></div>
                     <div class="col-xs-12 col-sm-6">积分<span>{{member.point}}</span></div>
                 </div>
                 <div class="row">
@@ -40,30 +41,19 @@
                     </ul>
 
                  </div>
-                 <div class="invent_msg" @click="goPcikGood()">
-                     <span class="iconfont icon-kucun invent_btn"></span> 查看存货信息
-                 </div>
             </div>
+            <div class="btn  storageStock btn-lightgreen " @click="goPcikGood()">
+                <span class="iconfont icon-kucun invent_btn"></span> 查看存货信息
+             </div>
+        </div>
      </div>
 
 </template>
-<style  rel="stylesheet/less"  lang="less">
-    @import "../../../less/util/skin.less";
-    @import "../../../less/util/mixin.less";
-
-    .yxq{color: @border-color;}
-    .invent_msg{height: 45px;text-align: center;line-height: 45px;background-color: #6fc89c;color: #fff;border-radius: 10px;font-size: 16px;}
-    .invent_msg :hover{
-
-    }
-    .invent_btn{margin-right: 20px;}
-    .password_again{float: right;font-size: 18px;color: #539776;line-height: 70px;}
-</style>
 
 <script>
     import layer from 'layer';
     export default{
-        name:"CustomInfo",
+        name:"CustomDetail",
         props:['member'],
         data(){
             return {
