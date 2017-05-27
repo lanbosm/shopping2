@@ -550,29 +550,26 @@
   display: inline-block;
 }
 /*!custom modale*/
-.custom-layer .modal-header {
+.custom-layer .dialog-title {
   border-bottom: solid 3px #6fc89c;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+  display: block;
 }
-.custom-layer .modal-header .close {
-  margin-top: -20px;
+.custom-layer .el-dialog__headerbtn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
-.custom-layer .modal-body {
-  padding: 30px 30px;
-}
-.custom-layer .custom-table-header {
-  width: 100%;
-  height: auto;
+.custom-layer .el-dialog__body {
+  padding: 20px 20px;
 }
 .custom-layer .custom-table-body {
   height: auto;
-  margin-top: 10px;
-  padding: 20px 30px;
+  margin-top: 20px;
   border: 1px dashed #999;
-  border-radius: 5px;
-}
-.custom-layer .custom-table-body .normal {
-  height: 250px;
-  background: url('../images/awyp.jpg') 50% 50% no-repeat;
+  border-radius: 5px ;
 }
 .custom-layer .custom-table-foot {
   margin-top: 10px;
@@ -609,41 +606,62 @@
   border-top-right-radius: 30px!important;
   border-bottom-right-radius: 30px !important;
 }
-.custom-layer .registration .custom-sex {
+.custom-layer .search .btn {
+  position: relative;
+}
+.custom-layer .normal {
+  width: 80%;
+  margin: 0 auto;
+}
+.custom-layer .normal .custom-table-body {
+  height: 300px;
+  background: url('../images/awyp.jpg') 50% 50% no-repeat;
+}
+.custom-layer .register {
+  width: 80%;
+  margin: 0 auto;
+}
+.custom-layer .register .custom-sex {
   padding: 10px 20px;
 }
-.custom-layer .registration .custom-sex .radio {
+.custom-layer .register .custom-sex .radio {
   position: relative;
   margin: 0 20px;
   display: inline-block;
 }
-.custom-layer .registration .custom-sex .radio > input {
+.custom-layer .register .custom-sex .radio > input {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
   margin-left: 0;
 }
-.custom-layer .registration .custom-sex .radio > label {
+.custom-layer .register .custom-sex .radio > label {
   margin-left: 0;
   padding-left: 0;
   width: 90px;
   height: 90px;
 }
-.custom-layer .registration .man-radio.radio label {
+.custom-layer .register .man-radio.radio label {
   background: url('../images/man.png') 50% 50% no-repeat;
 }
-.custom-layer .registration .women-radio.radio label {
+.custom-layer .register .women-radio.radio label {
   background: url('../images/women.png') 50% 50% no-repeat;
 }
-.custom-layer .registration .man-radio.radio input:checked + label {
+.custom-layer .register .man-radio.radio input:checked + label {
   background: url('../images/man_check.png') 50% 50% no-repeat;
 }
-.custom-layer .registration .women-radio.radio input:checked + label {
+.custom-layer .register .women-radio.radio input:checked + label {
   background: url('../images/women_check.png') 50% 50% no-repeat;
 }
-.custom-layer .list {
-  background: blue;
+.custom-layer .register .input-group {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.custom-layer .register .btn {
+  position: relative;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 .custom-layer .list li {
   width: 100%;

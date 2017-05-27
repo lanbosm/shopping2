@@ -1,9 +1,11 @@
 <template>
     <el-dialog
-            :visible.sync="dialogVisible"
+            :visible.sync="ssss"
             size="small"
             custom-class="custom-layer"
-            :before-close="handleClose">
+            @close="closeWin"
+
+            >
                   <span slot="title" class="dialog-title">
                         顾客
                   </span>
@@ -72,13 +74,23 @@
                 tips:'',
                 msg:"动态东西1",
                 con1:true,
-                con2:false
+                con2:false,
+                ssss:false
+
+
             }
         },
         computed: {
-            dialogVisible(){
-                return this.$root.showCustomModal;
-            },
+//            ssss:{
+//                set(val){
+//                    alert(val);
+//                    this.$root.showCustomModal=!this.$root.showCustomModal;   //msg1设置值时此处触发 
+//                },
+//                get(){
+//                    console.log('我被调用了') //msg1获取值时触发
+//                    return this.$root.showCustomModal;         //这儿返回值将是msg1的值。
+//                }
+//            },
             custom (){
                 return  this.$store.state.currentPage.customData;
             }
@@ -90,6 +102,7 @@
             CustomList                                  //顾客列表
         },
         created(){
+            this.ssss=true;
             //test
 //            this.searching=false;
 //            this.infoShow = false;
@@ -98,33 +111,32 @@
 //            this.listShow=false;
 
 
-            if(this.custom.id){
-                // 下次进来就显示当前顾客
-                this.searching=false;
-                this.infoShow = true;
-                this.searchShow = false;
-                this.registerShow = false;
-                this.listShow=false;
-                this.tempcustom={"appMember":this.custom};
-            }else{
-
-            }
+//            if(this.custom.id){
+//                // 下次进来就显示当前顾客
+//                this.searching=false;
+//                this.infoShow = true;
+//                this.searchShow = false;
+//                this.registerShow = false;
+//                this.listShow=false;
+//                this.tempcustom={"appMember":this.custom};
+//            }else{
+//
+//            }
         },
         methods:{
+
+            closeWin(){
+                this.ssss=false;
+                this.$root.showCustomModal=false;
+
+            },
             openSecend(){
                 this.dialogVisible = true;
                 this.con1=!this.con1;
                 this.con2=!this.con2;
                 this.msg="动态东西2";
             },
-            handleClose(done) {
-                this.$confirm('确认关闭？')
-                    .then(_ => {
-                        alert(done);
-                        done();
-                    })
-                    .catch(_ => {});
-            },
+
 
             //+号事件
             addEvent(){
