@@ -9,6 +9,8 @@
 
 @import "main/login";
 
+@import "main/product";
+
 @import "main/cart";
 
 @import "main/custom";
@@ -23,10 +25,6 @@ body{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:14px;line-height:1.42857143;color:#333;
   background-color:#fff; }
 
-body{  }
-
-
-
 
 
 /*!left-con*/
@@ -39,11 +37,11 @@ body{  }
   .panel-body{
      height:@productHeight;
       border-radius: 5px;
-      padding: @gutter  @gutter*2;
+      padding:0;
       overflow: hidden;
       border: 1px solid @border-color;
-      border-bottom-right-radius: 0;
-     border-bottom-left-radius:0;
+      border-radius: 0;
+      border-top-right-radius:5px;
   }
   .panel-footer{
     padding: 5px 15px;
@@ -51,14 +49,11 @@ body{  }
     border-top:none;
     .pagination{margin: 15px 0 10px 0;}
   }
-  .right-con .panel-heading .nav-tabs>li{margin-left:-1px}
   .panel-heading .nav-tabs>li>a{width:120px}
-  .product;
 }
 
 /*!right-con*/
 .right-con{height:auto; }
-
 
 /*!分类列表*/
 .category-list{

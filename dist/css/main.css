@@ -435,6 +435,113 @@
   color: #808080;
   padding-top: 60px;
 }
+.productList {
+  padding-left: 12px;
+  padding-right: 12px;
+  *zoom: 1;
+}
+.productList:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.productList .item {
+  width: 18.45%;
+  float: left;
+  padding: 6px;
+  margin-top: 12px;
+  margin-left: 12px;
+  *zoom: 1;
+  height: auto;
+  position: relative;
+  border: solid 1px #e5e5e5;
+  border-radius: 3px;
+  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
+  background-size: 100%;
+}
+.productList .item:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.productList .item .cc {
+  width: 100%;
+  padding-top: 100%;
+  background: #fff;
+  border-radius: 5px;
+  position: relative;
+}
+.productList .item .cc .photo {
+  top: 0;
+  position: absolute;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+}
+.productList .item .cc .txt {
+  width: 100%;
+  background: blank;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  z-index: 10;
+  bottom: 0;
+  position: absolute;
+  line-height: 20px;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.productList .item .cc .txt .iconfont {
+  font-size: 12px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.productList .item .cc .txt .icon-liebiao {
+  font-size: 14px;
+  line-height: 22px;
+}
+.productList .item .cc .txt .info {
+  float: right;
+}
+.productList .item .cc .txt .price {
+  color: #e84593;
+}
+.productList .item .cc .txt .stock {
+  margin-left: 10px;
+  color: #ffffff;
+}
+.productList .item .cc .txt .list-btn,
+.productList .item .cc .txt .buy-btn {
+  position: relative;
+  z-index: 99;
+  float: left;
+  margin-left: 6px;
+  margin-right: 6px;
+  color: #e84593;
+}
+.productList .item .tt {
+  width: 100%;
+  padding: 5px;
+  z-index: 10;
+  font-size: 16px;
+  position: relative;
+  padding: 5px 10px 10px 5px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 /*!购物车*/
 .shoppingCart {
   width: 100%;
@@ -1380,11 +1487,11 @@ body {
 .left-con .panel-body {
   height: 540px;
   border-radius: 5px;
-  padding: 12px 24px;
+  padding: 0;
   overflow: hidden;
   border: 1px solid #e5e5e5;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
+  border-top-right-radius: 5px;
 }
 .left-con .panel-footer {
   padding: 5px 15px;
@@ -1395,92 +1502,8 @@ body {
 .left-con .panel-footer .pagination {
   margin: 15px 0 10px 0;
 }
-.left-con .right-con .panel-heading .nav-tabs > li {
-  margin-left: -1px;
-}
 .left-con .panel-heading .nav-tabs > li > a {
   width: 120px;
-}
-.left-con .item {
-  height: auto;
-  position: relative;
-  margin-top: 12px;
-  border: solid 1px #e5e5e5;
-  border-radius: 3px;
-  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
-  background-size: 100%;
-  padding-bottom: 10px;
-}
-.left-con .item .cc {
-  width: 100%;
-  height: 200px;
-  background: #fff;
-  top: 0;
-  border-radius: 5px;
-}
-.left-con .item .cc .photo {
-  position: relative;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  background-position: center center;
-}
-.left-con .item .cc .txt {
-  width: 100%;
-  background: blank;
-  height: 30px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  z-index: 10;
-  bottom: 0;
-  position: absolute;
-  line-height: 20px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.left-con .item .cc .txt .iconfont {
-  font-size: 12px;
-  line-height: 20px;
-  text-decoration: none;
-}
-.left-con .item .cc .txt .icon-liebiao {
-  font-size: 14px;
-  line-height: 22px;
-}
-.left-con .item .cc .txt .info {
-  float: right;
-}
-.left-con .item .cc .txt .price {
-  color: #e84593;
-}
-.left-con .item .cc .txt .stock {
-  margin-left: 10px;
-  color: #ffffff;
-}
-.left-con .item .cc .txt .list-btn,
-.left-con .item .cc .txt .buy-btn {
-  position: relative;
-  z-index: 99;
-  float: left;
-  margin-left: 6px;
-  margin-right: 6px;
-  color: #e84593;
-}
-.left-con .item .tt {
-  width: 100%;
-  padding: 5px;
-  z-index: 10;
-  font-size: 16px;
-  position: relative;
-  padding: 5px 10px 10px 5px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 /*!right-con*/
 .right-con {
