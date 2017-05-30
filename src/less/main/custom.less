@@ -1,6 +1,6 @@
  /*!custom modale*/
  .custom-layer {
-       //初始样式
+       //通用样式
         .dialog-title{
             border-bottom: solid 3px @green;
             padding-top: 10px;
@@ -15,15 +15,12 @@
         }
         .el-dialog__body{
           padding:20px 20px
-
         }
-        .modal-body {
-
+        .el-dialog__footer{
+          display: none;
         }
-
-
         .custom-table-body{
-          height:auto;margin-top:20px; border:1px dashed #999;border-radius:5px ;
+          min-height:300px;  margin-top:20px; border:@borderDashedStyle;border-radius:5px ;
         }
         .custom-table-foot{margin-top:10px}
         .custom-table-foot .btn-default{padding:5px 20px}
@@ -32,6 +29,8 @@
         .cancel-custom{background:#999;color:#fff}
         .searchCustom button{border-top-left-radius:30px!important;border-bottom-left-radius:30px!important}
         .searchCustom input{border-top-right-radius:30px!important;border-bottom-right-radius:30px!important}
+
+
         //搜索样式
         .search{
             .btn{position: relative;}
@@ -40,7 +39,7 @@
         .normal {
             width: 80%;
             margin: 0 auto;
-            .custom-table-body{ height:300px; background:url('@{imgPath}/awyp.jpg') 50% 50% no-repeat}
+            .custom-table-body{ background:url('@{imgPath}/awyp.jpg') 50% 50% no-repeat}
         }
         //注册样式
         .register{
@@ -59,29 +58,48 @@
         }
         //列表样式
         .list{
+            width: 90%;
+            margin: 0 auto;
+          .custom-table-body{ border:none;}
 
-            li{
-              width: 100%;
-              .norow();
-              .item-pack{
-                 float: left;
-                 &.item-photo{
-                   width: 30%;
-                 }
-                &.item-name{
-                  width: 30%;
+            .data-placeholder{
+              border: @borderDashedStyle; width: 100%;   height:240px;   text-align: center; padding-top: 30px;
+            }
+            .custom-list { width: 100%;  padding-bottom: 20px;
+              li {
+                height:80px; border: @borderDashedStyle;
+                &.select{
+                  border-color: @themeColor;
+                  border-style: solid;
                 }
-                &.item-phone{
-                  width: 40%;
+                .norow();
+                .item-col{
+                  line-height: 80px;
+                }
+                .item-col {
+                  float: left;
+                  width: 40%; position: relative;
+                  &.item-col1 {
+                    width: 20%;
+                    .item-photo{
+                      width: 60px; height:60px;background: #e5e5e5;   border-radius: 50%; overflow: hidden;  margin-left: 20px; margin-top: 10px;
+                    }
+                  }
+                  &.item-col2 {
+
+                  }
+                  &.item-col3 {
+
+                  }
                 }
               }
             }
-
         }
-
-
         //详情样式
-        .info{
+        .detail{
+            width: 80%;
+            margin: 0 auto;
+            .custom-table-body{padding: @gutter;}
             .custom-member{
                 .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
                 .custom-name .input-group-addon,.custom-layer .custom-phone .input-group-addon{background:0 0}
@@ -91,31 +109,44 @@
                 .sex-photo.male{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat;background-size:100%}
                 .sex-photo.female{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat;background-size:100%}
 
-                .col-xs-12{padding-left:30px}
-                .nickname{line-height:70px;font-size:1.5rem;display:block;float:left;}
+                .nickname{line-height:70px;font-size:14px;display:block;float:left;}
                 span{padding-left: 30px;}
             }
             .custom-ticket{
                  height:auto;
                  color:#333333;
-                .custom-ticket-header{padding-bottom:20px;padding-left:60px}
-                .custom-ticket-body{height:300px;overflow-x:hidden;}
+                 margin-bottom:@gutter;
+                .yxq{color: #999999;}
+                .custom-ticket-header{margin-bottom:@gutter;padding-left:60px}
+                .custom-ticket-body{height:180px;overflow-x:hidden;}
                 .custom-ticket-body ul{list-style:none;padding:0}
-                .custom-ticket-body li{width:80%;height:90px;display:block;border:2px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
+                .custom-ticket-body li{width:80%;height:60px;display:block;border:1px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
                 .custom-ticket-body li:first-child{margin-top:0}
                 .custom-ticket-body li .left{width:33%;height:100%;background:#e8e9f1;position:relative;float:left}
-                .custom-ticket-body li .right{width:66%;height:100%;position:relative;float:left;background:#fff;padding:10px 20px}
-                .custom-ticket-body li .left .m{position:absolute;font-size:2rem;left:20px;top:10px}
-                .custom-ticket-body li .left .u{position:absolute;left:30px;top:60px}
+                .custom-ticket-body li .right{width:66%;height:100%;position:relative;float:left;background:#fff;padding:5px 20px}
+                .custom-ticket-body li .left .m{position:absolute;font-size:24px;left:20px;top:0px}
+                .custom-ticket-body li .left .u{position:absolute;left:30px; bottom: 5px;}
                 .custom-ticket-body li .left .m:before{content:"¥";font-size:1rem}
-                .custom-ticket-body li .right span{margin-top:5px;display:block}
+                .custom-ticket-body li .right span{margin-top:0px;display:block}
                 .custom-ticket-body li .right em{font-style:normal}
             }
-            .line{width:113%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:-30px;position:relative}
+            .line{width:100%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:0px;position:relative}
             .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
             .custom-group{
                 margin: 10px 0;
             }
+
+            .storageStock{
+              position: relative;
+            }
+            .password_again{
+              float: right;font-size: 14px;color: @green;line-height: 70px; margin-right: 20px; cursor: pointer;
+              &:hover{
+                color: @greenStrong;
+              }
+
+            }
+
         }
 
     }

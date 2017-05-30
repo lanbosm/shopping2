@@ -339,16 +339,14 @@ const actions= {
         },
 
         fetchCustom({commit},value){
-            commit("show_waiting");
-
             let apiObj = {
                 url : '/testapi/',
-                data:{username:value}
+                data:value
             };
 
             return new Promise((resolve, reject) => {
-                commit("hide_waiting");
                 request.fnGet_dev(apiObj).then(res=> {
+
                     if (res.data.code=="20000") {
                          resolve(res.data);
                     } else {
@@ -357,7 +355,6 @@ const actions= {
                 }).catch(res=>{
                         reject(res.data);
                 });
-
             });
         },
         //获取会员详情信息

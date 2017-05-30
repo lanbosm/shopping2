@@ -21,12 +21,15 @@ import AppCenterLoading from 'views/AppCenterloading.vue'
 import AgainPass from 'components/custom/AgainPass.vue'
 
 import ElementUI from 'element-ui'
+
+
 import 'element-ui/lib/theme-default/index.css'
 
 import store from './vuex/store'
 import router from './router'
 
 Vue.use(ElementUI);
+
 
 
 //定义头组件

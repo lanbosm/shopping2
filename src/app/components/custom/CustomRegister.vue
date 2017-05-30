@@ -47,7 +47,7 @@
 
 <script>
 
-    import {request, API_URLS} from 'util/request.js';
+
     import layer from 'layer';
     import $ from  'jquery';
 
@@ -75,6 +75,7 @@
             doRegister(){
                 let vm = this;
                 if(!this.newCustom.name){
+
                     layer.tips('姓名不能为空', '#name');
                     return;
                 }
@@ -87,7 +88,7 @@
                     return;
                 }
                 if(!/\d{11}/.test(this.newCustom.phone)){
-                    layer.tips('手机号码不正确', '#phone');
+                    this.$message.error({ message: '手机号码不正确' });
                     return;
                 }
                 if(!/\d{8}/.test(this.newCustom.membeCard)){

@@ -23,8 +23,8 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 // export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
-const HOST_main="http://cs.awo123.cn";              //主服务器
-const HOST_back="http://192.168.1.69:82";                 //备服务器
+const HOST_main="http://192.168.1.69:82";              //主服务器
+const HOST_back="http://cs.awo123.cn";                 //备服务器
 
 
 export let HOST=HOST_main;
@@ -92,6 +92,7 @@ export const request = {
     //开发的get方法
     fnGet_dev(apiObj) {
         console.log('get');
+
         return  Vue.http.get(HOST+apiObj.url, {
                 params: apiObj.data,
                 timeout:3000,
