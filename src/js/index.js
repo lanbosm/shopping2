@@ -25,6 +25,8 @@ import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-default/index.css'
 
+import simpScroller  from 'libs/simpScroller.js'
+
 import store from './vuex/store'
 import router from './router'
 
@@ -90,6 +92,7 @@ router.beforeEach(({path}, from, next) => {
 })
 
 
+
 router.afterEach(route => {
     store.state.appLoading=true;
    // alert(Vue.islogin);
@@ -98,6 +101,10 @@ router.afterEach(route => {
     },100)
 });
 
+//简单滚动
+Vue.prototype.$simpScroll = (dom,direction) => {
+    simpScroller(document.querySelector(dom));
+}
 //vue实例
 var vm =new Vue({
     store,

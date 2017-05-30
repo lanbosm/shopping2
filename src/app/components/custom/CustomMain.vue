@@ -83,17 +83,6 @@
                 },
                 tips:'',
 
-//                registerShow:false,
-//                searchShow:true,
-//                normalShow:true,
-//                infoShow:false,
-//                listShow:false,
-//                username:'',
-//                tempcustom:null,
-//
-//                msg:"动态东西1",
-//                con1:true,
-//                con2:false
 
             }
         },
@@ -173,6 +162,7 @@
                     else  if (this.step == "detail" ) {
                         this.step = "list";
 
+
                     }
                     else {
                         this.historyStep = this.step;
@@ -208,6 +198,9 @@
                         lock.close();
                         this.searching=false;
                         this.step='list';
+                        this.$nextTick(_=>{
+                            this.$simpScroll(".custom-list");
+                        })
                     },300)
                 }).catch(res=>{
                     lock.close();
@@ -266,6 +259,10 @@
                         lock.close();
                         this.searching=false;
                         this.step='list';
+                        this.$nextTick(_=>{
+                            this.$simpScroll(".custom-list");
+                        })
+
                     },300)
                 }).catch(res=>{
                     lock.close();
