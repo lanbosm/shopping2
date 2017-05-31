@@ -1,84 +1,94 @@
 
 /*!导航栏*/
-
 .icon {
-    display: inline-block; overflow: hidden; vertical-align: middle; background-repeat: no-repeat  !important;
-    background-position: 50% 50% !important;
-    width: 50px;
+    display: inline-block; overflow: hidden; vertical-align: top; background-repeat: no-repeat  !important;
+    background-position: 0% 50% !important;
+
+
+    width: 40px;
     height:50px;
 }
-.icon-log{background: url('@{imgPath}/icon_scan.png') no-repeat;}
-.icon-cash{background: url('@{imgPath}/icon_cash.jpg') no-repeat;}
-.icon-exit{background: url('@{imgPath}/icon_exit.png') no-repeat;}
+.icon-log{background: url('@{imgPath}/icon_scan.png') no-repeat; background-size:25px 25px;}
+.icon-cash{background: url('@{imgPath}/icon_cash.jpg') no-repeat; background-size:25px 25px;}
+.icon-exit{background: url('@{imgPath}/icon_exit.png') no-repeat; background-size:25px 25px;}
 
-.menu-box a{
-    padding-left: 15px;
-    padding-right: 15px;
-
-}
 
 .header{
+
     position: relative;
     z-index: 100;
     width: 100%;
+    font-size:12px;
+    min-width: 1280px;
+    margin: 0 auto;
     min-height: 50px;
     background-color:#393939;
-
-
+    padding-left: @gutter;
+    padding-right: @gutter;
     .logo {float: left;  }
+    .staff{
+        position:relative;display:block;padding-top:15px;padding-bottom:15px; width:120px;
+        margin-right:10px;float:left;color:#fff;text-align:center;
+    }
+   .nav-box{
+            float: left;
+            white-space: nowrap;
 
-    .header-nav{
-        border-bottom: 0px;
-        margin: 0;
-        border: none;
-        .staff{
-            position:relative;display:block;padding-top:15px;padding-bottom:15px;height:100%;width:15%;
-            margin-right:10px;float:left;color:#fff;text-align:center;
-        }
-        .navbar-toggle{
-            background-color: #333333;
-            .icon-bar{background-color: #ffffff;}
-        }
-        .navbar-collapse{
-             li {
+            .nav-box-list{
+               max-width: 340px;
+               height: 50px;
+               overflow:hidden;
+               float: left;
+               color: #ffffff;
+                li {
+                    display: inline-block;
+                    float: none;
                     margin-right:10px; margin-top: 10px;
 
-                 span{font-size:1rem;margin:0;padding:0; }
-                 a{
+                    span{margin:0;padding:0; }
+                    a{
 
+                        padding-top:12px;
+                        padding-bottom:12px;
+                        color:#eee;
+                        background:#666!important;
+                        .halfcircle;
+                        .time{display:none}
+                        &.cur{
+                            background:#eee!important;color:#666;
+                            .num{color:#fff;background:#666;padding:5px 10px;border-radius:30px;margin-left:-10px}
+                            .time{display:inline;margin-left:10px;color:#666}
+                        }
 
-                     padding-top:10px;
-                     padding-bottom:10px;
-                     color:#eee;
-                     background:#666!important;
-                     .halfcircle;
-                     .time{display:none}
-                     &.cur{
-                         background:#eee!important;color:#666;
-                         .num{color:#fff;background:#666;padding:5px 10px;border-radius:30px;margin-left:-10px}
-                         .time{display:inline;margin-left:10px;color:#666}
-                     }
+                    }
 
-                 }
-
-             }
+                }
+            }
             .custom-add,.custom-remove{
                 color:#eee;
-
                 background:#777!important;
                 width:40px;
                 font-size: 28px;
                 text-align: center;
                 margin-top: 10px;
+                margin-left: 5px;
                 padding-top:0px;
                 padding-bottom:0px;
                 display: inline-block;
                 .halfcircle;
                 &:hover{ text-decoration: none; cursor: pointer;}
             }
+   }
 
-        }
-        .menu-box{float: right;
+  .menu-box{
+          height: 50px;
+          overflow: hidden;
+          a{
+              padding-left: 10px;
+              padding-right:20px;
+
+          }
+            float: right;
             .contact-btn{ display: inline-block; line-height: 50px;
                 border-left: solid 1px #333333;
                 box-shadow: -1px 0px 1px #666666;
@@ -99,7 +109,7 @@
                 &:hover{ text-decoration: none; ;}
 
             }
-
+            .msg-btn{border-left: none;}
             .cash-btn,.log-btn{color: @green;}
 
             .exit-btn{ display: inline-block; line-height: 50px;
@@ -111,7 +121,7 @@
 
             }
 
-        }
+  }
 
-    }
+
 }

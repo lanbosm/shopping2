@@ -29,14 +29,8 @@
 <style>
 </style>
 <script>
-    import util from 'util/util.js';
-    import $ from 'jquery';
 
 
-
-    /**
-     * [设置购物车的高]
-     */
     export default{
         name:"cart",
         filters: {
@@ -55,11 +49,9 @@
         },
 		props:['cartData','cartItemIndex'],
 
-        created(){
-
-            //this.setCartHeight();
-            //window.onresize=this.setCartHeight;
-        },
+        mounted(){
+            this.$simpleScroll('.shoppingCart-list');
+		},
         computed: {
             //数据来自全局
             totalprice () {

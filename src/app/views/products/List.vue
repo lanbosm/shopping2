@@ -1,6 +1,6 @@
 //列表组件
 <template>
-    <div class="productList">
+    <div class="product">
         <div class="row"  v-if="!itemData">
             <div class="col-xs-12">
                 加载中...
@@ -11,8 +11,8 @@
                 没有数据
             </div>
         </div>
-        <div class="row"  v-else >
-            <div class="item" v-for="(item,index) in itemData"   @click="fetchItem(item.id);" >
+        <div class="row"  v-else>
+            <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
                         <!--图片盒子-->
                         <div class="cc">
                             <div class="photo" :style="{'background-image':'url('+item.image+')'}">
@@ -26,14 +26,12 @@
                                 </div>
                             </div>
                         </div>
+                            <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
                         <!--文本盒子-->
                         <div class="tt">
-
                             {{item.name}}
-
                         </div>
-
-                    </div>
+            </div>
         </div>
     </div>
 </template>
@@ -56,6 +54,12 @@
             }
         },
         created(){
+
+        },
+        mounted(){
+
+
+                this.$simpleScroll('.product','vertical',false);
 
         },
         methods:{

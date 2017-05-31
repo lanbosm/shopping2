@@ -1,10 +1,10 @@
+<!-- list -->
 <template>
     <div class="list" >
         <div class="custom-table-body" >
             <p class="data-placeholder" v-if="!listData.list" >数据加载中...</p>
             <p class="data-placeholder" v-else-if="listData.list.length==0" >暂无记录</p>
-
-              <ul class="custom-list" v-else >
+            <ul class="custom-list" v-else >
               <li v-for="(item,index) in listData.list" :class="{select:index==currentIndex}" @click="checkCustom(index)"
                     @dblclick="viewCustom(item,index)">
                   <div class="item-col item-col1">
@@ -21,38 +21,32 @@
               </li>
 
           </ul>
-            <el-pagination
-                    @current-change="handleCurrentChange"
-                    :current-page="listData.pageNum"
-                    :page-size=listData.pageSize
-                    layout="total, prev, pager, next"
-                    :total=listData.total>
-            </el-pagination>
+            <Pagination :page="listData" :go-callback="handleCurrentChange" ></Pagination>
+            <!--<el-pagination-->
+                    <!--@current-change="handleCurrentChange"-->
+                    <!--:current-page="listData.pageNum"-->
+                    <!--:page-size=listData.pageSize-->
+                    <!--layout="total, prev, pager, next"-->
+                    <!--:total=listData.total>-->
+            <!--</el-pagination>-->
         </div>
     </div>
 </template>
-<style >
 
-</style>
 <script>
 
-        ///  require('components/scroll/Scroll.less')
+        import Pagination from 'components/pagination/Pagination.vue';
+
         export default{
         name:"CustomList",
         props:['listIndex','listData','listCallback','pageTo','selectedCustom'],
         data(){
             return {
                 custom:{},
-                currentIndex:1,
-                scrollToEle: undefined,
-               // moreShadow: true, // 滚动至尾部是否展示阴影效果（仅对水平滑动有效）
-                scrollDirection: 'vertical' // (horizontal/vertical, 默认horizontal)
+                currentIndex:1
             }
         },
-
         created(){
-
-
             this.custom=this.selectedCustom;
 
             if(this.listIndex){
@@ -60,15 +54,11 @@
             }else{
                 this.currentIndex=-1;
             }
-
-
         },
-        mounted(){
-
-
+        components: {
+                Pagination,                 //分页器
         },
         methods:{
-
             handleCurrentChange(index){
                 this.currentIndex=-1;
                 this.pageTo(index);
@@ -78,7 +68,6 @@
             },
             viewCustom(item,index){
                 this.listCallback(item,index);
-
             }
         }
     }

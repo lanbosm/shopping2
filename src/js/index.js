@@ -22,17 +22,15 @@ import AgainPass from 'components/custom/AgainPass.vue'
 
 import ElementUI from 'element-ui'
 
-
 import 'element-ui/lib/theme-default/index.css'
+import simpScroller from 'lib/simpScroller'
 
-import simpScroller  from 'libs/simpScroller.js'
+
 
 import store from './vuex/store'
 import router from './router'
 
 Vue.use(ElementUI);
-
-
 
 //定义头组件
 Vue.component('app-header',appHeader);
@@ -71,23 +69,73 @@ Vue.component('choose-gifts',ChooseGifts);
 Vue.component('again-pass',AgainPass);
 
 
+//扩展vue方法
+//设置cookie,增加到vue实例方便全局调用
+//vue全局调用的理由是，有些组件所用到的接口可能需要session验证，session从cookie获取
+//当然，如果session保存到vuex的话除外
+Vue.prototype.setCookie = (c_name, value, expiredays) => {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+//获取cookie
+Vue.prototype.getCookie = (name) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg))
+        return (arr[2]);
+    else
+        return null;
+}
+//scroll
+Vue.prototype.$simpleScroll = (ele,direction,hideScrollBar) => {
+    var opt={
+        ele:ele,
+        verticalScroll:   direction=='vertical'?true:false,
+        horizontalScroll: direction=='horizontal'?true:false,
+        hideScrollBar:hideScrollBar
+    };
+
+    if(!direction){
+        opt.verticalScroll=true;
+    }
+    if(!hideScrollBar){
+        opt.hideScrollBar=false;
+    }
+    simpScroller(document.querySelector(opt.ele), {
+        verticalScroll: opt.verticalScroll,
+        horizontalScroll: opt.horizontalScroll,
+        hideScrollBar: opt.hideScrollBar,
+        onScroll: function(event) {
+            // console.log("type: " + event.type);
+        }
+    });
+}
+
+
+
+
+
+
 //自定义属性
-Vue.islogin=false;
 
-router.beforeEach(({path}, from, next) => {
 
-    // const {auth = true} = meta      // meta代表的是to中的meta对象，path代表的是to中的path对象
+router.beforeEach(({meta, path}, from, next)=> {
 
-    var auth=true;
+
+    const {auth = true} =  meta      // meta代表的是to中的meta对象，path代表的是to中的path对象  
 
     var isLogin = Boolean(store.state.login)    // true用户已登录， false用户未登录　
+    if (auth  &&  !isLogin  &&  path !== '/login') {   // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验
 
+         next({ path: '/login' })   //  跳转到login页面  
+    }else {
 
-    if ( auth && !isLogin  &&  path !== '/login') {   // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验
-        return next({ path: '/login' })   //  跳转到login页面
+        next()   // 进行下一个钩子函数  
     }
 
-    return next()   // 进行下一个钩子函数
+
+
 
 })
 
@@ -136,8 +184,11 @@ var vm =new Vue({
         }
     },
     created() {
+
         var accessToken = window.localStorage.getItem("accessToken");
-        this.$store.state.login=accessToken;
+        if(accessToken) {
+            this.$store.state.login = accessToken;
+        }
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
@@ -146,9 +197,9 @@ var vm =new Vue({
         //this.$router.push('/log/products');
         // this.$router.push('/log/sales');
 
-        this.$router.push('/');
+        //this.$router.push('/');
         // this.$router.push('/print');
-        // this.$router.push('/');
+        this.$router.push('/');
     }
 })
 

@@ -55,6 +55,14 @@ const store = new Vuex.Store({
   },
    // 变量赋值
   mutations:{
+      setAccessToken(state,data){
+          state.login=data;
+          window.localStorage.setItem("accessToken",data);
+      },
+      clearAccessToken(state,data){
+          state.login=false;
+          window.localStorage.removeItem("accessToken");
+      },
       setLoading(state,data){
          state.loading=data;
       },

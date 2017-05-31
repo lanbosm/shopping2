@@ -12,6 +12,7 @@ const actions= {
             var  apiObj={
                 url:API_URLS.public_key,
             };
+
             return new Promise((resolve, reject) => {
                 commit("hide_waiting");
                 request.fnGet_dev(apiObj).then(res => { //成功
@@ -96,12 +97,7 @@ const actions= {
 
             })
         },
-        loginIn({commit,state},value){
 
-
-
-
-        },
         //注册
         registerCustom({commit,state},value){
             commit("show_waiting");
@@ -123,50 +119,78 @@ const actions= {
                         reject(res.data);
                     });
             });
-            //                request.fnPost(this,apiObj,function(res){
-//                    console.log(res);
-//                    layer.msg("保存成功");
-//                    // 存储到vuex
-//                    vm.$store.commit('setCustomData', res.appMember );
-//                    if(vm.$store.state.currentPage.mode=="order") {
-//                        vm.$store.dispatch('fetchOrder');
-//                    }
-//
-//                }, function (err) {
-//                    layer.msg(err.msg);
-//                });
+        },
+        //登陆
+        loginIn({dispatch,commit,state},value){
 
+            return dispatch('getPublicKey')
+                .then(res => {
+                    let publicKey=res.data;
+
+                    let  rsaKey = new RSAKey();
+                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                    let  enPwd = hex2b64(rsaKey.encrypt(value.password));
+
+                    return {publicKey:publicKey,enPwd:enPwd};
+                })
+                .then(res=>{
+                    if(res.publicKey && res.enPwd) {
+                        let cid = localStorage.getItem("currentShiftId");
+                        let apiobj = {
+                            url: API_URLS.login,
+                            data: {
+                                currentShiftId: cid,
+                                username: value.username,
+                                enPasswd: res.enPwd,
+                                tmpKey: res.publicKey.tmpKey
+                            }
+                        };
+                        return new Promise((resolve, reject) => {
+                            request.fnPost_dev(apiobj).then(res=> {
+                                if (res.data.code=="20000") {
+                                    commit('setAccessToken', res.data.accessToken);
+                                    resolve(res.data);
+                                } else {
+                                    reject(res.data);
+                                }
+                            }).catch(res=>{
+                                commit("hide_waiting");
+                                reject(res.data);
+                            });
+                        });
+                    }
+            })
 
         },
-
         //退出
         logout({commit,state},value){
-            commit("show_waiting");
+
             var apiObj={
                 url: API_URLS.log_out
             }
+
             return new Promise((resolve, reject) => {
+                commit("show_waiting");
                 window.localStorage.setItem('currentShiftId',value);
-                request.fnGet(apiObj).then(res => { //成功
-                    if(res.code=="20000"){
-                        state.login=false; //清除accesstoken;
+                request.fnGet_dev(apiObj).then(res => { //成功
+                    if(res.data.code=="20000"){
                         clearInterval(state.msgTimer);
                         router.replace('/login');
                         state.headIndex=1;
                         state.currentPage={},
                         state.pageList=[];
-                        //state.localList=[];
+                        commit('clearAccessToken');
                         commit("setLocalList",[]);
                         commit('setShopData', {});
 
                         util.delLocal("accessToken");
                         util.delLocal("shopData");
                         commit("hide_waiting");
-                        resolve(res);
+                        resolve(res.data);
                     }
                 }).catch( res=> { //失败
                     commit("hide_waiting");
-                    reject(res);
+                    reject(res.data);
                 })
             });
         },

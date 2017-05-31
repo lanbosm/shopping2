@@ -295,7 +295,8 @@
             fetchList() {
 
                 this.$store.dispatch("fetchMsgList",{"pageNum":this.pageNum}).then(res=>{
-                        console.log(res);
+//                        res.page.pages= 2;
+//                        res.page.pageSize=5;
                         this.listData=res.page;
 
                 }).catch(res=>{

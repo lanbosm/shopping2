@@ -83,13 +83,12 @@ module.exports = {
     },
     resolve: {
         alias: {
-            jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
             less: srcDir + "/css/util",
             components : srcDir + "/app/components",
-            libs : srcDir + "/libs",
+            lib:   path.join(ROOT_PATH, "./lib"),
             views : srcDir + "/app/views",
             vue$: 'vue/dist/vue'
         }

@@ -1,33 +1,29 @@
 <template>
     <div class="header">
-        <div class="container-fluid ">
             <div class="logo">
-                <a class="navbar-brand"><img src="/images/logo.jpg" alt="Brand"></a>
+                <router-link  class="navbar-brand" :to="{ path: '/'}" replace><img src="/images/logo.jpg" alt="Brand"></router-link>
+                <!--<a class="navbar-brand" @click="">/a>-->
             </div>
-
-            <div class="header-nav navbar " id="header-nav">
-                <div class="staff">{{shopData.adminName}}</div>
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-
-                            <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
-
-                    </ul>
+            <div class="staff">{{shopData.adminName}}</div>
+            <div class="nav-box" id="header-nav">
+                    <div class="nav-box-list">
+                        <ul class="nav" >
+                                <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
+                        </ul>
+                    </div>
                     <a class="custom-add" @click="addPage()">+</a>
                     <a class="custom-remove" @click="removePage()">-</a>
-                    <div class="menu-box">
+            </div>
+             <div class="menu-box">
+
                         <a class="msg-btn"  @click="msg()">
                             消息
                             <span class="badge">{{msgData.msgNum}}</span>
                         </a>
+                         <a class="cash-btn"  @click="setting()">
+                             <i class="icon icon-cash"></i>
+                             应用
+                         </a>
                         <a class="cash-btn"  @click="cash()">
                             <i class="icon icon-cash"></i>
                             备用金
@@ -40,21 +36,15 @@
                             <i class="icon icon-exit"></i>
                             退出
                         </a>
-                        <a class="exit-btn" @click="demo()">
-                            <i class="icon icon-exit"></i>
-                            测试赠品弹框
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+                        <!--<a class="exit-btn" @click="demo()">-->
+                            <!--<i class="icon icon-exit"></i>-->
+                            <!--测试赠品弹框-->
+                        <!--</a>-->
+             </div>
     </div>
 </template>
 
-<style>
-</style>
+
 <script>
 
     import util from 'util/util.js';
@@ -90,6 +80,7 @@
         },
         data(){
             return {
+                dialogVisible: false,
                 timer:null
             }
         },
@@ -106,9 +97,17 @@
                 },300);
             }
 
+
             //this.$store.dispatch("addListenAllocation");
             this.$store.dispatch("loadLastData");
 //            this.addMsglistener();
+        },
+        mounted(){
+            this.$nextTick(_=>{
+               this.$simpleScroll('.nav-box-list','horizontal',true)
+            })
+
+
         },
         methods:{
             addPage(){
@@ -249,12 +248,16 @@
                     });
                 })
             },
+            setting(){
+                this.dialogVisible = true
+
+
+            },
             exit(){
                 let vm = this;
                 layer.confirm('确定要退出吗？', function(index){
                     vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=> {
                             layer.closeAll();
-                            vm.exitFullScreen()
                         }
                     )
                 });

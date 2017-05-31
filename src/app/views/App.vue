@@ -28,8 +28,9 @@
                                 <add-price :page="page" :product-params="productParams" @open-detail="openDetail" v-show="!flag"></add-price>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" :go-callback="goCallback" v-show="flag"></Pagination>
+                                <Pagination :page="page" :go-callback="goCallback" ></Pagination>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
     import addPrice from 'views/products/addPrice.vue';
     import activeHead from 'views/products/activeHead.vue';
 
-    //import Pagination  from 'views/products/Pagination.vue';
+
     import Pagination from 'components/pagination/Pagination.vue';
 
     import layer from 'layer';
@@ -122,7 +123,7 @@
              searchbar,
              Loading,
              addPrice,
-            activeHead
+             activeHead
         },
         created(){
             this.fetchList();
