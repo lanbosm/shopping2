@@ -14,10 +14,10 @@
                                     <div class="col-xs-2">
                                         <a class="btn btn-gray shuaixuan" :class="{activeOn:activty==false}" @click="showCategory=!showCategory; activeTabt()" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
-                                    <div class="col-xs-2 activity">
-                                        <a class="btn btn-gray shuaixuan" @click="activeTab()"  :class="{activeOn:activty==true}" ><span class="glyphicon glyphicon-fire"></span>活动专区</a>
-                                    </div>
-                                    <div class="col-xs-3  col-xs-offset-5 ">
+                                    <!--<div class="col-xs-2 activity">-->
+                                        <!--<a class="btn btn-gray shuaixuan" @click="activeTab()"  :class="{activeOn:activty==true}" ><span class="glyphicon glyphicon-fire"></span>活动专区</a>-->
+                                    <!--</div>-->
+                                    <div class="col-xs-3  col-xs-offset-7">
                                         <searchbar  :product-params="productParams"></searchbar>
                                     </div>
                                 </div>

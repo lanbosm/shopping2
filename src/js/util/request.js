@@ -9,9 +9,11 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
 import layer from 'layer';
+import { MessageBox } from 'element-ui';
 import * as data from '../util/mock';
 //http请求
-Vue.use(VueResource)
+Vue.use(VueResource);
+
 /**
  * 接口签名
  * @type {string}
@@ -48,7 +50,7 @@ export const API_URLS = {
 };
 
 //Vue.http.options.emulateJSON = true; //json模式
-Vue.http.options.timeout = 1000;  //500超时
+Vue.http.options.timeout = 3000;  //500超时
 /**
  * 四大金刚
  * @type {{fnGet: request.fnGet, fnPost: request.fnPost, fnPut: request.fnPut, fnDelete: request.fnDelete}}
@@ -56,19 +58,18 @@ Vue.http.options.timeout = 1000;  //500超时
 
 export const request = {
 
-    //通信错误方法 可扩展新进程
-    fnError(host,apiObj){
-       console.log('out');
+    //通信错误方法
+    fnError(){
+        console.log("Server error");
 
-        //return ("alaa");
+        layer.alert("服务器连接失败");
 
-
+        return Promise.reject({data:{"msg":"ServerError"}});
 
     },
 
 
     fnGet (apiObj) {
-
         return new Promise((resolve, reject) => {
             Vue.http.get(HOST+apiObj.url, {
                params: apiObj.data,
@@ -86,18 +87,14 @@ export const request = {
 
     //开发的get方法
     fnGet_dev(apiObj,host) {
-        console.log('get');
-
-
         if(!host){host=HOST_main;}
-        console.log(host);
+        console.log('get:'+host);
         return  Vue.http.get(host+apiObj.url, {
                 params: apiObj.data,
                 headers: {'Content-Type': 'application/json'},
             }).catch(response=> { //失败
                 if(host==HOST_back){
-                    alert(222222);
-                    return Promise.reject("ServerError");
+                    return this.fnError();
                 }else {
                     return this.fnGet_dev(apiObj, HOST_back);
                 }
@@ -105,14 +102,20 @@ export const request = {
 
     },
     //开发的post方法
-    fnPost_dev (apiObj) {
-        console.log('post');
-        return  Vue.http.post(HOST+apiObj.url, apiObj.data, {
+    fnPost_dev (apiObj,host) {
+
+        if(!host){host=HOST_main;}
+        console.log('post:'+host);
+        return  Vue.http.post(host+apiObj.url, apiObj.data, {
                 params: apiObj.data,
                 headers: {'Content-Type': 'application/json'}
             }).catch(response=> { //失败
-            return  this.fnError(HOST,apiObj);
-        })
+                if(host==HOST_back){
+                    return this.fnError();
+                }else {
+                    return this.fnPost_dev(apiObj, HOST_back);
+                }
+            })
     },
     //开发的post方法
     fnPost2 (apiObj) {

@@ -104,6 +104,7 @@
                     this.$router.replace('/');
 
                 }).catch(res=>{
+
                     layer.close(loading);
                     layer.msg(res.msg, {icon: 2});
                     this.password="";

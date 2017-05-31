@@ -20,7 +20,6 @@ const actions= {
                         resolve(res.data);
                     }
                 }).catch( res=> { //失败
-
                     reject(res.data);
                 })
             });
@@ -146,6 +145,7 @@ const actions= {
                             }
                         };
                         return new Promise((resolve, reject) => {
+
                             request.fnPost_dev(apiobj).then(res=> {
                                 if (res.data.code=="20000") {
                                     commit('setAccessToken', res.data.accessToken);
@@ -154,6 +154,7 @@ const actions= {
                                     reject(res.data);
                                 }
                             }).catch(res=>{
+
                                 commit("hide_waiting");
                                 reject(res.data);
                             });
