@@ -1,42 +1,37 @@
 //列表组件
 <template>
-    <div class="row"  v-if="!itemData">
-        <div class="col-xs-12">
-            加载中...
+    <div class="product">
+        <div class="row"  v-if="!itemData">
+            <div class="col-xs-12">
+                加载中...
+            </div>
         </div>
-    </div>
-    <div class="row"  v-else-if="itemData.length == 0">
-        <div class="col-xs-12">
-            没有数据
+        <div class="row"  v-else-if="itemData.length == 0">
+            <div class="col-xs-12">
+                没有数据
+            </div>
         </div>
-    </div>
-    <div class="row"  v-else>
-        <div class="col-xs-3" v-for="(item,index) in itemData ">
-                <div class=" item" @click="fetchItem(item.id);">
-                    <!--图片盒子-->
-                    <div class="cc">
-                        <div class="photo" :style="{'background-image':'url('+item.image+')'}">
+        <div class="row"  v-else>
+            <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
+                        <!--图片盒子-->
+                        <div class="cc">
+                            <div class="photo" :style="{'background-image':'url('+item.image+')'}">
 
-                            <div class="txt">
-                                <a  class="buy-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
-                                <a  class="list-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
-                                <span class="info">
-                                     <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
-                                </span>
+                                <div class="txt">
+                                    <a  class="buy-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
+                                    <a  class="list-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
+                                    <span class="info">
+                                         <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
-                    <!--文本盒子-->
-                    <div class="tt">
-
-                        {{item.name}}
-
-                    </div>
-
-                </div>
-
-
+                            <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
+                        <!--文本盒子-->
+                        <div class="tt">
+                            {{item.name}}
+                        </div>
+            </div>
         </div>
     </div>
 </template>
@@ -59,6 +54,12 @@
             }
         },
         created(){
+
+        },
+        mounted(){
+
+
+                this.$simpleScroll('.product','vertical',false);
 
         },
         methods:{

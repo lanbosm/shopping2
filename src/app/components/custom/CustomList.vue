@@ -21,18 +21,22 @@
               </li>
 
           </ul>
-            <el-pagination
-                    @current-change="handleCurrentChange"
-                    :current-page="listData.pageNum"
-                    :page-size=listData.pageSize
-                    layout="total, prev, pager, next"
-                    :total=listData.total>
-            </el-pagination>
+            <Pagination :page="listData" :go-callback="handleCurrentChange" ></Pagination>
+            <!--<el-pagination-->
+                    <!--@current-change="handleCurrentChange"-->
+                    <!--:current-page="listData.pageNum"-->
+                    <!--:page-size=listData.pageSize-->
+                    <!--layout="total, prev, pager, next"-->
+                    <!--:total=listData.total>-->
+            <!--</el-pagination>-->
         </div>
     </div>
 </template>
 
 <script>
+
+        import Pagination from 'components/pagination/Pagination.vue';
+
         export default{
         name:"CustomList",
         props:['listIndex','listData','listCallback','pageTo','selectedCustom'],
@@ -50,6 +54,9 @@
             }else{
                 this.currentIndex=-1;
             }
+        },
+        components: {
+                Pagination,                 //分页器
         },
         methods:{
             handleCurrentChange(index){

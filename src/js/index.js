@@ -22,15 +22,13 @@ import AgainPass from 'components/custom/AgainPass.vue'
 
 import ElementUI from 'element-ui'
 
-
 import 'element-ui/lib/theme-default/index.css'
+import simpScroller from 'lib/simpScroller'
 
 import store from './vuex/store'
 import router from './router'
 
 Vue.use(ElementUI);
-
-
 
 //定义头组件
 Vue.component('app-header',appHeader);
@@ -67,6 +65,46 @@ Vue.component('choose-gifts',ChooseGifts);
 
 //定义重置密码弹框
 Vue.component('again-pass',AgainPass);
+
+
+//扩展vue方法
+//设置cookie,增加到vue实例方便全局调用
+//vue全局调用的理由是，有些组件所用到的接口可能需要session验证，session从cookie获取
+//当然，如果session保存到vuex的话除外
+Vue.prototype.setCookie = (c_name, value, expiredays) => {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+//scroll
+Vue.prototype.$simpleScroll = (ele,direction,hideScrollBar) => {
+    var opt={
+        ele:ele,
+        verticalScroll:   direction=='vertical'?true:false,
+        horizontalScroll: direction=='horizontal'?true:false,
+        hideScrollBar:hideScrollBar
+    };
+
+    if(!direction){
+        opt.verticalScroll=true;
+    }
+    if(!hideScrollBar){
+        opt.hideScrollBar=false;
+    }
+    simpScroller(document.querySelector(opt.ele), {
+        verticalScroll: opt.verticalScroll,
+        horizontalScroll: opt.horizontalScroll,
+        hideScrollBar: opt.hideScrollBar,
+        onScroll: function(event) {
+            // console.log("type: " + event.type);
+        }
+    });
+}
+
+
+
+
 
 
 //自定义属性
@@ -129,6 +167,8 @@ var vm =new Vue({
         }
     },
     created() {
+
+
         var accessToken = window.localStorage.getItem("accessToken");
         this.$store.state.login=accessToken;
         // 关闭窗口时弹出确认提示

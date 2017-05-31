@@ -59,21 +59,16 @@ export const request = {
     //通信错误方法 可扩展新进程
     fnError(host,apiObj){
        console.log('out');
+
         //return ("alaa");
-        if(host==HOST_main){
-            HOST=HOST_back;   //尝试链接备用服务器
-            //alert("this");
-            //再次请求
-            return this.fnGet_dev(apiObj);
-        }else{
-            return Promise.reject("ServerError");
-        }
+
 
 
     },
 
 
     fnGet (apiObj) {
+
         return new Promise((resolve, reject) => {
             Vue.http.get(HOST+apiObj.url, {
                params: apiObj.data,
@@ -90,16 +85,21 @@ export const request = {
     },
 
     //开发的get方法
-    fnGet_dev(apiObj) {
+    fnGet_dev(apiObj,host) {
         console.log('get');
 
-        return  Vue.http.get(HOST+apiObj.url, {
+
+        if(!host){host=HOST_main;}
+        console.log(host);
+        return  Vue.http.get(host+apiObj.url, {
                 params: apiObj.data,
-                timeout:3000,
                 headers: {'Content-Type': 'application/json'},
             }).catch(response=> { //失败
-
-               return  this.fnError(HOST,apiObj);
+                if(host==HOST_back){
+                    return Promise.reject("ServerError");
+                }else {
+                    return this.fnGet_dev(apiObj, HOST_back);
+                }
             })
 
     },

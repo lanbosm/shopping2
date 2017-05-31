@@ -178,53 +178,55 @@
 .icon-exit {
   background: url('../images/icon_exit.png') no-repeat;
 }
-.menu-box a {
-  padding-left: 15px;
-  padding-right: 15px;
-}
 .header {
   position: relative;
   z-index: 100;
   width: 100%;
+  font-size: 14px;
+  min-width: 1280px;
+  margin: 0 auto;
   min-height: 50px;
   background-color: #393939;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 .header .logo {
   float: left;
 }
-.header .header-nav {
-  border-bottom: 0px;
-  margin: 0;
-  border: none;
-}
-.header .header-nav .staff {
+.header .staff {
   position: relative;
   display: block;
   padding-top: 15px;
   padding-bottom: 15px;
-  height: 100%;
-  width: 15%;
+  width: 200px;
   margin-right: 10px;
   float: left;
   color: #fff;
   text-align: center;
 }
-.header .header-nav .navbar-toggle {
-  background-color: #333333;
+.header .nav-box {
+  float: left;
+  white-space: nowrap;
 }
-.header .header-nav .navbar-toggle .icon-bar {
-  background-color: #ffffff;
+.header .nav-box .nav-box-list {
+  max-width: 352px;
+  height: 50px;
+  overflow: hidden;
+  float: left;
+  color: #ffffff;
 }
-.header .header-nav .navbar-collapse li {
+.header .nav-box .nav-box-list li {
+  display: inline-block;
+  float: none;
   margin-right: 10px;
   margin-top: 10px;
 }
-.header .header-nav .navbar-collapse li span {
+.header .nav-box .nav-box-list li span {
   font-size: 1rem;
   margin: 0;
   padding: 0;
 }
-.header .header-nav .navbar-collapse li a {
+.header .nav-box .nav-box-list li a {
   padding-top: 10px;
   padding-bottom: 10px;
   color: #eee;
@@ -232,48 +234,53 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.header .header-nav .navbar-collapse li a .time {
+.header .nav-box .nav-box-list li a .time {
   display: none;
 }
-.header .header-nav .navbar-collapse li a.cur {
+.header .nav-box .nav-box-list li a.cur {
   background: #eee!important;
   color: #666;
 }
-.header .header-nav .navbar-collapse li a.cur .num {
+.header .nav-box .nav-box-list li a.cur .num {
   color: #fff;
   background: #666;
   padding: 5px 10px;
   border-radius: 30px;
   margin-left: -10px;
 }
-.header .header-nav .navbar-collapse li a.cur .time {
+.header .nav-box .nav-box-list li a.cur .time {
   display: inline;
   margin-left: 10px;
   color: #666;
 }
-.header .header-nav .navbar-collapse .custom-add,
-.header .header-nav .navbar-collapse .custom-remove {
+.header .nav-box .custom-add,
+.header .nav-box .custom-remove {
   color: #eee;
   background: #777!important;
   width: 40px;
   font-size: 28px;
   text-align: center;
   margin-top: 10px;
+  margin-left: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
   display: inline-block;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.header .header-nav .navbar-collapse .custom-add:hover,
-.header .header-nav .navbar-collapse .custom-remove:hover {
+.header .nav-box .custom-add:hover,
+.header .nav-box .custom-remove:hover {
   text-decoration: none;
   cursor: pointer;
 }
-.header .header-nav .menu-box {
+.header .menu-box {
   float: right;
 }
-.header .header-nav .menu-box .contact-btn {
+.header .menu-box a {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.header .menu-box .contact-btn {
   display: inline-block;
   line-height: 50px;
   border-left: solid 1px #333333;
@@ -282,27 +289,27 @@
   cursor: pointer;
   color: #999999;
 }
-.header .header-nav .menu-box .contact-btn:after {
+.header .menu-box .contact-btn:after {
   content: " 正在连接设备";
 }
-.header .header-nav .menu-box .contact-btn:hover {
+.header .menu-box .contact-btn:hover {
   text-decoration: none;
 }
-.header .header-nav .menu-box .contact-btn.success {
+.header .menu-box .contact-btn.success {
   color: #37D7A9;
 }
-.header .header-nav .menu-box .contact-btn.success:after {
+.header .menu-box .contact-btn.success:after {
   content: " 扫描连接成功";
 }
-.header .header-nav .menu-box .contact-btn.error {
+.header .menu-box .contact-btn.error {
   color: #D72940;
 }
-.header .header-nav .menu-box .contact-btn.error:after {
+.header .menu-box .contact-btn.error:after {
   content: " 扫描连接失败";
 }
-.header .header-nav .menu-box .msg-btn,
-.header .header-nav .menu-box .cash-btn,
-.header .header-nav .menu-box .log-btn {
+.header .menu-box .msg-btn,
+.header .menu-box .cash-btn,
+.header .menu-box .log-btn {
   display: inline-block;
   line-height: 50px;
   border-left: solid 1px #333333;
@@ -311,16 +318,16 @@
   cursor: pointer;
   color: #eeeeee;
 }
-.header .header-nav .menu-box .msg-btn:hover,
-.header .header-nav .menu-box .cash-btn:hover,
-.header .header-nav .menu-box .log-btn:hover {
+.header .menu-box .msg-btn:hover,
+.header .menu-box .cash-btn:hover,
+.header .menu-box .log-btn:hover {
   text-decoration: none;
 }
-.header .header-nav .menu-box .cash-btn,
-.header .header-nav .menu-box .log-btn {
+.header .menu-box .cash-btn,
+.header .menu-box .log-btn {
   color: #6fc89c;
 }
-.header .header-nav .menu-box .exit-btn {
+.header .menu-box .exit-btn {
   display: inline-block;
   line-height: 50px;
   border-left: solid 1px #333333;
@@ -329,7 +336,7 @@
   cursor: pointer;
   color: #eeeeee;
 }
-.header .header-nav .menu-box .exit-btn:hover {
+.header .menu-box .exit-btn:hover {
   text-decoration: none;
 }
 .login {
@@ -435,6 +442,104 @@
   color: #808080;
   padding-top: 60px;
 }
+.product {
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 540px;
+}
+.product .item {
+  width: 18.35%;
+  float: left;
+  height: auto;
+  position: relative;
+  margin-top: 12px;
+  margin-left: 12px;
+  border: solid 1px #e5e5e5;
+  border-radius: 3px;
+  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
+  background-size: 100%;
+  padding-bottom: 10px;
+  *zoom: 1;
+}
+.product .item:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.product .item .cc {
+  width: 100%;
+  padding-top: 100%;
+  background: #fff;
+  position: relative;
+  border-radius: 5px;
+}
+.product .item .cc .photo {
+  position: absolute;
+  top: 0;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+}
+.product .item .cc .txt {
+  width: 100%;
+  background: blank;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  z-index: 10;
+  bottom: 0;
+  position: absolute;
+  line-height: 20px;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.product .item .cc .txt .iconfont {
+  font-size: 12px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.product .item .cc .txt .icon-liebiao {
+  font-size: 14px;
+  line-height: 22px;
+}
+.product .item .cc .txt .info {
+  float: right;
+}
+.product .item .cc .txt .price {
+  color: #e84593;
+}
+.product .item .cc .txt .stock {
+  margin-left: 10px;
+  color: #ffffff;
+}
+.product .item .cc .txt .list-btn,
+.product .item .cc .txt .buy-btn {
+  position: relative;
+  z-index: 99;
+  float: left;
+  margin-left: 6px;
+  margin-right: 6px;
+  color: #e84593;
+}
+.product .item .tt {
+  width: 100%;
+  padding-left: 6px;
+  padding-right: 6px;
+  z-index: 10;
+  position: relative;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 /*!购物车*/
 .shoppingCart {
   width: 100%;
@@ -456,9 +561,7 @@
 }
 .shoppingCart .shoppingCart-list {
   position: relative;
-  overflow-x: hidden;
-  height: 471px;
-  min-height: 471px;
+  height: 445px;
 }
 .shoppingCart .shoppingCart-list.empty {
   background: url(../images/empty.jpg) 50% 50% no-repeat;
@@ -1433,13 +1536,11 @@ body {
   border-bottom-right-radius: 0;
 }
 .left-con .panel-body {
-  height: 540px;
-  border-radius: 5px;
-  padding: 12px 24px;
+  padding: 0;
   overflow: hidden;
   border: 1px solid #e5e5e5;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
+  border-top-left-radius: 5px;
 }
 .left-con .panel-footer {
   padding: 5px 15px;
@@ -1450,96 +1551,30 @@ body {
 .left-con .panel-footer .pagination {
   margin: 15px 0 10px 0;
 }
-.left-con .right-con .panel-heading .nav-tabs > li {
-  margin-left: -1px;
-}
 .left-con .panel-heading .nav-tabs > li > a {
   width: 120px;
-}
-.left-con .item {
-  height: auto;
-  position: relative;
-  margin-top: 12px;
-  border: solid 1px #e5e5e5;
-  border-radius: 3px;
-  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
-  background-size: 100%;
-  padding-bottom: 10px;
-}
-.left-con .item .cc {
-  width: 100%;
-  height: 200px;
-  background: #fff;
-  top: 0;
-  border-radius: 5px;
-}
-.left-con .item .cc .photo {
-  position: relative;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  background-position: center center;
-}
-.left-con .item .cc .txt {
-  width: 100%;
-  background: blank;
-  height: 30px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  z-index: 10;
-  bottom: 0;
-  position: absolute;
-  line-height: 20px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.left-con .item .cc .txt .iconfont {
-  font-size: 12px;
-  line-height: 20px;
-  text-decoration: none;
-}
-.left-con .item .cc .txt .icon-liebiao {
-  font-size: 14px;
-  line-height: 22px;
-}
-.left-con .item .cc .txt .info {
-  float: right;
-}
-.left-con .item .cc .txt .price {
-  color: #e84593;
-}
-.left-con .item .cc .txt .stock {
-  margin-left: 10px;
-  color: #ffffff;
-}
-.left-con .item .cc .txt .list-btn,
-.left-con .item .cc .txt .buy-btn {
-  position: relative;
-  z-index: 99;
-  float: left;
-  margin-left: 6px;
-  margin-right: 6px;
-  color: #e84593;
-}
-.left-con .item .tt {
-  width: 100%;
-  padding: 5px;
-  z-index: 10;
-  font-size: 16px;
-  position: relative;
-  padding: 5px 10px 10px 5px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 /*!right-con*/
 .right-con {
   height: auto;
+}
+/*!简单滚动条*/
+.scroller_vertical,
+.scroller_horizontal {
+  border-radius: 2.5px;
+  background-color: rgba(0, 0, 0, 0.35);
+  -webkit-transition: opacity .5s;
+  transition: opacity .5s;
+  position: absolute;
+  opacity: 0;
+}
+.scroller_vertical {
+  width: 5px;
+  right: 0;
+}
+.scroller_horizontal {
+  height: 5px;
+  bottom: 0;
 }
 /*!分类列表*/
 .category-list {
@@ -1797,6 +1832,6 @@ body {
 @media (min-width: 1200px) {
   body,
   html {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
