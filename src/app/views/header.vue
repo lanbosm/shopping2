@@ -20,7 +20,7 @@
                             消息
                             <span class="badge">{{msgData.msgNum}}</span>
                         </a>
-                         <a class="cash-btn"  @click="setting()">
+                         <a class="setting-btn"  @click="setting()">
                              <i class="icon icon-cash"></i>
                              应用
                          </a>
@@ -249,7 +249,9 @@
                 })
             },
             setting(){
-                this.dialogVisible = true
+
+
+                this.$root.showSettingDialog=true;
 
 
             },

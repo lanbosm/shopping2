@@ -60,28 +60,7 @@
         methods:{
             //显示会员模块
 			showCustomModal(){
-			    var vm=this;
-                this.$root.showCustomModal=true;
-
-                this.$nextTick(()=>{
-
-//                    var modal='#layer-custom';
-//                    $(modal).on('hidden.bs.modal',function(){
-//                        vm.$root.showCustomModal=false;
-//                    });
-//                    //禁用空白处点击关闭
-//                    $(modal).modal({
-//                        backdrop: 'static',
-//                        keyboard: false,//禁止键盘
-//                        show:false
-//                    });
-//                    //页面大小变化是仍然保证模态框水平垂直居中
-//                    //$(window).on('resize',(modal)=>centerModals);
-//                    //shop_admins
-//                    $(modal).modal('toggle');
-                })
-
-
+                this.$root.showCustomDialog=true;
 			},
             //计算器
             calc:function(keycode){

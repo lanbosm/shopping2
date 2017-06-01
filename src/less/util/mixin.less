@@ -6,14 +6,19 @@
 	border-radius: @radius;
 	background: @bgcolor;
 }
-.class-order-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:25px){
-  color: @fontColor;
-  padding: @padding;
-  border-color:@borderColor;
-  border-radius: @radius;
-  background: @bgcolor;
+
+
+.common-header-row(){
+  border-bottom: @borderDashedStyle;
+  border-width: 1px;
 }
 
+.common-header-btn(){
+  .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
+  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
+  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
+  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+}
 
 
 .order-row(){
@@ -21,11 +26,16 @@
   border-width: 2px;
 }
 
+.diy-btn(@color,@bgcolor,@borderColor:#cccccc,@radius:3px,@padding:12px 12px){
+  .class-order-btn(@color,@bgcolor,@borderColor,@radius,@padding);
+  &:hover{ .class-order-btn(@color,darken(@bgcolor,20%),@borderColor,@radius,@padding); cursor: pointer; text-decoration: none;}
+  &:active,&.select{ .class-order-btn(@color,darken(@bgcolor,30%),@borderColor,@radius,@padding); cursor: pointer; }
+}
 
 .green-btn(){
   .class-order-btn(#ffffff,@green,#cccccc,3px,12px);
-  &:hover{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
-  &:active{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
+  &:hover{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px); cursor: pointer; text-decoration: none;}
+  &:active{ .class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px); }
   &.select{.class-order-btn(#ffffff,@greenStrong,#cccccc,3px,12px);}
 }
 

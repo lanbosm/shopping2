@@ -51,7 +51,7 @@
 					</div>
 
 					<!--顾客-->
-					<layer-custom v-if="showCustomModal"></layer-custom>
+					<dialog-custom v-if="showCustomDialog" :show-custom-dialog="showCustomDialog"></dialog-custom>
 					<!--导购员-->
 					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
 
@@ -65,6 +65,10 @@
 					<transition name="fade" >
 						<layer-msg v-if="showMsgModal"></layer-msg>
 					</transition>
+
+					<!--应用设置-->
+					<dialog-setting v-if="showSettingDialog" :show-setting-dialog="showSettingDialog"></dialog-setting>
+
 					<!--日记-->
 					<layer-log v-if="showLogModal"></layer-log>
 
@@ -80,8 +84,8 @@
 				    <!--赠品弹框-->
 				    <choose-gifts v-if="showChooseGifts"></choose-gifts>
 
-				   <!--重置密码框-->
-				   <again-pass v-if="showAgainPass"></again-pass>
+				    <!--重置密码框-->
+				    <again-pass v-if="showAgainPass"></again-pass>
 			</div>
 		</div>
 

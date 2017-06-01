@@ -24,6 +24,7 @@ import activeProductsMain from 'views/products/activeProductsMain.vue';
 
 
 
+import AdMain from 'views/Ad/AdMain.vue';
 
 import NoPage from 'views/NoPage.vue'
 
@@ -113,6 +114,11 @@ const router = new VueRouter({
                     component: PayMoney,
                 }
             ]
+        },
+        {                                      //广告
+            path: '/ad',
+            name: 'ad',
+            component:AdMain
         },
         // 404 page
         {   path: '*',

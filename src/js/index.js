@@ -3,13 +3,17 @@ import Vue from 'vue';
 
 import appHeader from 'views/header.vue'
 
-import CustomModal from 'components/custom/CustomMain.vue';
+import CustomModal from 'views/custom/CustomMain.vue';
 import ShopAdminModal from 'components/shopAdmin/ShopAdminMain.vue';
 import CouponModal from 'components/coupon/CouponMain.vue';
 import RechargeModal from 'components/recharge/RechargeMain.vue';
 import MsgModal from 'components/message/MsgModal.vue';
 import LogModal from 'components/log/LogModal.vue';
 import CashModal from 'components/cash/CashModal.vue';
+
+
+import SettingDialog from 'views/dialog/settingDialog.vue';
+
 
 import ChooseGifts from 'views/products/ChooseGifts.vue'
 
@@ -36,7 +40,7 @@ Vue.use(ElementUI);
 Vue.component('app-header',appHeader);
 
 //定义顾客组件
-Vue.component('layer-custom',CustomModal);
+Vue.component('dialog-custom',CustomModal);
 
 //定义导购组件
 Vue.component('layer-shopadmin',ShopAdminModal);
@@ -56,6 +60,9 @@ Vue.component('layer-log',LogModal);
 //定义备用金组件
 Vue.component('layer-cash',CashModal);
 
+//定义设置弹窗
+Vue.component('dialog-setting',SettingDialog);
+
 //定义商品弹窗
 Vue.component('list-item',ListItem);
 
@@ -67,6 +74,8 @@ Vue.component('choose-gifts',ChooseGifts);
 
 //定义重置密码弹框
 Vue.component('again-pass',AgainPass);
+
+
 
 
 //扩展vue方法
@@ -160,7 +169,7 @@ var vm =new Vue({
     el:'#app',
     data:{          //这里不是组件模式 不return
             showShopAdminModal:false,
-            showCustomModal:false,
+
             showCouponModal:false,
             showRechargeModal:false,
             showMsgModal:false,
@@ -170,6 +179,9 @@ var vm =new Vue({
             showStockItem:false,
             showChooseGifts:false,
             showAgainPass:false,
+
+            showSettingDialog:false,
+            showCustomDialog:false,
 
     },
     components:{
@@ -199,6 +211,7 @@ var vm =new Vue({
 
         //this.$router.push('/');
         // this.$router.push('/print');
+        //this.$router.push('/');
         this.$router.push('/');
     }
 })

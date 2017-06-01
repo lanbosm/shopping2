@@ -159,6 +159,12 @@
   background-color: #6ec89b;
   color: #fff;
 }
+.btn {
+  font-size: 14px;
+}
+input[type=file] {
+  display: none;
+}
 /*!导航栏*/
 .icon {
   display: inline-block;
@@ -313,7 +319,8 @@
 }
 .header .menu-box .msg-btn,
 .header .menu-box .cash-btn,
-.header .menu-box .log-btn {
+.header .menu-box .log-btn,
+.header .menu-box .setting-btn {
   display: inline-block;
   line-height: 50px;
   border-left: solid 1px #333333;
@@ -324,14 +331,16 @@
 }
 .header .menu-box .msg-btn:hover,
 .header .menu-box .cash-btn:hover,
-.header .menu-box .log-btn:hover {
+.header .menu-box .log-btn:hover,
+.header .menu-box .setting-btn:hover {
   text-decoration: none;
 }
 .header .menu-box .msg-btn {
   border-left: none;
 }
 .header .menu-box .cash-btn,
-.header .menu-box .log-btn {
+.header .menu-box .log-btn,
+.header .menu-box .setting-btn {
   color: #6fc89c;
 }
 .header .menu-box .exit-btn {
@@ -825,13 +834,14 @@
   margin-top: 10px;
 }
 .custom-layer .detail {
-  width: 80%;
   margin: 0 auto;
 }
 .custom-layer .detail .custom-table-body {
   padding: 12px;
 }
 .custom-layer .detail .custom-member {
+  width: 80%;
+  margin: 0 auto;
   color: #999;
   margin-top: -20px;
 }
@@ -872,6 +882,49 @@
 .custom-layer .detail .custom-member span {
   padding-left: 30px;
 }
+.custom-layer .detail .custom-bar {
+  height: 60px;
+  text-align: center;
+}
+.custom-layer .detail .custom-bar .order-btn,
+.custom-layer .detail .custom-bar .rechange-btn {
+  color: #ffffff;
+  padding: 12px;
+  border-color: #cccccc;
+  border-radius: 3px;
+  background: #6fc89c;
+  margin-left: 12px;
+  margin-right: 12px;
+  width: 160px;
+  display: inline-block;
+  margin-top: 15px;
+}
+.custom-layer .detail .custom-bar .order-btn:hover,
+.custom-layer .detail .custom-bar .rechange-btn:hover {
+  color: #ffffff;
+  padding: 12px;
+  border-color: #cccccc;
+  border-radius: 3px;
+  background: #3a9769;
+  cursor: pointer;
+  text-decoration: none;
+}
+.custom-layer .detail .custom-bar .order-btn:active,
+.custom-layer .detail .custom-bar .rechange-btn:active {
+  color: #ffffff;
+  padding: 12px;
+  border-color: #cccccc;
+  border-radius: 3px;
+  background: #3a9769;
+}
+.custom-layer .detail .custom-bar .order-btn.select,
+.custom-layer .detail .custom-bar .rechange-btn.select {
+  color: #ffffff;
+  padding: 12px;
+  border-color: #cccccc;
+  border-radius: 3px;
+  background: #3a9769;
+}
 .custom-layer .detail .custom-ticket {
   height: auto;
   color: #333333;
@@ -887,6 +940,8 @@
 .custom-layer .detail .custom-ticket .custom-ticket-body {
   height: 180px;
   overflow-x: hidden;
+  width: 80%;
+  margin: 0 auto;
 }
 .custom-layer .detail .custom-ticket .custom-ticket-body ul {
   list-style: none;
@@ -1515,6 +1570,76 @@
   border-width: 2px;
   width: 520px;
   height: 458px;
+}
+/*!购物车*/
+.ad .ad-main {
+  background-color: #ffffff;
+  border-left: 1px dashed #e5e5e5;
+  border-right: 1px dashed #e5e5e5;
+}
+.ad .gallery-btn-row {
+  height: 55px;
+}
+.ad .gallery-btn-row .gallery-btn {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 80px;
+  text-align: center;
+  display: inline-block;
+}
+.ad .gallery-btn-row .gallery-ok {
+  color: #ffffff;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #6fc89c;
+}
+.ad .gallery-btn-row .gallery-ok:hover {
+  color: #ffffff;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #3a9769;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ad .gallery-btn-row .gallery-ok:active,
+.ad .gallery-btn-row .gallery-ok.select {
+  color: #ffffff;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #2c724f;
+  cursor: pointer;
+}
+.ad .gallery-btn-row .gallery-empty {
+  color: #333333;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #e5e5e5;
+}
+.ad .gallery-btn-row .gallery-empty:hover {
+  color: #333333;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #b2b2b2;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ad .gallery-btn-row .gallery-empty:active,
+.ad .gallery-btn-row .gallery-empty.select {
+  color: #333333;
+  padding: 10px 20px;
+  border-color: #cccccc;
+  border-radius: 30px;
+  background: #999999;
+  cursor: pointer;
+}
+.ad .gallery {
+  padding: 12px;
+  height: 600px;
 }
 body {
   font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;

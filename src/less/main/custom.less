@@ -97,10 +97,11 @@
         }
         //详情样式
         .detail{
-            width: 80%;
             margin: 0 auto;
             .custom-table-body{padding: @gutter;}
             .custom-member{
+                width: 80%;
+                margin: 0 auto;
                 .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
                 .custom-name .input-group-addon,.custom-layer .custom-phone .input-group-addon{background:0 0}
                 color:#999;margin-top:-20px;
@@ -112,13 +113,25 @@
                 .nickname{line-height:70px;font-size:14px;display:block;float:left;}
                 span{padding-left: 30px;}
             }
+            .custom-bar{
+                height: 60px;
+                text-align: center;
+                .order-btn,.rechange-btn{
+                  .green-btn();
+                    margin-left: @gutter;
+                    margin-right: @gutter;
+                    width: 160px;
+                     display: inline-block;
+                    margin-top: 15px;
+                }
+            }
             .custom-ticket{
                  height:auto;
                  color:#333333;
                  margin-bottom:@gutter;
                 .yxq{color: #999999;}
-                .custom-ticket-header{margin-bottom:@gutter;padding-left:60px}
-                .custom-ticket-body{height:180px;overflow-x:hidden;}
+                .custom-ticket-header{margin-bottom:@gutter;padding-left:60px;}
+                .custom-ticket-body{height:180px;overflow-x:hidden;  width: 80%; margin: 0 auto;}
                 .custom-ticket-body ul{list-style:none;padding:0}
                 .custom-ticket-body li{width:80%;height:60px;display:block;border:1px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
                 .custom-ticket-body li:first-child{margin-top:0}

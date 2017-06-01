@@ -1,7 +1,6 @@
 <template>
-
     <el-dialog
-            :visible.sync="dialogTableVisible"
+            :visible.sync="showCustomDialog"
             size="small"
             custom-class="custom-layer"
             @close="closeWin"
@@ -9,7 +8,7 @@
                   <span slot="title" class="dialog-title">
                         顾客
                   </span>
-                  <custom-search  :step="step"  :add-callback="addEvent"  :search-callback="searchEvent" ></custom-search>
+                  <custom-search  :step="step"  :add-callback="addEvent"  :search-callback="searchEvent" :select-callback="selectEvent"></custom-search>
                  <div id="custom-solt">
                   <custom-normal v-if="step=='normal'" :tips="tips" :searching="searching" ></custom-normal>
 
@@ -19,36 +18,9 @@
 
                   <custom-detail v-if="step=='detail'" :member="custumData"></custom-detail>
                  </div>
-        <span slot="footer" class="dialog-footer">
-            <!--<el-button >取 消</el-button>-->
-            <!--<el-button type="primary">确 定</el-button>-->
-         </span>
     </el-dialog>
 
-    <!--<div role="dialog" class="modal fade custom-layer" id="layer-custom">-->
-    <!--<div class="modal-dialog ">-->
-    <!--<div class="modal-content">-->
-    <!--<div class="modal-header">-->
-    <!--<h4 class="modal-title">顾客</h4>-->
-    <!--<a class="close" data-dismiss="modal">&times;</span></a>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-    <!--<custom-search :tips="tips" :custom="tempcustom" :info-show="infoShow" :search-show="searchShow"></custom-search>-->
-    <!--<custom-register v-show="registerShow"></custom-register>-->
-    <!--<custom-list v-show="listShow"></custom-list>-->
-
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 </template>
-<style  rel="stylesheet/less"  lang="less">
-
-
-
-
-
-</style>
 
 <script>
 
@@ -64,12 +36,11 @@
     import { Loading } from 'element-ui';
 
     export default{
-
+        props:["showCustomDialog"],
         data(){
             return {
                 step:'normal',
                 historyStep:'',
-                dialogTableVisible:false,
                 searching:false,
                 searchStr:'',
                 listIndex:-1,
@@ -87,16 +58,6 @@
             }
         },
         computed: {
-//            ssss:{
-//                set(val){
-//                    alert(val);
-//                    this.$root.showCustomModal=!this.$root.showCustomModal;   //msg1设置值时此处触发 
-//                },
-//                get(){
-//                    console.log('我被调用了') //msg1获取值时触发
-//                    return this.$root.showCustomModal;         //这儿返回值将是msg1的值。
-//                }
-//            },
             custom (){
                 return  this.$store.state.currentPage.customData;
             }
@@ -109,27 +70,7 @@
             CustomDetail                                //顾客详情
         },
         created(){
-              this.dialogTableVisible=true;
 
-            //test
-//            this.searching=false;
-//            this.infoShow = false;
-//            this.searchShow = true;
-//            this.registerShow = false;
-//            this.listShow=false;
-
-
-//            if(this.custom.id){
-//                // 下次进来就显示当前顾客
-//                this.searching=false;
-//                this.infoShow = true;
-//                this.searchShow = false;
-//                this.registerShow = false;
-//                this.listShow=false;
-//                this.tempcustom={"appMember":this.custom};
-//            }else{
-//
-//            }
         },
         methods:{
             wait(){
@@ -138,17 +79,8 @@
 
             },
             closeWin(){
-                this.dialogTableVisible=false;
-                this.$root.showCustomModal=false;
-
+                this.$root.showCustomDialog=false;
             },
-            openSecend(){
-                this.dialogVisible = true;
-                this.con1=!this.con1;
-                this.con2=!this.con2;
-                this.msg="动态东西2";
-            },
-
 
             //+号事件
             addEvent(){
@@ -269,45 +201,13 @@
                 });
 
             },
-            doSearch(){
+            selectEvent(){
+                alert("select");
+                console.log(this.custumData);
 
 
-//                    this.$store.dispatch("fetchCustom",vm.username).then(res=>{
-//
-//                               vm.tips="";
-//
-//                                $(modal).hide();
-//                                vm.$store.state.waiting=true;
-//                                setTimeout(()=>{
-//                                    vm.$store.state.waiting=false;
-//                                    $(modal).show();
-//                                    vm.tempcustom = res;
-//                                    vm.searching=false;
-//                                    vm.searchShow=false;
-//                                    vm.infoShow = true;
-//
-//                               },500)
-//
-////
-////
-////                           $(modal).modal('hidden');
-////
-//                    }).catch(res=>{
-//                        vm.searching = true;
-//                        this.tips="没有找到此会员";
-//                        setTimeout(() => vm.searching = false, 3000);
-//                    })
-            },
-            chooseThis(){
-                let vm = this;
-                // 存储到vuex
-                vm.$store.commit('setCustomData', vm.tempcustom.appMember );
-                if(vm.$store.state.currentPage.mode=="order") {
-                    vm.$store.dispatch('fetchOrder');
-                }
-                //关闭弹窗
-                $('#layer-custom').modal('hide');
             }
+
         }
     }
 </script>
