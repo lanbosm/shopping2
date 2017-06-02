@@ -889,7 +889,7 @@ input[type=file] {
 .custom-layer .detail .custom-bar .order-btn,
 .custom-layer .detail .custom-bar .rechange-btn {
   color: #ffffff;
-  padding: 12px;
+  padding: 12px 12px;
   border-color: #cccccc;
   border-radius: 3px;
   background: #6fc89c;
@@ -902,28 +902,25 @@ input[type=file] {
 .custom-layer .detail .custom-bar .order-btn:hover,
 .custom-layer .detail .custom-bar .rechange-btn:hover {
   color: #ffffff;
-  padding: 12px;
+  padding: 12px 12px;
   border-color: #cccccc;
   border-radius: 3px;
   background: #3a9769;
+  display: inline-block;
   cursor: pointer;
   text-decoration: none;
 }
 .custom-layer .detail .custom-bar .order-btn:active,
-.custom-layer .detail .custom-bar .rechange-btn:active {
-  color: #ffffff;
-  padding: 12px;
-  border-color: #cccccc;
-  border-radius: 3px;
-  background: #3a9769;
-}
+.custom-layer .detail .custom-bar .rechange-btn:active,
 .custom-layer .detail .custom-bar .order-btn.select,
 .custom-layer .detail .custom-bar .rechange-btn.select {
   color: #ffffff;
-  padding: 12px;
+  padding: 12px 12px;
   border-color: #cccccc;
   border-radius: 3px;
-  background: #3a9769;
+  background: #2c724f;
+  display: inline-block;
+  cursor: pointer;
 }
 .custom-layer .detail .custom-ticket {
   height: auto;
@@ -1061,6 +1058,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .order .order-header .ok-btn:hover,
 .order .order-header .back-btn:hover {
@@ -1069,6 +1067,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-header .ok-btn:active,
 .order .order-header .back-btn:active {
@@ -1077,6 +1076,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .order .order-header .ok-btn.select,
 .order .order-header .back-btn.select {
@@ -1085,6 +1085,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-header .ok-btn:hover,
 .order .order-header .back-btn:hover {
@@ -1093,6 +1094,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-header .ok-btn:active,
 .order .order-header .back-btn:active {
@@ -1101,6 +1103,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .order .order-header .ok-btn.select,
 .order .order-header .back-btn.select {
@@ -1109,6 +1112,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-custom {
   padding: 20px 15px;
@@ -1129,6 +1133,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .custom-btn:hover {
   color: #666666;
@@ -1136,6 +1141,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .custom-btn:active {
   color: #666666;
@@ -1143,6 +1149,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .custom-btn.select {
   color: #666666;
@@ -1150,6 +1157,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .coupon-btn,
 .order .order-custom .point-btn,
@@ -1160,6 +1168,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .coupon-btn b,
 .order .order-custom .point-btn b,
@@ -1188,6 +1197,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .coupon-btn:active,
 .order .order-custom .point-btn:active,
@@ -1197,6 +1207,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .coupon-btn.select,
 .order .order-custom .point-btn.select,
@@ -1206,6 +1217,7 @@ input[type=file] {
   border-color: #999999;
   border-radius: 5px;
   background: #ffffff;
+  display: inline-block;
 }
 .order .order-custom .coupon-btn:hover span,
 .order .order-custom .point-btn:hover span,
@@ -1244,6 +1256,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .order .order-body .left-con .scan-btn:hover,
 .order .order-body .left-con .money-btn:hover,
@@ -1253,6 +1266,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .left-con .scan-btn:active,
 .order .order-body .left-con .money-btn:active,
@@ -1262,6 +1276,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .order .order-body .left-con .scan-btn.select,
 .order .order-body .left-con .money-btn.select,
@@ -1271,6 +1286,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .left-con .recharge-btn {
   margin-top: 80px;
@@ -1279,6 +1295,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .order .order-body .left-con .recharge-btn:hover {
   color: #ffffff;
@@ -1286,6 +1303,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .left-con .recharge-btn:active {
   color: #ffffff;
@@ -1293,6 +1311,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .order .order-body .left-con .recharge-btn.select {
   color: #ffffff;
@@ -1300,6 +1319,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .left-con .on {
   background-color: #6fc89c;
@@ -1354,6 +1374,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:hover {
   color: #ffffff;
@@ -1361,6 +1382,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:active {
   color: #ffffff;
@@ -1368,6 +1390,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn.select {
   color: #ffffff;
@@ -1375,6 +1398,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .order .order-body .list-box {
   padding-bottom: 0px;
@@ -1481,6 +1505,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .print .order-header .ok-btn:hover,
 .print .order-header .back-btn:hover {
@@ -1489,6 +1514,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .order-header .ok-btn:active,
 .print .order-header .back-btn:active {
@@ -1497,6 +1523,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .print .order-header .ok-btn.select,
 .print .order-header .back-btn.select {
@@ -1505,6 +1532,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .order-header .ok-btn:hover,
 .print .order-header .back-btn:hover {
@@ -1513,6 +1541,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .order-header .ok-btn:active,
 .print .order-header .back-btn:active {
@@ -1521,6 +1550,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .print .order-header .ok-btn.select,
 .print .order-header .back-btn.select {
@@ -1529,6 +1559,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .order-custom {
   padding: 30px 30px;
@@ -1542,6 +1573,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #f0eeef;
+  display: inline-block;
 }
 .print .order-custom .print-btn:hover {
   color: #ffffff;
@@ -1549,6 +1581,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .order-custom .print-btn:active {
   color: #ffffff;
@@ -1556,6 +1589,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #3b8c64;
+  display: inline-block;
 }
 .print .order-custom .print-btn.select {
   color: #ffffff;
@@ -1563,6 +1597,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 5px;
   background: #6fc89c;
+  display: inline-block;
 }
 .print .print-body {
   position: relative;
@@ -1593,6 +1628,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #6fc89c;
+  display: inline-block;
 }
 .ad .gallery-btn-row .gallery-ok:hover {
   color: #ffffff;
@@ -1600,6 +1636,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #3a9769;
+  display: inline-block;
   cursor: pointer;
   text-decoration: none;
 }
@@ -1610,6 +1647,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #2c724f;
+  display: inline-block;
   cursor: pointer;
 }
 .ad .gallery-btn-row .gallery-empty {
@@ -1618,6 +1656,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #e5e5e5;
+  display: inline-block;
 }
 .ad .gallery-btn-row .gallery-empty:hover {
   color: #333333;
@@ -1625,6 +1664,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #b2b2b2;
+  display: inline-block;
   cursor: pointer;
   text-decoration: none;
 }
@@ -1635,6 +1675,7 @@ input[type=file] {
   border-color: #cccccc;
   border-radius: 30px;
   background: #999999;
+  display: inline-block;
   cursor: pointer;
 }
 .ad .gallery {
@@ -1646,7 +1687,9 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
-  background-color: #fff;
+}
+.bg-gray {
+  background-color: #f0eeef;
 }
 /*!left-con*/
 .left-con .panel {

@@ -1,6 +1,6 @@
 <template>
 	<div class="ad">
-		<app-header  :title="title" :back="back" :next="next" ></app-header>
+		<commom-header  :title="title" :back="back"  ></commom-header>
 		<div class="container ad-main">
 			<div class="gallery-btn-row">
 				<a class="gallery-btn gallery-ok" @click="submitUpload">确定</a>
@@ -32,7 +32,6 @@
 <script>
 
     import { Loading } from 'element-ui';
-    import AppHeader from 'components/commom/AppHeader.vue';
 
 
     export default{
@@ -41,7 +40,6 @@
                 return {
                     title:"广告管理",
                     back:{"label":"返回","url":"index","show":true},
-                    next:{"label":"打印","url":"index","show":false},
                     dialogImageUrl: '',
                     dialogVisible: false,
                     fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
@@ -50,9 +48,7 @@
         },
         computed: {
         },
-        components:{
-            AppHeader
-        },
+
         created(){
 		},
         methods:{

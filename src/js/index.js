@@ -29,15 +29,25 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import simpScroller from 'lib/simpScroller'
 
-
+import CommomHeader from 'components/commom/Header.vue';
+import CommomList from 'components/commom/List.vue';
 
 import store from './vuex/store'
 import router from './router'
 
 Vue.use(ElementUI);
 
+//全局定义组件
+Vue.component('commom-header',CommomHeader);
+Vue.component('commom-list',CommomList);
+
 //定义头组件
 Vue.component('app-header',appHeader);
+
+
+//定义头组件
+Vue.component('app-header',appHeader);
+
 
 //定义顾客组件
 Vue.component('dialog-custom',CustomModal);
@@ -121,6 +131,10 @@ Vue.prototype.$simpleScroll = (ele,direction,hideScrollBar) => {
     });
 }
 
+Vue.filter("currency", function(value) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
+    if (!value) return '0.00';
+    return '¥ ' + Number(value).toFixed(2);
+});
 
 
 
@@ -135,6 +149,16 @@ router.beforeEach(({meta, path}, from, next)=> {
     const {auth = true} =  meta      // meta代表的是to中的meta对象，path代表的是to中的path对象  
 
     var isLogin = Boolean(store.state.login)    // true用户已登录， false用户未登录　
+
+
+    if ( path == '/login' || path == '/' ) {            //添加背景
+
+        document.body.classList.remove('bg-gray');  
+    }else{
+        document.body.classList.add('bg-gray');
+    }
+
+
     if (auth  &&  !isLogin  &&  path !== '/login') {   // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验
 
          next({ path: '/login' })   //  跳转到login页面  
@@ -186,6 +210,7 @@ var vm =new Vue({
     },
     components:{
         AppCenterLoading,
+
     },
     computed: {
         login: function() {

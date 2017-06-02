@@ -1,13 +1,13 @@
 <template>
    	   <div class="container common-header">
             <div class="row">
-                <div class="col-sm-2 col-md-2 col-lg-2">
+                <div class="col-sm-2 col-md-2 col-lg-2" v-if="back">
                     <a class="btn btn-default back-btn pull-left" @click="toBack();"  v-if="back.show" >&laquo;{{back.label}} </a>
                 </div>
                 <div class="col-sm-8 col-md-8 col-lg-8 text-center">
                     <h3>{{title}}</h3>
                 </div>
-                <div class="col-sm-2 col-md-2 col-lg-2 pull-right" >
+                <div class="col-sm-2 col-md-2 col-lg-2 pull-right" v-if="next" >
                     <a class="btn btn-default ok-btn pull-right"  @click="toNext();" v-if="next.show"> {{next.label}}  &raquo;</a>
                 </div>
             </div>
@@ -20,13 +20,10 @@
     @import "../../../less/util/mixin.less";
 
     .common-header{
-
+        padding: @gutter;
         background-color:#ffffff;
         border-left: @borderDashedStyle;
         border-right: @borderDashedStyle;
-    }
-    .common-header{
-        padding: @gutter;
         position: relative;
         .btn{
             position:relative;
@@ -35,7 +32,7 @@
         .common-header-row();
 
         h3{
-            font-size: 16px; line-height: 30px; margin: 0;
+            font-size: 16px; line-height: 40px; margin: 0; font-weight: bold;
         }
         .ok-btn,.back-btn{
             .common-header-btn();
@@ -45,12 +42,9 @@
 </style>
 <script>
 
-    import layer from 'layer';
-    import $ from 'jquery';
-    import {request, API_URLS, HOST} from 'util/request.js';
 
     export default{
-        name: 'AppHeader',
+        name: 'commomHeader',
         props:["title","back","next"],
         methods:{
             toBack (){
@@ -78,13 +72,8 @@
                        layer.close(index);
                    });
             }
-        },
-        filters: {
-            currency: function (value) {
-                if (!value) return '0.00';
-                return '¥ ' + Number(value).toFixed(2);
-            }
-        },
+        }
+
     }
 </script>
 

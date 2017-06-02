@@ -357,24 +357,23 @@ const actions= {
             });
         },
 
-        fetchCustom({commit},value){
+        fetchCustomList({commit},value){
             let apiObj = {
                 url : '/testapi/',
                 data:value
             };
-
-            return new Promise((resolve, reject) => {
-                request.fnGet_dev(apiObj).then(res=> {
-
+            commit("show_waiting");
+            return  request.fnGet_dev(apiObj).then(res=> {
+                    commit("hide_waiting");
                     if (res.data.code=="20000") {
-                         resolve(res.data);
+                        return  Promise.resolve(res.data);
                     } else {
-                        reject(res.data);
+                        return  reject(res.data);
                     }
                 }).catch(res=>{
-                        reject(res.data);
-                });
-            });
+                        return   reject(res.data);
+             });
+
         },
         //获取会员详情信息
         fetchCustomDetail({commit},value){

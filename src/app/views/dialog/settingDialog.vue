@@ -64,7 +64,8 @@
             },
             //会员设置
             customSetting(){
-                this.$root.showCustomDialog=true;
+                this.$root.showSettingDialog=false;
+                this.$router.push('/customlist');
             },
             //门店设置
             shopSetting(){
@@ -72,7 +73,8 @@
             },
             //订单设置
             orderSetting(){
-                alert(3)
+                this.$root.showSettingDialog=false;
+                this.$router.push('/orderlist');
             },
             //广告管理
             adSetting(){

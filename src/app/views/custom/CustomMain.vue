@@ -123,7 +123,7 @@
                 let lock = this.wait();
                 this.customListData=this.customListData_default;
                 var data={searchStr:str,pageNum:1};
-                this.$store.dispatch("fetchCustom",data).then(res=>{
+                this.$store.dispatch("fetchCustomList",data).then(res=>{
                     console.log(res);
                     this.customListData=res.page;
                     setTimeout(_=>{

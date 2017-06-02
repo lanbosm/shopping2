@@ -26,6 +26,11 @@ import activeProductsMain from 'views/products/activeProductsMain.vue';
 
 import AdMain from 'views/Ad/AdMain.vue';
 
+
+import OrderListMain from 'views/custom/OrderListMain.vue';
+import CustomListMain from 'views/custom/CustomListMain.vue';
+
+
 import NoPage from 'views/NoPage.vue'
 
 
@@ -120,6 +125,19 @@ const router = new VueRouter({
             name: 'ad',
             component:AdMain
         },
+        {
+            path: '/customList',
+            name:' customlist',
+            component: CustomListMain
+        },
+
+        {
+            path: '/orderList',
+            name:'orderList',
+            component:   OrderListMain
+        },
+
+
         // 404 page
         {   path: '*',
             name: '404',
