@@ -8,13 +8,11 @@ import router from '../router'
 const actions= {
         //获得公有秘钥
         getPublicKey({commit}){
-            commit("show_waiting");
             var  apiObj={
                 url:API_URLS.public_key,
             };
 
             return new Promise((resolve, reject) => {
-                commit("hide_waiting");
                 request.fnGet_dev(apiObj).then(res => { //成功
                     if(res.data.code=="20000"){
                         resolve(res.data);
@@ -144,21 +142,19 @@ const actions= {
                                 tmpKey: res.publicKey.tmpKey
                             }
                         };
-                        return new Promise((resolve, reject) => {
-
-                            request.fnPost_dev(apiobj).then(res=> {
+                
+                       return  request.fnPost_dev(apiobj).then(res=> {
                                 if (res.data.code=="20000") {
                                     commit('setAccessToken', res.data.accessToken);
-                                    resolve(res.data);
+                                   return  Promise.resolve(res.data);
                                 } else {
-                                    reject(res.data);
+                                   return  Promise.reject(res.data);
                                 }
                             }).catch(res=>{
 
                                 commit("hide_waiting");
-                                reject(res.data);
+                                return  Promise.reject(res.data);
                             });
-                        });
                     }
             })
 
@@ -170,10 +166,10 @@ const actions= {
                 url: API_URLS.log_out
             }
 
-            return new Promise((resolve, reject) => {
-                commit("show_waiting");
-                window.localStorage.setItem('currentShiftId',value);
-                request.fnGet_dev(apiObj).then(res => { //成功
+            commit("show_waiting");
+            window.localStorage.setItem('currentShiftId',value);
+            return   request.fnGet_dev(apiObj).then(res => { //成功
+                    commit("hide_waiting");
                     if(res.data.code=="20000"){
                         clearInterval(state.msgTimer);
                         router.replace('/login');
@@ -183,16 +179,14 @@ const actions= {
                         commit('clearAccessToken');
                         commit("setLocalList",[]);
                         commit('setShopData', {});
-
                         util.delLocal("accessToken");
                         util.delLocal("shopData");
-                        commit("hide_waiting");
-                        resolve(res.data);
+                      
+                       return Promise.resolve(res.data);
                     }
                 }).catch( res=> { //失败
                     commit("hide_waiting");
-                    reject(res.data);
-                })
+                    return Promise.reject(res.data);
             });
         },
 
