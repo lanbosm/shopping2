@@ -42,7 +42,11 @@
                     back:{"label":"返回","url":"index","show":true},
                     dialogImageUrl: '',
                     dialogVisible: false,
-                    fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+                    fileList2: [
+                        {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
+						{name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
+                        {name: 'ddd.jpeg', url: 'http://img1.gtimg.com/sports/pics/hv1/226/147/2214/144003061.jpg'}
+						],
 					upUrl:"https://jsonplaceholder.typicode.com/posts/"
                 }
         },

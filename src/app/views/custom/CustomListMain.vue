@@ -18,8 +18,8 @@
                         <dd class="phone">{{item.phone}}</dd>
 					</dl>
                     <span class="col">
-                        <a class="stock-btn" @click="handleStock(item.cid)">查看存货</a>
-                        <a class="detail-btn" @click="handleDetail(item.cid)">查看详情</a>
+                        <a class="stock-btn" @click="handleStock(item)">查看存货</a>
+                        <a class="detail-btn" @click="handleDetail(item)">查看详情</a>
                     </span>
                 </div>
             </div>
@@ -144,11 +144,13 @@
                 this.fetchList();
                 window.scrollTo(0,0);
             },
-            handleStock(){
+            handleStock(item){
                 this.$alert('此功能未开放', '存货');
             },
-            handleDetail(){
-                this.$alert('此功能未开放', '详情');
+            handleDetail(item){
+                this.$store.state.currentPage.customData=item;
+                this.$root.showCustomDialog=true;
+                //this.$alert('此功能未开放', '详情');
             },
             //请求列表
             fetchList() {

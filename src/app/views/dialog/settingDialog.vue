@@ -1,12 +1,12 @@
 <template>
     <el-dialog
             title="系统应用"
-            :visible.sync="showSettingDialog"
+            :visible.sync="dialogShow"
             size="tiny"
             top="30%"
             custom-class="dialog-setting"
             :close-on-click-modal=false
-            :modal=false
+            :modal=true
             @close="closeWin();"
             >
                 <div class="dialog-setting-con">
@@ -28,7 +28,7 @@
     @import "../../../less/util/mixin.less";
 
     .dialog-setting{
-        background:@green;
+        .dialog();
         .el-dialog__header{
             padding-bottom: 10px;
             border-bottom: 1px solid @green;
@@ -37,13 +37,12 @@
             width: 100%;
             padding-left: @gutter;
             padding-right: @gutter;
-            li{ margin-top: @gutter*2;}
+            li{ margin-top: @gutter*2; text-align: center;}
             .dialog-setting-btn{
                 width: 80%;
                 text-align: center;
-                display: block;
-                margin: 0 auto;
-                .green-btn()
+                .green-btn();
+
             }
         }
 
@@ -52,15 +51,18 @@
 <script>
     export default {
         name:"SettingDialog",
-        props:["showSettingDialog"],
         data() {
             return {
-
+                dialogShow: true
             };
         },
+
         methods: {
             closeWin(){
-                this.$root.showSettingDialog=false;
+                this.dialogShow=false;
+                setTimeout(_=> {
+                    this.$root.showSettingDialog = false;
+                },300)
             },
             //会员设置
             customSetting(){
@@ -69,7 +71,8 @@
             },
             //门店设置
             shopSetting(){
-                alert(2)
+                this.$root.showSettingDialog=false;
+                this.$root.showShopDialog=true;
             },
             //订单设置
             orderSetting(){

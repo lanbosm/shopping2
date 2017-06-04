@@ -43,6 +43,7 @@
     import Vue from 'vue'
     import layer from 'layer';
     import util from 'util/util.js'
+    import { Loading } from 'element-ui';
 
     export default{
         name:"Login",
@@ -88,9 +89,8 @@
 
                 this.logining=true;
 
-                let loading = layer.load(2, {
-                    shade: [0.1,'#fff'] //0.1透明度的白色背景
-                });
+                let loading = Loading.service({ target:document.querySelector('.register-box'),'text':'请稍等...'});
+
 
                 this.$store.dispatch('loginIn',{'username':this.username,'password':this.password}).then(res=>{
                     if(this.lastUserName!=this.username){
@@ -99,14 +99,20 @@
                     util.pushLocal('shopData',res)
                     this.setCookie("username",this.username,7);
 
-                    layer.close(loading);
+                    loading.close();
+
                     this.logining=false;
                     this.$router.replace('/');
 
                 }).catch(res=>{
+                    console.log(res);
+                    loading.close();
 
-                    layer.close(loading);
-                    layer.msg(res.msg, {icon: 2});
+                    this.$alert(res.msg, {
+                        type: 'error',
+                    });
+
+
                     this.password="";
                     this.logining=false;
                 })

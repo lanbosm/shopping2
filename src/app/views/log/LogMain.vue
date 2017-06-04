@@ -1,6 +1,6 @@
 <template>
    	  <div class="log">
-        <app-center-header  :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+        <commom-header  :title="title" :back="back" :next="next" ></commom-header>
         <div class="log-body">
 
               <div v-if="!listType">没有记录</div>
@@ -105,13 +105,13 @@
 </style>
 <script>
 
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
 
-    import LogCash from 'components/log/LogCash.vue';
-    import LogRecharge from 'components/log/LogRecharge.vue';
-    import LogProducts from 'components/log/LogProducts.vue';
-    import LogPromotion from 'components/log/LogPromotion.vue';
-    import LogSales from 'components/log/LogSales.vue';
+
+    import LogCash from './LogCash.vue';
+    import LogRecharge from './LogRecharge.vue';
+    import LogProducts from './LogProducts.vue';
+    import LogPromotion from './LogPromotion.vue';
+    import LogSales from './LogSales.vue';
 
     import {request, API_URLS} from 'util/request.js';
     import uti from 'util/request.js';
@@ -130,7 +130,6 @@
             }
         },
         components:{
-            AppCenterHeader,
             LogCash,
             LogRecharge,
             LogSales,

@@ -177,7 +177,7 @@
 
     .print-box #shopQrc{margin-left:5pt;  margin-top:30pt;   }
     hr{width:100%; height:0px;margin-top:30pt;  border-top:dotted 3px #cccccc;}
-    #shopQrc  table{ width: 150pt !important;}
+    .print-box   table{ width:100% !important;}
     .btn-inventory{margin-bottom: 15px;}
 
 </style>

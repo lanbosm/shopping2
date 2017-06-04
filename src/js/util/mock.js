@@ -4,21 +4,53 @@ import Mock from 'mockjs'
 //http://www.cnblogs.com/Leo_wl/p/6693211.html
 const baseURL='192.168.1.69:82';
 
+
+function GetQureyParams(url){
+        var Qureystr=url.split('?')[1];
+
+        var arr=Qureystr.split('&');
+
+        var obj={};
+
+        arr.forEach((ele,index)=>{
+
+                var key=ele.split('=')[0];
+                var val=ele.split('=')[1];
+
+                Object.defineProperty(obj,key+"",{
+                    value:val,
+                    writable:false,
+                    enumerable:true,
+                    configurable:false
+                })
+
+        })
+
+
+        return obj;
+}
+
+
+
 //测试接口
 var re =new RegExp(`${baseURL}/testapi/`,"i");
-export let test1=Mock.mock(re,'get',{
-	'code':'20000',
-    'page': {
-        "pageNum":1,"pageSize":5,"size":5,"orderBy":null,"startRow":1,"endRow":5,"total":16,"pages":3,
-        'list|5': [
-            {
-                'ssss':123,
-                'name': '@cname',
-                'nickname':'@name',
-                'cid': '@id',
-                'email': '@email',
-                'age|20-30': 50,
-                'headPortrait': Mock.Random.image('200x200', '#999999', '#FFFFFF', '@name()'),          //随机头像
+
+export let test1=Mock.mock(re,'get',function(query){
+    var params=GetQureyParams(query.url);
+    //console.log(params);
+    var template={
+        'code':'20000',
+        'page': {
+            "pageNum":parseInt(params.pageNum),"pageSize":5,"size":5,"orderBy":null,"startRow":1,"endRow":5,"total":16,"pages":3,
+            'list|5': [
+                {
+                    'str':params.searchStr,
+                    'name': '@cname',
+                    'nickname':'@name',
+                    'id': '@id',
+                    'email': '@email',
+                    'age|20-30': 50,
+                    'headPortrait': Mock.Random.image('200x200', '#999999', '#FFFFFF', '@name()'),          //随机头像
                 // 'tel': /^1[0-9]{10}$/,
                 'phone|1': ['13531544954', '13632250649', '15820292420', '15999905612'], //在数组中随机找一个
                 'balance|2000-10000.2': 1, //1-100 中随机生成一个保留两位小数点
@@ -38,10 +70,15 @@ export let test1=Mock.mock(re,'get',{
 
                 ]
 
-            }
-        ],
-    },
-    'msg':'响应成功'
+                }
+            ],
+        },
+        'msg':'响应成功'
+    }
+
+    var res = Mock.mock(template)
+    return res
+
 })
 
 

@@ -151,9 +151,8 @@ const actions= {
                                    return  Promise.reject(res.data);
                                 }
                             }).catch(res=>{
-
                                 commit("hide_waiting");
-                                return  Promise.reject(res.data);
+                                return  Promise.reject(res);
                             });
                     }
             })
@@ -357,6 +356,7 @@ const actions= {
             });
         },
 
+        //获取会员列表
         fetchCustomList({commit},value){
             let apiObj = {
                 url : '/testapi/',
@@ -373,8 +373,8 @@ const actions= {
                 }).catch(res=>{
                         return   reject(res.data);
              });
-
         },
+
         //获取会员详情信息
         fetchCustomDetail({commit},value){
             commit("show_waiting");
@@ -397,28 +397,7 @@ const actions= {
             });
         },
 
-        //获取会员信息
-        fetchCustom2({commit},value){
-            commit("show_waiting");
-            let apiObj = {
-                url : '/testapi',
-                data:{username:value}
-            };
-            return new Promise((resolve, reject) => {
-                request.fnGet(apiObj).then(res => { //成功
-                    commit("hide_waiting");
-                    if(res.code=="20000"){
-                        resolve(res);
-                    }else{
-                        reject(res);
-                    }
-                }).catch(res=> { //失败
-                    commit("hide_waiting");
-                    reject(res); //这里可以尝试扩展备用接口
-                })
-            });
 
-        },
 
         //获取班次信息
         fetchLog({commit},value){
@@ -471,6 +450,24 @@ const actions= {
                         reject(res);
                  })
             });
+        },
+
+        //获取门店信息
+
+        //提交门店信息
+        saveShopData({commit,state},value){
+            commit("show_waiting");
+            let apiObj={
+
+            };
+            //TODO saveShopData
+
+            commit("hide_waiting");
+
+            return Promise.resolve({'code': 20000, 'msg': 'ok'});
+
+
+
         },
 
         // //获取个人购买商品列表
@@ -583,12 +580,10 @@ const actions= {
                 data: ''
             }
 
-
             return new Promise((resolve, reject) => {
                 request.fnPost2(apiObj).then(res => { //成功
                     commit("hide_waiting");
                     if(res.code=="20000"){
-                        commit("setMsgData",res);
                         resolve(res);
                     }else{
                         reject(res);

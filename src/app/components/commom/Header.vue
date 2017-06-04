@@ -60,17 +60,18 @@
                 var msg="确定"+this.next.label+"吗?";
                 var vm=this;
                    //询问框
-                   layer.confirm(msg, {
-                       btn: ['确定'] //按钮
-                   }, function(index){
-                       if(vm.next.cb){
-                           vm.next.cb();
-                       }else {
-                           vm.$store.commit("setMode",vm.next.url);
-                           vm.$router.replace(vm.next.url);
-                       }
-                       layer.close(index);
-                   });
+                    this.$confirm(msg, '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        if(vm.next.cb){
+                            vm.next.cb();
+                        }else {
+                            vm.$store.commit("setMode",vm.next.url);
+                            vm.$router.replace(vm.next.url);
+                        }
+                    })
             }
         }
 

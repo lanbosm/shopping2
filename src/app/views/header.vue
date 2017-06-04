@@ -2,13 +2,12 @@
     <div class="header">
             <div class="logo">
                 <router-link  class="navbar-brand" :to="{ path: '/'}" replace><img src="/images/logo.jpg" alt="Brand"></router-link>
-                <!--<a class="navbar-brand" @click="">/a>-->
             </div>
             <div class="staff">{{shopData.adminName}}</div>
             <div class="nav-box" id="header-nav">
-                    <div class="nav-box-list">
+                    <div class="nav-box-list" id="nav-box-list">
                         <ul class="nav" >
-                                <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num">{{item.title}}</span><span class="time">{{item.time}}</span></a></li>
+                            <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num"><em v-if="headIndex == index && item.customData.id ">{{item.customData.nickname}}</em><em v-else>{{item.title}}</em></span><span class="time">{{item.time}}</span></a></li>
                         </ul>
                     </div>
                     <a class="custom-add" @click="addPage()">+</a>
@@ -48,8 +47,7 @@
 <script>
 
     import util from 'util/util.js';
-    import {request, API_URLS, HOST} from 'util/request.js';
-    import layer from 'layer';
+
 
     export default{
 
@@ -69,7 +67,7 @@
             },
             currentPage(){
               //console.log("currentPage");
-              return this.$store.state.currentPage;
+                return this.$store.state.currentPage;
             },
             member(){
                 return this.$store.state.member;
@@ -81,7 +79,9 @@
         data(){
             return {
                 dialogVisible: false,
-                timer:null
+                timer:null,
+                notice:null
+
             }
         },
         created(){
@@ -89,6 +89,7 @@
             var shopData= util.pullLocal("shopData");
             this.$store.commit('setShopData', shopData);
             //判断备用金 只填写一次
+
             if(this.shopData.needSpareCash){
                 this.shopData.needSpareCash=false;
                 util.pushLocal("shopData",this.shopData);
@@ -98,15 +99,14 @@
             }
 
 
-            //this.$store.dispatch("addListenAllocation");
             this.$store.dispatch("loadLastData");
-//            this.addMsglistener();
+            this.addMsglistener();
         },
         mounted(){
             this.$nextTick(_=>{
-               this.$simpleScroll('.nav-box-list','horizontal',true)
+               this.$simpleScroll('#nav-box-list','horizontal',true);
+                document.querySelector('.nav-box-list > div').scrollLeft=document.querySelector('.nav-box-list > div').scrollWidth;
             })
-
 
         },
         methods:{
@@ -114,15 +114,22 @@
                 this.$store.dispatch('addPage').then(res=> {
                     this.$router.replace('/' + this.mode);
                 });
+
+                this.$nextTick(_=> {
+                    document.querySelector('.nav-box-list > div').scrollLeft = document.querySelector('.nav-box-list > div').scrollWidth;
+                }  )
             },
             removePage(){
                 let vm = this;
-                layer.confirm('确定要删除吗？删除后数据将丢失！', function(index){
-                    vm.$store.dispatch("removePage").then(res=> {
+                this.$confirm('确定要删除吗？删除后数据将丢失！', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.dispatch("removePage").then(res=> {
                         console.log(res);
-                        layer.close(index);
-                        vm.$router.replace('/'+vm.mode);
+                        this.$router.replace('/'+vm.mode);
                     });
+                }).catch(() => {
+
                 });
 
             },
@@ -133,136 +140,95 @@
                     this.$router.replace('/'+this.mode);
                 });
             },
-            demo(){
-              var vm=this;
-              this.$root. showChooseGifts=true;
-
-              this.$nextTick(()=>{
-                  layer.open({
-                      id: 'layui-choose',
-                      type: 1,            //1 普通层
-                      shade: 0.01,  //遮罩
-                      anim: 0,
-                      zIndex: 1000,
-                      closeBtn: 2,
-                      title: false,
-                      area: ['auto', 'auto'], //宽高
-                      content: $('#layer-choose'),
-                      success: function () {
-
-
-                      },
-                      end: function () {
-
-                          vm.$root. showChooseGifts=false
-                      }
-                  });
-              })
-            },
+//            demo(){
+//              var vm=this;
+//              this.$root. showChooseGifts=true;
+//
+//              this.$nextTick(()=>{
+//                  layer.open({
+//                      id: 'layui-choose',
+//                      type: 1,            //1 普通层
+//                      shade: 0.01,  //遮罩
+//                      anim: 0,
+//                      zIndex: 1000,
+//                      closeBtn: 2,
+//                      title: false,
+//                      area: ['auto', 'auto'], //宽高
+//                      content: $('#layer-choose'),
+//                      success: function () {
+//
+//
+//                      },
+//                      end: function () {
+//
+//                          vm.$root. showChooseGifts=false
+//                      }
+//                  });
+//              })
+//            },
             cash(){
 
-                var vm=this;
-
-                this.$root.showCashModal=true;
-
-                this.$nextTick(() => {
-                    //弹出页面层
-                    layer.open({
-                        id: 'layui-cash',
-                        type: 1,            //1 普通层
-                        shade: 0.01,  //遮罩
-                        anim: 0,
-                        zIndex: 1000,
-                        closeBtn: 2,
-                        title: false,
-                        area: ['auto', 'auto'], //宽高
-                        content: $('#layer-cash-box'),
-                        success: function () {
-
-
-                        },
-                        end: function () {
-
-                            vm.$root.showCashModal=false;
-                        }
-                    });
-                })
-
+                this.$root.showCashDialog=true;
             },
             msg(){
-
-                this.$store.commit("setMode","message");
-                this.$router.replace('/message');
-                //alert("连接设备");
+                this.$router.replace('/notice');
             },
+
             //消息检测
             addMsglistener(){
 
                 var delay=10000;
                 var roopOver=false;
 
+                const vnode = this.$createElement;
                 var roopAction=()=>{
                     this.$store.state.msgTimer=setTimeout(()=> {
                             console.log("发生请求包");
+
                            this.$store.dispatch("addListenAllocation").then(res => {
-                               if(res.appUnconfirmList.length>0){
-                                   this.$root.showMsgModal=true;
-                                   roopOver=true;
+                               if (res.appUnconfirmList.length > 0) {
+
+
+                                   var newMsg = res.appUnconfirmList;
+                                   var html = vnode('dialog-notice', {props: {"item": newMsg}});
+
+                                   this.$notify({
+                                       title: newMsg.shopName + '的申请调拨',
+                                       message: html,
+                                       customClass: 'notice',
+                                       type: 'warning',
+                                       duration: 5000
+                                   });
                                }
+                           });
 
                             if(!roopOver){
                                 roopAction();
                             }
-                        })
                     }, delay);
 
                 }
+
                 roopAction();
             },
             log(){
-
-                var vm=this;
-
-                this.$root.showLogModal=true;
-
-                this.$nextTick(() => {
-                    //弹出页面层
-                    layer.open({
-                        id: 'layui-msg',
-                        type: 1,            //1 普通层
-                        shade: 0.01,  //遮罩
-                        anim: 0,
-                        zIndex: 1000,
-                        closeBtn: 2,
-                        title: false,
-                        area: ['auto', 'auto'], //宽高
-                        content: $('#layer-log-box'),
-                        success: function () {
-
-                        },
-                        end: function () {
-
-                            vm.$root.showLogModal=false;
-                            //aa      this.$root.showLogModal=false;
-                        }
-                    });
-                })
+                this.$root.showLogDialog=true;
             },
             setting(){
-
-
                 this.$root.showSettingDialog=true;
-
-
             },
             exit(){
-                let vm = this;
-                layer.confirm('确定要退出吗？', function(index){
-                    vm.$store.dispatch('logout',vm.shopData.currentShiftId).then(()=> {
-                            layer.closeAll();
-                        }
-                    )
+
+                this.$confirm('确定要退出吗？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.dispatch('logout',this.shopData.currentShiftId);
+                }).catch(() => {
+
                 });
+
             },
         }
     }

@@ -16,6 +16,7 @@ const store = new Vuex.Store({
   state: {
     login:false, //=>accessToken
     waiting:false,
+    noticeId:'',
     shopCount:1,
     headIndex:0,
     activeId:{

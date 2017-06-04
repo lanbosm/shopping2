@@ -36,7 +36,7 @@
 
 
         .common-list-header{
-            background:#f7f7f7;
+
             //border-bottom: @borderDashedStyle;
         }
 

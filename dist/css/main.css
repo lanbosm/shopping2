@@ -464,7 +464,7 @@ input[type=file] {
   height: 540px;
 }
 .product .item {
-  width: 18.35%;
+  width: 15.35%;
   float: left;
   height: auto;
   position: relative;
@@ -472,7 +472,6 @@ input[type=file] {
   margin-left: 12px;
   border: solid 1px #e5e5e5;
   border-radius: 3px;
-  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
   background-size: 100%;
   padding-bottom: 10px;
   *zoom: 1;
@@ -488,9 +487,10 @@ input[type=file] {
 .product .item .cc {
   width: 100%;
   padding-top: 100%;
-  background: #fff;
   position: relative;
   border-radius: 5px;
+  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
+  background-size: cover;
 }
 .product .item .cc .photo {
   position: absolute;
@@ -577,7 +577,7 @@ input[type=file] {
 }
 .shoppingCart .shoppingCart-list {
   position: relative;
-  height: 445px;
+  height: 455px;
 }
 .shoppingCart .shoppingCart-list.empty {
   background: url(../images/empty.jpg) 50% 50% no-repeat;
@@ -835,6 +835,8 @@ input[type=file] {
 }
 .custom-layer .detail {
   margin: 0 auto;
+  height: 560px;
+  overflow: hidden;
 }
 .custom-layer .detail .custom-table-body {
   padding: 12px;
@@ -883,28 +885,28 @@ input[type=file] {
   padding-left: 30px;
 }
 .custom-layer .detail .custom-bar {
+  width: 80%;
+  margin: 0 auto;
   height: 60px;
   text-align: center;
 }
 .custom-layer .detail .custom-bar .order-btn,
 .custom-layer .detail .custom-bar .rechange-btn {
   color: #ffffff;
-  padding: 12px 12px;
-  border-color: #cccccc;
-  border-radius: 3px;
+  padding: 10px 20px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
   background: #6fc89c;
-  margin-left: 12px;
-  margin-right: 12px;
-  width: 160px;
   display: inline-block;
   margin-top: 15px;
+  width: 49%;
 }
 .custom-layer .detail .custom-bar .order-btn:hover,
 .custom-layer .detail .custom-bar .rechange-btn:hover {
   color: #ffffff;
-  padding: 12px 12px;
-  border-color: #cccccc;
-  border-radius: 3px;
+  padding: 10px 20px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
   background: #3a9769;
   display: inline-block;
   cursor: pointer;
@@ -915,17 +917,60 @@ input[type=file] {
 .custom-layer .detail .custom-bar .order-btn.select,
 .custom-layer .detail .custom-bar .rechange-btn.select {
   color: #ffffff;
-  padding: 12px 12px;
-  border-color: #cccccc;
-  border-radius: 3px;
+  padding: 10px 20px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
   background: #2c724f;
   display: inline-block;
   cursor: pointer;
+}
+.custom-layer .detail .custom-gallery {
+  width: 80%;
+  margin: 0 auto;
+}
+.custom-layer .detail .custom-gallery h5 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: #999;
+}
+.custom-layer .detail .custom-gallery .custom-gallery-list {
+  width: 100%;
+  white-space: nowrap;
+}
+.custom-layer .detail .custom-gallery .custom-gallery-list ul li {
+  display: inline-block;
+  width: 128px;
+  height: 128px;
+  text-align: center;
+  line-height: 128px;
+  border-radius: 5px;
+  background: #ffffff url('../images/lazyload.png') 50% 50% no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  border: solid 1px #e5e5e5;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 .custom-layer .detail .custom-ticket {
   height: auto;
   color: #333333;
   margin-bottom: 12px;
+}
+.custom-layer .detail .custom-ticket .line {
+  width: 100%;
+  background: #e84593;
+  height: 1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 0px;
+  position: relative;
+}
+.custom-layer .detail .custom-ticket .line > span {
+  font-size: 2rem;
+  display: block;
+  position: absolute;
+  left: 20px;
+  top: -5px;
 }
 .custom-layer .detail .custom-ticket .yxq {
   color: #999999;
@@ -936,7 +981,7 @@ input[type=file] {
 }
 .custom-layer .detail .custom-ticket .custom-ticket-body {
   height: 180px;
-  overflow-x: hidden;
+  overflow: hidden;
   width: 80%;
   margin: 0 auto;
 }
@@ -993,27 +1038,36 @@ input[type=file] {
 .custom-layer .detail .custom-ticket .custom-ticket-body li .right em {
   font-style: normal;
 }
-.custom-layer .detail .line {
-  width: 100%;
-  background: #e84593;
-  height: 1px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-left: 0px;
-  position: relative;
+.custom-layer .detail .custom-stock-row {
+  text-align: center;
 }
-.custom-layer .detail .line > span {
-  font-size: 2rem;
-  display: block;
-  position: absolute;
-  left: 20px;
-  top: -5px;
+.custom-layer .detail .custom-stock-row .storageStock-btn {
+  color: #ffffff;
+  padding: 12px 200px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
+  background: #6fc89c;
+  display: inline-block;
 }
-.custom-layer .detail .custom-group {
-  margin: 10px 0;
+.custom-layer .detail .custom-stock-row .storageStock-btn:hover {
+  color: #ffffff;
+  padding: 12px 200px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
+  background: #3a9769;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
 }
-.custom-layer .detail .storageStock {
-  position: relative;
+.custom-layer .detail .custom-stock-row .storageStock-btn:active,
+.custom-layer .detail .custom-stock-row .storageStock-btn.select {
+  color: #ffffff;
+  padding: 12px 200px;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
+  background: #2c724f;
+  display: inline-block;
+  cursor: pointer;
 }
 .custom-layer .detail .password_again {
   float: right;
@@ -1055,7 +1109,7 @@ input[type=file] {
 .order .order-header .back-btn {
   color: #666666;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1064,7 +1118,7 @@ input[type=file] {
 .order .order-header .back-btn:hover {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1073,7 +1127,7 @@ input[type=file] {
 .order .order-header .back-btn:active {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1082,7 +1136,7 @@ input[type=file] {
 .order .order-header .back-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1091,7 +1145,7 @@ input[type=file] {
 .order .order-header .back-btn:hover {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1100,7 +1154,7 @@ input[type=file] {
 .order .order-header .back-btn:active {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1109,7 +1163,7 @@ input[type=file] {
 .order .order-header .back-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1130,7 +1184,7 @@ input[type=file] {
   font-size: 18px;
   color: #666666;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1138,7 +1192,7 @@ input[type=file] {
 .order .order-custom .custom-btn:hover {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1146,7 +1200,7 @@ input[type=file] {
 .order .order-custom .custom-btn:active {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1154,7 +1208,7 @@ input[type=file] {
 .order .order-custom .custom-btn.select {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1165,7 +1219,7 @@ input[type=file] {
   font-size: 18px;
   color: #666666;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1194,7 +1248,7 @@ input[type=file] {
 .order .order-custom .balance-btn:hover {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1204,7 +1258,7 @@ input[type=file] {
 .order .order-custom .balance-btn:active {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1214,7 +1268,7 @@ input[type=file] {
 .order .order-custom .balance-btn.select {
   color: #666666;
   padding: 25px;
-  border-color: #999999;
+  border: solid 1px #999999;
   border-radius: 5px;
   background: #ffffff;
   display: inline-block;
@@ -1253,7 +1307,7 @@ input[type=file] {
 .order .order-body .left-con .card-btn {
   color: #666666;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1263,7 +1317,7 @@ input[type=file] {
 .order .order-body .left-con .card-btn:hover {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1273,7 +1327,7 @@ input[type=file] {
 .order .order-body .left-con .card-btn:active {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1283,16 +1337,16 @@ input[type=file] {
 .order .order-body .left-con .card-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
 }
 .order .order-body .left-con .recharge-btn {
-  margin-top: 80px;
+  margin-top: 20px;
   color: #666666;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1300,7 +1354,7 @@ input[type=file] {
 .order .order-body .left-con .recharge-btn:hover {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1308,7 +1362,7 @@ input[type=file] {
 .order .order-body .left-con .recharge-btn:active {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1316,7 +1370,7 @@ input[type=file] {
 .order .order-body .left-con .recharge-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1371,7 +1425,7 @@ input[type=file] {
   line-height: 40px;
   color: #666666;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1379,7 +1433,7 @@ input[type=file] {
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:hover {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1387,7 +1441,7 @@ input[type=file] {
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn:active {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1395,7 +1449,7 @@ input[type=file] {
 .order .order-body .tab-con .shopAdminBox .addShopAdmin-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1502,7 +1556,7 @@ input[type=file] {
 .print .order-header .back-btn {
   color: #666666;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1511,7 +1565,7 @@ input[type=file] {
 .print .order-header .back-btn:hover {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1520,7 +1574,7 @@ input[type=file] {
 .print .order-header .back-btn:active {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1529,7 +1583,7 @@ input[type=file] {
 .print .order-header .back-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1538,7 +1592,7 @@ input[type=file] {
 .print .order-header .back-btn:hover {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1547,7 +1601,7 @@ input[type=file] {
 .print .order-header .back-btn:active {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1556,7 +1610,7 @@ input[type=file] {
 .print .order-header .back-btn.select {
   color: #ffffff;
   padding: 25px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1570,7 +1624,7 @@ input[type=file] {
   font-size: 18px;
   color: #666666;
   padding: 15px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
   display: inline-block;
@@ -1578,7 +1632,7 @@ input[type=file] {
 .print .order-custom .print-btn:hover {
   color: #ffffff;
   padding: 15px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1586,7 +1640,7 @@ input[type=file] {
 .print .order-custom .print-btn:active {
   color: #ffffff;
   padding: 15px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #3b8c64;
   display: inline-block;
@@ -1594,7 +1648,7 @@ input[type=file] {
 .print .order-custom .print-btn.select {
   color: #ffffff;
   padding: 15px;
-  border-color: #cccccc;
+  border: solid 1px #cccccc;
   border-radius: 5px;
   background: #6fc89c;
   display: inline-block;
@@ -1625,7 +1679,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-ok {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #6fc89c;
   display: inline-block;
@@ -1633,7 +1687,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-ok:hover {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #3a9769;
   display: inline-block;
@@ -1644,7 +1698,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-ok.select {
   color: #ffffff;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #2c724f;
   display: inline-block;
@@ -1653,7 +1707,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-empty {
   color: #333333;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #e5e5e5;
   display: inline-block;
@@ -1661,7 +1715,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-empty:hover {
   color: #333333;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #b2b2b2;
   display: inline-block;
@@ -1672,7 +1726,7 @@ input[type=file] {
 .ad .gallery-btn-row .gallery-empty.select {
   color: #333333;
   padding: 10px 20px;
-  border-color: #cccccc;
+  border: solid 1px #f5f5f5;
   border-radius: 30px;
   background: #999999;
   display: inline-block;
@@ -1718,7 +1772,7 @@ body {
   border-top-left-radius: 5px;
 }
 .left-con .panel-footer {
-  padding: 5px 15px;
+  padding: 12px;
   border-radius: 0;
   border: solid 1px #e5e5e5;
   border-top: none;

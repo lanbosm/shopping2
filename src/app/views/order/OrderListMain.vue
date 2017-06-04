@@ -20,6 +20,7 @@
                 <!--list-->
                 <div class="list-row" v-for="(item,index) in listData.list">
                     <div class="t">
+                        <span class="list-checkbox" v-show="refundShow"><input type="checkbox" v-model="item.isRefund"  /> <i></i> </span>
                         <span>订单号： {{item.sn}} x  {{item.paymentMethod}}</span><span>{{item.createDate}}</span>
                     </div>
                     <div class="c">
@@ -44,7 +45,9 @@
                         总现在收入<span>{{totalCash | currency }}</span>元
                     </div>
                      <div class="footer-right">
-                         <a class="refund-btn" @click="handleRefund()">退款</a>
+                         <a class="check-btn" v-show="!refundShow" @click="handleCheck()">退款</a>
+                         <a class="refund-btn" v-show="refundShow"@click="handleRefund()">确定</a>
+                         <a class="cancel-btn" v-show="refundShow" @click="refundShow=false">取消</a>
                      </div>
             </div>
         </commom-list>
@@ -69,6 +72,59 @@
         .clearfix;
     }
 
+    .list-checkbox {
+        margin-top:@gutter;
+        margin-right:@gutter;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border-radius: 50%;
+        border: solid 1px #cccccc;
+        overflow: hidden;
+        position: relative;
+        i{
+            width: 100%;
+            height:100%;
+
+            position: absolute;
+            pointer-events: none;
+            top:0;
+            left:0;
+
+        }
+        i:after{
+            box-sizing: content-box;
+            content: "";
+            border: 2px solid #fff;
+            border-left: 0;
+            border-top: 0;
+            height: 8px;
+            left: 7px;
+            position: absolute;
+            top: 3px;
+            transform: rotate(45deg) scaleY(0);
+            width: 4px;
+            transition: transform .15s cubic-bezier(.71,-.46,.88,.6) .05s;
+            transform-origin: center;
+        }
+        input[type=checkbox]{
+            position: absolute;
+            width: 100%;
+            height:100%;
+            opacity:0;
+            margin: 0;
+            outline:none;
+            display: inline-block;
+        }
+
+        input[type=checkbox]:checked +i{
+            background: @themeColor;
+        }
+        input[type=checkbox]:checked +i:after {
+            transform: rotate(45deg) scaleY(1);
+        }
+
+    }
     .list-header{
         line-height: 50px;
         font-size: 12px;
@@ -80,6 +136,7 @@
 
             height: @listHeight;
             overflow: hidden;
+
 
             .list-row{
                 border: solid 1px  @border-color;
@@ -148,9 +205,14 @@
             position: absolute;
             top:@gutter;
             right:@gutter;
-            .refund-btn{
-                .diy-btn(#ffffff,@themeColor,@padding: 12px 30px)
+            .refund-btn,.check-btn{
+                .diy-btn(#ffffff,@themeColor,@padding: 12px 30px);
             }
+            .cancel-btn {
+                 margin-left: 30px;
+                .diy-btn(@themeColor,#ffffff,@themeColor,@padding: 12px 30px);
+             }
+
 
         }
     }
@@ -170,6 +232,8 @@
                 back:{"label":"返回","url":"index","show":true},
                 listData:{},
                 pageNum:1,                 //一页显示多少
+                refundShow:false,
+
             }
         },
         created(){
@@ -189,8 +253,17 @@
                 this.fetchList();
                 window.scrollTo(0,0);
             },
+            handleCheck(){
+
+                this.refundShow=true;
+            },
             handleRefund(){
-                this.$alert('此功能未开放', '退款');
+                this.$alert('操作成功',{
+                    type: 'success',
+                }).then(_=>{
+                    this.refundShow=false;
+                    this.fetchList();
+                })
 
             },
             //请求列表
@@ -209,7 +282,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':false,
                               },
                               {
                                   'sn': 10102020102020200,
@@ -221,7 +295,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':true,
                               },
                               {
                                   'sn': 10102020102020200,
@@ -233,7 +308,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':false,
                               },
                               {
                                   'sn': 10102020102020200,
@@ -245,7 +321,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':false,
                               },
                               {
                                   'sn': 10102020102020200,
@@ -257,7 +334,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':false,
                               },
                               {
                                   'sn': 10102020102020200,
@@ -269,7 +347,8 @@
 
                                   ],
                                   'username':"naslo",
-                                  'amountPaid':'2000.00'
+                                  'amountPaid':'2000.00',
+                                  'isRefund':false,
                               }
                           ],
                   }

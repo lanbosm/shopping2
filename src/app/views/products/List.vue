@@ -13,6 +13,66 @@
         </div>
         <div class="row"  v-else>
             <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
+                <!--图片盒子-->
+                <div class="cc">
+                    <div class="photo" :style="{'background-image':'url('+item.image+')'}">
+
+                        <div class="txt">
+                            <a  class="buy-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
+                            <a  class="list-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
+                            <span class="info">
+                                         <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+                <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
+                <!--文本盒子-->
+                <div class="tt">
+                    {{item.name}}
+                        </div>
+            </div>
+            <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
+                <!--图片盒子-->
+                <div class="cc">
+                    <div class="photo" :style="{'background-image':'url('+item.image+')'}">
+
+                        <div class="txt">
+                            <a  class="buy-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
+                            <a  class="list-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
+                            <span class="info">
+                                         <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+                <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
+                <!--文本盒子-->
+                <div class="tt">
+                    {{item.name}}
+                        </div>
+            </div>
+            <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
+                <!--图片盒子-->
+                <div class="cc">
+                    <div class="photo" :style="{'background-image':'url('+item.image+')'}">
+
+                        <div class="txt">
+                            <a  class="buy-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
+                            <a  class="list-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
+                            <span class="info">
+                                         <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+                <!--http://aoupprod.oss-cn-beijing.aliyuncs.com/ads/2017-03-25/08b32783-e2aa-407d-a1f8-ee1faced0364.png-->
+                <!--文本盒子-->
+                <div class="tt">
+                    {{item.name}}
+                        </div>
+            </div>
+            <div class="item" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
                         <!--图片盒子-->
                         <div class="cc">
                             <div class="photo" :style="{'background-image':'url('+item.image+')'}">

@@ -1,7 +1,7 @@
 <template>
    	  <div class="message">
 
-            <app-center-header  :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+            <commom-header  :title="title" :back="back" :next="next" ></commom-header>
 
             <div class="container message-body" >
                 <div class="row page-con">
@@ -23,15 +23,14 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
+            </div>
+            <div class="container message-footer" >
                         <pagination :page="listData" :go-callback="goCallback"></pagination>
-                    </div>
-                </div>
 
             </div>
+
+
 
 
           <div id="layer-comfirm-box" class="layer-comfirm-box">
@@ -92,26 +91,18 @@
         }
 
 
-        background: #efefef;
-        .order-header{
-            padding: 15px;
-            position: relative;
-            .order-row;
-            h3{
-                font-size: 18px; line-height: 30px; margin: 0;
-            }
-            .ok-btn,.back-btn{
-                .order-header-btn;
-            }
-        }
+
 
         .page-con{height: 588px;}
-        .page-bar{}
+
 
         .container{
             background-color:#ffffff;
             border-left: @borderDashedStyle;
             border-right: @borderDashedStyle;
+        }
+        .message-footer{
+            padding: @gutter;
         }
         .btn{
             position:relative;

@@ -98,7 +98,8 @@
         //详情样式
         .detail{
             margin: 0 auto;
-            .custom-table-body{padding: @gutter;}
+            height: 560px; overflow: hidden;
+            .custom-table-body{padding: @gutter; }
             .custom-member{
                 width: 80%;
                 margin: 0 auto;
@@ -114,24 +115,55 @@
                 span{padding-left: 30px;}
             }
             .custom-bar{
+                width: 80%;
+               margin: 0 auto;
                 height: 60px;
                 text-align: center;
                 .order-btn,.rechange-btn{
                   .green-btn();
-                    margin-left: @gutter;
-                    margin-right: @gutter;
-                    width: 160px;
-                     display: inline-block;
-                    margin-top: 15px;
+                  margin-top: 15px;
+                  width: 49%;
                 }
             }
+           .custom-gallery{
+              width: 80%;
+              margin: 0 auto;
+              h5{
+                margin-top: @gutter; margin-bottom: @gutter;
+                color:#999;
+              }
+
+              .custom-gallery-list{
+                  width: 100%;
+                  white-space: nowrap;
+                  ul{
+                    li {
+                       display: inline-block;
+                       width: 128px;
+                       height: 128px;
+                       text-align: center;
+                       line-height: 128px;
+                       border-radius: 5px;
+                       background:#ffffff  url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
+                       background-size: cover;
+                       overflow: hidden;
+                       border:@borderStyle;
+                       margin-left: @gutter;
+                       margin-right: @gutter;
+                     }
+                  }
+
+              }
+           }
             .custom-ticket{
+                .line{width:100%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:0px;position:relative}
+                .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
                  height:auto;
                  color:#333333;
                  margin-bottom:@gutter;
                 .yxq{color: #999999;}
                 .custom-ticket-header{margin-bottom:@gutter;padding-left:60px;}
-                .custom-ticket-body{height:180px;overflow-x:hidden;  width: 80%; margin: 0 auto;}
+                .custom-ticket-body{height:180px;overflow:hidden;  width: 80%; margin: 0 auto;}
                 .custom-ticket-body ul{list-style:none;padding:0}
                 .custom-ticket-body li{width:80%;height:60px;display:block;border:1px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
                 .custom-ticket-body li:first-child{margin-top:0}
@@ -143,15 +175,14 @@
                 .custom-ticket-body li .right span{margin-top:0px;display:block}
                 .custom-ticket-body li .right em{font-style:normal}
             }
-            .line{width:100%;background:@themeColor;height:1px;margin-top:15px;margin-bottom:15px;margin-left:0px;position:relative}
-            .line>span{font-size:2rem;display:block;position:absolute;left:20px;top:-5px}
-            .custom-group{
-                margin: 10px 0;
-            }
 
-            .storageStock{
-              position: relative;
-            }
+
+           .custom-stock-row {
+             text-align: center;
+             .storageStock-btn {
+               .green-btn(@padding:12px 200px;)
+             }
+           }
             .password_again{
               float: right;font-size: 14px;color: @green;line-height: 70px; margin-right: 20px; cursor: pointer;
               &:hover{

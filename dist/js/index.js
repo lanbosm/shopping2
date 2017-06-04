@@ -71,6 +71,8 @@ var simpScroller = (function() {
 			if (_upSupportTouch == false || (document.moveFollow == true)) {
 				// touch设备或有可移动标志
 				this["scroll" + Key] = pos[key] + (pos[pageKey] - (event.touches? event.touches[0][pageKey]: event[pageKey]));
+
+
 				// 自定义滚动条的位置
 				fnPosScroll();
 				// 回调

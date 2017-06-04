@@ -2,10 +2,15 @@
 .class-order-btn(@fontColor,@bgcolor,@borderColor,@radius:5px,@padding:25px){
 	color: @fontColor;
 	padding: @padding;
-	border-color:@borderColor;
+	border:solid 1px @borderColor;
 	border-radius: @radius;
 	background: @bgcolor;
     display: inline-block;
+}
+
+.dialog(){
+    border-radius: 5px !important;
+    box-shadow: 0 0 5px #cccccc  !important;
 }
 
 
@@ -27,13 +32,13 @@
   border-width: 2px;
 }
 
-.diy-btn(@color,@bgcolor,@borderColor:#cccccc,@radius:5px,@padding:12px 12px){
+.diy-btn(@color,@bgcolor,@borderColor:#f5f5f5,@radius:5px,@padding:10px 20px){
   .class-order-btn(@color,@bgcolor,@borderColor,@radius,@padding);
   &:hover{ .class-order-btn(@color,darken(@bgcolor,20%),@borderColor,@radius,@padding); cursor: pointer; text-decoration: none;}
   &:active,&.select{ .class-order-btn(@color,darken(@bgcolor,30%),@borderColor,@radius,@padding); cursor: pointer; }
 }
 
-.green-btn(@radius:3px,@padding:12px 12px){
+.green-btn(@radius:5px,@padding:10px 20px){
   .class-order-btn(#ffffff,@green,#cccccc,@radius,@padding);
   &:hover{ .class-order-btn(#ffffff,darken(@green,20%),#cccccc,@radius,@padding); cursor: pointer; text-decoration: none;}
   &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc,@radius,@padding); cursor: pointer;}

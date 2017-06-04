@@ -1,6 +1,6 @@
 <template>
     <div class="order">
-        <app-center-header :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+        <commom-header :title="title" :back="back" :next="next"></commom-header>
         <app-center-custom :mode="mode" :message="message" :amount="amount" :order="order"></app-center-custom>
         <div class="container order-body">
             <div class="row">
@@ -30,6 +30,7 @@
     import layer from 'layer';
     import $ from 'jquery';
 
+
     export default{
         data() {
             return {
@@ -40,7 +41,6 @@
             }
         },
         components:{
-            AppCenterHeader,
             AppCenterMenu,
             AppCenterCustom
         },

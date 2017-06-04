@@ -51,7 +51,7 @@
 					</div>
 
 					<!--顾客-->
-					<dialog-custom v-if="showCustomDialog" :show-custom-dialog="showCustomDialog"></dialog-custom>
+					<dialog-custom v-if="showCustomDialog"></dialog-custom>
 					<!--导购员-->
 					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
 
@@ -67,14 +67,13 @@
 					</transition>
 
 					<!--应用设置-->
-					<dialog-setting v-if="showSettingDialog" :show-setting-dialog="showSettingDialog"></dialog-setting>
-
+					<dialog-setting v-if="showSettingDialog" ></dialog-setting>
+					<!--门店设置-->
+					<dialog-shop v-if="showShopDialog" ></dialog-shop>
 					<!--日记-->
-					<layer-log v-if="showLogModal"></layer-log>
-
+					<dialog-log v-if="showLogDialog"></dialog-log>
 					<!--备用金-->
-					<layer-cash v-if="showCashModal"></layer-cash>
-
+					<dialog-cash v-if="showCashDialog" ></dialog-cash>
 					<!--物品详情-->
 					<list-item v-if="showListItem"></list-item>
 

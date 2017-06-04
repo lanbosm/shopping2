@@ -5,7 +5,7 @@
             <div class="item-detail-con">
                 <div class="price">{{productDetail.price | currency}} </div>
 
-                <div class="product">
+                <div class="item-product">
                     <img class="img-responsive  center-block" :src="productDetail.image" :alt="productDetail.title" :title="productDetail.title">
                     <p class="name">{{productDetail.name}} {{productDetail.specDesc}}</p>
                     <p class="gift primary" v-if="productDetail.appGiftActivity">{{productDetail.appGiftActivity.name}}</p>
@@ -72,7 +72,7 @@
             position: relative; width: 100%;  height:400px;
             overflow:auto;
             .price { position: relative; color: @themeColor; margin-bottom: @gutter; }
-                .product {  position: relative;  left: 0;right: 0;
+                .item-product {  position: relative;  left: 0;right: 0;
                     img{width: 80%; margin: 0 auto; max-height: 160px; }
                     .name{margin-top: 10px; overflow: hidden;}
                 }

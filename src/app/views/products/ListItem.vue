@@ -3,7 +3,7 @@
         <!--商品详情	-->
         <div class="item-detail">
             <div class="item-detail-con">
-                <div class="product" style="margin-top:15px;">
+                <div class="item-product">
                     <img class="img-responsive  center-block" :src="productDetail.image" :alt="productDetail.title" :title="productDetail.title">
                     <p class="name">{{productDetail.name}} {{productDetail.specDesc}}</p>
                     <p class="price primary">{{productDetail.price | currency }}元</p>
@@ -45,9 +45,7 @@
         </div>
     </div>
 </template>
-<style>
 
-</style>
 <script>
     import {request, API_URLS, HOST} from 'util/request.js';
     import util from 'util/util.js';
@@ -71,7 +69,6 @@
                     newitem.appGiftItem = this.productDetail.appGiftActivity.appGifts[this.productDetail.giftIndex]     //选择的赠品id
 
                  }
-
                 return newitem;
             }
         },

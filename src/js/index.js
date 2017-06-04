@@ -7,13 +7,15 @@ import CustomModal from 'views/custom/CustomMain.vue';
 import ShopAdminModal from 'components/shopAdmin/ShopAdminMain.vue';
 import CouponModal from 'components/coupon/CouponMain.vue';
 import RechargeModal from 'components/recharge/RechargeMain.vue';
-import MsgModal from 'components/message/MsgModal.vue';
-import LogModal from 'components/log/LogModal.vue';
-import CashModal from 'components/cash/CashModal.vue';
 
 
-import SettingDialog from 'views/dialog/settingDialog.vue';
 
+
+import CashDialog from 'views/dialog/CashDialog.vue';
+import SettingDialog from 'views/dialog/SettingDialog.vue';
+import ShopDialog    from 'views/dialog/ShopDialog.vue';
+import LogDialog    from 'views/dialog/LogDialog.vue';
+import NoticeDialog    from 'views/dialog/NoticeDialog.vue';
 
 import ChooseGifts from 'views/products/ChooseGifts.vue'
 
@@ -44,13 +46,9 @@ Vue.component('commom-list',CommomList);
 //定义头组件
 Vue.component('app-header',appHeader);
 
-
-//定义头组件
-Vue.component('app-header',appHeader);
-
-
 //定义顾客组件
 Vue.component('dialog-custom',CustomModal);
+
 
 //定义导购组件
 Vue.component('layer-shopadmin',ShopAdminModal);
@@ -62,16 +60,20 @@ Vue.component('layer-coupon',CouponModal);
 Vue.component('layer-recharge',RechargeModal);
 
 //定义msg组件
-Vue.component('layer-msg',MsgModal);
+Vue.component('dialog-notice',NoticeDialog);
 
 //定义日记组件
-Vue.component('layer-log',LogModal);
+Vue.component('dialog-log',LogDialog);
 
 //定义备用金组件
-Vue.component('layer-cash',CashModal);
+Vue.component('dialog-cash',CashDialog);
 
 //定义设置弹窗
 Vue.component('dialog-setting',SettingDialog);
+
+
+//定义门店组件
+Vue.component('dialog-shop',ShopDialog);
 
 //定义商品弹窗
 Vue.component('list-item',ListItem);
@@ -148,6 +150,10 @@ router.beforeEach(({meta, path}, from, next)=> {
 
     const {auth = true} =  meta      // meta代表的是to中的meta对象，path代表的是to中的path对象  
 
+    var accessToken = window.localStorage.getItem("accessToken");
+    if(accessToken) {
+        store.state.login = accessToken;
+    }
     var isLogin = Boolean(store.state.login)    // true用户已登录， false用户未登录　
 
 
@@ -197,15 +203,18 @@ var vm =new Vue({
             showCouponModal:false,
             showRechargeModal:false,
             showMsgModal:false,
-            showLogModal:false,
-            showCashModal:false,
+
             showListItem:false,
             showStockItem:false,
             showChooseGifts:false,
             showAgainPass:false,
 
             showSettingDialog:false,
+            showShopDialog:false,
             showCustomDialog:false,
+            showCashDialog:false,
+            showLogDialog:false
+
 
     },
     components:{
@@ -222,10 +231,7 @@ var vm =new Vue({
     },
     created() {
 
-        var accessToken = window.localStorage.getItem("accessToken");
-        if(accessToken) {
-            this.$store.state.login = accessToken;
-        }
+
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
@@ -237,7 +243,7 @@ var vm =new Vue({
         //this.$router.push('/');
         // this.$router.push('/print');
         //this.$router.push('/');
-        this.$router.push('/');
+        //this.$router.push('/');
     }
 })
 

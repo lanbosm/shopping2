@@ -40,6 +40,7 @@
             }
         },
         created(){
+            console.log(this.listData);
             this.custom=this.selectedCustom;
 
             if(this.listIndex){

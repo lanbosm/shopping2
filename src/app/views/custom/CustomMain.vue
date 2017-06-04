@@ -1,14 +1,15 @@
 <template>
     <el-dialog
-            :visible.sync="showCustomDialog"
+            :visible.sync="dialogShow"
             size="small"
             custom-class="custom-layer"
             @close="closeWin"
+            top="5%"
             >
                   <span slot="title" class="dialog-title">
                         顾客
                   </span>
-                  <custom-search  :step="step"  :add-callback="addEvent"  :search-callback="searchEvent" :select-callback="selectEvent"></custom-search>
+                  <custom-search  :step="step"  v-if="$route.name!='customlist'" :add-callback="addEvent"  :search-callback="searchEvent" :select-callback="selectEvent"></custom-search>
                  <div id="custom-solt">
                   <custom-normal v-if="step=='normal'" :tips="tips" :searching="searching" ></custom-normal>
 
@@ -16,7 +17,7 @@
 
                   <custom-list v-if="step=='list'" :list-index="listIndex" :list-data="customListData" :list-callback="listSelect" :page-to="listPageTo"></custom-list>
 
-                  <custom-detail v-if="step=='detail'" :member="custumData"></custom-detail>
+                  <custom-detail v-if="step=='detail'" :member="customData" :order-callback="orderEvent" :recharge-callback="rechargeEvent" :stock-callback="stockEvent"></custom-detail>
                  </div>
     </el-dialog>
 
@@ -36,15 +37,15 @@
     import { Loading } from 'element-ui';
 
     export default{
-        props:["showCustomDialog"],
         data(){
             return {
+                dialogShow: true,
                 step:'normal',
                 historyStep:'',
                 searching:false,
                 searchStr:'',
                 listIndex:-1,
-                custumData:'',
+                customData:{},
                 customListData:{ },
                 customListData_default:{
                     pageNum:1,
@@ -71,6 +72,20 @@
         },
         created(){
 
+            if(this.$route.name=='customlist'){
+
+
+                this.customData=this.$store.state.currentPage.customData;  //直接从vuex获取
+                this.step='detail';
+
+
+
+
+
+
+            }
+
+
         },
         methods:{
             wait(){
@@ -79,7 +94,10 @@
 
             },
             closeWin(){
-                this.$root.showCustomDialog=false;
+                this.dialogShow=false;
+                setTimeout(_=> {
+                    this.$root.showCustomDialog = false;
+                },300);
             },
 
             //+号事件
@@ -130,9 +148,9 @@
                         lock.close();
                         this.searching=false;
                         this.step='list';
-                        this.$nextTick(_=>{
-                            this.$simpScroll(".custom-list");
-                        })
+//                        this.$nextTick(_=>{
+//                            this.$simpScroll(".custom-list");
+//                        })
                     },300)
                 }).catch(res=>{
                     lock.close();
@@ -160,7 +178,8 @@
                         }
                     });
                 }).catch(res=>{
-                    this.$alert('注册失败', {
+                    console.log(res);
+                    this.$alert(res.msg, {
                         confirmButtonText: '确定',
                         type: 'error'
                     })
@@ -173,7 +192,7 @@
                 let lock = this.wait();
 
                 setTimeout(_=>{
-                    this.custumData=item;
+                    this.customData=item;
                     this.step="detail";
                     lock.close();
                 },300)
@@ -183,9 +202,8 @@
                 let lock = this.wait();
                 this.pageNum=index;
                 var data={searchStr:this.searchStr,pageNum:index};
-                this.$store.dispatch("fetchCustom",data).then(res=>{
-                    console.log(index);
-                    console.log(this.searchStr);
+                this.$store.dispatch("fetchCustomList",data).then(res=>{
+                    console.log(res);
                     this.customListData=res.page;
                     setTimeout(_=>{
                         lock.close();
@@ -202,10 +220,24 @@
 
             },
             selectEvent(){
-                alert("select");
-                console.log(this.custumData);
+                this.$store.commit('setCustomData',this.customData);
+                this.closeWin();
 
-
+            },
+            orderEvent(){
+                this.closeWin();
+                this.$router.push('/orderlist');
+            },
+            rechargeEvent(){
+                this.$alert('此功能未开放', '充钱');
+            },
+            stockEvent(){
+                this.$store.dispatch("fetchPickList",{"memberId":this.customData.id}).then(res=>{
+                    alert(res);
+                    this.$router.push({path:'/membercargo'});
+                    this.$root.showCustomModal=false;
+                    $("#layer-custom").modal('hide');
+                });
             }
 
         }

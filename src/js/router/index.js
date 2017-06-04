@@ -5,7 +5,7 @@ import Login from 'views/login/login.vue'
 
 import App from 'views/App.vue'
 import AppCenter from 'views/AppCenter.vue'
-import MsgCenter from 'components/message/MsgMain.vue';
+
 
 import OrderDefault from 'views/order/OrderDefault.vue';
 import PayScan from 'views/pay/PayScan.vue'
@@ -14,7 +14,7 @@ import PayMoney from 'views/pay/PayMoney.vue'
 import RechargeDefault from 'components/recharge/RechargeDefault.vue'
 
 
-import LogCenter from 'components/log/LogMain.vue';
+
 
 import member from 'components/member/MemberStockMain.vue';
 
@@ -25,11 +25,10 @@ import activeProductsMain from 'views/products/activeProductsMain.vue';
 
 
 import AdMain from 'views/Ad/AdMain.vue';
-
-
-import OrderListMain from 'views/custom/OrderListMain.vue';
+import OrderListMain from 'views/order/OrderListMain.vue';
 import CustomListMain from 'views/custom/CustomListMain.vue';
-
+import LogMain from 'views/log/LogMain.vue';
+import NoticeMain from 'views/notice/NoticeMain.vue';
 
 import NoPage from 'views/NoPage.vue'
 
@@ -73,19 +72,19 @@ const router = new VueRouter({
             component: Login
         },
         { path: '/index', redirect: '/' },
-        { path: '/message',                                    //消息中心
-            name: 'MsgCenter',
-            component: MsgCenter,
+        { path: '/notice',                                    //消息中心
+            name: 'NoticeMain',
+            component: NoticeMain,
         },
         {
             path: '/log',
-            name: 'logCenter',
-            component:LogCenter
+            name: 'logMain',
+            component:LogMain
         },
         {
             path: '/log/:type',
-            name: 'logCenterList',
-            component:LogCenter
+            name: 'logMainList',
+            component:LogMain
         },
         {
             path: '/appCenter',
@@ -127,7 +126,7 @@ const router = new VueRouter({
         },
         {
             path: '/customList',
-            name:' customlist',
+            name:'customlist',
             component: CustomListMain
         },
 
