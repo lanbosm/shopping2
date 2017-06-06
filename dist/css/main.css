@@ -575,6 +575,14 @@ input[type=file] {
 .shoppingCart .totalprice span {
   margin-left: 20px ;
 }
+.shoppingCart .gaijia {
+  padding: 5px;
+}
+.shoppingCart .editPrice {
+  background: #e84593;
+  color: #ffffff;
+  border-radius: 5px;
+}
 .shoppingCart .shoppingCart-list {
   position: relative;
   height: 455px;
