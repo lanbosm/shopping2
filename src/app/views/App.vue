@@ -37,11 +37,13 @@
                
                 <div class="col-xs-3 right-con" >
                     <!-- 购物车 -->
-                    <cart @open-stock="openStock" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
+                    <cart @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
                     <calc @trigger-build-order="buildOrder" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
+            <!--改价-->
+            <dialog-edit v-if="showEditDialog" :edit-item="editItem" ></dialog-edit>
     </div>
 </template>
 
@@ -74,6 +76,8 @@
         data() {
             return {
                 showCategory:false,
+                showEditDialog:false,
+                editItem:{},
                 cartItemIndex:0,
                 pageNum:1,
                 activty:false,
@@ -335,11 +339,6 @@
                     layer.alert("获取仓库信息失败",{"icon":2})
                 })
                 return false;
-
-
-
-
-
             },
             //关闭仓库详情
             closeStock(params){
@@ -355,6 +354,14 @@
                     });
                 }
 
+
+            },
+            //打开改价
+            openPrice(item){
+
+                this.$set(item,'editPrice',true)
+                this.editItem=item;
+                this.showEditDialog=true;
 
             },
             //判断如何加入购物车

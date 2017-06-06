@@ -9,12 +9,12 @@
 									<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
 								</p>
 								<p class="small">
-									<span>数量 :{{item.amount}} * 单价 {{item.price  }}</span><span></span>
+									<span >数量 :{{item.amount}} * 单价 {{item.price  }}</span>
 									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
 								</p>
 								<p class="total">
 									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
-									<span>{{item.amount*item.price | currency }}</span>
+									<span @click="openPrice(item)" class="gaijia" :class="{editPrice:item.editPrice==true}">{{item.amount*item.price | currency }}</span>
 								</p>
 							</div>
 						</li>
@@ -27,6 +27,7 @@
 </template>
 
 <style>
+
 </style>
 <script>
 
@@ -88,10 +89,15 @@
             openStock:function(item){
                 if(item){
                 	this.$emit('open-stock',item);
-
                 }
 
-			}
+			},
+            openPrice:function(item){
+                if(item){
+                    this.$emit('open-price',item);
+                }
+
+            }
         }
     }
 </script>

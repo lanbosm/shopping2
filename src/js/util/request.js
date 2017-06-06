@@ -8,7 +8,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
-import layer from 'layer';
 import { MessageBox } from 'element-ui';
 import * as data from '../util/mock';
 //http请求
@@ -62,7 +61,7 @@ export const request = {
     fnError(){
         console.log("Server error");
 
-        layer.alert("服务器连接失败");
+        MessageBox.alert("服务器连接失败",{ type: 'error'});
 
         return Promise.reject({data:{"msg":"ServerError"}});
 
@@ -80,7 +79,7 @@ export const request = {
                })
                .catch(response=> { //失败
                     reject(response);
-                    layer.alert("服务器连接失败");
+                   MessageBox.alert("服务器连接失败",{ type: 'error'});
                })
         });
     },
@@ -129,7 +128,7 @@ export const request = {
                  })
                 .catch(response=>{ //失败
                     reject(response.data);
-                    layer.alert("服务器连接失败");
+                    MessageBox.alert("服务器连接失败",{ type: 'error'});
                 })
         });
     },
@@ -154,7 +153,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                layer.alert("服务器连接失败");
+                MessageBox.alert("服务器连接失败",{ type: 'error'});
             })
     },
     fnPut: function (vm, apiObj, success, error) {
@@ -176,7 +175,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                layer.alert("服务器连接失败");
+                MessageBox.alert("服务器连接失败",{ type: 'error'});
             })
     },
     fnDelete: function (vm, apiObj, success, error) {
@@ -199,7 +198,7 @@ export const request = {
             })
             .catch(function (response) { //失败
                 error(response.data);
-                layer.alert("服务器连接失败");
+                MessageBox.alert("服务器连接失败",{ type: 'error'});
             })
     }
 };
@@ -232,9 +231,8 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
 
         if (response.data && response.data.code == 49001) {
-            layer.alert("访问令牌过期 请重新登录",{anim:-1,closeBtn: 0},function(){
+            MessageBox.alert("访问令牌过期 请重新登录",{ type: 'warning'}).then(_=>{
                 store.dispatch("logout");
-                layer.closeAll();
             });
             return response;
         }else if (response.data && response.data.code == 40001) {
@@ -245,7 +243,9 @@ Vue.http.interceptors.push(function (request, next) {
             //window.location.href = './login.html';
             return  response;
         } else if (response.data && response.data.code ==  45004) {
-            layer.alert("商品库存不足",{closeBtn: 0})
+
+            MessageBox.alert("商品库存不足",{ type: 'warning'});
+
             return response;
         }
         else {

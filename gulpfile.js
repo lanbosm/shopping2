@@ -18,8 +18,7 @@ const gulp = require('gulp'),
     prefix = require('gulp-prefix'),
     fileinclude = require('gulp-file-include'),
     clean = require('gulp-clean'),
-    spriter = require('gulp-css-spriter'),
-    base64 = require('gulp-css-base64');
+    autoprefixer = require('gulp-autoprefixer');
 
 
 
@@ -40,6 +39,18 @@ var host = {
     port: 3000,
     html: 'index.html'
 };
+
+var autoprefixerConfig= {
+    browsers: [
+        'last 2 versions',
+        'ie 9',
+        'ios 7',
+        'android 4'
+    ],
+    cascade: true
+}
+
+
 
 
 gulp.task('clean', function () {
@@ -67,7 +78,7 @@ gulp.task('copy:data',function(){
 // 合并lib文件 通常是第三方库
 gulp.task('copy:lib',function(){
 
-    gulp.src(['**/*.js','!vue/*.js'],{
+    gulp.src(['**/*.js','!vue/*.js','!**/index.js'],{
         cwd:'./lib/'
     }).pipe(rename(function (path) {
         path.dirname = "./";             //以根目录方式输出
@@ -81,7 +92,7 @@ gulp.task('copy:lib',function(){
 
 
     //抓取font
-    gulp.src(['**/fonts/**.*'],{             //抓取时候会存在子目录
+    gulp.src(['bootstrap/fonts/**.*'],{             //抓取时候会存在子目录
         cwd:'./lib/'
     }).pipe(rename(function (path) {
         path.dirname = "./";             //以根目录方式输出
@@ -102,23 +113,16 @@ gulp.task('copy',['copy:css','copy:images','copy:lib','copy:data'],function() {
 
 });
 
+
+////////////////////////////////////////////////dev模式////////////////////////////////////////////////////
+
 //压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css css处理
-// gulp.task('lessmin', function (done) {
-//     //修改源码
-//     gulp.src(['src/css/*.less'])  //main 是主入口
-//         .pipe(less())
-//         //这里可以加css sprite 让每一个css合并为一个雪碧图
-//         //.pipe(spriter({}))
-//        // .pipe(concat('style.css'))
-//         .pipe(cssmin({"keepBreaks":true}))
-//         .pipe(gulp.dest('dist/css/'))
-//         .on('end', done);
-// });
 // scss编译后的css将注入到浏览器里实现更新
 gulp.task('less', function() {
     gulp.src(['src/less/*.less'])  //main 是主入口
-    .pipe(less())
-    .pipe(gulp.dest('dist/css/'))
+        .pipe(less())
+        .pipe(autoprefixer(autoprefixerConfig))
+        .pipe(gulp.dest('dist/css/'))
 
 });
 //用于在html文件中直接include文件 html处理
@@ -126,163 +130,14 @@ gulp.task('fileinclude', function (done) {
 
     gulp.src(['src/app/*.html'])
         .pipe(fileinclude({
-          prefix: '@@',
-          basepath: '@file'
-        }))
-        .pipe(gulp.dest('dist'))
-        .on('end', done);
-});
-
-//引用webpack对js进行操作 js处理
-gulp.task("build-js", function(done) {
-
-    console.log("正在打包Js...");   //插件版
-    return   gulp.src('src/js/main.js')  //这里src只是装样子 如果想有效请使用vinyl-named
-        .pipe(  gulpwebpack( webpackConfig , null, function(err, stats) {
-            /* Use stats to do more things if needed */
-            if(err) throw new gutil.PluginError("webpack:build-js", err);
-                gutil.log("[webpack:build-js]", stats.toString({
-                    colors: true
-                }));
-        }))
-        .pipe(gulp.dest('dist/js/'))
-        .on('end', function(){
-            console.log("打包完成...");
-        });
-});
-
-
-
-
-
-//准备发布的js打包
-gulp.task('rev:js', function (done) {
-    console.log("正在打包Js...");
-    return   gulp.src('src/js/main.js')  //这里src只是装样子 如果想有效请使用vinyl-named
-        .pipe(gulpwebpack( webpackConfigPro ))
-        .pipe(gulp.dest('dist/js/'))
-        .on('end', function(){
-            console.log("打包完成...");
-        });
-});
-
-//准备发布的css打包
-gulp.task('rev:css', function (done) {
-
-
-    return gulp.src(['src/less/*.less'])  //第一层 是主入口
-        .pipe(less())
-        //这里可以加css sprite 让每一个css合并为一个雪碧图
-        //.pipe(spriter({}))
-       // .pipe(concat('style.min.css'))
-        .pipe(cssmin({"keepBreaks":true}))
-        .pipe(chsiRev())
-        .pipe(gulp.dest('dist/css/'));
-
-
-});
-
-//准备发布的html打包
-gulp.task('rev:html', function (done) {
-    //也许会用到cdn
-   // var prefixUrl = "http://mydomain.com/assets";
-   // .pipe(prefix(prefixUrl, null, '{{'))
-    return gulp.src(['src/app/*.html'])
-        .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
-
         .pipe(gulp.dest('dist'))
-});
-
-
-//雪碧图操作，应该先拷贝图片并压缩合并css
-gulp.task('sprite', ['copy:images', 'less'], function (done) {
-    var timestamp = +new Date();
-    gulp.src('dist/css/style.min.css')
-        .pipe(spriter({
-            spriteSheet: 'dist/images/spritesheet' + timestamp + '.png',
-            pathToSpriteSheetFromCSS: '../images/spritesheet' + timestamp + '.png',
-            spritesmithOptions: {
-                padding: 10
-            }
-        }))
-        .pipe(base64())
-        .pipe(cssmin())
-        .pipe(gulp.dest('dist/css'))
         .on('end', done);
 });
 
-
-
-
-
-
-
-
-
-// //webpack服务器 万物皆模块（js） 没配好 css html 要手动刷新
-// gulp.task('webpackDevServer',function(){
-//     var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
-//     var WebpackDevServer = require("webpack-dev-server");
-//     //new HotMiddleware(compiler);                   //中间件 还没添加
-//     var config = Object.create(webpackConfigDev);
-//     config.devtool = "eval";
-//     config.debug = true;
-//
-//     for(var i in config.entry){ //给每个多入口添加监听器
-//       //  console.log(i);
-//        config.entry[i].unshift("webpack-dev-server/client?http://"+host.domain+":"+host.port+"/", "webpack/hot/dev-server");
-//     }
-//
-//     config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
-//
-//
-//     //tips
-//     //这两项配置原本是在webpack.config.dev.js里边配置，可是通过gulp启动devserver，那种配置无效，只能在此处写入
-//     //官网的解释是webpack-dev-server没有权限读取webpack的配置
-//
-//     var compiler = webpack(config);
-//     var server = new WebpackDevServer(compiler, {
-//         contentBase: config.output.path,
-//         publicPath: config.output.publicPath,
-//         inline:true,
-//         hot: true,
-//         compress: false,
-//         stats: { colors: true },
-//         proxy: {
-//             '/cashier/*': {
-//                 target: 'http://192.168.1.199:82',
-//                 changeOrigin: true,
-//                 secure: false
-//             }
-//         }
-//
-//
-//         });
-//     server.listen( host.port, host.domain, function(err) {
-//         if(err) throw new gutil.PluginError("webpack-dev-server", err);
-//         // Server listening
-//         console.log("listen successful , port at 3000");
-//         gulp.src('') .pipe(open({app: 'chrome', uri: 'http://'+host.domain+':3000'}));
-//
-//
-//     });
-//
-//     // server.close();
-// });
-
-
-
-gulp.task('default',function(){
-    console.log("如果开发请输入gulp dev 生产请输入gulp pro");
-});
-
-
-
-//webpack服务器开发 适合 js编译
-
+//webpack服务器开发  js编译
 var express = require('express'),
     path = require('path'),
     consolidate = require('consolidate');
@@ -301,7 +156,6 @@ app.set('views', path.resolve(__dirname, './dist'));
 app.locals.env = process.env.NODE_ENV || 'dev';
 app.locals.reload = false;
 
-//静态服务器开发 适合布局
 gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
     process.env.NODE_ENV="dev";
     gulp.start('copy',['fileinclude','less'],function(){
@@ -351,11 +205,10 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
 
 
             var bsPort=8089;
-
             //你代理我 我代理你
-            var apiProxy = proxy('/browser-sync/*', { target: 'http://localhost:8089',changeOrigin: true });
-            app.use('/*', apiProxy);//api子目录下的都是用代理
-            //   app.use(express.static(path.join(__dirname, 'dist/css')));
+            // var apiProxy = proxy('/browser-sync/*', { target: 'http://localhost:8089',changeOrigin: true });
+            // app.use('/*', apiProxy);//api子目录下的都是用代理
+            // app.use(express.static(path.join(__dirname, 'dist/css')));
             // browsersync is a nice choice when modifying only views (with their css & js)
             var bs = require('browser-sync').create();
             app.listen(host.port, function(){
@@ -393,44 +246,46 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
 });
 
 
-//生产最后的dist 适合发布 压缩
-// gulp.task('pro', ['clean'],function(){
-//     //也许你需要cdn!
-//     gulp.start('copy',function(){
-//         gulp.start('rev:html','rev:css','build-js',function(){ //少个图片压缩
-//             console.log("生成终了..");
-//
-//
-//         });
-//     });
-// });
+
+//////////////////////////////////////////////////prod模式//////////////////////////////////
+
+//准备发布的js打包
+gulp.task('rev:js', function (done) {
+    console.log("正在打包Js...");
+    return   gulp.src('src/js/main.js')  //这里src只是装样子 如果想有效请使用vinyl-named
+        .pipe(gulpwebpack( webpackConfigPro ))
+        .pipe(gulp.dest('dist/js/'))
+        .on('end', function(){
+            console.log("打包完成...");
+        });
+});
 
 
-//webpack服务器开发 适合 js编译
-// gulp.task('webpack-dev', ['clean'],function(){
-//      gulp.start('copy','fileinclude','lessmin','webpackDevServer');
-// });
+//准备发布的css打包
+gulp.task('rev:css', function (done) {
 
 
-// 静态服务器 
-gulp.task('web', function() {
-    console.log('browser------------');
-    browserSync.init({
-        server: {
-            baseDir: host.path,
-            directory: true
-        },
-        port: host.port
+    return gulp.src(['src/less/*.less'])  //第一层 是主入口
+        .pipe(less())
+        .pipe(autoprefixer(autoprefixerConfig))
+        // .pipe(concat('style.min.css'))
+        .pipe(cssmin({"keepBreaks":true}))
+        .pipe(chsiRev())
+        .pipe(gulp.dest('dist/css/'));
 
+});
 
-    });
-    //每次dist文件发生变化 自动刷新游览器
-    var watcher = gulp.watch(['dist/css/*.css','dist/**/*.html','dist/js/*.js']);
-
-    watcher.on('change', function(event) {
-       // console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-        browserSync.reload();
-    });
+//准备发布的html打包
+gulp.task('rev:html', function (done) {
+    //也许会用到cdn
+    // var prefixUrl = "http://mydomain.com/assets";
+    // .pipe(prefix(prefixUrl, null, '{{'))
+    return gulp.src(['src/app/*.html'])
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(gulp.dest('dist'))
 });
 
 
@@ -452,15 +307,34 @@ gulp.task('prod', ['clean'],function(){
     });
 });
 
-// gulp.task("demo1",function () {
-//     console.log(222)
-// })
-// gulp.task('demo',['demo1'],function(){
-//   gulp.start("demo2",function () {
-//
-//   })
-// })
-//
-// gulp.task("demo2",function () {
-//     console.log(333)
-// })
+
+
+/////////////////////////////////////////////test////////////////////////////////
+
+
+// 静态服务器
+gulp.task('web', function() {
+    console.log('browser------------');
+    browserSync.init({
+        server: {
+            baseDir: host.path,
+            directory: true
+        },
+        port: host.port
+
+
+    });
+    //每次dist文件发生变化 自动刷新游览器
+    var watcher = gulp.watch(['dist/css/*.css','dist/**/*.html','dist/js/*.js']);
+
+    watcher.on('change', function(event) {
+        // console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+        browserSync.reload();
+    });
+});
+
+
+
+gulp.task('default',function(){
+    console.log("如果开发请输入gulp dev 生产请输入gulp pro 测试请生成dist目录后 gulp test");
+});

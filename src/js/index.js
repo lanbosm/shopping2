@@ -16,6 +16,8 @@ import SettingDialog from 'views/dialog/SettingDialog.vue';
 import ShopDialog    from 'views/dialog/ShopDialog.vue';
 import LogDialog    from 'views/dialog/LogDialog.vue';
 import NoticeDialog    from 'views/dialog/NoticeDialog.vue';
+import EditDialog    from 'views/dialog/EditDialog.vue';
+
 
 import ChooseGifts from 'views/products/ChooseGifts.vue'
 
@@ -26,9 +28,10 @@ import AppCenterLoading from 'views/AppCenterloading.vue'
 
 import AgainPass from 'components/custom/AgainPass.vue'
 
-import ElementUI from 'element-ui'
 
-import 'element-ui/lib/theme-default/index.css'
+import ElementUI from 'element-ui'
+import 'lib/element-ui/index.css'
+
 import simpScroller from 'lib/simpScroller'
 
 import CommomHeader from 'components/commom/Header.vue';
@@ -67,6 +70,9 @@ Vue.component('dialog-log',LogDialog);
 
 //定义备用金组件
 Vue.component('dialog-cash',CashDialog);
+
+//定义改价组件
+Vue.component('dialog-edit',EditDialog);
 
 //定义设置弹窗
 Vue.component('dialog-setting',SettingDialog);
@@ -172,8 +178,6 @@ router.beforeEach(({meta, path}, from, next)=> {
 
         next()   // 进行下一个钩子函数  
     }
-
-
 
 
 })

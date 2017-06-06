@@ -71,7 +71,8 @@ const router = new VueRouter({
             meta: {auth:false},
             component: Login
         },
-        { path: '/index', redirect: '/' },
+        { path: '/index', alias:['index.html','/index.htm'] ,redirect: '/' },
+        { path: '/index.html', redirect: '/' },
         { path: '/notice',                                    //消息中心
             name: 'NoticeMain',
             component: NoticeMain,

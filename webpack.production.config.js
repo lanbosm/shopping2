@@ -16,8 +16,8 @@ var srcDir = path.resolve(process.cwd(), 'src');
 
 
 
-let extractCss= new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
-let extractLess = new ExtractTextPlugin(path.resolve(__dirname,"./dist/css/[name].css"));
+let extractCss= new ExtractTextPlugin("../css/element.css");
+let extractLess = new ExtractTextPlugin("../css/[name].css");
 
 //获取多页面的每个入口文件，用于配置中的entry
 function getEntry() {
@@ -31,18 +31,19 @@ function getEntry() {
         }
     });
 
+    //给第三的口子
     return files;
 }
+
 
 
 module.exports = {
     cache: true,
   //  devtool: "source-map",
     entry: getEntry(),
-
     output: {
         path: path.join(ROOT_PATH, "./dist"),
-        publicPath: "/js", //gulp 已经托管了WebpackDevServer
+        publicPath: "/", //gulp 已经托管了WebpackDevServer
         filename: "[name].js",
     },
     externals: {
@@ -72,11 +73,11 @@ module.exports = {
             },
             {
                 test: /\.(eot|woff|svg|ttf|woff2|gif)(\?|$)/,
-                loader: 'file-loader?name=[hash].[ext]'
+                loader: 'file-loader?name=../fonts/[name].[ext]'
             },
             {
                 test: /\.(png|jpg)$/,
-                loader: 'url?limit=1200&name=/dist/images/[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
+                loader: 'url?limit=1200&name=../images/[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
             },
             {
                 test:/\.vue$/,
@@ -88,12 +89,12 @@ module.exports = {
     },
     resolve: {
         alias: {
-            jquery: path.join(ROOT_PATH, "./lib/jquery.min.js"),   //别名
             core: srcDir + "/js/core",
             ui: srcDir + "/js/ui",
             util: srcDir + "/js/util",
             less: srcDir + "/css/util",
             components : srcDir + "/app/components",
+            lib:   path.join(ROOT_PATH, "./lib"),
             views : srcDir + "/app/views",
             vue$: 'vue/dist/vue'
         }
@@ -104,8 +105,8 @@ module.exports = {
             name:'common',
             filename: "common.js",
         }),
-        extractCss,
-        extractLess,
+         extractCss,
+        // extractLess,
        // 加入了这个插件之后，编译的速度会明显变慢，所以一般只在生产环境启用。
         new webpack.optimize.UglifyJsPlugin({
             compress: {
