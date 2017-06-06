@@ -5,7 +5,7 @@
             :current-page="page.pageNum"
             :page-size=page.pageSize
             layout="total, prev, pager, next"
-            :total="listTotal">
+            :total="page.total">
     </el-pagination>
 </template>
 
@@ -14,12 +14,7 @@
         name: 'Pagination',
         props:["page","goCallback"],
         computed: {
-            listTotal(){
-                var pages=this.page.pages;
-                var pageSize=this.page.pageSize;
 
-                return pages*pageSize;
-            }
         },
         methods:{
             //页码点击事件
