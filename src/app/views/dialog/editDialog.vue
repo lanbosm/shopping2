@@ -15,7 +15,7 @@
                         <p><span >数量 :{{editItem.amount}} * 单价 {{editItem.price  }}</span><span style="float: right">现价：{{editItem.amount*editItem.price | currency }}</span></p>
                     </div>
                     <div class="item-edit">
-                        <el-input type="tel" v-model="editPrice"  class="editPrice-input" placeholder="请输入价格"></el-input>
+                        <el-input type="tel" v-model="discountPrice"  class="editPrice-input" placeholder="请输入价格"></el-input>
                     </div>
                 </div>
                 <div class="dialog-footer" slot="footer">
@@ -77,14 +77,14 @@
         data() {
             return {
                 dialogShow: true,
-                editPrice:""
+                discountPrice:""
             };
         },
 
         computed: {
-//            shopData(){
-//                return this.$store.state.shopData;
-//            }
+            cartData(){
+                return this.$store.state.currentPage.cartData;
+            }
         },
         created(){
             console.log(this.editItem);
@@ -92,57 +92,42 @@
         methods:{
             closeWin(){
                 this.dialogShow=false;
-                this.$parent.editItem.editPrice=false;
+      
+                //如果价格还是空的
+                //没有动过 //动过但和原价一样
+                if(!this.$parent.editItem.discountPrice || Number(this.$parent.editItem.discountPrice)==Number(this.$parent.editItem.amount)*Number(this.$parent.editItem.price)){
+                    this.$parent.editItem.isDiscount=false;
+                }
+
+
                 setTimeout(_=> {
                     this.$parent.showEditDialog = false;
                 },300);
             },
 
             checkPrice(){
-                if(this.editPrice==0){
-                    this.$message.error('请输入价格');
+
+                if(isNaN(this.discountPrice)){
+                    this.$message.error('价格只能为数字');
                     return false;
                 }
-                if(isNaN(this.editPrice)){
-                    this.$message.error('价格只能为整数');
+
+
+                if(Number(this.discountPrice)<=0){
+                    this.$message.error('价格必须大于0');
                     return false;
                 }
+                //最好还是根据索引 和数组来玩。 这里不严谨
+                var item=this.$parent.editItem;
+
+
+                this.$set(item,'discountPrice',this.discountPrice);
 
                 this.$alert('操作成功',{
                     type: 'success',
                 }).then(_=>{
                     this.closeWin();
                 });
-//                this.$store.dispatch("addSpareCash",{password:this.password,spareCash:this.spareCash}).then(res=>{
-//
-//                    this.password="";
-//                    this.spareCash=0;
-//                    var  needSpareCash=false;
-//                    if(res.spareCash<=0){
-//                        needSpareCash=true;
-//                    }
-//                    this.$store.commit('setShopData',{'spareCash':Number(res.spareCash),'needSpareCash':needSpareCash});
-//                    util.pushLocal('shopData',this.shopData);
-//
-//                    this.$alert('操作成功',{
-//                        type: 'success',
-//                    }).then(_=>{
-//                        this.dialogShow=false;
-//                        this.$root.showCashDialog=false;
-//                    });
-//
-//                }).catch(res=>{
-//                    var msg=res.errmsg||res.msg;
-//                    this.$alert(msg,'操作失败',{
-//                        type: 'error',
-//                    }).then(_=>{
-//                        this.dialogShow=false;
-//                        this.$root.showCashDialog=false;
-//                    });
-//
-//
-//
-//                })
 
             }
         }

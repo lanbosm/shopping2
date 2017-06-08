@@ -13,10 +13,10 @@
                       </div>
                   </div>
                   <div class="item-col item-col2">
-                      <span>{{item.name}}</span>
+                      <span>{{item.nickname}}</span>
                   </div>
                   <div class="item-col item-col3">
-                      <span>{{item.phone}}</span>
+                      <span>{{item.username}}</span>
                 </div>
               </li>
 

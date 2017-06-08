@@ -192,10 +192,7 @@ router.afterEach(route => {
     },100)
 });
 
-//简单滚动
-Vue.prototype.$simpScroll = (dom,direction) => {
-    simpScroller(document.querySelector(dom));
-}
+
 //vue实例
 var vm =new Vue({
     store,
@@ -246,7 +243,7 @@ var vm =new Vue({
 
         //this.$router.push('/');
         // this.$router.push('/print');
-        //this.$router.push('/');
+        this.$router.push('/ad');
         //this.$router.push('/');
     }
 })

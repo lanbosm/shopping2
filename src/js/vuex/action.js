@@ -355,16 +355,33 @@ const actions= {
                 })
             });
         },
-
-        //获取会员列表
+       //获取会员
         fetchCustomList({commit},value){
             let apiObj = {
-                url : '/testapi/',
+                url : API_URLS.customers+'/list',
                 data:value
             };
             commit("show_waiting");
             return  request.fnGet_dev(apiObj).then(res=> {
-                    commit("hide_waiting");
+                 commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  reject(res.data);
+                }
+            }).catch(res=>{
+                return   reject(res.data);
+            });
+        },
+        //获取会员列表
+        fetchCustom({commit},value){
+            let apiObj = {
+                url : API_URLS.customers,
+                data:value
+            };
+          //  commit("show_waiting");
+            return  request.fnGet_dev(apiObj).then(res=> {
+                   // commit("hide_waiting");
                     if (res.data.code=="20000") {
                         return  Promise.resolve(res.data);
                     } else {
@@ -453,20 +470,47 @@ const actions= {
         },
 
         //获取门店信息
+        fetchShopData({commit,state},value){
+            commit("show_waiting");
+            let apiObj={
+                url: API_URLS.shop_setting
+            };
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
 
+
+
+
+
+        },
         //提交门店信息
         saveShopData({commit,state},value){
             commit("show_waiting");
             let apiObj={
-
+                url: API_URLS.shop_setting,
+                data:value
             };
-            //TODO saveShopData
-
-            commit("hide_waiting");
-
-            return Promise.resolve({'code': 20000, 'msg': 'ok'});
-
-
+           // console.log(value);
+            return  request.fnPost_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
 
         },
 
@@ -493,6 +537,62 @@ const actions= {
         //       })
         //
         // },
+
+        //获取广告列表
+        fetchAdList({commit,state},value){
+            commit("show_waiting");
+            let apiObj={
+                url:API_URLS.ads+'/list',
+                data:value
+            };
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
+        },
+
+        //上传广告图片
+         uploadAdList({commit,state},value){
+
+             commit("show_waiting");
+
+             console.log(value);
+             let apiObj={
+                 url:API_URLS.ads+'/add_image'+'?accessToken='+state.login,
+                 data:value
+             };
+
+         },
+         //删除广告图片
+         removeAdList({commit,state},value){
+
+             commit("show_waiting");
+             console.log(value);
+             let apiObj={
+                 url:API_URLS.ads+'/delete',
+                 data:value
+             };
+             // console.log(value);
+             return  request.fnPost_dev(apiObj).then(res=> {
+                 commit("hide_waiting");
+                 if (res.data.code=="20000") {
+                     return  Promise.resolve(res.data);
+                 } else {
+                     return  Promise.reject(res.data);
+                 }
+             }).catch(res=>{
+                 commit("hide_waiting");
+                 return  Promise.reject(res);
+             });
+         },
+
 
         //点击存货发送的请求取数据
         stockGoods({commit,state},value){
@@ -582,14 +682,12 @@ const actions= {
 
             return new Promise((resolve, reject) => {
                 request.fnPost2(apiObj).then(res => { //成功
-                    commit("hide_waiting");
                     if(res.code=="20000"){
                         resolve(res);
                     }else{
                         reject(res);
                     }
                 }).catch( res=> { //失败
-                    commit("hide_waiting");
                     reject(res);
                 })
             });

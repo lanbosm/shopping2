@@ -8,14 +8,14 @@
             <div class="list-body" v-else-if="listData.list.length==0">
                 <div class="no-list"></div>
             </div>
-            <div class="list-body" v-else>
+            <div class="list-body" id="custom-list-main-list" v-else >
                 <!--list-->
                 <div class="list-row" v-for="(item,index) in listData.list">
                     <dl class="col">
                         <dd class="photo"><img :src="item.headPortrait"/></dd>
-                        <dd class="name">{{item.name}}</dd>
+                        <dd class="name">{{item.nickname}}</dd>
 
-                        <dd class="phone">{{item.phone}}</dd>
+                        <dd class="phone">{{item.username}}</dd>
 					</dl>
                     <span class="col">
                         <a class="stock-btn" @click="handleStock(item)">查看存货</a>
@@ -154,12 +154,15 @@
             },
             //请求列表
             fetchList() {
-                    var data={searchStr:'',pageNum:1};
+                    var data={searchStr:'',pageNum:this.pageNum};
                     this.$store.dispatch('fetchCustomList',data).then(res=>{
-
                         this.listData=res.page;
+                        this.$nextTick(_=>{
+                            this.$simpleScroll('#custom-list-main-list');
+                        })
                         console.log(res);
                     }).catch(res=>{
+                        console.log(res);
                         console.log('err');
                     });
 

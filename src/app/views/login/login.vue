@@ -59,7 +59,11 @@
 
             this.lastUserName=  this.getCookie("username") ;
             this.username=this.lastUserName;
-
+            this.$root.showSettingDialog=false;
+            this.$root.showShopDialog=false;
+            this.$root.showCustomDialog=false;
+            this.$root.showCashDialog=false;
+            this.$root.showLogDialog=false;
         },
         watch: {
             'username': function (val) {

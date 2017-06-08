@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 //不懂的请看
 //http://www.jianshu.com/p/8626d28f226f
 //http://www.cnblogs.com/Leo_wl/p/6693211.html
-const baseURL='192.168.1.69:82';
+const baseURL='192.168.1.122:82';
 
 
 function GetQureyParams(url){

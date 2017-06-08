@@ -95,10 +95,20 @@
             };
         },
         created(){
-            this.shopName.val='李小白的完达山';
-            this.contactName.val='李小白';
-            this.contactPhone.val=13555444333;
-            this.address.val="";
+            this.$store.dispatch("fetchShopData").then(res=>{
+                console.log(res);
+                            this.shopName.val=res.shopSetting.shopName;
+                            this.contactName.val=res.shopSetting.contactName;
+                            this.contactPhone.val=res.shopSetting.contactTel;
+                            this.address.val=res.shopSetting.shopAddress;
+
+
+            }).catch(res=>{
+                this.$alert('获取失败',{
+                    type: 'error',
+                })
+            })
+
         },
         methods: {
             closeWin(){
@@ -120,13 +130,32 @@
             },
             //保存
             handleSave(){
+                var testPhone=/^(1[345678][0-9]{1})[0-9]{8}$/;
+
+                if(!testPhone.test(this.contactPhone.val)) {
+                    this.$message({
+                        message: '联系人手机号错误',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+
                 this.shopName.readonly=true;
                 this.contactName.readonly=true;
                 this.contactPhone.readonly=true;
                 this.address.readonly=true;
                 this.edit=false;
 
-                this.$store.dispatch("saveShopData").then(res=>{
+                var postData={
+                    'shopName':this.shopName.val,
+                    'contactName':this.contactName.val,
+                    'contactTel':this.contactPhone.val,
+                    'shopAddress':this.address.val,
+                }
+                this.$store.dispatch("saveShopData",postData).then(res=>{
+                    console.log(res);
+
                     this.$alert('修改成功',{
                         type: 'success',
                     }).then(_=>{

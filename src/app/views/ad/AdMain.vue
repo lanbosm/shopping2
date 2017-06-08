@@ -9,13 +9,17 @@
 			<div class="gallery">
 				<el-upload
 						ref="upload"
-						action="https://jsonplaceholder.typicode.com/posts/"
+						action="http://192.168.1.122:82/cashier/member/ads/add_image"
 						list-type="picture-card"
 						:show-file-list="true"
 						:auto-upload="false"
-						:file-list="fileList2"
+						:file-list="fileList"
 						:on-preview="handlePictureCardPreview"
-						:on-remove="handleRemove">
+						:on-remove="handleRemove"
+						:on-success="handleSuccess"
+						:before-upload="beforeUpload"
+						:data="token"
+					>
 					<i class="el-icon-plus"></i>
 				</el-upload>
 				<el-dialog v-model="dialogVisible" size="tiny">
@@ -31,8 +35,8 @@
 
 <script>
 
-    import { Loading } from 'element-ui';
 
+    import {request, API_URLS, HOST} from 'util/request.js';
 
     export default{
 
@@ -42,30 +46,118 @@
                     back:{"label":"返回","url":"index","show":true},
                     dialogImageUrl: '',
                     dialogVisible: false,
-                    fileList2: [
-                        {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
-						{name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
-                        {name: 'ddd.jpeg', url: 'http://img1.gtimg.com/sports/pics/hv1/226/147/2214/144003061.jpg'}
-						],
-					upUrl:"https://jsonplaceholder.typicode.com/posts/"
+                    fileList: [],
+					token:{}
+
                 }
         },
         computed: {
         },
 
         created(){
+
+            this.$store.dispatch('fetchAdList').then(res=>{
+                for(var i in res.ads){
+                    res.ads[i].url= res.ads[i].image;
+
+				}
+
+				this.fileList=res.ads;
+				console.log(this.$refs.upload);
+                console.log(res);
+                //action="http://192.168.1.122:82/cashier/member/ads/add_image"
+
+			})
+
+
 		},
         methods:{
+            beforeUpload (file) {
+				 console.log(file);
+
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 1;
+                 var  isMax=false;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+
+				var token=this.$store.state.login;
+
+                this.$set(this.token,'accessToken',token)
+
+                if(!token) {
+                    this.$message.error('令牌过期');
+                }
+
+                if(this.fileList.length>10) {
+                    isMax=true;
+                    this.$message.error('最多只能保留10张图片');
+                }
+                return isJPG && isLt2M && token && !isMax;
+            },
+
             emptyList(){
-                this.$refs.upload.clearFiles();
+
+                this.$confirm('确认清空广告吗？',{'type':'warning'}).then(_ => {
+
+                    var strIds=[];
+                    this.fileList.forEach(function(ele,index){
+                        strIds.push(ele.id);
+
+                    });
+                    var  strIdsstr=strIds.join(',');
+
+                    return  this.$store.dispatch('removeAdList',{'strIds':strIdsstr}).then(res=>{
+                       console.log(res);
+                    })
+
+
+                        //ids='1,2,3,5,6,7'
+
+
+
+
+
+                }).then(res=>{
+
+                    this.$refs.upload.clearFiles();
+				});
+
+
+                //
 
 			},
             submitUpload() {
                 this.$refs.upload.submit();
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
+
+                this.$store.dispatch('removeAdList',{'strIds':file.id}).then(res=>{
+                    console.log(res);
+                    this.fileList=fileList;
+                })
             },
+            handleSuccess(response, file, fileList){
+                this.fileList=fileList;
+			},
+
+            handleUpload(file){
+
+                //this.$store.commit('show_waiting');
+//                this.$store.dispatch('uploadAdList',file.file).then(res=>{
+//
+//                    console.log(res);
+//
+//
+//                    //action="http://192.168.1.122:82/cashier/member/ads/add_image"
+//
+//                })
+			},
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;

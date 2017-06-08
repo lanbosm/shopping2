@@ -91,6 +91,7 @@ const store = new Vuex.Store({
       },
       setCategoryData (state,data){
           state.categoryData=data;
+
       },
       setProductParams (state,data){
           Object.assign(state.currentPage.list,data);

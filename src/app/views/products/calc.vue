@@ -7,7 +7,7 @@
 				<td><a  class="num-btn btn-default" @click="calc(1);">1</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(2);">2</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(3);">3</a></td>
-				<td rowspan="3"><a class="num-btn btn-lightgreen" style="" @click="calc('qty');" >QTY</a></td>
+				<td rowspan="2"><a class="qty-btn btn-lightgreen" style="" @click="calc('qty');" >QTY</a></td>
 			</tr>
 
 			<tr>
@@ -17,15 +17,17 @@
 				<td><a  class="num-btn btn-default" @click="calc(4);">4</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(5);">5</a></td>
 				<td><a  class="num-btn btn-default" @click="calc(6);">6</a></td>
+
 			</tr>
 			<tr>
 				<td><a class="num-btn btn-default" @click="calc(7);">7</a></td>
 				<td><a class="num-btn btn-default" @click="calc(8);">8</a></td>
 				<td><a class="num-btn btn-default" @click="calc(9);">9</a></td>
+				<td colspan="1" ><a class="gai-btn btn-lightgreen" style="" @click="gai();" >改价</a></td>
 			</tr>
 			<tr>
 
-				<td colspan="3"><a class="num-btn btn-default" @click="calc(0);">0</a></td>
+				<td colspan="3" ><a class="num-btn btn-default" @click="calc(0);">0</a></td>
 
 				<td><a class="num-btn btn-default" @click="calc('x');">x</a></td>
 			</tr>
@@ -35,19 +37,12 @@
 	</div>
 </template>
 
-<style>
-</style>
+
 <script>
     import util from 'util/util.js';
     import $ from 'jquery';
     export default{
         name:"calc",
-        filters: {
-            currency: function (value) {
-                if (!value) return '';
-                return '¥ ' + value.toFixed(2);
-            }
-        },
 		computed:{
 			customName(){
 				let customs = this.$store.state.currentPage.customData;
@@ -68,6 +63,8 @@
                 if(this.cartData.length==0){return;}
 
                 var index=this.cartItemIndex;
+
+                this.cartData[index].isDiscount = false;
 
                 //选中的数量
                 var amount=this.cartData[index].amount;
@@ -110,7 +107,13 @@
                 }else{
                     alert('请先选择物品');
                 }
-            }
+            },
+
+            gai:function(){
+
+                this.$emit('trigger-edit-price');
+
+			}
 
         }
     }

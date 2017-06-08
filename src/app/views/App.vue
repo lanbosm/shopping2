@@ -39,11 +39,11 @@
                     <!-- 购物车 -->
                     <cart @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
-                    <calc @trigger-build-order="buildOrder" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
+                    <calc @trigger-build-order="buildOrder" @trigger-edit-price="editPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
             <!--改价-->
-            <dialog-edit v-if="showEditDialog" :edit-item="editItem" ></dialog-edit>
+            <dialog-edit v-if="showEditDialog" :edit-item="editItem"  ></dialog-edit>
     </div>
 </template>
 
@@ -169,7 +169,7 @@
                 cart.forEach(function(ele,index){
 
                     cartParam.itemParams.push(
-                        {"productId":ele.id,"quantity":ele.amount}
+                        {"productId":ele.id,"quantity":ele.amount,'discountPrice':ele.discountPrice}
                     )
                 });
 
@@ -209,6 +209,12 @@
                      this.$router.push('/order');
                 })
 
+
+            },
+            //改价
+            editPrice(){
+                var item=this.cartData[this.cartItemIndex];
+                this.openPrice(item);
 
 
 
@@ -359,7 +365,8 @@
             //打开改价
             openPrice(item){
 
-                this.$set(item,'editPrice',true)
+
+                this.$set(item,'isDiscount',true);
                 this.editItem=item;
                 this.showEditDialog=true;
 
@@ -391,7 +398,9 @@
 
                 if(!find){
                     this.cartData.push(item);
-
+                    //在存下
+                    var pageList=this.$store.state.pageList;
+                    this.$store.commit('setLocalList',pageList);    //存储本地
                 }
 
             }

@@ -1,23 +1,6 @@
 <!-- info -->
 <template>
     <div class="detail" id="custom-detail">
-        <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-            <el-form :model="form">
-                <el-form-item label="活动名称" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="活动区域" :label-width="formLabelWidth">
-                    <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-            </div>
-        </el-dialog>
 
         <div class="custom-table-body">
             <div class="custom-member">
@@ -30,7 +13,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">手机号<span>{{member.phone}}</span></div>
+                    <div class="col-xs-12 col-sm-6">手机号<span>{{member.username}}</span></div>
                     <div class="col-xs-12 col-sm-6">积分<span>{{member.point}}</span></div>
                 </div>
                 <div class="row">
@@ -41,36 +24,12 @@
                     <a class="order-btn" @click="handleOrder()">订单</a>
                     <a class="rechange-btn" @click="handleRecharge()">充值</a>
             </div>
-            <div class="custom-gallery">
-                    <h5>这是画廊</h5>
+            <div class="custom-gallery" v-if="member.babyPhotos && member.babyPhotos.length>0">
+                    <h5>宝宝照片</h5>
                     <div class="custom-gallery-list" id="custom-gallery-list">
                         <ul >
-                            <li>
-                                照片1
-                            </li>
-                            <li>
-                                照片2
-                            </li>
-                            <li>
-                                照片3
-                            </li>
-                            <li>
-                                照片1
-                            </li>
-                            <li>
-                                照片2
-                            </li>
-                            <li>
-                                照片3
-                            </li>
-                            <li>
-                                照片1
-                            </li>
-                            <li>
-                                照片2
-                            </li>
-                            <li>
-                                照片3
+                            <li v-for="(item,index) in member.babyPhotos">
+                                    <img :src="item"/>
                             </li>
                         </ul>
                     </div>
@@ -133,7 +92,9 @@
 
                 this.$nextTick(_=> {
                     this.$simpleScroll('#custom-ticket-list', 'vertical');
-                    this.$simpleScroll('#custom-gallery-list', 'horizontal');
+                    if(this.member&&this.member.babyPhotos.length>0){
+                        this.$simpleScroll('#custom-gallery-list', 'horizontal');
+                    }
                     this.$simpleScroll('#custom-detail', 'vertical');
                 });
         },

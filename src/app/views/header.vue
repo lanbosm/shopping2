@@ -7,7 +7,14 @@
             <div class="nav-box" id="header-nav">
                     <div class="nav-box-list" id="nav-box-list">
                         <ul class="nav" >
-                            <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)"><span class="num"><em v-if="headIndex == index && item.customData.id ">{{item.customData.nickname}}</em><em v-else>{{item.title}}</em></span><span class="time">{{item.time}}</span></a></li>
+                            <li v-for="(item,index) in pageList" ><a class="custom"   :class="{cur: currentPage && (headIndex == index)}" @click="switchPage(index)">
+                                <span class="num">
+                                    <em v-if="headIndex == index && item.customData.id ">{{item.customData.nickname}}</em>
+                                    <em v-else-if="item.customData.id">{{item.customData.nickname}}</em>
+                                    <em v-else>{{ item.title}}</em>
+                                </span>
+                                <span class="time">{{item.time}}</span></a>
+                            </li>
                         </ul>
                     </div>
                     <a class="custom-add" @click="addPage()">+</a>

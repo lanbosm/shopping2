@@ -14,7 +14,13 @@
 								</p>
 								<p class="total">
 									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
-									<span @click="openPrice(item)" class="gaijia" :class="{editPrice:item.editPrice==true}">{{item.amount*item.price | currency }}</span>
+									<span  @click="openPrice(item)" class="gaijia" :class="{editPrice:item.isDiscount===true}">
+										<em v-if="item.isDiscount && item.discountPrice">
+											<del>原价{{item.amount*item.price | currency }}</del>
+											{{item.discountPrice | currency}}
+										</em>
+										<em v-else>{{item.amount*item.price | currency }}</em>
+									</span>
 								</p>
 							</div>
 						</li>

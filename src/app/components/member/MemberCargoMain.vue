@@ -95,7 +95,6 @@
 </style>
 
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue'
     import MemberCargo from 'components/member/MemberCargo.vue'
 
     import layer from 'layer';
@@ -112,7 +111,6 @@
             }
         },
         components:{
-            AppCenterHeader,
             MemberCargo
         },
         computed:{

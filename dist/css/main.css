@@ -660,14 +660,33 @@ input[type=file] {
 }
 .shoppingCalc .table .num-btn {
   line-height: 40px;
-  width: 100%;
-  height: 100%;
-  font-weight: 400;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   text-decoration: none;
   display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.shoppingCalc .table .gai-btn {
+  line-height: 40px;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-decoration: none;
+  display: inline;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.shoppingCalc .table .qty-btn {
+  line-height: 80px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 .shoppingCalc .table .settle-accounts-btn {
   width: 60px;
