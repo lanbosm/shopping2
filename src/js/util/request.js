@@ -45,7 +45,7 @@ export const API_URLS = {
     payments:'/cashier/member/payments',                        //验证支付
     log_out:'/cashier/common/log_out',
     cashier_shift:'/cashier/member/cashier_shift' ,                    //零售订单
-    take_goods:'/cashier/member/consigns',   //提取货接口
+    consigns:'/cashier/member/consigns',   //提取货接口
     send:'/cashier/common/send_code',
     shop_setting:'/cashier/member/shop_setting',
     ads:'/cashier/member/ads'
@@ -65,7 +65,9 @@ export const request = {
     fnError(){
         console.log("Server error");
 
-        MessageBox.alert("服务器连接失败",{ type: 'error'});
+        MessageBox.alert("服务器连接失败",{ type: 'error'}).then(_=>{
+            store.dispatch('logout');
+        });
 
         return Promise.reject({data:{"msg":"ServerError"}});
 
@@ -82,8 +84,8 @@ export const request = {
                     resolve(response.data);
                })
                .catch(response=> { //失败
-                    reject(response);
-                   MessageBox.alert("服务器连接失败",{ type: 'error'});
+                    //reject(response);
+                    return this.fnError();
                })
         });
     },
@@ -153,7 +155,6 @@ export const request = {
                  })
                 .catch(response=>{ //失败
                     reject(response.data);
-                    MessageBox.alert("服务器连接失败",{ type: 'error'});
                 })
         });
     },

@@ -64,7 +64,9 @@
 
                 var index=this.cartItemIndex;
 
-                this.cartData[index].isDiscount = false;
+                if(this.cartData[index].isDiscount) {
+                    this.cartData[index].isDiscount = false;
+                }
 
                 //选中的数量
                 var amount=this.cartData[index].amount;
@@ -88,7 +90,11 @@
                             else{
                                 this.cartData[index].amount=parseInt(amount);
                             }
+                            var pageList=this.$store.state.pageList;
+                            this.$store.commit('setLocalList',pageList);    //存储本地
+
                             break;
+
                     }
                 }else{
 

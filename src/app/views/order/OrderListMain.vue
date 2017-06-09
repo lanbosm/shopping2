@@ -228,7 +228,7 @@
     	name: 'CustomList',
         data(){
             return {
-                title:"会员",
+                title:"",
                 back:{"label":"返回","url":"index","show":true},
                 listData:{},
                 pageNum:1,                 //一页显示多少

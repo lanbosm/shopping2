@@ -1,8 +1,8 @@
 <template>
     <div class="member_main">
-        <app-center-Header  :title="title" :back="back" :next="next" mode="mode"></app-center-Header>
+        <commom-header  :title="title" :back="back" :next="next"></commom-header>
         <!--提货-->
-        <member-cargo :takelist="takeList"></member-cargo>
+        <member-cargo :list-data="takeList"></member-cargo>
     </div>
 </template>
 
@@ -104,8 +104,8 @@
         data(){
             return{
                 title:'提货',
-                back:{"label":"返回","url":"index","show":true,},
-                next:{"label":"提货","url":"","show":true,"isshow":true,"isnum":2},//提货是2
+                back:{"label":"返回","url":"customlist","show":true,},
+                next:{"label":"提货","url":"","show":true},//提货是2
                 message: '',
                 listType:null,
             }
@@ -114,14 +114,12 @@
             MemberCargo
         },
         computed:{
-            mode(){
-                return this.$store.state.currentPage.mode;
-            },
             takeList(){
                 return this.$store.state.currentPage.takeData;
             }
         },
         created(){
+              this.back.url=this.back.url+"?p="+this.$route.query.p;
 
         },
         methods:{

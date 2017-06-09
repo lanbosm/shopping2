@@ -35,8 +35,8 @@
         data() {
             return {
                 title:"结账",
-                back:{"label":"返回","url":"index","show":true},
-                next:{"label":"打印","url":"print","show":true,"cb":this.createOrder},
+                back:{"label":"返回","url":"/","show":true},
+                next:{"label":"打印","url":"/print","show":true,"cb":this.createOrder},
                 message: '请选择一个付款方式',
             }
         },
@@ -74,7 +74,10 @@
 
 
                 if(!this.orderParams.paymentMethodId){
-                    layer.msg("请选择一种付款方式", {icon: 2});
+                    this.$message({
+                        message: '请选择一种付款方式',
+                        type: 'error'
+                    });
                     return false;
                 }
                 //数据过滤
@@ -86,10 +89,13 @@
                     this.$store.dispatch("createOrder").then(res=>{
 
                         this.$store.commit("setMode","print");
-                        this.$router.replace("print");
+                        this.$router.replace("/print");
 
                     }).catch(res=>{
-                        layer.alert("创建支付失败",{icon:2})
+                        this.$alert('创建支付失败',{
+                            type: 'error'
+                        });
+
                     })
 
                 } if(this.orderParams.paymentMethodId==12){//扫码
@@ -99,43 +105,63 @@
                     this.$store.dispatch("createOrder").then(res=>{
 
                         this.$store.commit("setMode","print");
-                        this.$router.replace("print");
+                        this.$router.replace("/print");
 
                     }).catch(res=>{
-                        layer.alert("创建支付失败",{icon:2})
+                        this.$alert('创建支付失败',{
+                            type: 'error'
+                        });
+
                     })
 
                 } else if(this.orderParams.paymentMethodId==10 ){  //现金
 
                     if( this.orderParams.rmb<0) {
-                        layer.msg("现金支付付款不能为零", {icon: 2});
+
+                        this.$message({
+                            message: '现金支付付款不能为零',
+                            type: 'error'
+                        });
+
                         return false;
                     }
                     if( this.orderParams.rmb<this.amount) {
-                        layer.msg("现金支付付款不能小于付款数", {icon: 2});
+
+                        this.$message({
+                            message: '现金支付付款不能小于付款数',
+                            type: 'error'
+                        });
                         return false;
                     }
 
                     this.$store.dispatch("createOrder").then(res=>{
 
                         this.$store.commit("setMode","print");
-                        this.$router.replace("print");
+                        this.$router.replace("/print");
 
                     }).catch(res=>{
-                        layer.alert("创建支付失败",{icon:2})
+                        this.$alert('创建支付失败',{
+                            type: 'error'
+                        });
+
                     })
                 } else if(this.orderParams.paymentMethodId==14 ){  //余额
-                    var vm=this;
-                    layer.confirm('将要扣除余额吗？', function(index){
-                        layer.closeAll();
-                        vm.$store.dispatch("createOrder").then(res=>{
-                            vm.$store.commit("setMode","print");
-                            vm.$router.replace("print");
+
+
+                    this.$confirm('将要扣除余额吗？', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.$store.dispatch("createOrder").then(res=>{
+                            this.$store.commit("setMode","print");
+                            this.$router.replace("/print");
 
                         }).catch(res=>{
-                            layer.alert("创建支付失败",{icon:2})
+                            this.$alert('创建支付失败',{
+                                type: 'error'
+                            });
                         })
-                    });
+                    })
+
 
                 }
 

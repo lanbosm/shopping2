@@ -229,14 +229,43 @@
                 this.$router.push('/orderlist');
             },
             rechargeEvent(){
-                this.$alert('此功能未开放', '充钱');
+                this.$root.showRechargeModal=true;
+
+                function centerModals() {
+                    $(this).each(function(i) {
+                        var $clone = $(this).clone().css('display','block').appendTo('body');
+                        var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                        top = top > 0 ? top : 0;
+                        $clone.remove();
+                        $(this).find('.modal-content').css("margin-top", top);
+                    });
+                };
+                this.$nextTick(()=>{
+
+                    var vm=this;
+                    var modal='#layer-recharge';
+                    $(modal).on('show.bs.modal', centerModals);
+                    $(modal).on('hidden.bs.modal',function(){
+                        vm.$root.showRechargeModal=false;
+                        vm.recharge=false;
+                    });
+                    //禁用空白处点击关闭
+                    $(modal).modal({
+                        backdrop: 'static',
+                        keyboard: false,//禁止键盘
+                        show:false
+                    });
+                    //页面大小变化是仍然保证模态框水平垂直居中
+                    $(window).on('resize',(modal)=>centerModals);
+                    //shop_admins
+                    $(modal).modal('toggle');
+                })
             },
             stockEvent(){
                 this.$store.dispatch("fetchPickList",{"memberId":this.customData.id}).then(res=>{
-                    alert(res);
-                    this.$router.push({path:'/membercargo'});
                     this.$root.showCustomModal=false;
-                    $("#layer-custom").modal('hide');
+                    this.$router.push({path:'/membercargo'});
+
                 });
             }
 

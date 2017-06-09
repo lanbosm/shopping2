@@ -1125,7 +1125,7 @@ input[type=file] {
   padding: 15px;
   position: relative;
   border-bottom: 1px dashed #e5e5e5;
-  border-width: 2px;
+  border-width: 1px;
 }
 .order .order-header h3 {
   font-size: 18px;
@@ -1168,38 +1168,11 @@ input[type=file] {
   background: #6fc89c;
   display: inline-block;
 }
-.order .order-header .ok-btn:hover,
-.order .order-header .back-btn:hover {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
-.order .order-header .ok-btn:active,
-.order .order-header .back-btn:active {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #3b8c64;
-  display: inline-block;
-}
-.order .order-header .ok-btn.select,
-.order .order-header .back-btn.select {
-  color: #ffffff;
-  padding: 25px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
 .order .order-custom {
   padding: 20px 15px;
   position: relative;
   border-bottom: 1px dashed #e5e5e5;
-  border-width: 2px;
+  border-width: 1px;
 }
 .order .order-custom .cur {
   border-color: #e84593 !important;
@@ -1311,7 +1284,7 @@ input[type=file] {
 .order .order-body {
   position: relative;
   border-bottom: 1px dashed #e5e5e5;
-  border-width: 2px;
+  border-width: 1px;
 }
 .order .order-body .left-con {
   padding-top: 15px;
@@ -1514,12 +1487,13 @@ input[type=file] {
   color: #ffffff;
 }
 .order .order-body .calc-box {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  width: 30%;
+  padding: 12px;
+  margin-left: 5%;
+  float: left;
 }
 .order .order-body .calc-box ul {
-  width: 480px;
-  background: #eeeeee;
+  width: 100%;
   border-left: solid 1px #cccccc;
   border-top: solid 1px #cccccc;
   margin: 0;
@@ -1529,11 +1503,31 @@ input[type=file] {
   box-sizing: border-box;
   border-right: solid 1px #cccccc;
   border-bottom: solid 1px #cccccc;
-  width: 16.5%;
-  height: 80px;
-  line-height: 80px;
-  font-size: 22px;
+  width: 33%;
+  height: 60px;
+  line-height: 60px;
+  font-size: 16px;
   float: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  background: #eeeeee;
+}
+.order .order-body .calc-box ul li:hover {
+  color: #ffffff;
+  background: #bbbbbb;
+}
+.order .order-body .calc-box ul li:active {
+  color: #ffffff;
+  background: #a2a2a2;
+}
+.order .order-body .tab-con-1 .shopAdminBox {
+  width: 50%;
+  padding: 12px;
+  position: relative;
+  float: right;
 }
 .print-wrap {
   background: #f0eeef;
@@ -1567,90 +1561,15 @@ input[type=file] {
 .print .btn {
   position: relative;
 }
-.print .order-header {
-  padding: 15px;
-  position: relative;
-  border-bottom: 1px dashed #e5e5e5;
-  border-width: 2px;
-}
-.print .order-header h3 {
-  font-size: 20px;
-  line-height: 30px;
-  margin: 0;
-  color: #e84593;
-}
-.print .order-header .ok-btn,
-.print .order-header .back-btn {
-  color: #666666;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #f0eeef;
-  display: inline-block;
-}
-.print .order-header .ok-btn:hover,
-.print .order-header .back-btn:hover {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
-.print .order-header .ok-btn:active,
-.print .order-header .back-btn:active {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #3b8c64;
-  display: inline-block;
-}
-.print .order-header .ok-btn.select,
-.print .order-header .back-btn.select {
-  color: #ffffff;
-  padding: 25px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
-.print .order-header .ok-btn:hover,
-.print .order-header .back-btn:hover {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
-.print .order-header .ok-btn:active,
-.print .order-header .back-btn:active {
-  color: #ffffff;
-  padding: 10px 20px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #3b8c64;
-  display: inline-block;
-}
-.print .order-header .ok-btn.select,
-.print .order-header .back-btn.select {
-  color: #ffffff;
-  padding: 25px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #6fc89c;
-  display: inline-block;
-}
 .print .order-custom {
   padding: 30px 30px;
   position: relative;
   width: 520px;
 }
 .print .order-custom .print-btn {
-  font-size: 18px;
+  font-size: 14px;
   color: #666666;
-  padding: 15px;
+  padding: 15px 0;
   border: solid 1px #cccccc;
   border-radius: 5px;
   background: #f0eeef;
@@ -1658,32 +1577,28 @@ input[type=file] {
 }
 .print .order-custom .print-btn:hover {
   color: #ffffff;
-  padding: 15px;
+  padding: 15px 0;
   border: solid 1px #cccccc;
   border-radius: 5px;
-  background: #6fc89c;
+  background: #3a9769;
   display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
 }
-.print .order-custom .print-btn:active {
-  color: #ffffff;
-  padding: 15px;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  background: #3b8c64;
-  display: inline-block;
-}
+.print .order-custom .print-btn:active,
 .print .order-custom .print-btn.select {
   color: #ffffff;
-  padding: 15px;
+  padding: 15px 0;
   border: solid 1px #cccccc;
   border-radius: 5px;
-  background: #6fc89c;
+  background: #2c724f;
   display: inline-block;
+  cursor: pointer;
 }
 .print .print-body {
   position: relative;
   border-bottom: 1px dashed #e5e5e5;
-  border-width: 2px;
+  border-width: 1px;
   width: 520px;
   height: 458px;
 }

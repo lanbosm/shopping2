@@ -18,6 +18,7 @@
                         <dd class="phone">{{item.username}}</dd>
 					</dl>
                     <span class="col">
+                        <a class="recharge-btn" @click="handleRecharge(item)">充值</a>
                         <a class="stock-btn" @click="handleStock(item)">查看存货</a>
                         <a class="detail-btn" @click="handleDetail(item)">查看详情</a>
                     </span>
@@ -92,7 +93,7 @@
                     line-height: 20px;
                 }
 
-                .stock-btn,.detail-btn{
+                .recharge-btn,.stock-btn,.detail-btn{
                     margin-top: 20px;
                     margin-right: 20px;
                     .green-btn(@radius:30px,@padding:12px 30px);
@@ -127,8 +128,11 @@
                 pageNum:1,                 //一页显示多少
             }
         },
-        mounted(){
+        created(){
+            this.pageNum=this.$route.query.p||1;
+
             this.fetchList();
+
         },
         components: {
             Pagination,                 //分页器
@@ -145,12 +149,49 @@
                 window.scrollTo(0,0);
             },
             handleStock(item){
-                this.$alert('此功能未开放', '存货');
+
+                this.$store.dispatch("fetchPickList",{"memberId":item.id,"pageNum":1}).then(res=>{
+                    this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
+                });
             },
             handleDetail(item){
                 this.$store.state.currentPage.customData=item;
                 this.$root.showCustomDialog=true;
                 //this.$alert('此功能未开放', '详情');
+            },
+            handleRecharge(item){
+                this.$root.showRechargeModal=true;
+
+                function centerModals() {
+                    $(this).each(function(i) {
+                        var $clone = $(this).clone().css('display','block').appendTo('body');
+                        var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                        top = top > 0 ? top : 0;
+                        $clone.remove();
+                        $(this).find('.modal-content').css("margin-top", top);
+                    });
+                };
+                this.$nextTick(()=>{
+
+                    var vm=this;
+                    var modal='#layer-recharge';
+                    $(modal).on('show.bs.modal', centerModals);
+                    $(modal).on('hidden.bs.modal',function(){
+                        vm.$root.showRechargeModal=false;
+                        vm.recharge=false;
+                    });
+                    //禁用空白处点击关闭
+                    $(modal).modal({
+                        backdrop: 'static',
+                        keyboard: false,//禁止键盘
+                        show:false
+                    });
+                    //页面大小变化是仍然保证模态框水平垂直居中
+                    $(window).on('resize',(modal)=>centerModals);
+                    //shop_admins
+                    $(modal).modal('toggle');
+                })
+
             },
             //请求列表
             fetchList() {

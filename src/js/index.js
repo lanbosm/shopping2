@@ -36,7 +36,7 @@ import simpScroller from 'lib/simpScroller'
 
 import CommomHeader from 'components/commom/Header.vue';
 import CommomList from 'components/commom/List.vue';
-
+import Pagination from 'components/pagination/Pagination.vue';
 import store from './vuex/store'
 import router from './router'
 
@@ -45,6 +45,11 @@ Vue.use(ElementUI);
 //全局定义组件
 Vue.component('commom-header',CommomHeader);
 Vue.component('commom-list',CommomList);
+
+Vue.component('pagination',Pagination);
+
+
+
 
 //定义头组件
 Vue.component('app-header',appHeader);
@@ -242,8 +247,9 @@ var vm =new Vue({
         // this.$router.push('/log/sales');
 
         //this.$router.push('/');
-        // this.$router.push('/print');
-        this.$router.push('/ad');
+
+         this.$router.push('/');
+        //this.$router.push('/ad');
         //this.$router.push('/');
     }
 })

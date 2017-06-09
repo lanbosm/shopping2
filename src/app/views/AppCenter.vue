@@ -1,8 +1,8 @@
 <template>
 	 <div class="appCenter">
 		 <app-center-loading v-if="waiting"></app-center-loading>
-		 <order-main v-if="mode=='order'"></order-main>
-		 <print-main v-if="mode=='print'"></print-main>
+		 <order-main v-if="$route.path.indexOf('/order')!=-1"></order-main>
+		 <print-main v-if="$route.path=='/print'"></print-main>
 	 </div>
 </template>
 
@@ -22,9 +22,6 @@
         name: 'appCenter',
         computed: {
             //数据来自全局
-			mode(){
-				return this.$store.state.currentPage.mode;
-			},
 			waiting: function() {
                     return this.$store.state.currentPage.waiting
             },
@@ -34,21 +31,15 @@
             PrintMain,
             AppCenterLoading
         },
-        watch:{
-            'mode':"routerGo"
-        },
 		created(){
+            console.log(this.$route);
            // this.$store.state.currentPage.mode="print";
 
-            this.routerGo();
+            //this.routerGo();
 		},
 		methods:{
 
-		    routerGo(){
-               if(this.mode=="index"){
-                    this.$router.replace('/');
-                }
-			}
+
 
 		}
     }

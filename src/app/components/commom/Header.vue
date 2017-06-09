@@ -48,12 +48,11 @@
         props:["title","back","next"],
         methods:{
             toBack (){
-                var vm=this;
-                if(vm.back.cb){
-                    vm.back.cb();
+
+                if(this.back.cb){
+                    this.back.cb();
                 }else {
-                    vm.$store.commit("setMode", vm.back.url);
-                    vm.$router.replace(vm.back.url);
+                    this.$router.replace(this.back.url);
                 }
             },
             toNext (){
@@ -71,6 +70,9 @@
                             vm.$store.commit("setMode",vm.next.url);
                             vm.$router.replace(vm.next.url);
                         }
+                    }).catch(() => {
+
+
                     })
             }
         }

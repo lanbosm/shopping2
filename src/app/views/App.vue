@@ -206,6 +206,9 @@
                 request.fnPost(this,apiObj,(res)=>{
                      this.$store.commit("setMode",'order');
                      this.$store.commit("setOrderData",res.appOrderConfirmBean);
+                     this.$store.state.currentPage.cartData=[];
+                     var pageList=this.$store.state.pageList;
+                     this.$store.commit('setLocalList',pageList);    //存储本地
                      this.$router.push('/order');
                 })
 
@@ -398,6 +401,7 @@
 
                 if(!find){
                     this.cartData.push(item);
+                    this.cartItemIndex=this.cartData.length-1;
                     //在存下
                     var pageList=this.$store.state.pageList;
                     this.$store.commit('setLocalList',pageList);    //存储本地

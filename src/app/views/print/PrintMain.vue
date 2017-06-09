@@ -1,10 +1,10 @@
 
 <template>
     <div class="print">
-        <app-center-header :title="title" :back="back" :next="next" mode="mode"></app-center-header>
+        <commom-header  :title="title" :back="back" :next="next" ></commom-header>
         <div class="container order-custom">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12" v-if="printData.memberId">
                     <a class="btn btn-default print-btn btn-block btn-inventory"  @click="gostock()">
                         <span class="iconfont icon-kucun" aria-hidden="true"></span> 存货
 
@@ -36,7 +36,7 @@
                         <table class="printtable">
                             <caption class="text-center">
                                 <h3>{{printData.shopName}}</h3>
-                                <h5 class="text-left">{{printData.DateTime}}</h5>
+                                <h5 class="text-left">{{printData.time}}</h5>
                                 <h5 class="text-left">订单号 {{printData.sn}}</h5>
                             </caption>
                             <tbody>
@@ -75,7 +75,7 @@
                             </tr>
                             <tr class="split">
                                 <td>付款方式</td>
-                                <td>{{printData.paymentName}}</td>
+                                <td>{{printData.paymentMethodName}}</td>
                             </tr>
                             <tr class="split" v-if="orderParams.paymentMethodId == 10 ">
                                 <td>现金支付</td>
@@ -149,7 +149,7 @@
     .prev-txt{ margin-top: 10px; font-size: 14px; color: #999999;}
     .payres-txt.success{  color: #6fc89c;}
     .print-div{
-        height:360px; overflow-x:  auto;}
+        height:360px; overflow: hidden }
 
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
@@ -207,7 +207,6 @@
             }
         },
         components:{
-            AppCenterHeader,
             AppCenterMenu,
             AppCenterCustom
         },
@@ -219,9 +218,6 @@
         },
         computed: {
             //数据来自全局
-            mode(){
-                return this.$store.state.currentPage.mode;
-            },
             orderParams(){
                 return this.$store.state.currentPage.orderParams;
             },
@@ -233,18 +229,14 @@
             printData(){
                 var print=this.$store.state.currentPage.printData;
                 var nowDate = new Date();
-                var myDate=nowDate.toLocaleDateString();
-                var myTime=nowDate.toLocaleTimeString();     //获取当前时间
 
                 var paymentName={12:"扫码支付",10:"现金支付",11:"刷卡支付",14:"余额支付"};
 
-                print.paymentName=paymentName[this.orderParams.paymentMethodId];
-
-
+               // print.paymentName=paymentName[this.orderParams.paymentMethodId];
                 print.cash=this.orderParams.cash ;
                 print.rmb=this.orderParams.rmb ;
-                print.DateTime=myDate+" "+myTime;
-                print.shopName=this.$store.state.shopData.name;
+
+
                 return  print;
             }
 
@@ -253,6 +245,7 @@
 
             this.title='价格：¥'+this.order.totalAmountPayable;
             this.$nextTick(function() {
+
 
                 //付款二维码
                 $('#qrcCode').html("");
@@ -279,7 +272,7 @@
                 });
 
                // this.scanResListen();
-
+                this.$simpleScroll('#printDiv');
 
             });
 
@@ -289,7 +282,7 @@
                 this.payStatus="success";
                 clearInterval(this.timer);
                 this.$store.dispatch("removePage").then(res=> {
-                    this.$router.replace('/index');
+                    this.$router.replace('/');
                 });
 
                // this.$store.dispatch('switchPage',curPage-1);
@@ -298,7 +291,7 @@
             },
             printPage(){
 
-                var obj=document.getElementById('printDiv');
+                var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
                 var docStr = obj.innerHTML;
 
                 var newWindow=window.open("/print.html","_blank");
@@ -357,11 +350,10 @@
             },
 
             gostock(){
-                var vm=this;
-//                alert(vm.printData.sn);
-                this.$store.dispatch("stockGoods",{"orderSn":vm.printData.sn}).then(res=>{
-//                    alert(res.appConsigns);
-                    this.$router.push({path:'/member'})
+
+                this.$store.dispatch("stockGoods",{"orderSn":this.printData.sn}).then(res=>{
+
+                    this.$router.push({path:'/member',query:{sn:this.printData.sn,mid:this.printData.memberId}})
                 })
             }
         }

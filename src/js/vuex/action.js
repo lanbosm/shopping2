@@ -4,7 +4,6 @@ import util from 'util/util.js'
 import router from '../router'
 
 
-
 const actions= {
         //获得公有秘钥
         getPublicKey({commit}){
@@ -613,25 +612,48 @@ const actions= {
                 })
             })
         },
+        savePickList({commit,state},value){
 
+            var apiObj = {
+                url:API_URLS.consigns,
+                data:value
+            };
+            console.log( apiObj);
+            return  request.fnPost_dev(apiObj).then(res=> {
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
+
+//                           alert(vm.$store.state.currentPage.customData.id);
+
+        },
         //点击查看存货信息获取提货列表
         fetchPickList({commit,state},value){
             commit("show_waiting");
             let apiObj={
-                url: API_URLS.take_goods, //请求提货地址
+                url: API_URLS.consigns, //请求提货地址
                 data:value
             };
-            return new Promise((resolve,reject)=>{
+
+            return  request.fnGet_dev(apiObj).then(res=> {
                 commit("hide_waiting");
-                request.fnGet(apiObj).then(res=>{
-                    if(res.code=="20000"){
-                        commit("setTakeData",res.appConsigns);
-                        resolve(res);
-                    }else {
-                        reject(res)
-                    }
-                })
-            })
+                if (res.data.code=="20000") {
+                    commit("setTakeData",res.data.page);
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
+
         },
         exportProducts({commit},value){
             commit("show_waiting");

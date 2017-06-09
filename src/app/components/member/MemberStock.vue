@@ -13,15 +13,15 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="list-body" v-if="!listdata" >
+                <div class="list-body" v-if="!listData" >
                     加载中...
                 </div>
-                <div class="list-body" v-else-if="listdata.length==0">
+                <div class="list-body" v-else-if="listData.length==0">
                     <div class="no-list"></div>
                 </div>
-                <div class="list-body" style="overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;" v-else>
+                <div class="list-body" v-else>
                     <!--list-->
-                    <div class="list-row" v-for="(item,index) in listdata">
+                    <div class="list-row" v-for="(item,index) in listData">
                         <div class="t">
                             编号: {{item.productSn}}
                         </div>
@@ -47,11 +47,7 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<div class="col-xs-12">-->
-                <!--<pagination :page="listData" :go-callback="goCallback"></pagination>-->
-            <!--</div>-->
-        <!--</div>-->
+
     </div>
 </template>
 
@@ -65,9 +61,9 @@
         border-radius: 5px;
         border: 1px solid #999
     }
-    .span_all .span1{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
+    .span_all .span1{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
     .span_all .span2{width: 68px;height: 38px;line-height: 38px;text-align: center;float: left}
-    .span_all .span3{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
+    .span_all .span3{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
     .no-list{ width: 100%; height:600px; background: url(/images/no_list.jpg) no-repeat 50% 0%;}
     .log-products{
         position: relative;
@@ -152,7 +148,7 @@
 
     export default{
         name:'Member_stock',
-        props:["listdata"],
+        props:["listData"],
         data(){
             return{
                 pageNum:1,
@@ -167,7 +163,7 @@
         computed:{
             Num(){
                 var num_act={};
-                var length=this.listdata.length;
+                var length=this.listData.length;
                 for (var i=0;i<length;i++){
                     this.$set(num_act,i,0)
                 }
@@ -178,7 +174,7 @@
             },
         },
         created(){
-
+                console.log(this.listData);
 
 //            this.fetchList();
 //            console.log(this.order)
@@ -186,33 +182,17 @@
         methods:{
             add(number,index,max,ss){
                 var vm=this;
-                index=this.listdata[ss].quantity;
+                index=this.listData[ss].quantity;
                     if(index<max){
                         index+=number;
-//                        this.listdata[ss].quantity=index;
-                        console.log(this.listdata[ss])
-                        this.$set(this.listdata[ss],'quantity',index);
-//                        alert(this.listdata[ss].quantity)
+//                        this.listData[ss].quantity=index;
+                        console.log(this.listData[ss])
+                        this.$set(this.listData[ss],'quantity',index);
+//                        alert(this.listData[ss].quantity)
                     }else {
                         index=max;
                     }
 
-
-
-
-////                console.log(typeof (this.Num[index]));
-//                if(this.Num[index]>=max){
-//                    this.Num[index]=max
-//                }else {
-//                    this.Num[index]+=Number(number);
-//                }
-//                console.log(this.Num);
-//                var set=this.listdata[index].quantity;
-//                 if(set<max){
-//                     set+=Number(number);
-//                 }else{
-//                     set=max
-//                 }
             },
             edd(number,index,ss){
 //                this.Num[index]-=Number(number);
@@ -222,7 +202,7 @@
                     index=0;
                 }else {
                     index-=Number(number);
-                    this.$set(this.listdata[ss],'quantity',index);
+                    this.$set(this.listData[ss],'quantity',index);
                 }
             },
             goCallback(pageIndex){

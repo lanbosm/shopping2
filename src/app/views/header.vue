@@ -107,7 +107,7 @@
 
 
             this.$store.dispatch("loadLastData");
-            this.addMsglistener();
+           // this.addMsglistener();
         },
         mounted(){
             this.$nextTick(_=>{

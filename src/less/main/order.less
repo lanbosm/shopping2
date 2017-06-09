@@ -134,22 +134,43 @@
       }
 
       .calc-box{
-          padding-top: 15px;
-          padding-bottom: 15px;
+          width: 30%;
+          padding:@gutter;
+          margin-left: 5%;
+          float: left;
           ul {
-            width: 480px; background: #eeeeee; border-left: solid 1px #cccccc; border-top: solid 1px #cccccc;
+            width: 100%;  border-left: solid 1px #cccccc; border-top: solid 1px #cccccc;
             margin: 0; padding: 0;
             li {
               box-sizing: border-box;
               border-right: solid 1px #cccccc;
               border-bottom: solid 1px #cccccc;
-              width: 16.5%;
-              height: 80px;
-              line-height: 80px;
-              font-size: 22px;
+              width: 33%;
+              height: 60px;
+              line-height: 60px;
+              font-size: 16px;
               float: left;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              cursor: pointer;
+              background: #eeeeee;
+            }
+            li:hover{
+              color:#ffffff;
+              background: darken(#eeeeee,20%);
+            }
+            li:active{
+              color:#ffffff;
+              background: darken(#eeeeee,30%);
             }
           }
+      }
+
+      .tab-con-1{
+
+        .shopAdminBox{ width:50%;  padding:@gutter;  position:relative;  float: right;}
       }
 
 

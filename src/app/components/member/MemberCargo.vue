@@ -14,15 +14,15 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="list-body" v-if="!takelist" >
+                <div class="list-body" v-if="!listData" >
                     加载中...
                 </div>
-                <div class="list-body" v-else-if="takelist.length==0">
+                <div class="list-body" v-else-if="listData.list.length==0">
                     <div class="no-list"></div>
                 </div>
                 <div class="list-body" style="overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;" v-else>
                     <!--list-->
-                    <div class="list-row" v-for="(item,index) in takelist" v-show="item.quantity>0">
+                    <div class="list-row" v-for="(item,index) in listData.list" v-show="item.quantity>0">
                         <div class="t">
                             编号: {{item.productSn}}
                         </div>
@@ -48,11 +48,11 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row">-->
-        <!--<div class="col-xs-12">-->
-        <!--<pagination :page="listData" :go-callback="goCallback"></pagination>-->
-        <!--</div>-->
-        <!--</div>-->
+        <div class="row">
+            <div class="col-xs-12">
+                 <pagination :page="listData" :go-callback="handleCurrentChange" ></pagination>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -153,12 +153,13 @@
 
     export default{
         name:'Member_cargo',
-        props:["takelist"],
+        props:["listData"],
         data(){
             return{
                 pageNum:1,
                 num:"",
-                aa:""
+                aa:"",
+                mid:""
             }
 
         },
@@ -180,40 +181,24 @@
         },
         created(){
 
+                this.mid=this.$route.query.mid
+//
 
-//            this.fetchList();
-//            console.log(this.order)
         },
         methods:{
             add(number,index,max,ss){
                 var vm=this;
-                index=this.takelist[ss].operationNum;
+                index=this.listData[ss].operationNum;
                 if(index<max){
                     index+=number;
 //                        this.listdata[ss].quantity=index;
-                    console.log(this.takelist[ss]);
-                    this.$set(this.takelist[ss],'operationNum',index);
+                    console.log(this.listData[ss]);
+                    this.$set(this.listData[ss],'operationNum',index);
 //                        alert(this.listdata[ss].quantity)
                 }else {
                     index=max;
                 }
 
-
-
-
-////                console.log(typeof (this.Num[index]));
-//                if(this.Num[index]>=max){
-//                    this.Num[index]=max
-//                }else {
-//                    this.Num[index]+=Number(number);
-//                }
-//                console.log(this.Num);
-//                var set=this.listdata[index].quantity;
-//                 if(set<max){
-//                     set+=Number(number);
-//                 }else{
-//                     set=max
-//                 }
             },
             edd(number,index,ss){
 //                this.Num[index]-=Number(number);
@@ -223,20 +208,20 @@
                     index=0;
                 }else {
                     index-=Number(number);
-                    this.$set(this.takelist[ss],'operationNum',index);
+                    this.$set(this.listData[ss],'operationNum',index);
                 }
             },
-            goCallback(pageIndex){
+            handleCurrentChange(pageIndex){
                 this.pageNum=pageIndex;
                 this.fetchList();
                 window.scrollTo(0,0);
             },
             //请求列表
-//            fetchList() {
-//                this.$store.dispatch('fetchShiftList',{"pageNum":this.pageNum}).then(res=>{
-//                    this.listData=res.page;
-//                })
-//            }
+            fetchList() {
+                this.$store.dispatch("fetchPickList",{"memberId":this.mid,"pageNum":this.pageNum}).then(res=>{
+
+                });
+            }
 
         }
 

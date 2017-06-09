@@ -29,7 +29,7 @@
 
 .order-row(){
   border-bottom: @borderDashedStyle;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .diy-btn(@color,@bgcolor,@borderColor:#f5f5f5,@radius:5px,@padding:10px 20px){
@@ -44,6 +44,12 @@
   &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc,@radius,@padding); cursor: pointer;}
 }
 
+
+.gray-green-btn(@radius:5px,@padding:10px 20px){
+  .class-order-btn(#666666,#f0eeef,#cccccc,@radius,@padding);
+  &:hover{.class-order-btn(#ffffff,darken(@green,20%),#cccccc,@radius,@padding); cursor: pointer; text-decoration: none;}
+  &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc,@radius,@padding); cursor: pointer;}
+}
 
 .order-custom-btn(){
   .class-order-btn(#666666,#ffffff,#cccccc);

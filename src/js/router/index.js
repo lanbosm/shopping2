@@ -10,8 +10,8 @@ import AppCenter from 'views/AppCenter.vue'
 import OrderDefault from 'views/order/OrderDefault.vue';
 import PayScan from 'views/pay/PayScan.vue'
 import PayCard from 'views/pay/PayCard.vue'
-import PayMoney from 'views/pay/PayMoney.vue'
-import RechargeDefault from 'components/recharge/RechargeDefault.vue'
+import PayCash from 'views/pay/PayMoney.vue'
+
 
 
 
@@ -89,37 +89,40 @@ const router = new VueRouter({
         },
         {
             path: '/appCenter',
-            alias:['/order','/recharge','/print'],            //中心有 订单 充值 打印
+            alias:['/print'],            //中心有 订单 充值 打印
+            name: 'AppCenter',
+            component: AppCenter
+        },
+
+        {
+            path: '/order',
             name: 'AppCenter',
             component: AppCenter,
-            children: [
-                {
-                    path: '/order/',                          //默认支付
-                    name: 'OrderDefault',
-                    component: OrderDefault,
-                },
-                {
-                    path: '/recharge/',                      //默认充值
-                    name: 'RechargeDefault',
-                    component: RechargeDefault,
-                },
-                {
-                    path: '/scan',
-                    name: 'PayScan',
-                    component: PayScan,
-                },
-                {
-                    path: '/card',
-                    name: 'PayCard',
-                    component: PayCard,
-                },
-                {
-                    path: '/money',
-                    name: 'PayMoney',
-                    component: PayMoney,
-                }
-            ]
+                    children: [
+                        {
+                            path: '/',                          //默认支付
+                            name: 'OrderDefault',
+                            component: OrderDefault,
+                        },
+                        {
+                            path: 'payScan',
+                            name: 'PayScan',
+                            component: PayScan,
+                        },
+                        {
+                            path: 'payCard',
+                            name: 'PayCard',
+                            component: PayCard,
+                        },
+                        {
+                            path: 'payCash',
+                            name: 'PayCash',
+                            component:PayCash,
+                        }
+                    ]
         },
+
+
         {                                      //广告
             path: '/ad',
             name: 'ad',
