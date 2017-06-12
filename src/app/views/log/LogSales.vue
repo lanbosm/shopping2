@@ -173,17 +173,12 @@
             }
 
 		},
-        filters: {
-            currency: function (value) {
-                if (!value) return '0.00';
-                return '¥ ' + Number(value).toFixed(2);
-            }
-        },
         components:{
             Pagination
         },
         created(){
-			this.fetchList()
+			this.fetchList();
+		
         },
         methods:{
             //
@@ -196,6 +191,7 @@
 
                     this.$store.dispatch('fetchLog',{"type":"sales","pageNum":this.pageNum}).then(res=>{
                          this.listData=res.page;
+                         console.log(this.listData);
                          this.shiftInfo=res.appShiftInfo;
                     })
             }

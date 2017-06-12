@@ -96,7 +96,7 @@
 
 <script>
 
-    import MemberStock from 'components/member/MemberStock.vue'
+    import MemberStock from './MemberStock.vue'
 
     import layer from 'layer';
     import $ from 'jquery';

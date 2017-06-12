@@ -158,7 +158,6 @@
             },
             logTo (type){
                 this.closeWin();
-                this.$store.commit("setMode",'log/'+type);
                 this.$router.replace('/log/'+type);
 
             },

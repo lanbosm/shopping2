@@ -1,7 +1,7 @@
 <template>
     <div class="order">
         <commom-header :title="title" :back="back" :next="next"></commom-header>
-        <app-center-custom :mode="mode" :message="message" :amount="amount" :order="order"></app-center-custom>
+        <app-center-custom  :message="message" :amount="amount" :order="order"></app-center-custom>
         <div class="container order-body">
             <div class="row">
                 <div class="col-nn-30  left-con">
@@ -22,7 +22,6 @@
 </template>
 
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
     import AppCenterCustom from 'views/AppCenterCustom.vue';
     import AppCenterMenu from 'views/AppCenterMenu.vue';
 
@@ -88,7 +87,7 @@
 
                     this.$store.dispatch("createOrder").then(res=>{
 
-                        this.$store.commit("setMode","print");
+
                         this.$router.replace("/print");
 
                     }).catch(res=>{
@@ -104,7 +103,6 @@
 
                     this.$store.dispatch("createOrder").then(res=>{
 
-                        this.$store.commit("setMode","print");
                         this.$router.replace("/print");
 
                     }).catch(res=>{
@@ -136,7 +134,7 @@
 
                     this.$store.dispatch("createOrder").then(res=>{
 
-                        this.$store.commit("setMode","print");
+
                         this.$router.replace("/print");
 
                     }).catch(res=>{
@@ -152,7 +150,7 @@
                         type: 'warning'
                     }).then(() => {
                         this.$store.dispatch("createOrder").then(res=>{
-                            this.$store.commit("setMode","print");
+
                             this.$router.replace("/print");
 
                         }).catch(res=>{

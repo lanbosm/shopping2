@@ -1,8 +1,8 @@
 <template>
     <div class="member_main">
-        <commom-header  :title="title" :back="back" :next="next"></commom-header>
-        <!--提货-->
-        <member-cargo :list-data="takeList"></member-cargo>
+        <app-center-Header  :title="title" :back="back" :next="next" mode="mode"></app-center-Header>
+        <!--会员-->
+        <member-msg></member-msg>
     </div>
 </template>
 
@@ -95,7 +95,8 @@
 </style>
 
 <script>
-    import MemberCargo from 'components/member/MemberCargo.vue'
+    import AppCenterHeader from 'views/AppCenterHeader.vue'
+    import MemberMsg from './MemberMsg.vue'
 
     import layer from 'layer';
     import $ from 'jquery';
@@ -103,23 +104,23 @@
         name:'member',
         data(){
             return{
-                title:'提货',
-                back:{"label":"返回","url":"customlist","show":true,},
-                next:{"label":"提货","url":"","show":true},//提货是2
+                title:'会员',
+                back:{"label":"返回","url":"index","show":true,},
+                next:{"label":"","url":"","show":false},
                 message: '',
                 listType:null,
             }
         },
         components:{
-            MemberCargo
+            AppCenterHeader,
+            MemberMsg
         },
         computed:{
-            takeList(){
-                return this.$store.state.currentPage.takeData;
-            }
+            mode(){
+                return this.$store.state.currentPage.mode;
+            },
         },
         created(){
-              this.back.url=this.back.url+"?p="+this.$route.query.p;
 
         },
         methods:{

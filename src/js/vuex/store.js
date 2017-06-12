@@ -50,8 +50,8 @@ const store = new Vuex.Store({
 
     //子类数据
     currentPage:{   //当前数据节点
-          index:0,
-          mode:"index",
+
+
     },
   },
    // 变量赋值
@@ -74,9 +74,6 @@ const store = new Vuex.Store({
           state.msgData.appUnconfirmList=state.msgData.appUnconfirmList.concat(data.appUnconfirmList);
           state.msgData.msgNum=data.msgNum;
       },
-      setMode(state,data){
-          state.currentPage.mode=data;
-      },
       setActive(state,data){
          state.activeId=data;
       },
@@ -91,7 +88,6 @@ const store = new Vuex.Store({
       },
       setCategoryData (state,data){
           state.categoryData=data;
-
       },
       setProductParams (state,data){
           Object.assign(state.currentPage.list,data);

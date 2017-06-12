@@ -67,7 +67,6 @@
                         if(vm.next.cb){
                             vm.next.cb();
                         }else {
-                            vm.$store.commit("setMode",vm.next.url);
                             vm.$router.replace(vm.next.url);
                         }
                     }).catch(() => {

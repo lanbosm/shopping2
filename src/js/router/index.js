@@ -13,12 +13,8 @@ import PayCard from 'views/pay/PayCard.vue'
 import PayCash from 'views/pay/PayMoney.vue'
 
 
-
-
-
-import member from 'components/member/MemberStockMain.vue';
-
-import membercargomain from 'components/member/MemberCargoMain.vue';
+import member from 'views/member/MemberStockMain.vue';
+import membercargomain from 'views/member/MemberCargoMain.vue';
 
 import activeProductsMain from 'views/products/activeProductsMain.vue';
 

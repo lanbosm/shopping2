@@ -4,9 +4,9 @@ import Vue from 'vue';
 import appHeader from 'views/header.vue'
 
 import CustomModal from 'views/custom/CustomMain.vue';
-import ShopAdminModal from 'components/shopAdmin/ShopAdminMain.vue';
-import CouponModal from 'components/coupon/CouponMain.vue';
-import RechargeModal from 'components/recharge/RechargeMain.vue';
+import ShopAdminModal from 'views/shopAdmin/ShopAdminMain.vue';
+import CouponModal from 'views/coupon/CouponMain.vue';
+import RechargeModal from 'views/recharge/RechargeMain.vue';
 
 
 
@@ -26,7 +26,7 @@ import ListItem from 'views/products/ListItem.vue';
 
 import AppCenterLoading from 'views/AppCenterloading.vue'
 
-import AgainPass from 'components/custom/AgainPass.vue'
+import AgainPass from 'views/custom/AgainPass.vue'
 
 
 import ElementUI from 'element-ui'
@@ -180,7 +180,7 @@ router.beforeEach(({meta, path}, from, next)=> {
 
          next({ path: '/login' })   //  跳转到login页面  
     }else {
-
+        store.state.currentPage.history=path
         next()   // 进行下一个钩子函数  
     }
 
@@ -231,24 +231,27 @@ var vm =new Vue({
         login: function() {
             return this.$store.state.login;
         },
+        history: function() {
+            return this.$store.state.currentPage.history;
+        },
         waiting: function() {
             return this.$store.state.waiting;
         }
     },
-    created() {
+    mounted() {
 
 
         // 关闭窗口时弹出确认提示
         // $(window).bind('beforeunload', function(){
         //     return '您可能有数据没有保存';
         // });
-        //起始路由
-        //this.$router.push('/log/products');
-        // this.$router.push('/log/sales');
 
-        //this.$router.push('/');
-
-         this.$router.push('/');
+        if(this.history){
+            this.$store.state.currentPage=this.$store.state.pageList[this.$store.state.headIndex];
+            this.$router.push(this.history);
+        }else {
+            this.$router.push('/');
+        }
         //this.$router.push('/ad');
         //this.$router.push('/');
     }

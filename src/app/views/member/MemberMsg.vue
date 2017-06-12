@@ -135,8 +135,7 @@
 
 
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
-    import Pagination from 'components/pagination/Pagination.vue'
+
 
 
     import {request, API_URLS, HOST} from 'util/request.js';
@@ -170,10 +169,6 @@
                 pageNum:1
 
             }
-        },
-        components:{
-            AppCenterHeader,
-            Pagination
         },
         created(){
             this.fetchList()

@@ -9,7 +9,7 @@
 
 
 <script>
-    import {request, API_URLS} from 'util/request.js';
+   
     import $ from 'jquery';
     export default{
         name: 'showAdminBtn',
