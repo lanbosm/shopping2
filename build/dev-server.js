@@ -26,7 +26,7 @@ module.exports = {
 
         var devMiddleware = require('webpack-dev-middleware')(compiler, {
             publicPath: config.output.publicPath,
-            noInfo: false,
+            noInfo: true,
             stats: {
                 colors: true
             }

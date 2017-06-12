@@ -38,7 +38,7 @@ module.exports = {
     // 输出配置
     output: {
         path: path.join(ROOT_PATH, "./dist"),
-        publicPath: "/js",
+        publicPath: "/",
         filename: "[name].js",
     },
     externals: {
@@ -68,14 +68,14 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [resolve('src'), resolve('test')]
+                include: [resolve('src'), resolve('test')],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
                     limit: 1024,
-                    name: utils.assetsPath('../images/[name].[ext]')
+                    name: utils.assetsPath('images/[name].[ext]')
                 }
             },
             {
@@ -83,7 +83,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 1024,
-                    name: utils.assetsPath('../fonts/[name].[ext]')
+                    name: utils.assetsPath('fonts/[name].[ext]')
                 }
             }
         ]

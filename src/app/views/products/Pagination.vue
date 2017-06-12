@@ -60,7 +60,7 @@
             },
             //请求列表
             fetchList() {
-                this.$store.dispatch('fetchList');
+                //this.$store.dispatch('fetchList');
 
             }
 

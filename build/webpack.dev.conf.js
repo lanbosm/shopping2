@@ -16,16 +16,22 @@ module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({ sourceMap: true })
     },
+    output: {
+        path:  path.resolve(__dirname, '../dist'),
+        filename: utils.assetsPath('js/[name].js'),
+        chunkFilename: utils.assetsPath('js/[id].js')
+    },
     // cheap-module-eval-source-map is faster for development
     devtool: '#cheap-module-eval-source-map',
     plugins: [
         new webpack.DefinePlugin({
             'process.env':{ NODE_ENV: '"development"'}
         }),
+
         //公共common
         new CommonsChunkPlugin({
-            name:'common',
-            filename: "common.js"
+            name: 'vendor',
+            filename: "js/vendor.js",
         }),
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin(),

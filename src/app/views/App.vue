@@ -12,8 +12,9 @@
                                 <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:activty==false}" @click="showCategory=!showCategory; activeTabt()" ><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
+                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:true}" @click="showCategory=!showCategory;"><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
+                                    <!---->
                                     <!--<div class="col-xs-2 activity">-->
                                         <!--<a class="btn btn-gray shuaixuan" @click="activeTab()"  :class="{activeOn:activty==true}" ><span class="glyphicon glyphicon-fire"></span>活动专区</a>-->
                                     <!--</div>-->
@@ -28,7 +29,7 @@
                                 <add-price :page="page" :product-params="productParams" @open-detail="openDetail" v-show="!flag"></add-price>
                             </div>
                             <div class="panel-footer">
-                                <Pagination :page="page" :go-callback="goCallback" ></Pagination>
+                                <pagination :page="page" :go-callback="goCallback" ></pagination>
                             </div>
 
                         </div>
@@ -64,8 +65,6 @@
     import addPrice from 'views/products/addPrice.vue';
     import activeHead from 'views/products/activeHead.vue';
 
-
-    import Pagination from 'components/pagination/Pagination.vue';
 
     import layer from 'layer';
     import util from 'util/util.js';
@@ -120,7 +119,6 @@
         components: {
              cart:AppCart,              //购物车
              calc:AppCalc,              //计算器
-             Pagination,                 //分页器
              breadcrumb,                  //面包屑
              category,                    //分类
              ProductList,                 //商品列表
@@ -157,7 +155,7 @@
             },
             goCallback(pageIndex){
                 this.pageNum=pageIndex;
-                this.fetchList();
+                this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
             },
             //创建订单
             buildOrder:function(cart){

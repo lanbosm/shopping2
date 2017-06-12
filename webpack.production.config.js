@@ -43,12 +43,14 @@ function resolve (dir) {
 module.exports = {
     cache: true,
   //  devtool: "source-map",
-    entry: getEntry(),
+    entry: {
+        index:'./src/js/index.js'
+    },
     output: {
         path: path.join(ROOT_PATH, "./dist"),
         publicPath: "/", //gulp 已经托管了WebpackDevServer
         filename: "[name].js",
-        chunkFilename: 'js/[id].[chunkhash].js'
+
 
     },
     externals: {

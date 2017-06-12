@@ -187,7 +187,24 @@ const actions= {
                     return Promise.reject(res.data);
             });
         },
+        //意外退出
+        logoutUnexpected({commit,state,dispatch}){
+            commit("hide_waiting");
+            return Promise.resolve(_=> {
+                clearInterval(state.msgTimer);
+                router.replace('/login');
+                state.headIndex = 1;
+                state.currentPage = {};
+                state.pageList = [];
+                commit('clearAccessToken');
+                commit("setLocalList", []);
+                commit('setShopData', {});
+                util.delLocal("accessToken");
+                util.delLocal("shopData");
 
+            });
+
+        },
         loadLastData({commit,state,dispatch}){
             commit("show_waiting");
             //先获取本地商品记录
@@ -272,42 +289,39 @@ const actions= {
                      })
             });
         },
-        //获取商品列表
-        fetchList({commit,state},value){
-            if(value){
-                var oldPageData=state.currentPage.pageData;
-                commit("setProductParams",value);
-                commit("setPageData",{});
+    //获取商品列表
+    fetchList({commit,state},value){
+        if(value){
+            var oldPageData=state.currentPage.pageData;
+            commit("setProductParams",value);
+            commit("setPageData",{});
+        }
+
+        let apiObj={
+            url: API_URLS.products,
+            data:{
+                'categoryId': state.currentPage.list.categoryId,
+                'brandId': state.currentPage.list.brandId,
+                'pageNum': state.currentPage.list.pageNum,
+                'keyword': state.currentPage.list.searchStr
             }
+        };
+        commit("set_list_waiting",true);
+        return  request.fnGet_dev(apiObj).then(res=> {
+            commit("set_list_waiting",false);
+            if (res.data.code=="20000") {
+                commit("setPageData",res.data.page);
+                return  Promise.resolve(res.data);
+            } else {
+                commit("setPageData",oldPageData);
+                return   Promise.reject(res.data);
+            }
+        }).catch(res=>{
+            return    Promise.reject(res.data);
+        });
 
-            let apiObj={
-                url: API_URLS.products,
-                data:{
-                    'categoryId': state.currentPage.list.categoryId,
-                    'brandId': state.currentPage.list.brandId,
-                    'pageNum': state.currentPage.list.pageNum,
-                    'keyword': state.currentPage.list.searchStr
-                }
-            };
 
-            return new Promise((resolve, reject) => {
-                commit("set_list_waiting",true);
-                request.fnGet_dev(apiObj).then(res=> {
-                    commit("set_list_waiting",false);
-                    if (res.data.code=="20000") {
-                        commit("setPageData",res.data.page);
-                        resolve(res.data);
-                    } else {
-                        commit("setPageData",oldPageData);
-                        reject(res.data);
-                    }
-                }).catch(res=>{
-                    commit("set_list_waiting",false);
-                    reject(res.data);
-                });
-
-            });
-        },
+    },
         //获取商品详情
         fetchItem:function({commit,state},pid){
             commit("set_list_waiting",true);
@@ -366,10 +380,10 @@ const actions= {
                 if (res.data.code=="20000") {
                     return  Promise.resolve(res.data);
                 } else {
-                    return  reject(res.data);
+                    return   Promise.reject(res.data);
                 }
             }).catch(res=>{
-                return   reject(res.data);
+                return    Promise.reject(res.data);
             });
         },
         //获取会员列表

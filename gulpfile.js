@@ -25,8 +25,7 @@ const gulp = require('gulp'),
 
 
 
-
-const webpackConfigPro=require("./webpack.production.config.js");
+const webpackConfigPro=require("./build/webpack.prod.conf.js");
 
 
 
@@ -137,22 +136,7 @@ gulp.task('fileinclude', function (done) {
 });
 
 //webpack服务器开发  js编译
-//var isDev = process.env.NODE_ENV !== 'production';
-// var isDev = true;
-// var app = express();
-// var port = host.port;
-// app.engine('html', consolidate.ejs);
-// app.set('view engine', 'html');
-// app.set('views', path.resolve(__dirname, './dist'));
-//
-//
-// app.locals.env = process.env.NODE_ENV || 'dev';
-// app.locals.reload = false;
-
 gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
-
-    var path = require('path');
-    var express = require('express');
 
 
     if (!process.env.NODE_ENV) {
@@ -209,10 +193,10 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
 //准备发布的js打包
 gulp.task('rev:js', function (done) {
     console.log("正在打包Js...");
-    var  gulpwebpack = require('gulp-webpack');  //gulp版webpack
-    return   gulp.src('')  //这里src只是装样子 如果想有效请使用vinyl-named
-        .pipe(gulpwebpack( webpackConfigPro ))
-        .pipe(gulp.dest('dist/js/'))
+    var webpack = require('webpack-stream'); //gulp版webpack
+    return   gulp.src('src/js/index.js')  //这里src只是装样子 如果想有效请使用vinyl-named
+        .pipe(webpack( webpackConfigPro , require('webpack')))
+        .pipe(gulp.dest('dist'))
         .on('end', function(){
             console.log("打包完成...");
         });

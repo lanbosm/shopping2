@@ -25,11 +25,13 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 // export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
-const HOST_main="http://192.168.1.122:82";              //主服务器
-const HOST_back="http://cs.awo123.cn";                 //备服务器
+// const HOST_main="http://192.168.1.122:82";              //主服务器
+// const HOST_back="http://cs.awo123.cn";                 //备服务
 
+const HOST_main="http://cs.awo123.cn";              //主服务器
+let switchBack=false;
 
-export let HOST=HOST_main;
+export const HOST=HOST_main;
 
 //export const HOST="";
 export const API_URLS = {
@@ -65,8 +67,9 @@ export const request = {
     fnError(){
         console.log("Server error");
 
-        MessageBox.alert("服务器连接失败",{ type: 'error'}).then(_=>{
-            store.dispatch('logout');
+        MessageBox.alert("连接服务器失败",{ type: 'error'}).then(_=>{
+            store.dispatch('logoutUnexpected');
+
         });
 
         return Promise.reject({data:{"msg":"ServerError"}});
@@ -92,13 +95,14 @@ export const request = {
 
     //开发的get方法
     fnGet_dev(apiObj,host) {
+
         if(!host){host=HOST_main;}
-        console.log('get:'+host);
+        console.log('get:'+host+apiObj.url);
         return  Vue.http.get(host+apiObj.url, {
                 params: apiObj.data,
                 headers: {'Content-Type': 'application/json'},
             }).catch(response=> { //失败
-                if(host==HOST_back){
+                if( !switchBack || host==HOST_back){
                     return this.fnError();
                 }else {
                     return this.fnGet_dev(apiObj, HOST_back);
@@ -115,7 +119,7 @@ export const request = {
             params: apiObj.data,
             headers: {'Content-Type': 'application/json'}
         }).catch(response=> { //失败
-            if(host==HOST_back){
+            if(!switchBack || host==HOST_back){
                 return this.fnError();
             }else {
                 return this.fnPost_dev(apiObj, HOST_back);
@@ -126,17 +130,14 @@ export const request = {
     fnPost_form_dev(apiObj,host) {
 
         if(!host){host=HOST_main;}
-        console.log('post:'+host);
-
-        console.log(apiObj.data);
-
+        console.log('post:'+host+apiObj.url);
         return  Vue.http.post(host+apiObj.url, apiObj.data, {
             headers: {'Content-Type': 'application/json;charset=UTF-8'},
             params: apiObj.data,
         }).then(res=>{
-            console.log(222222)
+
         }).catch(response=> { //失败
-            if(host==HOST_back){
+            if(!switchBack || host==HOST_back){
                 return this.fnError();
             }else {
                 return this.fnPost_form_dev(apiObj, HOST_back);
@@ -260,8 +261,8 @@ Vue.http.interceptors.push(function (request, next) {
             MessageBox.alert("访问令牌过期 请重新登录",{ type: 'warning'}).then(_=>{
                 store.dispatch("logout");
             });
+            return Promise.reject({data:{"msg":"AccessError"}});
 
-            return response;
         }else if (response.data && response.data.code == 40001) {
 
             return response;
