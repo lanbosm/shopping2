@@ -35,6 +35,9 @@ function getEntry() {
     return files;
 }
 
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 
 module.exports = {
@@ -45,47 +48,40 @@ module.exports = {
         path: path.join(ROOT_PATH, "./dist"),
         publicPath: "/", //gulp 已经托管了WebpackDevServer
         filename: "[name].js",
+        chunkFilename: 'js/[id].[chunkhash].js'
+
     },
     externals: {
         jquery: "window.jQuery",
         layer: "window.layer"
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js?$/,
-                loader: 'babel',         //es6语法
-                exclude: /node_modules/, // include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
-                query: {
-                    presets: ['es2015'],//也可以通过外部配置文件.babelrc
-                    plugins:['transform-runtime']
-                }
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: [resolve('src'), resolve('test')]
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader?limit=1200&name=../images/[name].[ext]'
             },
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("css-loader")
-                //loader: "style-loader!css-loader",
-            },
-            {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract('css-loader!less-loader'),
 
             },
             {
-                test: /\.(eot|woff|svg|ttf|woff2|gif)(\?|$)/,
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'file-loader?name=../fonts/[name].[ext]'
-            },
-            {
-                test: /\.(png|jpg)$/,
-                loader: 'url?limit=1200&name=../images/[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
-            },
-            {
-                test:/\.vue$/,
-                loader:'vue'
-
             }
-        ],
-        noParse: []
+        ]
+
+
     },
     resolve: {
         alias: {

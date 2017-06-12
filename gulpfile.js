@@ -23,10 +23,9 @@ const gulp = require('gulp'),
 
 
 
-const gulpwebpack = require('gulp-webpack');  //gulp版webpack
-const webpack = require('webpack');          //原生的webpack
 
-const webpackConfig=require("./webpack.config.js");
+
+
 const webpackConfigPro=require("./webpack.production.config.js");
 
 
@@ -138,110 +137,68 @@ gulp.task('fileinclude', function (done) {
 });
 
 //webpack服务器开发  js编译
-var express = require('express'),
-    path = require('path'),
-    consolidate = require('consolidate');
-
-const proxy = require('http-proxy-middleware');//引入代理中间件
-
 //var isDev = process.env.NODE_ENV !== 'production';
-var isDev = true;
-var app = express();
-var port = host.port;
-app.engine('html', consolidate.ejs);
-app.set('view engine', 'html');
-app.set('views', path.resolve(__dirname, './dist'));
-
-
-app.locals.env = process.env.NODE_ENV || 'dev';
-app.locals.reload = false;
+// var isDev = true;
+// var app = express();
+// var port = host.port;
+// app.engine('html', consolidate.ejs);
+// app.set('view engine', 'html');
+// app.set('views', path.resolve(__dirname, './dist'));
+//
+//
+// app.locals.env = process.env.NODE_ENV || 'dev';
+// app.locals.reload = false;
 
 gulp.task('dev',['clean'],function(){           //不能同时进行 所以很多start
-    process.env.NODE_ENV="dev";
-    gulp.start('copy',['fileinclude','less'],function(){
-        if (isDev) {
-            var webpack = require('webpack'),
-                webpackDevMiddleware = require('webpack-dev-middleware'),
-                webpackHotMiddleware = require('webpack-hot-middleware');
 
-            var webpackConfigDev=require("./webpack.config.js"); //这里没仔细配置 以后再说
-            var config = Object.create(webpackConfigDev);
-            //config.devtool = "eval";
-            //config.debug = true;
+    var path = require('path');
+    var express = require('express');
 
-            for(var i in config.entry){ //给每个多入口添加监听器
-                //  console.log(i);
-                config.entry[i].unshift("webpack-hot-middleware/client?reload=true");
-            }
 
-            config.plugins.push(new webpack.HotModuleReplacementPlugin()); //添加热刷新功能
-            var compiler = webpack(config);
+    if (!process.env.NODE_ENV) {
+        process.env.NODE_ENV = "dev";
+    }
 
-            app.use(webpackDevMiddleware(compiler, {
-                publicPath: config.output.publicPath,
-                noInfo: true,
-                stats: {
-                    colors: true
-                }
-            }));
-            app.use(webpackHotMiddleware(compiler));
+    // default port where dev server listens for incoming traffic
+    var port = 8089
+    // automatically open browser, if not set will be false
+    var autoOpenBrowser =  true;
 
-            //静态文件目录，
-            app.use(express.static(path.join(__dirname,'dist')));
 
-            /*为app添加中间件处理跨域请求*/
-            app.use(function(req, res, next) {
-                res.header("Access-Control-Allow-Origin", "*");
-                res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-                res.header("Access-Control-Allow-Headers", "X-Requested-With");
-                res.header('Access-Control-Allow-Headers', 'Content-Type');
-                next();
+
+    const devServer = require('./build/dev-server.js');  //gulp版webpack
+
+
+    var cb=function(){
+
+        // browsersync is a nice choice when modifying only views (with their css & js)
+        var bs = require('browser-sync').create();
+            bs.init({
+                open:autoOpenBrowser,
+                ui: false,
+                notify: true,
+                proxy: host.domain+':'+host.port,
+                files: ['./dist/**'],
+                port: port
             });
-
-            app.use('/',   function(req, res) {
-                res.render('index.html');
-            });
-
-
-
-            var bsPort=8089;
-            //你代理我 我代理你
-            // var apiProxy = proxy('/browser-sync/*', { target: 'http://localhost:8089',changeOrigin: true });
-            // app.use('/*', apiProxy);//api子目录下的都是用代理
-            // app.use(express.static(path.join(__dirname, 'dist/css')));
-            // browsersync is a nice choice when modifying only views (with their css & js)
-            var bs = require('browser-sync').create();
-            app.listen(host.port, function(){
-                bs.init({
-                    open: true,
-                    ui: false,
-                    notify: true,
-                    proxy: host.domain+':'+host.port,
-                    files: ['./dist/**'],
-                    port: bsPort
-                });
-                console.log('App (dev) is going to be running on port '+bsPort+' (by browsersync).');
-            });
-
-
+            console.log('App (dev) is going to be running on port '+port+' (by browsersync).');
             var  watcher= gulp.watch('src/less/**/*.less');
-            watcher.on('change', function(){
-                gulp.src(['src/less/*.less'])  //main 是主入口
-                    .pipe(less())
-                    .pipe(gulp.dest('dist/css/'))
-            })
-                   //console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-                   // gulp.start("less");
-        } else {
-            console.log("生产模式");
-            // app.use(express.static(path.join(__dirname, 'public')));
-            // require('./server/routes')(app);
-            // app.listen(port, function () {
-            //     console.log('App (production) is now running on port 3000!');
-            // });
-        }
+                watcher.on('change', function(){
+                    gulp.src(['src/less/*.less'])  //main 是主入口
+                        .pipe(less())
+                        .pipe(gulp.dest('dist/css/'))
+                })
+
+    }
+
+    gulp.start('copy',['fileinclude','less'],function(){
+         devServer.open(cb,true);
 
     });
+
+
+
+    return false;
 
 });
 
@@ -252,7 +209,8 @@ gulp.task('dev',['clean'],function(){           //不能同时进行 所以很�
 //准备发布的js打包
 gulp.task('rev:js', function (done) {
     console.log("正在打包Js...");
-    return   gulp.src('src/js/main.js')  //这里src只是装样子 如果想有效请使用vinyl-named
+    var  gulpwebpack = require('gulp-webpack');  //gulp版webpack
+    return   gulp.src('')  //这里src只是装样子 如果想有效请使用vinyl-named
         .pipe(gulpwebpack( webpackConfigPro ))
         .pipe(gulp.dest('dist/js/'))
         .on('end', function(){
