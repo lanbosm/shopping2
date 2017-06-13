@@ -212,9 +212,6 @@
 
 
     export default{
-        mounted(){
-            alert(this.customId);
-        },
         data(){
             return {
                 title:"充值",
@@ -224,7 +221,7 @@
                 customId:"",
                 diySeleted:false,
                 payMethod:null,
-                customId:null
+                customName:null
             }
         },
         computed:{
@@ -233,14 +230,14 @@
             },
             printData(){
 
-                var print=this.$store.state.currentPage.printData;
+                var print={};
 
                 var nowDate = new Date();
                 var myDate=nowDate.toLocaleDateString();
                 var myTime=nowDate.toLocaleTimeString();     //获取当前时间
 
-                print.cashierName=this.order.cashierName;
-                print.guiderName=this.shopAdminData.cashierName;
+                //print.cashierName=this.order.cashierName;
+               // print.guiderName=this.shopAdminData.cashierName;
                 print.DateTime=myDate+" "+myTime;
 
                 return  print;
@@ -271,11 +268,11 @@
             },
 
             toPrint(){
-                console.log(this.custom.username);
+                console.log(this.customName);
                 var apiObj={
                     url:API_URLS.recharge,
                     data:{
-                        phone:this.custom.username,
+                        phone:this.customName,
                         amount:this.amount,
                         paymentMethodId: this.payMethod
 

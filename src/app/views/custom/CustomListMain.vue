@@ -158,9 +158,7 @@
             },
             handleRecharge(item){
                 this.$root.showRechargeModal=true;
-                this.$refs.recharge.customId=item.id;
-
-                console.log(this.$refs.recharge);
+               // console.log(this.$root.$refs);
                 function centerModals() {
                     $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');
@@ -173,6 +171,7 @@
                 this.$nextTick(()=>{
 
                     var vm=this;
+                    vm.$root.$refs.recharge.customName=item.username;
                     var modal='#layer-recharge';
                     $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
@@ -198,7 +197,7 @@
                     this.$store.dispatch('fetchCustomList',data).then(res=>{
                         this.listData=res.page;
                         this.$nextTick(_=>{
-                           // this.$simpleScroll('#custom-list-main-list');
+                            this.$simpleScroll('#custom-list-main-list');
                         })
                         console.log(res);
                     }).catch(res=>{

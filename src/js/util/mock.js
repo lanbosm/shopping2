@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 //不懂的请看
 //http://www.jianshu.com/p/8626d28f226f
 //http://www.cnblogs.com/Leo_wl/p/6693211.html
-const baseURL='192.168.1.122:82';
+const baseURL='http://cs.awo123.cn';
 
 
 function GetQureyParams(url){
@@ -33,7 +33,7 @@ function GetQureyParams(url){
 
 
 //测试接口
-var re =new RegExp(`${baseURL}/testapi/`,"i");
+var re =new RegExp(`${baseURL}/cashier/member/customers`,"i");
 
 export let test1=Mock.mock(re,'get',function(query){
     var params=GetQureyParams(query.url);
@@ -47,7 +47,7 @@ export let test1=Mock.mock(re,'get',function(query){
                     'str':params.searchStr,
                     'name': '@cname',
                     'nickname':'@name',
-                    'id': '@id',
+                    'username': '@id',
                     'email': '@email',
                     'age|20-30': 50,
                     'headPortrait': Mock.Random.image('200x200', '#999999', '#FFFFFF', '@name()'),          //随机头像

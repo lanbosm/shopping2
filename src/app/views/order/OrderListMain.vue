@@ -228,8 +228,8 @@
     	name: 'CustomList',
         data(){
             return {
-                title:"",
-                back:{"label":"返回","url":"index","show":true},
+                title:"网络订单",
+                back:{"label":"返回","url":"/","show":true},
                 listData:{},
                 pageNum:1,                 //一页显示多少
                 refundShow:false,
