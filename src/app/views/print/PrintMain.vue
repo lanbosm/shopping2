@@ -184,9 +184,7 @@
 
 
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
-    import AppCenterCustom from 'views/AppCenterCustom.vue';
-    import AppCenterMenu from 'views/AppCenterMenu.vue';
+
 
     import {request, API_URLS, HOST} from 'util/request.js';
     import layer from 'layer';
@@ -204,16 +202,6 @@
                 timer:null,
                 orderMsg:null
 
-            }
-        },
-        components:{
-            AppCenterMenu,
-            AppCenterCustom
-        },
-        filters: {
-            currency: function (value) {
-                if (!value) return '0.00';
-                return '¥ ' + Number(value).toFixed(2);
             }
         },
         computed: {
@@ -241,12 +229,12 @@
             }
 
         },
-        created(){
+        mounted(){
 
-            this.title='价格：¥'+this.order.totalAmountPayable;
+
             this.$nextTick(function() {
 
-
+                this.title='价格：¥'+this.order.totalAmountPayable;
                 //付款二维码
                 $('#qrcCode').html("");
                 console.log(this.printData);
@@ -258,8 +246,8 @@
                         width: 230,  //230内扫不出
                         height: 230
                     });
-
-                    this.scanResListen();
+                    clearInterval(this.timer);
+                    this.timer=this.scanResListen();
                 }
 
                 //自定义二维码
@@ -337,10 +325,12 @@
                     }else{
                         if(this.payStatus=="success"){
                             this.message="付款成功";
+                            clearInterval(this.timer);
                             $(".payres-txt").addClass("success");
                             layer.msg(this.message, {icon: 1});
                         }else {
                             this.message="付款失败";
+                            clearInterval(this.timer);
                             $(".payres-txt").addClass("error");
                             layer.msg(this.message, {icon: 2});
                         }

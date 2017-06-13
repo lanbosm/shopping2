@@ -27,6 +27,10 @@
 }
 
 
+.animated(@animatename,@animatduring:.3s){
+    -webkit-animation: @animatename @animatduring linear both;animation:  @animatename @animatduring  linear both;
+}
+
 .order-row(){
   border-bottom: @borderDashedStyle;
   border-width: 1px;

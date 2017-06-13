@@ -289,12 +289,12 @@ const actions= {
                      })
             });
         },
-    //获取商品列表
+
     fetchList({commit,state},value){
         if(value){
             var oldPageData=state.currentPage.pageData;
             commit("setProductParams",value);
-            commit("setPageData",{});
+           // commit("setPageData",{});
         }
 
         let apiObj={
@@ -309,6 +309,7 @@ const actions= {
         commit("set_list_waiting",true);
         return  request.fnGet_dev(apiObj).then(res=> {
             commit("set_list_waiting",false);
+
             if (res.data.code=="20000") {
                 commit("setPageData",res.data.page);
                 return  Promise.resolve(res.data);
@@ -499,10 +500,6 @@ const actions= {
                 commit("hide_waiting");
                 return  Promise.reject(res);
             });
-
-
-
-
 
         },
         //提交门店信息
@@ -842,7 +839,7 @@ function getTimeData(){
 function defaultPage(title){
     //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失
     return {
-        mode:"index",               //状态模式
+        history:"index",               //状态模式
         pageData:{},                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},

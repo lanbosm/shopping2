@@ -27,7 +27,7 @@
                             <span class="badge">{{msgData.msgNum}}</span>
                         </a>
                          <a class="setting-btn"  @click="setting()">
-                             <i class="icon icon-cash"></i>
+                             <i class="glyphicon glyphicon-th-list" style="width:40px;"></i>
                              应用
                          </a>
                         <a class="cash-btn"  @click="cash()">
@@ -76,11 +76,11 @@
               //console.log("currentPage");
                 return this.$store.state.currentPage;
             },
+            history(){
+                return this.$store.state.currentPage.history;
+            },
             member(){
                 return this.$store.state.member;
-            },
-            mode(){
-                return this.$store.state.currentPage.mode;
             },
         },
         data(){
@@ -119,7 +119,7 @@
         methods:{
             addPage(){
                 this.$store.dispatch('addPage').then(res=> {
-                    this.$router.replace('/' + this.mode);
+                    this.$router.replace('/');
                 });
 
                 this.$nextTick(_=> {
@@ -127,13 +127,12 @@
                 }  )
             },
             removePage(){
-                let vm = this;
                 this.$confirm('确定要删除吗？删除后数据将丢失！', '提示', {
                     type: 'warning'
                 }).then(() => {
                     this.$store.dispatch("removePage").then(res=> {
                         console.log(res);
-                        this.$router.replace('/'+vm.mode);
+                        this.$router.replace(this.history);
                     });
                 }).catch(() => {
 
@@ -143,8 +142,8 @@
             switchPage(index){
                 this.$store.dispatch('switchPage', index).then(res=> {
                     //切换路由
-                    this.mode= this.mode.replace(/\//i,"");
-                    this.$router.replace('/'+this.mode);
+                    //this.history= this.history.replace(/\//i,"");
+                    this.$router.replace(this.history);
                 });
             },
 //            demo(){

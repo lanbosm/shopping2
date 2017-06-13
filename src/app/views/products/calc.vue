@@ -203,7 +203,7 @@
                     this.$emit('trigger-build-order',this.cartData);
 
                 }else{
-                    alert('请先选择物品');
+                    this.$message.info('请先选择物品');
                 }
             },
 

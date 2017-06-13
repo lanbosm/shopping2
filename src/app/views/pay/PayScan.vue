@@ -11,7 +11,7 @@
 <style>
 </style>
 <script>
-    import shopAdminBtn from 'components/shopAdmin/ShopAdminBtn.vue';
+    import shopAdminBtn from 'views/shopAdmin/ShopAdminBtn.vue';
     export default{
         props:['message','amount','giftAmount','showShopAdminBtn'],
         components:{

@@ -7,7 +7,7 @@
                     </a>
                 </div>
 
-                <info-list v-if="mode=='order'" :amount="amount" :message="message" :custom="custom" :order="order"></info-list>
+                <info-list  :amount="amount" :message="message" :custom="custom" :order="order"></info-list>
             </div>
         </div>
 </template>
@@ -19,7 +19,7 @@
 
     export default{
         name: 'OrderHeader',
-        props:["mode","amount","message","order"],
+        props:["amount","message","order"],
         computed: {
             //数据来自全局
             custom () {

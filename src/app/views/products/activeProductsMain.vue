@@ -1,6 +1,6 @@
 <template>
     <div class="member_main">
-        <app-center-Header  :title="title" :back="back" :next="next" mode="mode"></app-center-Header>
+        <commom-header  :title="title" :back="back" :next="next" mode="mode"></commom-header>
         <active-products-list></active-products-list>
     </div>
 </template>
@@ -93,10 +93,10 @@
 
 </style>
 <script>
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
     import activeProductsList from 'views/products/activeProductsList.vue'
     import layer from 'layer';
     import $ from 'jquery';
+    import CommomHeader from "../../components/commom/Header";
     export default{
         name:'activeproductsmain',
         data(){
@@ -109,7 +109,6 @@
             }
         },
         components:{
-            AppCenterHeader,
             activeProductsList
         },
         computed:{

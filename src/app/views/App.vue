@@ -12,7 +12,7 @@
                                 <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:true}" @click="showCategory=!showCategory;"><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
+                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:true}" @click="openCategory()"><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
                                     </div>
                                     <!---->
                                     <!--<div class="col-xs-2 activity">-->
@@ -149,6 +149,12 @@
                 this.flag=true;
 
             },
+            openCategory(){
+                this.showCategory=!this.showCategory;
+                if(this.showCategory){
+                   console.log('load');
+                }
+            },
             //请求列表
             fetchList() {
                 this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
@@ -202,7 +208,6 @@
                 }
 
                 request.fnPost(this,apiObj,(res)=>{
-                     this.$store.commit("setMode",'order');
                      this.$store.commit("setOrderData",res.appOrderConfirmBean);
                      this.$store.state.currentPage.cartData=[];
                      var pageList=this.$store.state.pageList;
@@ -216,9 +221,6 @@
             editPrice(){
                 var item=this.cartData[this.cartItemIndex];
                 this.openPrice(item);
-
-
-
             },
             //打开详情
             openDetail() {

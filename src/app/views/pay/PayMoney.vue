@@ -50,7 +50,7 @@
     .rmb{background: #fff; color: #6fc89c;}
 </style>
 <script>
-    import shopAdminBtn from 'components/shopAdmin/ShopAdminBtn.vue';
+    import shopAdminBtn from 'views/shopAdmin/ShopAdminBtn.vue';
     export default{
         name:"PayMoney",
         filters: {

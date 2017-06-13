@@ -175,17 +175,11 @@
             }
 
         },
-        filters: {
-            currency: function (value) {
-                if (!value) return '0.00';
-                return '¥ ' + Number(value).toFixed(2);
-            }
-        },
         computed:{
             totalCash(){
                 var sum=0;
                 var arr=this.listData.list;
-                if(arr.length>0) {
+                if(arr&&arr.length>0) {
                     arr.forEach((ele, index) => {
 
                         sum += Number(ele.amountPaid);

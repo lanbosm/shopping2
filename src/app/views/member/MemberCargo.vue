@@ -149,7 +149,7 @@
 </style>
 
 <script>
-    //    import Pagination from 'components/pagination/Pagination.vue';
+
 
     export default{
         name:'Member_cargo',

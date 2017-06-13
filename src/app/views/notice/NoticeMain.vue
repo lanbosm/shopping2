@@ -182,8 +182,7 @@
 
 
 
-    import AppCenterHeader from 'views/AppCenterHeader.vue';
-    import Pagination from 'components/pagination/Pagination.vue';
+
 
 
     import layer from 'layer';
@@ -204,10 +203,7 @@
 
             }
         },
-        components:{
-            Pagination,
-            AppCenterHeader
-        },
+
         watch: {
 
         },
