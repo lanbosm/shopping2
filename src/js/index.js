@@ -180,7 +180,8 @@ router.beforeEach(({meta, path}, from, next)=> {
 
          next({ path: '/login' })   //  跳转到login页面  
     }else {
-        store.state.currentPage.history=path
+        store.state.currentPage.history=path;
+        console.log(store.state.currentPage.history);
         next()   // 进行下一个钩子函数  
     }
 
@@ -238,7 +239,7 @@ var vm =new Vue({
             return this.$store.state.waiting;
         }
     },
-    mounted() {
+    created() {
 
 
         // 关闭窗口时弹出确认提示
@@ -246,11 +247,16 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
 
-        if(this.history && this.$store.state.pageList.length>0){
-            console.log(this.history);
-            this.$store.state.currentPage=this.$store.state.pageList[this.$store.state.headIndex];
+       // alert(store.state.currentPage.history );
+        if(this.history ){
+
+            if(this.$store.state.pageList.length>0) {
+                this.$store.state.currentPage = this.$store.state.pageList[this.$store.state.headIndex];
+            }
+
             this.$router.push(this.history);
         }else {
+
             this.$router.push('/');
         }
         //this.$router.push('/ad');

@@ -60,7 +60,7 @@
 					<layer-coupon v-if="showCouponModal"></layer-coupon>
 
 					<!--充值-->
-					<layer-recharge v-if="showRechargeModal"></layer-recharge>
+					<layer-recharge ref="recharge" v-if="showRechargeModal"></layer-recharge>
 
 					<!--消息-->
 					<transition name="fade" >

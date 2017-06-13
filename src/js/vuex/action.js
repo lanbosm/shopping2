@@ -95,26 +95,65 @@ const actions= {
         },
 
         //注册
-        registerCustom({commit,state},value){
+        registerCustom({dispatch,commit,state},value){
             commit("show_waiting");
-            let apiObj = {
-                url:API_URLS.customers,
-                data:value
-            };
-            return new Promise((resolve, reject) => {
-                    request.fnPost_dev(apiObj).then(res=> {
-                        commit("hide_waiting");
-                        if (res.data.code=="20000") {
-                            commit('setCustomData', res.data.appMember );
-                            resolve(res.data);
-                        } else {
-                            reject(res.data);
-                        }
-                    }).catch(res=>{
-                        commit("hide_waiting");
-                        reject(res.data);
-                    });
-            });
+
+            return dispatch('getPublicKey')
+                .then(res => {
+                    let publicKey=res.data;
+
+                    let  rsaKey = new RSAKey();
+                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                    let  enPwd = hex2b64(rsaKey.encrypt(value.password));
+
+                    return {publicKey:publicKey,enPwd:enPwd};
+                })
+                .then(res=>{
+                    if(res.publicKey && res.enPwd) {
+
+                        let apiobj = {
+                            url:API_URLS.customers,
+                            data: {
+                                phone: value.phone,
+                                name: value.name,
+                                sex: value.sex,
+                                membeCard: value.membeCard,
+                                enPasswd: res.enPwd,
+                                tmpKey: res.publicKey.tmpKey
+                            }
+                        };
+
+                        return  request.fnPost_dev(apiobj).then(res=> {
+                            commit("hide_waiting");
+                            if (res.data.code=="20000") {
+                                commit('setCustomData', res.data.appMember );
+                                return  Promise.resolve(res.data);
+                            } else {
+                                return  Promise.reject(res.data);
+                            }
+                        }).catch(res=>{
+                            return  Promise.reject(res);
+                        });
+                    }
+                })
+            // let apiObj = {
+            //     url:API_URLS.customers,
+            //     data:value
+            // };
+            // return new Promise((resolve, reject) => {
+            //         request.fnPost_dev(apiObj).then(res=> {
+            //             commit("hide_waiting");
+            //             if (res.data.code=="20000") {
+            //                 commit('setCustomData', res.data.appMember );
+            //                 resolve(res.data);
+            //             } else {
+            //                 reject(res.data);
+            //             }
+            //         }).catch(res=>{
+            //             commit("hide_waiting");
+            //             reject(res.data);
+            //         });
+            // });
         },
         //登陆
         loginIn({dispatch,commit,state},value){
@@ -292,39 +331,39 @@ const actions= {
             });
         },
 
-    fetchList({commit,state},value){
-        if(value){
-            var oldPageData=state.currentPage.pageData;
-            commit("setProductParams",value);
-           // commit("setPageData",{});
-        }
-
-        let apiObj={
-            url: API_URLS.products,
-            data:{
-                'categoryId': state.currentPage.list.categoryId,
-                'brandId': state.currentPage.list.brandId,
-                'pageNum': state.currentPage.list.pageNum,
-                'keyword': state.currentPage.list.searchStr
+        fetchList({commit,state},value){
+            if(value){
+                var oldPageData=state.currentPage.pageData;
+                commit("setProductParams",value);
+               // commit("setPageData",{});
             }
-        };
-        commit("set_list_waiting",true);
-        return  request.fnGet_dev(apiObj).then(res=> {
-            commit("set_list_waiting",false);
 
-            if (res.data.code=="20000") {
-                commit("setPageData",res.data.page);
-                return  Promise.resolve(res.data);
-            } else {
-                commit("setPageData",oldPageData);
-                return   Promise.reject(res.data);
-            }
-        }).catch(res=>{
-            return    Promise.reject(res.data);
-        });
+            let apiObj={
+                url: API_URLS.products,
+                data:{
+                    'categoryId': state.currentPage.list.categoryId,
+                    'brandId': state.currentPage.list.brandId,
+                    'pageNum': state.currentPage.list.pageNum,
+                    'keyword': state.currentPage.list.searchStr
+                }
+            };
+            commit("set_list_waiting",true);
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("set_list_waiting",false);
+
+                if (res.data.code=="20000") {
+                    commit("setPageData",res.data.page);
+                    return  Promise.resolve(res.data);
+                } else {
+                    commit("setPageData",oldPageData);
+                    return   Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                return    Promise.reject(res.data);
+            });
 
 
-    },
+        },
         //获取商品详情
         fetchItem:function({commit,state},pid){
             commit("set_list_waiting",true);
@@ -840,7 +879,7 @@ function getTimeData(){
 function defaultPage(title){
     //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失
     return {
-        history:"index",               //状态模式
+        history:"/",               //状态模式
         pageData:{},                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},

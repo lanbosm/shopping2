@@ -213,7 +213,7 @@
 
     export default{
         mounted(){
-
+            alert(this.customId);
         },
         data(){
             return {
@@ -221,17 +221,13 @@
                 message: '请选择一个充值方式',
                 amount:0,
                 giftAmount:0,
+                customId:"",
                 diySeleted:false,
                 payMethod:null,
+                customId:null
             }
         },
         computed:{
-            custom (){
-               return this.$store.state.currentPage.customData;
-            },
-            order(){
-               return  this.$store.state.currentPage.orderData;
-            },
             shopAdminData(){
                 return  this.$store.state.currentPage.shopAdminData;
             },

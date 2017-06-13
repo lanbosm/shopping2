@@ -26,7 +26,7 @@
             </div>
             <div class="list-footer" slot="list-footer">
                     <div class="footer-left">
-                        <Pagination :page="listData" :go-callback="handleCurrentChange" ></Pagination>
+                        <pagination :page="listData" :go-callback="handleCurrentChange" ></pagination>
                     </div>
             </div>
         </commom-list>
@@ -116,7 +116,7 @@
 
 </style>
 <script>
-    import Pagination from 'components/pagination/Pagination.vue';
+
 
     export default{
     	name: 'CustomList',
@@ -133,9 +133,6 @@
 
             this.fetchList();
 
-        },
-        components: {
-            Pagination,                 //分页器
         },
         computed: {
             totalCash (){
@@ -161,7 +158,9 @@
             },
             handleRecharge(item){
                 this.$root.showRechargeModal=true;
+                this.$refs.recharge.customId=item.id;
 
+                console.log(this.$refs.recharge);
                 function centerModals() {
                     $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');
@@ -199,7 +198,7 @@
                     this.$store.dispatch('fetchCustomList',data).then(res=>{
                         this.listData=res.page;
                         this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-main-list');
+                           // this.$simpleScroll('#custom-list-main-list');
                         })
                         console.log(res);
                     }).catch(res=>{

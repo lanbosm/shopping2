@@ -173,9 +173,10 @@
                         confirmButtonText: '确定',
                         type: 'success'
                     }).then(_=>{
-                        if(this.$store.state.currentPage.mode=="order") {
+                        if(this.$route.path.history=="/order") {
                             this.$store.dispatch('fetchOrder');
                         }
+                        this.closeWin();
                     });
                 }).catch(res=>{
                     console.log(res);
