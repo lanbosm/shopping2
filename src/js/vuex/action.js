@@ -189,8 +189,10 @@ const actions= {
         },
         //意外退出
         logoutUnexpected({commit,state,dispatch}){
+
             commit("hide_waiting");
-            return Promise.resolve(_=> {
+
+
                 clearInterval(state.msgTimer);
                 router.replace('/login');
                 state.headIndex = 1;
@@ -202,7 +204,7 @@ const actions= {
                 util.delLocal("accessToken");
                 util.delLocal("shopData");
 
-            });
+
 
         },
         loadLastData({commit,state,dispatch}){
@@ -353,21 +355,20 @@ const actions= {
                 data:{"productCategoryId":value}
             };
 
-            return new Promise((resolve, reject) => {
-                request.fnGet(apiObj).then(res => { //成功
+            return  request.fnGet_dev(apiObj).then(res => { //成功
                     commit("set_list_waiting",false);
-                    if(res.code=="20000"){
-                        commit("setCategoryData",res.appProductCategories);
-                        resolve(res);
+                    if(res.data.code=="20000"){
+                        commit("setCategoryData",res.data.appProductCategories);
+                        Promise.resolve(res.data);
                     }else{
-                        reject(res);
+                        Promise.reject(res.data);
                     }
                 })
                 .catch( res=> { //失败
                         commit("set_list_waiting",false);
-                        reject(res);
-                })
-            });
+                         Promise.reject(res.data);
+            })
+
         },
        //获取会员
         fetchCustomList({commit},value){

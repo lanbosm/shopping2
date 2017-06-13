@@ -246,7 +246,8 @@ var vm =new Vue({
         //     return '您可能有数据没有保存';
         // });
 
-        if(this.history){
+        if(this.history && this.$store.state.pageList.length>0){
+            console.log(this.history);
             this.$store.state.currentPage=this.$store.state.pageList[this.$store.state.headIndex];
             this.$router.push(this.history);
         }else {

@@ -46,7 +46,7 @@
                     <tr v-show="printData.customer">
                         <td colspan="2" class="text-left block">顾客：{{printData.customer}}</td>
                     </tr>
-                    <tr v-show="printData.guiderName">
+                    <tr v-show="printData.guiderName" >
                         <td colspan="2" class="text-left  block">导购员：{{printData.guiderName}}</td>
                     </tr>
                     <tr class="split">
@@ -275,6 +275,7 @@
             },
 
             toPrint(){
+                console.log(this.custom.username);
                 var apiObj={
                     url:API_URLS.recharge,
                     data:{
@@ -293,21 +294,23 @@
 
                         $('#qrcCode').html("");
                         //有链接就生成
-                        if(res.appOrderPayment.wechatCodeUrl) {
-                            $('#qrcCode').qrcode({
-                                render: "table",
-                                text: res.appOrderPayment.wechatCodeUrl,
-                                width: 260,  //260内扫不出
-                                height: 260
-                            });
-                        }
+//                        if(res.appOrderPayment.wechatCodeUrl) {
+//                            $('#qrcCode').qrcode({
+//                                render: "table",
+//                                text: res.appOrderPayment.wechatCodeUrl,
+//                                width: 260,  //260内扫不出
+//                                height: 260
+//                            });
+//                        }
                         vm.printPage();
                     });
                 })
 
             },
             rechargePrint(){
-                if(this.payMethod==null){ layer.msg("请选择充值方式", {icon: 2}); return false;}
+                if(this.payMethod==null){
+                    layer.msg("请选择充值方式", {icon: 2}); return false;
+                }
                 if(this.amount<=0){ layer.msg("请选择充值金额", {icon: 2}); return false;}
 
 
@@ -323,6 +326,7 @@
 
             },
             printPage(){
+
                 var obj=document.getElementById('printDiv');
                 var docStr = obj.innerHTML;
 

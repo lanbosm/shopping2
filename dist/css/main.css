@@ -657,6 +657,10 @@ input[type=file] {
 .shoppingCart .shoppingCart-list .shoppingCart-item p.small span:last-child {
   float: right;
 }
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small i {
+  color: #999999;
+  font-style: normal;
+}
 .shoppingCart .shoppingCart-list .shoppingCart-item p.small .tips {
   color: #e84593;
 }

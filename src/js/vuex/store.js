@@ -87,7 +87,7 @@ const store = new Vuex.Store({
           state.itemData=data;
       },
       setCategoryData (state,data){
-          state.categoryData=data;
+          state.currentPage.categoryData=data;
       },
       setProductParams (state,data){
           Object.assign(state.currentPage.list,data);
@@ -144,7 +144,7 @@ const store = new Vuex.Store({
           }
       },
       setLocalList(state,value){
-          state.localList=value;
+          state.localList=state.pageList;
           var data={
               'index':state.headIndex,
               'count':state.shopCount,

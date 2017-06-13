@@ -27,7 +27,7 @@
                             <span class="badge">{{msgData.msgNum}}</span>
                         </a>
                          <a class="setting-btn"  @click="setting()">
-                             <i class="glyphicon glyphicon-th-list" style="width:40px;"></i>
+                             <i class="glyphicon glyphicon-th-list" style="width:30px;"></i>
                              应用
                          </a>
                         <a class="cash-btn"  @click="cash()">

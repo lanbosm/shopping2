@@ -121,6 +121,7 @@
                         var sales="";
                         this.cartData[index].isSales = true;
                     }else{
+                       // alert(222);
                         var sales=this.cartData[index].sales;
                         this.cartData[index].isSales = true;
                     }

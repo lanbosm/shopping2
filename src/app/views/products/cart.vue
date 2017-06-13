@@ -7,9 +7,9 @@
 								<p>{{item.title}}</p>
 								<p class="small">
 									<span>{{item.name}}</span>
-									<span  @click="openPrice(item)">
-										<em v-if="item.isDiscount && item.discountPrice">
-											{{item.amount*item.discountPrice | currency }}
+									<span >
+										<em v-if="item.isDiscount && item.discountPrice || item.isSales && item.sales">
+											{{item | realPrice | currency}}
 										</em>
 										<em v-else>{{item.amount*item.price | currency }}</em>
 									</span>
@@ -18,7 +18,6 @@
 									<span >
 										数量 :{{item.amount}} *
 										<em v-if="item.isDiscount && item.discountPrice"  :class="{editPrice:item.isDiscount===true}">
-											<del>原价{{item.price | currency }}</del>
 											{{item.discountPrice | currency}}
 										</em>
 										<em v-else>{{item.price | currency }}</em>
@@ -26,7 +25,7 @@
 									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
 								</p>
 								<p class="small sales" v-if="item.isSales">
-									<i>折扣 {{item.sales}}</i>
+									<i> {{item.sales}} 折</i>
 								</p>
 								<p class="small">
 									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
@@ -57,7 +56,14 @@
                 }else{
                     return "";
 				}
-            }
+            },
+			realPrice: function(e){
+                var realPrcie=e.isDiscount?e.discountPrice:e.price;
+                if( e.isSales && e.sales>=10){e.sales=10;}
+                var realSales=e.isSales?e.sales*0.1:1;
+
+                return  Number(realPrcie)*e.amount*realSales
+			}
         },
 		props:['cartData','cartItemIndex'],
 
@@ -70,7 +76,11 @@
                 var total=0;
                 this.cartData.forEach(function(e,i){
                     var realPrcie=e.isDiscount?e.discountPrice:e.price;
-                    total+=Number(realPrcie)*e.amount;
+                    if( e.isSales && e.sales>=10){e.sales=10;}
+                    var realSales=e.isSales?e.sales*0.1:1;
+
+                    console.log(realSales);
+                    total+=Number(realPrcie)*e.amount*realSales;
                 })
                 return total;
             }

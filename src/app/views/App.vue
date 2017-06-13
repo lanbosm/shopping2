@@ -80,7 +80,7 @@
                 cartItemIndex:0,
                 pageNum:1,
                 activty:false,
-                flag:true
+                flag:true,
 
             }
         },
@@ -105,7 +105,7 @@
                     return this.$store.state.itemData.appSpecifications;
             },
             productCategories (){
-                     return this.$store.state.categoryData;
+                     return this.$store.state.currentPage.categoryData;
             },
             cartData () {
                 return this.$store.state.currentPage.cartData
@@ -151,8 +151,12 @@
             },
             openCategory(){
                 this.showCategory=!this.showCategory;
+
                 if(this.showCategory){
-                   console.log('load');
+
+                    this.$store.dispatch('fetchCategory',this.productParams.categoryId).then(res=>{
+                     
+                    });
                 }
             },
             //请求列表
@@ -404,8 +408,8 @@
                     this.cartItemIndex=this.cartData.length-1;
                     this.$refs.calc.calcmode="qty";
                     //在存下
-                    var pageList=this.$store.state.pageList;
-                    this.$store.commit('setLocalList',pageList);    //存储本地
+
+                    this.$store.commit('setLocalList');    //存储本地
                 }
 
             }

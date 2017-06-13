@@ -49,14 +49,8 @@
                 }
             }
         },
-        watch: {
-            'showCategory'(val){
-                if(val && !this.cacheload){
-                    this.cacheload=true;
-                    this.fetchCategory(null);
+        created(){
 
-                }
-            }
         },
         methods:{
             outcheck(){
@@ -77,10 +71,6 @@
             fetchCategory(cid,cname){
                 if(cid){this.showSubMenu=true;}
                 this.$store.dispatch('fetchCategory',cid).then(res=>{
-                         if(!cid){
-//                               cid=res.appProductCategories[0].id;
-//                              cname=res.appProductCategories[0].name;
-                         }
                          this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
                 });
 

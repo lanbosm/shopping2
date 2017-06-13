@@ -25,11 +25,12 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 // export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
-// const HOST_main="http://192.168.1.122:82";              //主服务器
-// const HOST_back="http://cs.awo123.cn";                 //备服务
+const HOST_main="http://192.168.1.122:82";              //主服务器
+const HOST_back="http://cs.awo123.cn";                 //备服务
 
-const HOST_main="http://cs.awo123.cn";              //主服务器
+//const HOST_main="http://cs.awo123.cn";              //主服务器
 let switchBack=false;
+
 
 export const HOST=HOST_main;
 
@@ -40,7 +41,7 @@ export const API_URLS = {
     login_out:"/cashier/common/log_out",
     products: "/cashier/member/products",
     customers:"/cashier/member/customers",               //会员模块
-    category:"/cashier/member/products/categories",               //会员模块
+    category:"/cashier/member/products/categories",               //分类
     recharge:"/cashier/member/recharge",//充值
     shop_admins:'/cashier/member/shop_admins',       //员工
     b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
@@ -67,9 +68,9 @@ export const request = {
     fnError(){
         console.log("Server error");
 
+        if(this.login){}
         MessageBox.alert("连接服务器失败",{ type: 'error'}).then(_=>{
             store.dispatch('logoutUnexpected');
-
         });
 
         return Promise.reject({data:{"msg":"ServerError"}});
@@ -259,9 +260,9 @@ Vue.http.interceptors.push(function (request, next) {
 
         if (response.data && response.data.code == 49001) {
             MessageBox.alert("访问令牌过期 请重新登录",{ type: 'warning'}).then(_=>{
-                store.dispatch("logout");
+                store.dispatch('logoutUnexpected');
             });
-            return Promise.reject({data:{"msg":"AccessError"}});
+            return false ;
 
         }else if (response.data && response.data.code == 40001) {
 

@@ -1,16 +1,18 @@
 //加载中的效果组件
 
 <template>
-<div class="loadEffect">
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-    <span class="ld-span"></span>
-</div>
+    <div class="list-loading" >
+        <div class="loadEffect">
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+            <span class="ld-span"></span>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -20,6 +22,12 @@ export default {
 </script>
 
 <style scoped>
+.list-loading{
+
+    background: rgba(255,255,255,0.3); width: 100%; height: 100%; position: absolute; top: 0;
+    z-index:99;
+}
+
 .loadEffect{
     width: 100px;
     height: 100px;
@@ -30,7 +38,6 @@ export default {
     margin-top:-50px;
     margin-left:-50px;
     transform: scale(.5);
-    z-index:99;
 }
 .loadEffect .ld-span{
     display: inline-block;
