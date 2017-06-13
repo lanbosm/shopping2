@@ -38,9 +38,9 @@
                
                 <div class="col-xs-3 right-con" >
                     <!-- 购物车 -->
-                    <cart @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
+                    <cart ref="cart" @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
-                    <calc @trigger-build-order="buildOrder" @trigger-edit-price="editPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
+                    <calc ref="calc" @trigger-build-order="buildOrder" @trigger-edit-price="editPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
             <!--改价-->
@@ -400,6 +400,7 @@
                 if(!find){
                     this.cartData.push(item);
                     this.cartItemIndex=this.cartData.length-1;
+                    this.$refs.calc.calcmode="qty";
                     //在存下
                     var pageList=this.$store.state.pageList;
                     this.$store.commit('setLocalList',pageList);    //存储本地

@@ -6,21 +6,30 @@
 							<div class="shoppingCart-item">
 								<p>{{item.title}}</p>
 								<p class="small">
-									<span>{{item.name}}</span> <span>{{item.selectDate}}</span>
-								</p>
-								<p class="small">
-									<span >数量 :{{item.amount}} * 单价 {{item.price  }}</span>
-									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
-								</p>
-								<p class="total">
-									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
-									<span  @click="openPrice(item)" class="gaijia" :class="{editPrice:item.isDiscount===true}">
+									<span>{{item.name}}</span>
+									<span  @click="openPrice(item)">
 										<em v-if="item.isDiscount && item.discountPrice">
-											<del>原价{{item.amount*item.price | currency }}</del>
-											{{item.discountPrice | currency}}
+											{{item.amount*item.discountPrice | currency }}
 										</em>
 										<em v-else>{{item.amount*item.price | currency }}</em>
 									</span>
+								</p>
+								<p class="small">
+									<span >
+										数量 :{{item.amount}} *
+										<em v-if="item.isDiscount && item.discountPrice"  :class="{editPrice:item.isDiscount===true}">
+											<del>原价{{item.price | currency }}</del>
+											{{item.discountPrice | currency}}
+										</em>
+										<em v-else>{{item.price | currency }}</em>
+									</span>
+									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
+								</p>
+								<p class="small sales" v-if="item.isSales">
+									<i>折扣 {{item.sales}}</i>
+								</p>
+								<p class="small">
+									<span v-if="item.appGiftItem">赠送：{{item.appGiftItem.name}}</span>
 								</p>
 							</div>
 						</li>
@@ -41,10 +50,6 @@
     export default{
         name:"cart",
         filters: {
-            currency: function (value) {
-                if (!value) return '0.00';
-                return '¥ ' + Number(value).toFixed(2);
-            },
             stocktips: function (value) {
                // console.log(value.id);
                 if(value.amount>value.availableStock) {
@@ -64,7 +69,8 @@
             totalprice () {
                 var total=0;
                 this.cartData.forEach(function(e,i){
-                    total+=e.price*e.amount;
+                    var realPrcie=e.isDiscount?e.discountPrice:e.price;
+                    total+=Number(realPrcie)*e.amount;
                 })
                 return total;
             }

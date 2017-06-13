@@ -107,46 +107,92 @@
 									var pageList=this.$store.state.pageList;
 									this.$store.commit('setLocalList',pageList);    //存储本地
 						}else{
-							amount+=keycode+'';
-							this.cartData[index].amount=parseInt(amount);
+                            if(keycode!='.'){
+                                amount+=keycode+'';
+                                this.cartData[index].amount=parseInt(amount);
+                            }
 						}
+                }
+                else if(this.calcmode=="disc") {
+
+                    //只要有discountPrice就是改价状态
+                    //选中的数量
+                    if (!this.cartData[index].isSales) {
+                        var sales="";
+                        this.cartData[index].isSales = true;
+                    }else{
+                        var sales=this.cartData[index].sales;
+                        this.cartData[index].isSales = true;
+                    }
+
+                    if(keycode=="x"){
+
+                        //close
+                        var str=sales+"";
+                        sales=str.substring(0,str.length-1);
+                        if(sales==""){ //减到0
+                            sales="";
+                            this.cartData[index].sales=null;
+                            this.cartData[index].isSales = false;
+                        }
+                        else{
+                            this.cartData[index].sales=sales;
+                        }
+
+                        var pageList=this.$store.state.pageList;
+                        this.$store.commit('setLocalList',pageList);    //存储本地
+                    }else{
+                        if(keycode=='.' && sales.indexOf('.')<0 && sales==""){
+                            sales="0";
+                        }
+                        if(keycode=='.' && sales.indexOf('.')<0 || !isNaN(keycode)){  //如果是点的话 已经包含小数
+                            this.cartData[index].isSales = true;
+                            sales+=keycode+'';
+                            console.log( sales);
+                            this.$set( this.cartData[index],'sales',sales);
+                        }
+
+                    }
                 }
                 else if(this.calcmode=="price") {
 
-//                    if(this.cartData[index].isDiscount) {
-//                        this.cartData[index].isDiscount = true;
-//                    }
+					//只要有discountPrice就是改价状态
                     //选中的数量
                     if (!this.cartData[index].isDiscount) {
                         var discountPrice="";
                         this.cartData[index].isDiscount = true;
                     }else{
                         var discountPrice=this.cartData[index].discountPrice;
+                        this.cartData[index].isDiscount = true;
 					}
 
-
-//                    if (!this.cartData[index].isDiscount) {
-//                        this.cartData[index].isDiscount=true;
-//                    }
                     if(keycode=="x"){
+
                         //close
                         var str=discountPrice+"";
                         discountPrice=str.substring(0,str.length-1);
-                        if(discountPrice==""){
-                            discountPrice="0";
-                            this.cartData[index].discountPrice=Number(discountPrice);
+                        if(discountPrice==""){ //减到0
+                            discountPrice="";
+                            this.cartData[index].discountPrice=null;
+                            this.cartData[index].isDiscount = false;
                         }
                         else{
-                            this.cartData[index].discountPrice=Number(discountPrice);
+                            this.cartData[index].discountPrice=discountPrice;
                         }
 
                         var pageList=this.$store.state.pageList;
                         this.$store.commit('setLocalList',pageList);    //存储本地
                     }else{
-                        this.$set( this.cartData[index],'isDiscount',true);
-                        discountPrice+=keycode+'';
-                        console.log( discountPrice);
-                        this.$set( this.cartData[index],'discountPrice',Number(discountPrice));
+						if(keycode=='.' && discountPrice.indexOf('.')<0 && discountPrice==""){
+                            discountPrice="0";
+						}
+                        if(keycode=='.' && discountPrice.indexOf('.')<0 || !isNaN(keycode)){  //如果是点的话 已经包含小数
+                            this.cartData[index].isDiscount = true;
+                            discountPrice+=keycode+'';
+                            console.log( discountPrice);
+                            this.$set( this.cartData[index],'discountPrice',discountPrice);
+						}
+
                     }
                 }
             },

@@ -575,13 +575,8 @@ input[type=file] {
 .shoppingCart .totalprice span {
   margin-left: 20px ;
 }
-.shoppingCart .gaijia {
-  padding: 5px;
-}
 .shoppingCart .editPrice {
-  background: #e84593;
-  color: #ffffff;
-  border-radius: 5px;
+  color: #e84593;
 }
 .shoppingCart .shoppingCart-list {
   position: relative;
@@ -619,25 +614,20 @@ input[type=file] {
   margin-bottom: 0;
   clear: both;
 }
-.shoppingCart .shoppingCart-list .shoppingCart-item p.small,
-.shoppingCart .shoppingCart-list .shoppingCart-item p.total {
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small {
   font-size: .9rem;
   color: #666;
 }
-.shoppingCart .shoppingCart-list .shoppingCart-item p.small span,
-.shoppingCart .shoppingCart-list .shoppingCart-item p.total span {
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small span {
   display: block;
 }
-.shoppingCart .shoppingCart-list .shoppingCart-item p.small span:first-child,
-.shoppingCart .shoppingCart-list .shoppingCart-item p.total span:first-child {
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small span:first-child {
   float: left;
 }
-.shoppingCart .shoppingCart-list .shoppingCart-item p.small span:last-child,
-.shoppingCart .shoppingCart-list .shoppingCart-item p.total span:last-child {
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small span:last-child {
   float: right;
 }
-.shoppingCart .shoppingCart-list .shoppingCart-item p.small .tips,
-.shoppingCart .shoppingCart-list .shoppingCart-item p.total .tips {
+.shoppingCart .shoppingCart-list .shoppingCart-item p.small .tips {
   color: #e84593;
 }
 /*!计算器*/
