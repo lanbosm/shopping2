@@ -119,11 +119,11 @@
                     //选中的数量
                     if (!this.cartData[index].isSales) {
                         var sales="";
-                        this.cartData[index].isSales = true;
+                        this.$set( this.cartData[index],'isSales',true);
                     }else{
                        // alert(222);
                         var sales=this.cartData[index].sales;
-                        this.cartData[index].isSales = true;
+                        this.$set( this.cartData[index],'isSales',true);
                     }
 
                     if(keycode=="x"){
@@ -133,10 +133,10 @@
                         sales=str.substring(0,str.length-1);
                         if(sales==""){ //减到0
                             sales=""
-                            this.cartData[index].isSales = false;
+                            this.$set( this.cartData[index],'isSales',false);
                         }
                         else{
-                            this.cartData[index].sales=sales;
+                            this.$set( this.cartData[index],'sales',sales);
                         }
 
                         var pageList=this.$store.state.pageList;
@@ -146,7 +146,7 @@
                             sales="0";
                         }
                         if(keycode=='.' && sales.indexOf('.')<0 || !isNaN(keycode)){  //如果是点的话 已经包含小数
-                            this.cartData[index].isSales = true;
+                            this.$set( this.cartData[index],'isSales',true);
                             sales+=keycode+'';
                             console.log( sales);
                             this.$set( this.cartData[index],'sales',sales);
@@ -161,10 +161,10 @@
                     if (!this.cartData[index].isDiscount) {
 
                         var discountPrice="";
-                        this.cartData[index].isDiscount = true;
+                        this.$set( this.cartData[index],'isDiscount',true);
                     }else{
                         var discountPrice=this.cartData[index].discountPrice;
-                        this.cartData[index].isDiscount = true;
+                        this.$set( this.cartData[index],'isDiscount',true)
 					}
 
                     if(keycode=="x"){
@@ -175,10 +175,10 @@
                         if(discountPrice==""){ //减到0
                             discountPrice="";
                             this.cartData[index].discountPrice="";
-                            this.cartData[index].isDiscount = false;
+                            this.$set( this.cartData[index],'isDiscount',false)
                         }
                         else{
-                            this.cartData[index].discountPrice=discountPrice;
+                            this.$set( this.cartData[index],'discountPrice',discountPrice)
                         }
 
                         var pageList=this.$store.state.pageList;
@@ -188,7 +188,7 @@
                             discountPrice="0";
 						}
                         if(keycode=='.' && discountPrice.indexOf('.')<0 || !isNaN(keycode)){  //如果是点的话 已经包含小数
-                            this.cartData[index].isDiscount = true;
+                            this.$set( this.cartData[index],'isDiscount',true)
                             discountPrice+=keycode+'';
                             console.log( discountPrice);
                             this.$set( this.cartData[index],'discountPrice',discountPrice);

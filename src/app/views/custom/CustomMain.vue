@@ -108,7 +108,9 @@
                     }
                     else  if (this.step == "detail" ) {
                         this.step = "list";
-
+                        this.$nextTick(_=>{
+                            this.$simpleScroll('#custom-list-list');
+                        })
 
                     }
                     else {
@@ -145,9 +147,9 @@
                         lock.close();
                         this.searching=false;
                         this.step='list';
-//                        this.$nextTick(_=>{
-//                            this.$simpScroll(".custom-list");
-//                        })
+                        this.$nextTick(_=>{
+                            this.$simpleScroll('#custom-list-list');
+                        })
                     },300)
                 }).catch(res=>{
                     lock.close();
@@ -208,9 +210,8 @@
                         this.searching=false;
                         this.step='list';
                         this.$nextTick(_=>{
-                            this.$simpScroll(".custom-list");
+                            this.$simpleScroll('#custom-list-list');
                         })
-
                     },300)
                 }).catch(res=>{
                     lock.close();

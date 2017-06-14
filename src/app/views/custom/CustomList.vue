@@ -4,7 +4,7 @@
         <div class="custom-table-body" >
             <p class="data-placeholder" v-if="!listData.list" >数据加载中...</p>
             <p class="data-placeholder" v-else-if="listData.list.length==0" >暂无记录</p>
-            <ul class="custom-list" v-else >
+            <ul class="custom-list" id="custom-list-list" v-else  >
               <li v-for="(item,index) in listData.list" :class="{select:index==currentIndex}" @click="checkCustom(index)"
                     @dblclick="viewCustom(item,index)">
                   <div class="item-col item-col1">
@@ -21,14 +21,14 @@
               </li>
 
           </ul>
-            <Pagination :page="listData" :go-callback="handleCurrentChange" ></Pagination>
+            <pagination :page="listData" :go-callback="handleCurrentChange" ></pagination>
         </div>
     </div>
 </template>
 
 <script>
 
-        import Pagination from 'components/pagination/Pagination.vue';
+
 
         export default{
         name:"CustomList",
@@ -48,9 +48,6 @@
             }else{
                 this.currentIndex=-1;
             }
-        },
-        components: {
-                Pagination,                 //分页器
         },
         methods:{
             handleCurrentChange(index){
