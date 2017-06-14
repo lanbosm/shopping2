@@ -44,6 +44,7 @@ export const API_URLS = {
     category:"/cashier/member/products/categories",               //分类
     recharge:"/cashier/member/recharge",//充值
     shop_admins:'/cashier/member/shop_admins',       //员工
+    b2c_orders:'/cashier/member/b2c_orders',                   //订单模块
     b2b_orders:'/cashier/member/b2b_orders',                   //订单模块
     payments:'/cashier/member/payments',                        //验证支付
     log_out:'/cashier/common/log_out',

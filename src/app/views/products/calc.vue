@@ -7,7 +7,7 @@
 					<td><a  class="num-btn calc-btn" @click="calc(1);">1</a></td>
 					<td><a  class="num-btn calc-btn" @click="calc(2);">2</a></td>
 					<td><a  class="num-btn calc-btn" @click="calc(3);">3</a></td>
-					<td><a class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='qty'}" @click="changeCalcMode('qty');" >Qty</a></td>
+					<td><a class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='qty'}" @click="changeCalcMode('qty');" >数量</a></td>
 				</tr>
 			<tr>
 				<td colspan="3" rowspan="3" class="t1 bulid-t1">
@@ -16,13 +16,13 @@
 				<td><a  class="num-btn calc-btn" @click="calc(4);">4</a></td>
 				<td><a  class="num-btn calc-btn" @click="calc(5);">5</a></td>
 				<td><a  class="num-btn calc-btn" @click="calc(6);">6</a></td>
-				<td><a  class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='disc'}"  @click="changeCalcMode('disc');" >Disc</a></td>
+				<td><a  class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='disc'}"  @click="changeCalcMode('disc');" >折扣</a></td>
 			</tr>
 			<tr>
 				<td><a class="num-btn calc-btn" @click="calc(7);">7</a></td>
 				<td><a class="num-btn calc-btn" @click="calc(8);">8</a></td>
 				<td><a class="num-btn calc-btn" @click="calc(9);">9</a></td>
-				<td><a class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='price'}" @click="changeCalcMode('price');">Price</a></td>
+				<td><a class="num-btn calc-btn calc-mode" :class="{selected:calcmode=='price'}" @click="changeCalcMode('price');">价格</a></td>
 			</tr>
 			<tr>
 				<td colspan="2" ><a class="num-btn calc-btn" @click="calc(0);">0</a></td>
@@ -132,8 +132,7 @@
                         var str=sales+"";
                         sales=str.substring(0,str.length-1);
                         if(sales==""){ //减到0
-                            sales="";
-                            this.cartData[index].sales=null;
+                            sales=""
                             this.cartData[index].isSales = false;
                         }
                         else{
@@ -160,6 +159,7 @@
 					//只要有discountPrice就是改价状态
                     //选中的数量
                     if (!this.cartData[index].isDiscount) {
+
                         var discountPrice="";
                         this.cartData[index].isDiscount = true;
                     }else{
@@ -174,7 +174,7 @@
                         discountPrice=str.substring(0,str.length-1);
                         if(discountPrice==""){ //减到0
                             discountPrice="";
-                            this.cartData[index].discountPrice=null;
+                            this.cartData[index].discountPrice="";
                             this.cartData[index].isDiscount = false;
                         }
                         else{

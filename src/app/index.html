@@ -52,7 +52,7 @@
 					</div>
 
 					<!--顾客-->
-					<dialog-custom v-if="showCustomDialog"></dialog-custom>
+					<dialog-custom  ref="custom" v-if="showCustomDialog"></dialog-custom>
 					<!--导购员-->
 					<layer-shopadmin v-if="showShopAdminModal"></layer-shopadmin>
 
@@ -62,10 +62,10 @@
 					<!--充值-->
 					<layer-recharge ref="recharge" v-if="showRechargeModal"></layer-recharge>
 
-					<!--消息-->
-					<transition name="fade" >
-						<layer-msg v-if="showMsgModal"></layer-msg>
-					</transition>
+					<!--&lt;!&ndash;消息&ndash;&gt;-->
+					<!--<transition name="fade" >-->
+						<!--<layer-msg v-if="showMsgModal"></layer-msg>-->
+					<!--</transition>-->
 
 					<!--应用设置-->
 					<dialog-setting v-if="showSettingDialog" ></dialog-setting>

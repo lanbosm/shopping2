@@ -330,7 +330,44 @@ const actions= {
                      })
             });
         },
+        fetchOrderList({commit},value){
+            let apiObj = {
+                url : API_URLS.b2b_orders+'/wechat',
+                data:value
+            };
+            commit("show_waiting");
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return   Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                return    Promise.reject(res.data);
+            });
+        },
+        refundOrder({commit,state},value){
 
+            commit("show_waiting");
+            let apiObj={
+                url: API_URLS.b2b_orders+'/refunds',
+                data:value
+            };
+            // console.log(value);
+            return  request.fnPost_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else {
+                    return  Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            });
+
+        },
         fetchList({commit,state},value){
             if(value){
                 var oldPageData=state.currentPage.pageData;
@@ -361,8 +398,6 @@ const actions= {
             }).catch(res=>{
                 return    Promise.reject(res.data);
             });
-
-
         },
         //获取商品详情
         fetchItem:function({commit,state},pid){
@@ -386,6 +421,7 @@ const actions= {
                     })
             });
         },
+
         //获取分类
         fetchCategory({commit,state},value){
             commit("set_list_waiting",true);

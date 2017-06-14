@@ -9,7 +9,7 @@
 			<div class="gallery">
 				<el-upload
 						ref="upload"
-						action="http://192.168.1.122:82/cashier/member/ads/add_image"
+						action="http://cs.awo123.cn/cashier/member/ads/add_image"
 						list-type="picture-card"
 						:show-file-list="true"
 						:auto-upload="false"

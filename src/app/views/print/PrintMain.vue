@@ -250,15 +250,16 @@
                     this.timer=this.scanResListen();
                 }
 
-                //自定义二维码
-                $('#shopQrc').html("");
-                $('#shopQrc').qrcode({
-                    render: "table",
-                    text: 'http://www.apicloud.com/',
-                    width: 230,  //230内扫不出
-                    height: 230
-                });
-
+                if(this.printData.wechatMallUrl) {
+                    //自定义二维码
+                    $('#shopQrc').html("");
+                    $('#shopQrc').qrcode({
+                        render: "table",
+                        text: this.printData.wechatMallUrl,
+                        width: 230,  //230内扫不出
+                        height: 230
+                    });
+                }
                // this.scanResListen();
                 this.$simpleScroll('#printDiv');
 

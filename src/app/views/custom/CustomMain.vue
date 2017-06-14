@@ -74,13 +74,10 @@
 
             if(this.$route.name=='customlist'){
 
-
-                this.customData=this.$store.state.currentPage.customData;  //直接从vuex获取
-                this.step='detail';
-
-
-
-
+                this.$nextTick(_=> {
+                    console.log(this.customData);
+                    this.step='detail';
+                })
 
 
             }
@@ -231,7 +228,6 @@
             },
             rechargeEvent(){
                 this.$root.showRechargeModal=true;
-
                 function centerModals() {
                     $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');
@@ -244,6 +240,7 @@
                 this.$nextTick(()=>{
 
                     var vm=this;
+                    vm.$root.$refs.recharge.customName=vm.customData.username;
                     var modal='#layer-recharge';
                     $(modal).on('show.bs.modal', centerModals);
                     $(modal).on('hidden.bs.modal',function(){
@@ -263,11 +260,19 @@
                 })
             },
             stockEvent(){
-                this.$store.dispatch("fetchPickList",{"memberId":this.customData.id}).then(res=>{
-                    this.$root.showCustomModal=false;
-                    this.$router.push({path:'/membercargo'});
-
+                this.$store.dispatch("fetchPickList",{"memberId":this.customData.id,"pageNum":1}).then(res=>{
+                   this.$router.push({path:'/membercargo',query:{mid:this.customData.id,p:1}});
+                   this.closeWin();
+                }).catch(res=>{
+                    this.$message.error(res.msg);
                 });
+//                this.$store.dispatch("fetchPickList",{"memberId":this.customData.id}).then(res=>{
+//                    this.$root.showCustomModal=false;
+//                    this.$router.push({path:'/membercargo'});
+//
+//                }).catch(res=>{
+//                     this.$message.error(res.msg);
+//                });
             }
 
         }

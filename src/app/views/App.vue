@@ -171,13 +171,17 @@
             buildOrder:function(cart){
                 //alert(this.mode);
 
-                console.log(cart);
+
                 var cartParam={itemParams:[]};
 
                 cart.forEach(function(ele,index){
 
                     cartParam.itemParams.push(
-                        {"productId":ele.id,"quantity":ele.amount,'discountPrice':ele.discountPrice}
+                        {"productId":ele.id,
+                         "quantity":ele.amount,
+                         'discount':ele.discountPrice,
+                         'salePer':ele.sales && ele.sales!=10?ele.sales*10:null
+                        }
                     )
                 });
 
@@ -192,6 +196,9 @@
                         )
                     }
                 });
+
+                console.log(cartParam);
+
 
 
                 this.$store.commit("setOrderParams",{

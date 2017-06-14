@@ -1,140 +1,238 @@
 <template>
-   	  <div class="log-products container">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="list-header">
-						<div class="list-row">
-							<span>商品</span>
-							<span>数量</span>
-							<span>条码</span>
-						</div>
-					</div>
+	<commom-list>
+		<div class="list-header" slot="list-header">
+			<div class="list-row">
+				<span class="col">商品</span>
+				<span class="col">数量</span>
+				<span class="col">条码</span>
+			</div>
+		</div>
+		<div class="list-body" v-if="!listData.list">
+			加载中...
+        </div>
+		<div class="list-body" v-else-if="listData.list.length==0">
+			<div class="no-list"></div>
+		</div>
+		<div class="list-body" id="order-list-main-list" v-else>
+			<!--list-->
+			<div class="list-row" v-for="(item,index) in listData.list">
+				<div class="t">
+					<span>订单号： {{item.sn}}</span>
+				</div>
+				<div class="c">
+					<span class="col">
+						<img :src="item.image"/>
+						<em>{{item.name}}</em>
+					</span>
+					<span class="col">{{item.quantity}}件</span>
+					<span class="col" style="color: #999999;">{{item.barcode}}</span>
 				</div>
 			</div>
-			<div class="row">
-				  <div class="col-xs-12">
-					  <div class="list-body" v-if="!listData.list">
-						  加载中...
-					  </div>
-					  <div class="list-body" v-else-if="listData.list.length==0">
-						 	<div class="no-list"></div>
-					  </div>
-					  <div class="list-body" v-else>
-						  <!--list-->
-						  <div class="list-row" v-for="(item,index) in listData.list">
-							  	<div class="t">
-									订单号： {{item.sn}}
-								</div>
-							  	<div class="c">
-									<span>
-										<img :src="item.image"/>
-										<em>{{item.name}}</em>
-									</span>
-									<span>{{item.quantity}}件</span>
-									<span>{{item.barcode}}</span>
-								</div>
-						  </div>
-
-					  </div>
-				  </div>
+		</div>
+		<div class="list-footer" slot="list-footer">
+			<div class="footer-left">
+				<pagination :page="listData" :go-callback="handleCurrentChange" ></pagination>
 			</div>
-		  	<div class="row">
-				<div class="col-xs-12">
-					<pagination :page="listData" :go-callback="goCallback"></pagination>
-				</div>
-			</div>
-		  <div class="row list-footer">
+		</div>
+	</commom-list>
 
-		  </div>
-      </div>
 </template>
 
-<style  rel="stylesheet/less"  lang="less">
+<style lang="less" scoped>
 
-    @import "../../../less/util/skin.less";
-    @import "../../../less/util/mixin.less";
+	@import "../../../less/util/skin.less";
+	@import "../../../less/util/mixin.less";
 
-    .log-products{
-		position: relative;
-        .list-row{
-
-			clear: both;
-
-		    span{
-			   display: block; width: 25%; float: left; text-align: center;
-			   &:first-child{width: 50%;}
-		    }
-			.clearfix;
-	    }
-
-		.list-header {
-			.list-row{
-				line-height: 50px;
-				font-size: 18px;
+	.refunded{
+		color: @themeColor;
+	}
+	.list-row{
+		clear: both;
+		.col{
+			display: block; width: 30%; float: left; text-align: center;
+			&:nth-child(1){
+				width: 40%;
+				text-align: left;
 			}
 		}
+		.clearfix;
+	}
 
-		.list-body {
-			height: @listHeight;
-			.list-row{
-				border: solid 1px  @border-color;
-				margin-top: @gutter;
-				margin-bottom: @gutter;
-				border-radius: 5px;
-				clear: both;
-				.t{
-					color: @thinColor;
-					padding-left: @gutter;
-					padding-right: @gutter;
-					font-size: 16px;
-					line-height: 40px;
-				}
-				.c {
-					padding-left: @gutter;
-					padding-right: @gutter;
-					font-size: 16px;
-					border-top: @borderDashedStyle;
-					line-height:100px;
-					span {
-						display: block;
-						width: 25%;
-						float: left;
-						text-align: center;
-						color: @thinColor;
-						&:first-child {
-							width: 50%;
-							color: @color;
-							text-align: left;
-							em{ margin-left: @gutter; display: inline-block; width: 75%; height: 60px;
+	.list-checkbox {
+		margin-top:@gutter;
+		margin-right:@gutter;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		display: inline-block;
+		border-radius: 50%;
+		border: solid 1px #cccccc;
+		position: relative;
+
+		&.inner-checkbox{
+			margin-top:0;
+			top:@gutter/2;
+			margin-left:@gutter/2;
+			width: 20px;
+			height: 20px;
+			overflow: hidden;
+		}
+		i{
+			width: 100%;
+			height:100%;
+			overflow: hidden;
+			position: absolute;
+			pointer-events: none;
+			top:0;
+			left:0;
+
+		}
+		i:after{
+			box-sizing: content-box;
+			content: "";
+			border: 2px solid #fff;
+			border-left: 0;
+			border-top: 0;
+			height: 8px;
+			left: 7px;
+			position: absolute;
+			top: 3px;
+			transform: rotate(45deg) scaleY(0);
+			width: 4px;
+			transition: transform .15s cubic-bezier(.71,-.46,.88,.6) .05s;
+			transform-origin: center;
+		}
+		input[type=checkbox]{
+			position: absolute;
+			width: 100%;
+			height:100%;
+			opacity:0;
+			margin: 0;
+			outline:none;
+			display: inline-block;
+		}
+
+		input[type=checkbox]:checked +i{
+			background: @themeColor;
+			border-radius: 50%;
+		}
+		input[type=checkbox]:checked +i:after {
+			transform: rotate(45deg) scaleY(1);
+		}
+
+	}
+	.list-header{
+		line-height: 50px;
+		font-size: 12px;
+		text-align: center;
+		.list-row .col{text-align: center;}
+	}
+
+	.list-body{
+
+		height: @listHeight;
+		overflow: hidden;
+
+
+		.list-row{
+			border: solid 1px  @border-color;
+			margin-top: @gutter;
+			margin-bottom: @gutter;
+			border-radius: 5px;
+			clear: both;
+			.t{
+				background: #f7f7f7;
+				color: @thinColor;
+				padding-left: @gutter;
+				padding-right: @gutter;
+				font-size: 14px;
+				line-height: 40px;
+				span{
+					&:first-child { float: left; text-align: left;}
+
+
+					em{ margin-left: @gutter; display: inline-block; width: 75%; height: 60px;
 								.norow;
-							}
-						}
 					}
+
 					img{width: 60px; height: 60px; display: inline-block;}
 				}
 				.clearfix;
 			}
+			.c {
+				padding-left: @gutter;
+				padding-right: @gutter;
+				font-size: 12px;
+				border-top: @borderDashedStyle;
+				line-height:60px;
+				.col {
+					color: @color;
+					dd{line-height: 30px;
+						.norow;
+						&.single{ line-height: 60px;}
+					}
+					&:last-child {
+						color: @themeColor;
+						font-size: 24px;
+					}
+				}
+				img{width: 60px; height: 60px; display: inline-block;}
+				.clearfix;
+			}
+			.clearfix;
+
 		}
 
-		.list-footer{
-			height: 90px;
+		.refund-btn,.check-btn{
+			font-size: 12px;
+			line-height: 20px;
+			.diy-btn(#ffffff,@themeColor,@themeColor,30px,@padding: 5px 20px);
+		}
+		.check-btn.dis{
+			pointer-events: none;
+			.diy-btn(#ffffff,#cccccc,#cccccc,30px,@padding: 5px 20px);
+			opacity: 0.9;
+		}
+		.cancel-btn {
+			margin-left: 5px;
+			font-size: 12px;
+			line-height: 20px;
+			.diy-btn(@themeColor,#ffffff,@themeColor,30px,@padding: 5px 20px);
+		}
+	}
+	.list-footer{
+		.footer-center {
+			height: 60px;
 			width: 100%;
-			line-height: 90px;
-			text-align: center;
+			line-height: 60px;
+			text-align: right;
 			color: @themeColor;
 			font-size: 16px;
-			border-top: @borderDashedStyle;
-			border-width: 2px;
-			span{font-size: 36px; padding-left: 12px; padding-right: 12px;}
+			span {
+				font-size: 36px;
+				padding-left: 12px;
+				padding-right: 12px;
+			}
+			position: relative;
 		}
+		.footer-left{
+			position: absolute;
+			z-index:2;
+			top:@gutter;
+			left:@gutter;
+		}
+		.footer-right{
+			position: absolute;
+			top:@gutter;
+			right:@gutter;
 
-    }
 
 
-</style>
+		}
+	}
+	</style>
 <script>
 
-    import Pagination from 'components/pagination/Pagination.vue';
 
     export default{
         name:"logProducts",
@@ -144,13 +242,18 @@
                 pageNum:1,                 //一页显示多少个
             }
         },
-        components:{
-            Pagination
-        },
+
         created(){
 			this.fetchList()
         },
         methods:{
+            handleCurrentChange(pageIndex){
+                //this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
+                this.pageNum=pageIndex;
+                this.$router.replace({path:this.$route.path,query:{p:this.pageNum}});
+                this.fetchList();
+                window.scrollTo(0,0);
+            },
             goCallback(pageIndex){
                 this.pageNum=pageIndex;
                 this.fetchList();

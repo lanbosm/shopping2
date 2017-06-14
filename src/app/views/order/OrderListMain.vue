@@ -16,39 +16,45 @@
             <div class="list-body" v-else-if="listData.list.length==0">
                 <div class="no-list"></div>
             </div>
-            <div class="list-body" v-else>
+            <div class="list-body" id="order-list-main-list" v-else>
                 <!--list-->
                 <div class="list-row" v-for="(item,index) in listData.list">
                     <div class="t">
-                        <span class="list-checkbox" v-show="refundShow"><input type="checkbox" v-model="item.isRefund"  /> <i></i> </span>
+                        <span class="list-checkbox" v-show="item.refundShow"><input type="checkbox" v-model="item.isRefund" @change="handlecheck(item)" /> <i></i> </span>
                         <span>订单号： {{item.sn}} x  {{item.paymentMethod}}</span><span>{{item.createDate}}</span>
                     </div>
                     <div class="c">
                         <dl class="col">
-                            <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">{{item2.name}}</dd>
+                            <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">
+                                <span class="list-checkbox inner-checkbox" v-show="item.showRefunds && item2.quantity>item2.returnQuantity"><input type="checkbox" v-model="item2.isRefund"  @change="handlecheck(item2)"/> <i></i> </span>
+                                <span >{{item2.name}} <em class="refunded" v-if="item2.quantity==item2.returnQuantity">已退货</em></span>
+                            </dd>
                         </dl>
                         <dl class="col">
                             <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">
                                 {{item2.price | currency}} x {{item2.quantity}}
-										</dd>
+							</dd>
                         </dl>
                         <span class="col">{{item.username}}</span>
                         <span class="col">{{item.amountPaid | currency}}</span>
+                        <span class="col">
+                            <a class="check-btn" :class="{dis:!item.canRefunds}" v-show="!item.showRefunds"  @click="handleShowCheck(item)">退款</a>
+                            <a class="refund-btn" v-show="item.showRefunds" @click="handleRefund(item)">确定</a>
+                            <a class="cancel-btn" v-show="item.showRefunds" @click="handleCancel(item)">取消</a>
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="list-footer" slot="list-footer">
-                    <div class="footer-left">
-                        <Pagination :page="listData" :go-callback="handleCurrentChange" ></Pagination>
+                <div class="footer-left">
+                    <pagination :page="listData" :go-callback="handleCurrentChange" ></pagination>
+                </div>
+                <div class="footer-center">
+                    总现在收入<span>{{totalAmount | currency }}</span>元
                     </div>
-                    <div class="footer-center">
-                        总现在收入<span>{{totalCash | currency }}</span>元
-                    </div>
-                     <div class="footer-right">
-                         <a class="check-btn" v-show="!refundShow" @click="handleCheck()">退款</a>
-                         <a class="refund-btn" v-show="refundShow"@click="handleRefund()">确定</a>
-                         <a class="cancel-btn" v-show="refundShow" @click="refundShow=false">取消</a>
-                     </div>
+                <div class="footer-right">
+
+                </div>
             </div>
         </commom-list>
     </div>
@@ -59,11 +65,13 @@
     @import "../../../less/util/skin.less";
     @import "../../../less/util/mixin.less";
 
-
+    .refunded{
+        color: @themeColor;
+    }
     .list-row{
         clear: both;
         .col{
-            display: block; width: 20%; float: left; text-align: center;
+            display: block; width: 15%; float: left; text-align: center;
             &:nth-child(1){
                 width: 40%;
                 text-align: left;
@@ -77,15 +85,24 @@
         margin-right:@gutter;
         width: 20px;
         height: 20px;
+        overflow: hidden;
         display: inline-block;
         border-radius: 50%;
         border: solid 1px #cccccc;
-        overflow: hidden;
         position: relative;
+
+        &.inner-checkbox{
+            margin-top:0;
+            top:@gutter/2;
+            margin-left:@gutter/2;
+            width: 20px;
+            height: 20px;
+            overflow: hidden;
+        }
         i{
             width: 100%;
             height:100%;
-
+            overflow: hidden;
             position: absolute;
             pointer-events: none;
             top:0;
@@ -119,6 +136,7 @@
 
         input[type=checkbox]:checked +i{
             background: @themeColor;
+            border-radius: 50%;
         }
         input[type=checkbox]:checked +i:after {
             transform: rotate(45deg) scaleY(1);
@@ -134,59 +152,76 @@
 
     .list-body{
 
-            height: @listHeight;
-            overflow: hidden;
+        height: @listHeight;
+        overflow: hidden;
 
 
-            .list-row{
-                border: solid 1px  @border-color;
-                margin-top: @gutter;
-                margin-bottom: @gutter;
-                border-radius: 5px;
-                clear: both;
-                .t{
-                    background: #f7f7f7;
-                    color: @thinColor;
-                    padding-left: @gutter;
-                    padding-right: @gutter;
-                    font-size: 14px;
-                    line-height: 40px;
-                    span{
-                        &:first-child { float: left; text-align: left;}
-                        &:last-child { float: right; text-align: right;}
-                    }
-                    .clearfix;
-                }
-                .c {
-                    padding-left: @gutter;
-                    padding-right: @gutter;
-                    font-size: 12px;
-                    border-top: @borderDashedStyle;
-                    line-height:60px;
-                    .col {
-                        color: @color;
-                        dd{line-height: 20px;
-                            .norow;
-                            &.single{ line-height: 60px;}
-                        }
-                        &:last-child {
-                            color: @themeColor;
-                            font-size: 24px;
-                        }
-                    }
-                    img{width: 60px; height: 60px; display: inline-block;}
-                    .clearfix;
+        .list-row{
+            border: solid 1px  @border-color;
+            margin-top: @gutter;
+            margin-bottom: @gutter;
+            border-radius: 5px;
+            clear: both;
+            .t{
+                background: #f7f7f7;
+                color: @thinColor;
+                padding-left: @gutter;
+                padding-right: @gutter;
+                font-size: 14px;
+                line-height: 40px;
+                span{
+                    &:first-child { float: left; text-align: left;}
+                    &:last-child { float: right; text-align: right;}
                 }
                 .clearfix;
-
+            }
+            .c {
+                padding-left: @gutter;
+                padding-right: @gutter;
+                font-size: 12px;
+                border-top: @borderDashedStyle;
+                line-height:60px;
+                .col {
+                    color: @color;
+                    dd{line-height: 30px;
+                        .norow;
+                        &.single{ line-height: 60px;}
+                    }
+                    &:last-child {
+                        color: @themeColor;
+                        font-size: 24px;
+                    }
                 }
+                img{width: 60px; height: 60px; display: inline-block;}
+                .clearfix;
+            }
+            .clearfix;
+
+        }
+
+        .refund-btn,.check-btn{
+            font-size: 12px;
+            line-height: 20px;
+            .diy-btn(#ffffff,@themeColor,@themeColor,30px,@padding: 5px 20px);
+        }
+        .check-btn.dis{
+            pointer-events: none;
+            .diy-btn(#ffffff,#cccccc,#cccccc,30px,@padding: 5px 20px);
+            opacity: 0.9;
+        }
+        .cancel-btn {
+            margin-left: 5px;
+            font-size: 12px;
+            line-height: 20px;
+            .diy-btn(@themeColor,#ffffff,@themeColor,30px,@padding: 5px 20px);
+        }
     }
     .list-footer{
         .footer-center {
-            height: 100px;
+            height: 60px;
             width: 100%;
-            line-height: 100px;
-            text-align: center;
+            line-height: 60px;
+            text-align: right;
             color: @themeColor;
             font-size: 16px;
             span {
@@ -198,6 +233,7 @@
         }
         .footer-left{
             position: absolute;
+            z-index:2;
             top:@gutter;
             left:@gutter;
         }
@@ -205,24 +241,14 @@
             position: absolute;
             top:@gutter;
             right:@gutter;
-            .refund-btn,.check-btn{
-                .diy-btn(#ffffff,@themeColor,@padding: 12px 30px);
-            }
-            .cancel-btn {
-                 margin-left: 30px;
-                .diy-btn(@themeColor,#ffffff,@themeColor,@padding: 12px 30px);
-             }
+
 
 
         }
     }
 
-
-
-
 </style>
 <script>
-    import Pagination from 'components/pagination/Pagination.vue';
 
     export default{
     	name: 'CustomList',
@@ -232,140 +258,112 @@
                 back:{"label":"返回","url":"/","show":true},
                 listData:{},
                 pageNum:1,                 //一页显示多少
-                refundShow:false,
+
+                totalAmount:0
 
             }
         },
         created(){
+
+            this.pageNum=this.$route.query.p||1;
+
             this.fetchList();
         },
-        components: {
-            Pagination,                 //分页器
-        },
-        computed: {
-            totalCash (){
-                return  0;
-            }
-        },
+
         methods:{
+            handlecheck(item){
+                var on=item.isRefund;
+                this.$set(item, 'isRefund', on);
+                //如果子元素
+                if(item.items) {
+                    item.items.forEach((ele, index) => {
+                        this.$set(ele, 'isRefund', on)
+                    })
+                }
+
+            },
             handleCurrentChange(pageIndex){
+                //this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
                 this.pageNum=pageIndex;
+                this.$router.replace({path:this.$route.path,query:{p:this.pageNum}});
                 this.fetchList();
                 window.scrollTo(0,0);
             },
-            handleCheck(){
+            handleShowCheck(item){
+                this.listData.list.forEach((ele,index)=>{
+                       // ele.refundShow=false;
+                       this.$set(ele, 'refundShow',false)
+                })
+                this.$set(item, 'refundShow',true)
 
-                this.refundShow=true;
             },
-            handleRefund(){
-                this.$alert('操作成功',{
-                    type: 'success',
-                }).then(_=>{
-                    this.refundShow=false;
-                    this.fetchList();
+            handleRefund(item){
+
+
+                var refundsJson=[];
+
+                item.items.forEach((ele,index)=>{
+                        console.log(ele);
+                        if(ele.isRefund) {
+                            refundsJson.push({itemId: ele.itemId, quantity: ele.quantity})
+                        }
+                })
+                if(refundsJson.length==0){
+                    this.$message.warning('请选择退货项');
+                    return false;
+                }
+
+
+                var refundData={
+                    sn:item.sn,
+                    refundsJson:JSON.stringify(refundsJson),
+
+                }
+
+                this.$store.dispatch('refundOrder',refundData).then(_=>{
+                                    this.$alert('操作成功',{
+                                        type: 'success',
+                                    }).then(_=>{
+                                        item.refundShow=false;
+                                        this.fetchList();
+                                    })
+                }).catch(res=>{
+                    this.$alert(res.msg,{
+                        type: 'error',
+                    })
+
                 })
 
             },
             //请求列表
             fetchList() {
 
-                  this.listData= {
-                          "pageNum":1,"pageSize":5,"size":5,"orderBy":null,"startRow":1,"endRow":5,"total":16,"pages":3,
-                          'list': [
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
 
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':false,
-                              },
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
+                this.$store.dispatch('fetchOrderList',{pageNum:this.pageNum}).then(res=> {
+                    console.log(res);
+                    this.listData = res.page;
+                    this.totalAmount=res.totalAmount;
 
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':true,
-                              },
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
+                    this.listData=res.page;
+                    this.totalAmount=res.totalAmount;
 
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':false,
-                              },
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
+                    this.listData.list.forEach((ele,index)=>{
+                        ele.canRefunds=false;
 
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':false,
-                              },
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
+                        ele.items.forEach((ele2,index)=>{
+                            if(ele2.quantity>ele2.returnQuantity){
 
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':false,
-                              },
-                              {
-                                  'sn': 10102020102020200,
-                                  'paymentMethod':'现金方式',
-                                  'createDate':'2016-07-12',
-                                  'items': [
-                                      {'name':'XXXXX商品1','price':'100.00','quantity':1},
-                                      {'name':'XXXXX商品2','price':'105.00','quantity':2}
-
-                                  ],
-                                  'username':"naslo",
-                                  'amountPaid':'2000.00',
-                                  'isRefund':false,
-                              }
-                          ],
-                  }
-
-//                  setTimeout(_=>{
-//
-//                      this.$simpleScroll('.list-body', 'vertical');
-//                  },1000)
-
-                    var vm=this;
-                  this.$nextTick(_=> {
-                      vm.$simpleScroll('.list-body', 'vertical');
-
-                  });
-//                this.$store.dispatch('fetchShiftList',{"pageNum":this.pageNum}).then(res=>{
-//                    this.listData=res.page;
-//                })
+                                ele.canRefunds=false;
+                            }
+                        });
+                    });
+                    this.$nextTick(_ => {
+                        this.$simpleScroll('#order-list-main-list');
+                    })
+                }).catch(res=>{
+                    console.log(res);
+                    console.log('err');
+                });
             }
         }
 

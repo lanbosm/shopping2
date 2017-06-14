@@ -142,23 +142,26 @@
         methods:{
             handleCurrentChange(pageIndex){
                 this.pageNum=pageIndex;
+                this.$router.replace({path:'/membercargo',query:{p:this.pageNum}});
                 this.fetchList();
                 window.scrollTo(0,0);
             },
             handleStock(item){
-
                 this.$store.dispatch("fetchPickList",{"memberId":item.id,"pageNum":1}).then(res=>{
                     this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
                 });
             },
             handleDetail(item){
-                this.$store.state.currentPage.customData=item;
                 this.$root.showCustomDialog=true;
+
+
+                this.$nextTick(_=> {
+                    this.$root.$refs.custom.customData = item;
+                })
                 //this.$alert('此功能未开放', '详情');
             },
             handleRecharge(item){
                 this.$root.showRechargeModal=true;
-               // console.log(this.$root.$refs);
                 function centerModals() {
                     $(this).each(function(i) {
                         var $clone = $(this).clone().css('display','block').appendTo('body');

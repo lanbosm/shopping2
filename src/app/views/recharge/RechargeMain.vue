@@ -33,7 +33,7 @@
 
                 <table class="printtable">
                     <caption class="text-left">
-                        <h5>{{printData.DateTime}}</h5>
+                        <h5>{{printData.time}}</h5>
                         <h5>订单号 {{printData.sn}}</h5>
                     </caption>
                     <tbody >
@@ -71,27 +71,33 @@
         </div>
 
         <div style="display: none" id="styles">
-            *{padding:0; margin:0;}
-            .print-box {width: 260px; padding:100px 15px; margin:0 auto; font-size: 16px; }
-            .print-box  h5{font-size: 18px; line-height:30px;}
-            .print-box  table.printtable{ width: 100%; display: block;position: relative; line-height: 24px; font-family:'黑体' }
-            .print-box  table.printtable tbody,.print-box  table.printtable caption{display: block; font-size: 18px;}
-            .print-box  table.printtable .strong{font-weight: bold; font-size: 16px;}
-            .print-box  table.printtable .split{   }
-            .print-box  table.printtable tr{ display:block;clear: left;}
-            .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-            .print-box  table.printtable{*zoom:1;}
-            .print-box  table.printtable td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
-            .print-box  table.printtable td:first-child{display: block; width: 60%;float: left; position: relative;}
-            .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
-            .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
-            .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
-            .print-box  .text-center {text-align: center !important;}
-            .print-box  .text-right {text-align: right !important;}
-            .print-box  .text-left {text-align: left !important;}
-            .print-box  p {margin-top:10px;}
-            .print-box  #qrcCode{ margin-left:0px; margin-top:10px; }
-        </div>
+                         *{padding:0; margin:0;}
+                         body{ box-sizing: border-box;}
+                         .print-box {width: 180pt; padding:10pt 10pt 50pt 10pt; margin:0 auto; font-size: 10pt;  }
+                         .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:20pt;  }
+                         .print-box  h5{font-size: 10pt; display:block; adding-top:10pt; padding-bottom:10pt;}
+                         .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:20pt; padding-bottom:20pt;  font-family:'黑体' }
+                         .print-box  table.printtable tbody{display: block;}
+                         .print-box  table.printtable caption{display:block;}
+                         .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
+                         .print-box  table.printtable .split{ margin-top:10pt;   }
+                         .print-box  table.printtable tr{ display:block;clear: left;  padding-top:10pt; padding-bottom:10pt; }
+                         .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+                         .print-box  table.printtable{*zoom:1;}
+                         .print-box  table.printtable td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
+                         .print-box  table.printtable td:first-child{display: block; width: 60%;float: left; position: relative;}
+                         .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
+                         .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+                         .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
+                         .print-box  .text-center {text-align: center !important;}
+                         .print-box  .text-right {text-align: right !important;}
+                         .print-box  .text-left {text-align: left !important;}
+                         .print-box  p {margin-top:10pt;}
+                         .print-box  #qrcCode{margin-left:5pt; margin-top:30pt;  }
+
+                         .print-box #shopQrc{margin-left:5pt;  margin-top:30pt;   }
+                         hr{width:100%; height:0px;margin-top:30pt;  border-top:dotted 3px #cccccc;}
+         </div>
     </div>
 </template>
 <style  rel="stylesheet/less"  scope lang="less">
@@ -221,27 +227,14 @@
                 customId:"",
                 diySeleted:false,
                 payMethod:null,
-                customName:null
+                customName:null,
+                printData:{}
             }
         },
         computed:{
             shopAdminData(){
                 return  this.$store.state.currentPage.shopAdminData;
             },
-            printData(){
-
-                var print={};
-
-                var nowDate = new Date();
-                var myDate=nowDate.toLocaleDateString();
-                var myTime=nowDate.toLocaleTimeString();     //获取当前时间
-
-                //print.cashierName=this.order.cashierName;
-               // print.guiderName=this.shopAdminData.cashierName;
-                print.DateTime=myDate+" "+myTime;
-
-                return  print;
-            }
         },
         components:{
             RechargeList,
@@ -268,7 +261,8 @@
             },
 
             toPrint(){
-                console.log(this.customName);
+
+
                 var apiObj={
                     url:API_URLS.recharge,
                     data:{
@@ -282,21 +276,29 @@
 
                 request.fnPost(this,apiObj,function(res){
                     //console.log(res.appOrderPayment);
-                    vm.$store.commit("setPrintData",res.appOrderPayment);
-                    vm.$nextTick(function() {
+                    vm.printData=res.appOrderPayment;
+
+                    console.log(vm.printData);
+                   //vm.$store.commit("setPrintData",);
+
+                    vm.$nextTick(function()  {
 
                         $('#qrcCode').html("");
                         //有链接就生成
-//                        if(res.appOrderPayment.wechatCodeUrl) {
-//                            $('#qrcCode').qrcode({
-//                                render: "table",
-//                                text: res.appOrderPayment.wechatCodeUrl,
-//                                width: 260,  //260内扫不出
-//                                height: 260
-//                            });
-//                        }
+                        if(res.appOrderPayment.wechatCodeUrl) {
+                            $('#qrcCode').qrcode({
+                                render: "table",
+                                text: res.appOrderPayment.wechatCodeUrl,
+                                width: 230,  //230内扫不出
+                                height: 230
+                            });
+                        }
                         vm.printPage();
                     });
+                },function(res){
+
+                    layer.msg(res.msg, {icon: 2}); return false;
+
                 })
 
             },
@@ -319,12 +321,14 @@
 
             },
             printPage(){
+//                var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
+//                var docStr = obj.innerHTML;
+
 
                 var obj=document.getElementById('printDiv');
                 var docStr = obj.innerHTML;
 
-                var newWindow=window.open("./print.html","_blank");
-
+                var newWindow=window.open("/print.html","_blank");
                 var styles=document.getElementById("styles").innerHTML;
 
                 var header='<!DOCTYPE html>'+
