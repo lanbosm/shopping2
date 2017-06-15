@@ -181,6 +181,7 @@ body {
 /* transition animate */
 .fade-enter-active,
 .fade-leave-active {
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 .fade-enter,
@@ -188,6 +189,7 @@ body {
   opacity: 0;
 }
 .slide-enter-active {
+  -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
 .slide-leave-active {
@@ -195,7 +197,9 @@ body {
 }
 .slide-enter,
 .slide-leave-active {
-  transform: translateX(10px);
+  -webkit-transform: translateX(10px);
+      -ms-transform: translateX(10px);
+          transform: translateX(10px);
   opacity: 0;
 }
 .wrap {

@@ -280,33 +280,63 @@
             },
             printPage(){
 
+
+
                 var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
                 var docStr = obj.innerHTML;
 
-                var newWindow=window.open("/print.html","_blank");
 
                 var styles=document.getElementById("styles").innerHTML;
+
 
                 var header='<!DOCTYPE html>'+
                     '<html lang="en">'+
                     '<head>'+
                     '<meta charset="UTF-8">'+
+                    '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">'+
                     '<title>打印</title>'+
                     '<style type="text/css">'+
-                     styles+
+                    styles+
                     '</style>'+
                     '</head>'+
                     '<body>';
+
                 var footer='</body>'+
                     '</html>';
                 docStr=header+docStr+footer;
 
-                newWindow.document.write(docStr);
-                newWindow.document.close();
-                newWindow.print();
-                newWindow.close();
 
+                (function ($) {
+                    var printAreaCount = 0;
+                    $.fn.printArea = function () {
+                        var idPrefix = "printArea_";
+                        removePrintArea(idPrefix + printAreaCount);
+                        printAreaCount++;
+                        var iframeId = idPrefix + printAreaCount;
+                        var iframeStyle = 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;';
 
+                        var iframe = document.createElement('iframe');
+
+                        $(iframe).attr({
+                            style: iframeStyle,
+                            id: iframeId
+                        });
+
+                        document.body.appendChild(iframe);
+                        var doc = iframe.contentWindow.document;
+                        doc.write( docStr);
+                        doc.close();
+                        var frameWindow = iframe.contentWindow;
+                        frameWindow.close();
+                        frameWindow.focus();
+                        frameWindow.print();
+                    }
+                    var removePrintArea = function (id) {
+                        $("iframe#" + id).remove();
+                    };
+                })(jQuery);
+
+                $("#printDiv").printArea();
             },
             scanResListen(){
                     var apiObj={

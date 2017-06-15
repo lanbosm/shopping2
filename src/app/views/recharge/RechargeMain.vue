@@ -321,15 +321,15 @@
 
             },
             printPage(){
-//                var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
-//                var docStr = obj.innerHTML;
-
-
+              //  var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
+            //    var docStr = obj.innerHTML;
                 var obj=document.getElementById('printDiv');
                 var docStr = obj.innerHTML;
 
-                var newWindow=window.open("/print.html","_blank");
+
+
                 var styles=document.getElementById("styles").innerHTML;
+
 
                 var header='<!DOCTYPE html>'+
                     '<html lang="en">'+
@@ -348,12 +348,39 @@
                 docStr=header+docStr+footer;
 
 
+                (function ($) {
+                    var printAreaCount = 0;
+                    $.fn.printArea = function () {
+                        var idPrefix = "printArea_";
+                        removePrintArea(idPrefix + printAreaCount);
+                        printAreaCount++;
+                        var iframeId = idPrefix + printAreaCount;
+                        var iframeStyle = 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;';
 
-                newWindow.document.write(docStr);
+                        var iframe = document.createElement('iframe');
 
-                newWindow.print();
-                newWindow.document.close();
-                newWindow.close();
+                        $(iframe).attr({
+                            style: iframeStyle,
+                            id: iframeId
+                        });
+
+                        document.body.appendChild(iframe);
+                        var doc = iframe.contentWindow.document;
+                        doc.write( docStr);
+                        doc.close();
+                        var frameWindow = iframe.contentWindow;
+                        frameWindow.close();
+                        frameWindow.focus();
+                        frameWindow.print();
+                    }
+                    var removePrintArea = function (id) {
+                        $("iframe#" + id).remove();
+                    };
+                })(jQuery);
+
+                $("#printDiv").printArea();
+
+
 
 
             }

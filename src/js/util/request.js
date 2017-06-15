@@ -262,9 +262,8 @@ Vue.http.interceptors.push(function (request, next) {
     next(function (response) {
 
         if (response.data && response.data.code == 49001) {
-            MessageBox.alert("访问令牌过期 请重新登录",{ type: 'warning'}).then(_=>{
-                store.dispatch('logoutUnexpected');
-            });
+            store.dispatch('logoutUnexpected');
+            MessageBox.alert("访问令牌过期 请重新登录",{ type: 'warning'}).then(_=>{});
             return false ;
 
         }else if (response.data && response.data.code == 40001) {

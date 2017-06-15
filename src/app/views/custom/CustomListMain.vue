@@ -142,7 +142,7 @@
         methods:{
             handleCurrentChange(pageIndex){
                 this.pageNum=pageIndex;
-                this.$router.replace({path:'/membercargo',query:{p:this.pageNum}});
+                this.$router.replace({path:'/customList',query:{p:this.pageNum}});
                 this.fetchList();
                 window.scrollTo(0,0);
             },

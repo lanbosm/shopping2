@@ -16,7 +16,7 @@
 								</p>
 								<p class="small">
 									<span >
-										数量 :{{item.amount}} * {{item.isDiscount}}
+										数量 :{{item.amount}} *
 										<em v-if="item.isDiscount"  :class="{editPrice:item.isDiscount===true}">
 											{{item.discountPrice | currency}}
 										</em>
