@@ -14,7 +14,6 @@
                     <dl class="col">
                         <dd class="photo"><img :src="item.headPortrait"/></dd>
                         <dd class="name">{{item.nickname}}</dd>
-
                         <dd class="phone">{{item.username}}</dd>
 					</dl>
                     <span class="col">

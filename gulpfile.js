@@ -194,7 +194,7 @@ gulp.task('rev:js', function (done) {
     var webpack = require('webpack-stream'); //gulp版webpack
     return   gulp.src('src/js/index.js')  //这里src只是装样子 如果想有效请使用vinyl-named
         .pipe(webpack( webpackConfigPro , require('webpack')))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist/js'))
         .on('end', function(){
             console.log("打包完成...");
         });

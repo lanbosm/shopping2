@@ -1,4 +1,4 @@
-{
+  {
   "name": "shopping",
   "version": "1.0.0",
   "author": "lanbo",
@@ -17,7 +17,8 @@
     "vue": "^2.2.0",
     "vue-resource": "^1.2.1",
     "vue-router": "^2.2.0",
-    "vuex": "^2.2.0"
+    "vuex": "^2.2.0",
+    "electron": "~1.6.2"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -69,7 +70,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "dev": "gulp dev",
-    "prod": "gulp prod"
+    "prod": "gulp prod",
+    "start": "electron ./electron/main.js"
   },
   "license": "MIT"
 }

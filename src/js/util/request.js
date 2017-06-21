@@ -10,6 +10,7 @@ import VueResource from 'vue-resource'
 import store from '../vuex/store'
 import { MessageBox } from 'element-ui';
 
+
 //import * as data from '../util/mock';
 //http请求
 Vue.use(VueResource);

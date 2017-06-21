@@ -85,6 +85,7 @@
             }
         },
         methods: {
+
             toLogin:function(){
 
                 if(this.logining){return false;}

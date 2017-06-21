@@ -208,7 +208,7 @@
                                }
                            });
 
-                            if(!roopOver){
+                            if(!roopOver&&this.$store.login){
                                 roopAction();
                             }
                     }, delay);

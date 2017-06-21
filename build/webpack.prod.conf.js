@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'production';
+
 var path = require('path')
 var utils = require('./utils')
 var webpack = require('webpack')
@@ -9,10 +11,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-var env = config.build.env
 
-var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;  //压缩文件
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
+
+
+
+
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -20,10 +23,12 @@ var webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       extract: true
     })
+
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path:  path.resolve(__dirname, '../dist'),
+    publicPath: "/",
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[id].js')
   },
@@ -31,7 +36,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       //公共common   webpack.optimize（最优化）
       new webpack.optimize.CommonsChunkPlugin({
           name: 'vendor',
-          filename: "js/vendor.js",
+          filename: "vendor.js",
           minChunks: function (module, count) {
               // any required modules inside node_modules are extracted to vendor
               return (
