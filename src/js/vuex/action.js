@@ -381,7 +381,8 @@ const actions= {
                     'categoryId': state.currentPage.list.categoryId,
                     'brandId': state.currentPage.list.brandId,
                     'pageNum': state.currentPage.list.pageNum,
-                    'keyword': state.currentPage.list.searchStr
+                    'keyword': state.currentPage.list.searchStr,
+                    'type': state.currentPage.list.type
                 }
             };
             commit("set_list_waiting",true);

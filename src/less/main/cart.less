@@ -1,6 +1,6 @@
 /*!购物车*/
 .shoppingCart{
-  width:100%; height: auto; border:1px solid @border-color;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:0px;
+  width:100%; height: 75%; border:1px solid @border-color;border-bottom:none;border-top-left-radius:5px;border-top-right-radius:5px;padding-bottom:0px;
 
   .totalprice{width:100%;text-align:right;color:#ccc;padding-right:5px}
   .totalprice span{margin-left:20px ;  }
@@ -13,7 +13,7 @@
 
   }
   .shoppingCart-list{position:relative;
-      height: @cartHeight;
+      height: 95%;
       &.empty{background:url(../images/empty.jpg) 50% 50% no-repeat}
       ul{padding:0;margin:0;list-style:none}
       ul li{height:auto;clear:both;margin-bottom:5px;padding:10px 15px}
@@ -45,7 +45,12 @@
 /*!计算器*/
 .shoppingCalc{
      width:100%;
+     height: 165px;
+     background: red;
+     position: absolute;
+     bottom: 20px;
      .table {
+        margin-bottom: 0;
        .t1 {
          width: 40%;
          background-color: #eeeeee;

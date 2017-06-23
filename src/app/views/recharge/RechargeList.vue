@@ -5,7 +5,7 @@
              <p v-if="!activityList">加载中...</p>
              <p v-else-if="activityList.length==0">没有活动</p>
              <div v-else class="col-nn-15" v-for="activity in activityList">
-                     <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
+                     <a class="btn btn-primary btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
                          <span>¥ {{activity.baseline}}</span>
                          <em v-if="activity.amount">赠 ¥{{activity.amount}}</em>
                          <em v-else class="dis">无赠送活动</em>

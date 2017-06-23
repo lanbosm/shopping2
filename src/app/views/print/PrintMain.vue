@@ -5,13 +5,13 @@
         <div class="container order-custom">
             <div class="row">
                 <div class="col-xs-12" v-if="printData.memberId">
-                    <a class="btn btn-default print-btn btn-block btn-inventory"  @click="gostock()">
+                    <a class="btn btn-primary print-btn btn-block btn-inventory"  @click="gostock()">
                         <span class="iconfont icon-kucun" aria-hidden="true"></span> 存货
 
                     </a>
                 </div>
                 <div class="col-xs-12">
-                    <a class="btn btn-default print-btn btn-block" @click="printPage();">
+                    <a class="btn btn-primary print-btn btn-block" @click="printPage();">
                         <span class="iconfont icon-font29" aria-hidden="true"></span> 打印
                     </a>
                 </div>

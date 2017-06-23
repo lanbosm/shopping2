@@ -1,9 +1,9 @@
 <template>
    	    <div class="order-menu">
-            <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==12}" @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
-            <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==10}" @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
-            <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==11}" @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
-            <a  :class="{on:recharge}" class="btn btn-default recharge-btn btn-block" @click="goRecharge" ><span class="iconfont icon-jizhang" aria-hidden="true"></span>充值</a>
+            <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==17||payMethod==18}" @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
+            <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==10}" @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
+            <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==11}" @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
+            <a  :class="{on:recharge}" class="btn btn-primary recharge-btn btn-block" @click="goRecharge" ><span class="iconfont icon-jizhang" aria-hidden="true"></span>充值</a>
         </div>
 </template>
 
@@ -32,7 +32,7 @@
             payScan() {
                 this.recharge=false;
                 this.$store.commit("setOrderParams",{
-                    paymentMethodId:12,
+                    paymentMethodId:17,
                 })
                 this.$router.replace('/order/payScan');
             },

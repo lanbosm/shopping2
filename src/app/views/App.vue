@@ -1,34 +1,40 @@
 <template>
 	<div class="container-fluid index"  >
             <div class="row" >
-                <div class="col-xs-9 left-con">
+                <div class="left-con">
                     <!--<div class="left-con-header">-->
                         <!--&lt;!&ndash;<breadcrumb  ref="breadcrumb" :product-params="productParams"></breadcrumb>&ndash;&gt;-->
                     <!--</div>-->
                     <div class="left-con-content">
                         <Loading v-if="listLoading"></Loading>
-                        <div class="item-box panel panel-primary">
+                        <div class="panel panel-primary">
                             <div class="panel-heading" >
-                                <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
                                 <div class="row">
-                                    <div class="col-xs-2">
-                                        <a class="btn btn-gray shuaixuan" :class="{activeOn:true}" @click="openCategory()"><span class="glyphicon glyphicon-th-list"></span>分类筛选</a>
+                                    <div class="col-xs-7">
+                                        <ul class="nav nav-tabs app-nav">
+                                            <li class="category-list" :class='{active:showList=="product"}' @click="openCategory('product')">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="glyphicon glyphicon-th-list"></span>分类筛选<span class="caret"></span>
+                                                </a>
+                                                <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
+
+                                            </li>
+                                            <li @click="switchNavBar('act')"  :class='{active:showList=="act"}'><a href="javascript:void(0)">活动专区</a></li>
+                                         </ul>
                                     </div>
-                                    <!---->
-                                    <!--<div class="col-xs-2 activity">-->
-                                        <!--<a class="btn btn-gray shuaixuan" @click="activeTab()"  :class="{activeOn:activty==true}" ><span class="glyphicon glyphicon-fire"></span>活动专区</a>-->
-                                    <!--</div>-->
-                                    <div class="col-xs-3  col-xs-offset-7">
+
+                                    <div class="col-xs-5">
                                         <searchbar  :product-params="productParams"></searchbar>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <active-head v-show="activty" :flag="flag"></active-head>
-                                <product-list :page="page" :product-params="productParams"  @open-detail="openDetail" v-show="flag"></product-list>
-                                <add-price :page="page" :product-params="productParams" @open-detail="openDetail" v-show="!flag"></add-price>
+
+                                <product-list v-if='showList=="product"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></product-list>
+                                <act-product-list v-if='showList=="act"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></act-product-list>
+
                             </div>
-                            <div class="panel-footer">
+                            <div class="panel-footer" v-if='showList=="product"'>
                                 <pagination :page="page" :go-callback="goCallback" ></pagination>
                             </div>
 
@@ -36,15 +42,14 @@
                     </div>
                 </div>
                
-                <div class="col-xs-3 right-con" >
+                <div class="right-con" >
                     <!-- 购物车 -->
                     <cart ref="cart" @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
                     <!-- 计算器 -->
                     <calc ref="calc" @trigger-build-order="buildOrder" @trigger-edit-price="editPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
                 </div>
             </div>
-            <!--改价-->
-            <dialog-edit v-if="showEditDialog" :edit-item="editItem"  ></dialog-edit>
+
     </div>
 </template>
 
@@ -61,9 +66,9 @@
     import Loading from 'views/products/Loading.vue';
 
 
-    import ProductList from 'views/products/List.vue';
-    import addPrice from 'views/products/addPrice.vue';
-    import activeHead from 'views/products/activeHead.vue';
+    import ProductList from 'views/products/ProductList.vue';
+    import ActProductList from 'views/products/ActProductList.vue';
+
 
 
     import layer from 'layer';
@@ -74,13 +79,11 @@
         name: 'app',
         data() {
             return {
+                showList:'product',
                 showCategory:false,
-                showEditDialog:false,
                 editItem:{},
                 cartItemIndex:0,
                 pageNum:1,
-                activty:false,
-                flag:true,
 
             }
         },
@@ -93,6 +96,7 @@
                 return this.$store.state.currentPage.list;
             },
             page () {
+
                 return this.$store.state.currentPage.pageData;
             },
             productDetail (){
@@ -122,41 +126,26 @@
              breadcrumb,                  //面包屑
              category,                    //分类
              ProductList,                 //商品列表
+             ActProductList,                 //活动商品列表
              searchbar,
-             Loading,
-             addPrice,
-             activeHead
+             Loading
         },
         created(){
-            this.fetchList();
+
         },
         methods:{
-            activeTab(){
-                this.activty=true;
-                this.showCategory=false;
-                if(this.$store.state.activeId.number==3){
-                    this.flag=false;
+            switchNavBar(navname){
+                if (navname != 'product') {
+                    this.showCategory = false;
                 }
-//                this.$store.dispatch("demo").then(res=>{
-//
-//                }).catch(res=>{
-//
-//                })
+                this.showList=navname;
+
             },
-            activeTabt(){
-                this.activty=false;
+            openCategory(navname){
+                this.switchNavBar(navname);
                 this.showCategory=true;
-                this.flag=true;
-
-            },
-            openCategory(){
-                this.showCategory=!this.showCategory;
-
                 if(this.showCategory){
-
-                    this.$store.dispatch('fetchCategory',this.productParams.categoryId).then(res=>{
-                     
-                    });
+                    this.$store.dispatch('fetchCategory',this.productParams.categoryId);
                 }
             },
             //请求列表
@@ -170,8 +159,6 @@
             //创建订单
             buildOrder:function(cart){
                 //alert(this.mode);
-
-
                 var cartParam={itemParams:[]};
 
                 cart.forEach(function(ele,index){
@@ -187,7 +174,6 @@
 
 
                 var giftParam={giftIds:[]};
-
                 cart.forEach(function(ele,index){
 
                     if(ele.appGiftItem) {
@@ -248,7 +234,6 @@
 
                     var newitem = {};
                     Object.assign(newitem, item);
-                    newitem.selectDate = util.getSelectDate(); //自动获取选择日期
                     newitem.amount = 1; //数量默认为1
                     this.pushCart(newitem);
                     return false;
@@ -316,15 +301,11 @@
             },
             //打开仓库详情
             openStock(item) {
-
-
                 let vm=this;
                 var params={
                     barcode:item.barCode,
                     quantity:item.amount-item.availableStock
                 }
-
-
 
                 this.itemRepertory.needQuantity=item.amount-item.availableStock;
 
@@ -382,7 +363,7 @@
 
                 this.$set(item,'isDiscount',true);
                 this.editItem=item;
-                this.showEditDialog=true;
+
 
             },
             //判断如何加入购物车
@@ -398,11 +379,13 @@
                             //如果没赠品直接找到
                             if(!this.cartData[i].appGiftItem){
                                 this.cartData[i].amount++;
+                                this.cartItemIndex=i;
                                 find=true;
                             }
 
                             else if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
                                 this.cartData[i].amount++;
+                                this.cartItemIndex=i;
                                 find=true;
                                 //break;
                             }

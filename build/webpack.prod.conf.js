@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'production';
+
 
 var path = require('path')
 var utils = require('./utils')
@@ -28,15 +28,19 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path:  path.resolve(__dirname, '../dist'),
-    publicPath: "/",
+    publicPath: "../",
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[id].js')
   },
   plugins: [
+      new webpack.DefinePlugin({
+          'process.env':{ NODE_ENV: '"production"'}
+      }),
+
       //公共common   webpack.optimize（最优化）
       new webpack.optimize.CommonsChunkPlugin({
           name: 'vendor',
-          filename: "vendor.js",
+          filename: "js/vendor.js",
           minChunks: function (module, count) {
               // any required modules inside node_modules are extracted to vendor
               return (

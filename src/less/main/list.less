@@ -1,0 +1,174 @@
+#productList{
+  height: @productHeight+(-70);
+  @media (min-width:1600px){
+    height:@productHeight*1.5+(-50);;
+  }
+}
+#actProductList{
+  height: @productHeight+(-70);
+  @media (min-width:1600px){
+    height:@productHeight*1.5+(-50);;
+  }
+}
+
+//商品
+.product{
+    position: relative;
+    padding-top: 0;
+    margin-top: @gutter;
+    padding: @gutter;
+    .clearfix();
+    border-radius: 5px !important;
+    box-shadow: 0 0 10px #cccccc  !important;
+  //商品
+  .item{
+    .animated(opacityShow);
+    height: auto; position: relative;  margin-top:@gutter;
+    border:  @borderStyle; border-radius: 3px;
+    background-size:100%;
+    .clearfix();
+
+    .cc{width: 100%; padding-top: 100%;
+      position: relative;
+      border-radius: 5px;
+      background:#ffffff  url('@{imgPath}/lazyload.png') 50% 50% no-repeat;
+      background-size:cover;
+      .photo{
+        position: absolute;
+        top:0;
+        background-size:cover;
+        width: 100%;
+        height: 100%;
+        background-position: center center;
+      }
+      .txt{width: 100%; background: blank; height: 30px; background: rgba(0,0,0,0.5);
+        padding: 5px 10px;
+        z-index:10;
+        bottom:0; position: absolute; line-height: 20px;
+        .iconfont{
+          font-size: 12px;
+          line-height: 20px;
+          text-decoration: none;
+        }
+        .icon-liebiao{
+          font-size: 14px;
+          line-height: 22px;
+        }
+
+        color: #ffffff;
+        .norow;
+        .info{
+          float:right;}
+        .price{color:@themeColor; }
+        .stock{margin-left: 10px; color: #ffffff;}
+        .list-btn,.buy-btn{position:relative;z-index: 99;  float: left; margin-left: @gutter/2; margin-right: @gutter/2;  color: @themeColor}
+      }
+    }
+
+    .tt{
+
+      width: 100%;  position: relative;
+      padding-left: @gutter/2;
+      padding-right: @gutter/2;
+      z-index:10;
+      font-size: 12px;
+      position:relative;height:25px; line-height:25px; font-size:12px;
+      .norow();
+    }
+  }
+
+  //活动盒子
+  .act-box{
+
+    width: 20%;
+    height: 88%;
+    color: #fff;
+    right: 0;
+    position: absolute;
+    background: url('@{imgPath}/redBg.png') no-repeat;
+    background-size:cover;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    dt{
+       line-height: 1.5;
+       font-size: 36px;
+       margin-top: @gutter/2;
+       font-weight: normal;
+    }
+    dd{
+      line-height: 30px;
+      font-size: 12px;
+      &.dd2{
+        line-height: 1.5;
+        font-size: 20px;
+      }
+      &.dd3{
+        cursor: pointer;
+         border: solid 1px #ffffff;
+         background: @themeColor;
+         width: 60%;
+         height: 50px;
+         border-radius: 5px;
+         margin: @gutter/2 auto;
+         padding-top: 5px;
+         small,em{
+           font-size: 12px;
+           display:block;
+           line-height: 20px;
+         }
+         em{
+          font-size: 14px;
+         }
+      }
+      &.dd4{
+        cursor: pointer;
+        margin-top: 0;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+      }
+    }
+    &.overline{
+      background: url('@{imgPath}/greenBg.png') no-repeat;
+      & dd.dd3{
+          background: @green;
+      }
+    }
+  }
+
+}
+
+//活动导航
+.act-type{
+  margin-top: @gutter;
+  a{
+    background: #e8e9f1;
+    color: #333333;
+    padding: 6px 24px;
+    &.selected{
+      .btn-primary;
+    }
+    font-size: 12px;
+  }
+
+}
+
+#actProductList > div:first-child{
+  padding-left: 6px;
+  padding-right: 6px;
+
+  .product {
+
+    //商品
+    .act-col {
+      display: none;
+    }
+
+    .act-col:nth-child(1),.act-col:nth-child(2),.act-col:nth-child(3),.act-col:nth-child(4),.act-col:nth-child(5),.act-col:nth-child(6){
+      display: block;
+    }
+  }
+}
+
+

@@ -68,15 +68,14 @@
       position: relative;
       .order-row;
 
-      .left-con{
+      .menu-con{
         padding-top: 15px;
         padding-bottom: 15px;
-        height:@orderHeight;
         border-right: @borderDashedStyle;
-        border-width: 2px;
+        border-width: 1px;
         position: relative;
         .btn{
-          margin-top: 15px; margin-bottom: 30px; font-size: 18px;
+          margin-top: @gutter; margin-bottom: @gutter; font-size: 18px;
           span {margin-right: 20px;}
         }
         .scan-btn,.money-btn,.card-btn{
@@ -132,7 +131,25 @@
           border-bottom: @borderDashedStyle;
           border-width: 2px;
       }
+      .pay-type-box{
+        .clearfix();
+      }
+      .paytype{
+        margin-top:12px;
+        margin-bottom:12px;
+        float: left;
+        width: 250px;
+        height:187px;
 
+      }
+      .wxpay{
+        background: url('@{imgPath}/pay_wx.jpg')  no-repeat;
+        background-size:cover;
+      }
+      .alipay{
+        background: url('@{imgPath}/pay_ali.jpg')  no-repeat;
+        background-size:cover;
+      }
       .calc-box{
           width: 30%;
           padding:@gutter;

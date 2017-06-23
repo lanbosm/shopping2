@@ -44,7 +44,7 @@
                     <input v-model="memo" type="text" :disabled="!shopRepository.availableStock" placeholder="请输入备注"   />
                 </div>
                 <div class="item-stock-bom">
-                    <a class="btn btn-lightgreen btn-block specs-ok"  @click="checkRepository" >确定</a>
+                    <a class="btn btn-primary btn-block specs-ok"  @click="checkRepository" >确定</a>
                 </div>
             </div>
         </div>

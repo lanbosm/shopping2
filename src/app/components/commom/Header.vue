@@ -2,13 +2,13 @@
    	   <div class="container common-header">
             <div class="row">
                 <div class="col-sm-2 col-md-2 col-lg-2" v-if="back">
-                    <a class="btn btn-default back-btn pull-left" @click="toBack();"  v-if="back.show" >&laquo;{{back.label}} </a>
+                    <a class="btn btn-primary back-btn pull-left" @click="toBack();"  v-if="back.show" >&laquo;{{back.label}} </a>
                 </div>
                 <div class="col-sm-8 col-md-8 col-lg-8 text-center">
                     <h3>{{title}}</h3>
                 </div>
                 <div class="col-sm-2 col-md-2 col-lg-2 pull-right" v-if="next" >
-                    <a class="btn btn-default ok-btn pull-right"  @click="toNext();" v-if="next.show"> {{next.label}}  &raquo;</a>
+                    <a class="btn btn-primary ok-btn pull-right"  @click="toNext();" v-if="next.show"> {{next.label}}  &raquo;</a>
                 </div>
             </div>
         </div>

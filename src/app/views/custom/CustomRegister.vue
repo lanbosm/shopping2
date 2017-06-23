@@ -35,7 +35,7 @@
                                 <input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">
                             </div>
 
-                            <a class="btn btn-lightgreen btn-block" @click="doRegister()">保存</a>
+                            <a class="btn btn-primary btn-block" @click="doRegister()">保存</a>
                         </div>
                     </div>
         </div>

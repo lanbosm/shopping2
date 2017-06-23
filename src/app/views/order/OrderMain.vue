@@ -4,10 +4,10 @@
         <app-center-custom  :message="message" :amount="amount" :order="order"></app-center-custom>
         <div class="container order-body">
             <div class="row">
-                <div class="col-nn-30  left-con">
-                    <app-center-menu :mode="mode"></app-center-menu>
+                <div class="col-nn-30 menu-con">
+                    <app-center-menu ></app-center-menu>
                 </div>
-                <div class="col-nn-70 right-con">
+                <div class="col-nn-70">
                     <div class="content">
                         <transition name="slide">
                             <keep-alive>
@@ -36,7 +36,7 @@
                 title:"结账",
                 back:{"label":"返回","url":"/","show":true},
                 next:{"label":"打印","url":"/print","show":true,"cb":this.createOrder},
-                message: '请选择一个付款方式',
+                message: '请选择一个付款方式'
             }
         },
         components:{
@@ -54,9 +54,6 @@
             cartData(){
                 return this.$store.state.currentPage.cartData;  //购物车数据
             },
-            mode(){
-                return this.$store.state.currentPage.mode;
-            },
             order (){
                 return this.$store.state.currentPage.orderData;
             },
@@ -64,13 +61,11 @@
                 return this.order.totalAmountPayable;
             },
             orderParams(){
-
                 return this.$store.state.currentPage.orderParams;
             }
         },
         methods: {
             createOrder(){
-
 
                 if(!this.orderParams.paymentMethodId){
                     this.$message({
@@ -97,7 +92,7 @@
 
                     })
 
-                } if(this.orderParams.paymentMethodId==12){//扫码
+                } if(this.orderParams.paymentMethodId==17 || this.orderParams.paymentMethodId==18){//扫码
                     this.$store.state.currentPage.orderParams.rmb=0;
                     this.$store.state.currentPage.orderParams.cash=0;
 

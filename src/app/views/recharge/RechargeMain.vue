@@ -10,9 +10,9 @@
                     <div class="row">
                         <div class="col-nn-30  left-con">
                             <div class="recharge-menu">
-                                <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==12}"  @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
-                                <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==10}"  @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
-                                <a  class="btn btn-default scan-btn btn-block" :class="{on:payMethod==11}"  @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
+                                <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==12}"  @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
+                                <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==10}"  @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
+                                <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==11}"  @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
                             </div>
                         </div>
                         <div class="col-nn-70 right-con">
@@ -21,8 +21,8 @@
                     </div>
                 </div>
                 <div class="modal-foot">
-                    <a class="btn btn-default recharge-layer-ok" @click="rechargePrint">确定</a>
-                    <a class="btn btn-default recharge-layer-cancel" @click="closeRechargeModal" >取消</a>
+                    <a class="btn btn-primary recharge-layer-ok" @click="rechargePrint">确定</a>
+                    <a class="btn btn-primary recharge-layer-cancel" @click="closeRechargeModal" >取消</a>
                 </div>
 
 

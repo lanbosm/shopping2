@@ -39,7 +39,7 @@ Vue.use(VueRouter)
 
 //如果需要加菜单，就在这里添加路由，并在UserMenu.vue添加入口router-link
 const router = new VueRouter({
-    //mode: 'history',
+    // mode: 'history',
     routes: [
         {
 
@@ -138,7 +138,7 @@ const router = new VueRouter({
 
 
         // 404 page
-        {   path: '*',
+        {   path: ' *',
             name: '404',
             component: NoPage
         }

@@ -1,6 +1,6 @@
 <template>
     <div class="shopAdminBox">
-        <a class="btn btn-block btn-default addShopAdmin-btn" @click="showShopAdminModal">
+        <a class="btn btn-block btn-primary addShopAdmin-btn" @click="showShopAdminModal">
         <span class="iconfont icon-gouwucheman" aria-hidden="true" > {{shopAdminName}}</span>
         </a>
     </div>

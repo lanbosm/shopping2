@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="item-detail-bom">
-                 <a class="btn btn-lightgreen btn-block specs-ok"  @click="checkItem(cartItem)" >确定</a>
+                 <a class="btn btn-primary btn-block specs-ok"  @click="checkItem(cartItem)" >确定</a>
             </div>
 
         </div>

@@ -27,10 +27,13 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 // export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
 //const HOST_main="http://192.168.1.122:82";              //主服务器
-//const HOST_back="http://cs.awo123.cn";                 //备服务
 
+
+//const HOST_main="http://cs.awo123.cn";              //主服务器
 const HOST_main="http://cs.awo123.cn";              //主服务器
-let switchBack=false;
+//const HOST_main="http://lucxx.tunnel.qydev.com:80";              //主服务器
+//const HOST_back="http://cs.awo123.cn";                 //备服务
+let switchBack=false
 
 
 export const HOST=HOST_main;

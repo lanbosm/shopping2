@@ -87,6 +87,12 @@ gulp.task('copy:lib',function(){
     })).pipe(gulp.dest('./dist/css/'));
 
 
+    gulp.src(['**/*.png','**/*.jpg','**/*.gif'],{             //抓取时候会存在子目录
+        cwd:'./lib/'
+    }).pipe(rename(function (path) {
+        path.dirname = "./";             //以根目录方式输出
+    })).pipe(gulp.dest('./dist/images/'));
+
     //抓取font
     gulp.src(['bootstrap/fonts/**.*'],{             //抓取时候会存在子目录
         cwd:'./lib/'
@@ -194,7 +200,7 @@ gulp.task('rev:js', function (done) {
     var webpack = require('webpack-stream'); //gulp版webpack
     return   gulp.src('src/js/index.js')  //这里src只是装样子 如果想有效请使用vinyl-named
         .pipe(webpack( webpackConfigPro , require('webpack')))
-        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('dist'))
         .on('end', function(){
             console.log("打包完成...");
         });

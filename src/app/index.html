@@ -17,6 +17,7 @@
 
 	<link rel="stylesheet" type="text/css" href="./css/swiper.min.css"/>
 	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/layer.css"/>
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_obtrxlrp1y808uxr.css">
 	<link rel="stylesheet" type="text/css" href="./css/global.css" />
 	<link rel="stylesheet" type="text/css" href="./css/main.css" />
@@ -41,14 +42,11 @@
 
 					<app-center-loading v-if="waiting"></app-center-loading>
 
-					<div class="mediascreen" id="mediascreen">
-						<div class="s">
-							<!--主体-->
-							<transition name="slide" >
+					<!--主体-->
+					<transition name="slide" >
 									<router-view ref="app"></router-view>
-							</transition>
-						</div>
-					</div>
+					</transition>
+
 
 					<!--顾客-->
 					<dialog-custom  ref="custom" v-if="showCustomDialog"></dialog-custom>
@@ -97,7 +95,7 @@
 
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
-<script type="text/javascript" src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+<script type="text/javascript" src="./js/layer.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/swiper.min.js"></script>
 <script type="text/javascript" src="./js/jquery.qrcode.min.js"></script>
@@ -115,53 +113,7 @@
     }
 
 
-    (function(win,doc){
 
-        var re=function(){
-            var wrap=doc.querySelector('#mediascreen');
-            var s=doc.querySelectorAll('.s');
-            var pw = 1280;     //设计图的宽
-            var ph = 720;     //设计图的高
-            var tww = win.innerWidth;
-            var twh =win.innerHeight;
-
-            var wh = twh*pw/tww;        //获取对应比例高
-
-            var wsc = tww/pw;          //获取比例
-
-            var tw = Math.min(0,Math.abs((pw-tww)*0.5));  //center
-
-            if(wsc<=1) {
-                tw = 0;
-            }
-
-
-            //先宽自适应 wscale
-			wrap.style.height=wh+'px';
-            wrap.style.transformOrigin='0% 0%';
-            wrap.style.webkitTransformOrigin='0% 0%';
-            wrap.style.transform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
-            wrap.style.webkitTransform='translate3d('+tw+'px, 0px, 0px) scale('+wsc+')';
-
-            //  再高自适应  hscale
-            if(wh<ph) {
-                var hsc = wh/ph;
-            } else {
-                var hsc=1;
-            }
-
-            for(var i=0;i<s.length;i++){
-                s[i].style.transformOrigin='50% 0%';
-                s[i].style.webkitTransformOrigin='50% 0%';
-                s[i].style.transform='scale('+hsc+') translateZ(0)';
-                s[i].style.webkitTransform='scale('+hsc+') translateZ(0)';
-            }
-
-        }
-        //re();
-        //win.addEventListener('resize',re,false);
-        doc.querySelector('#mediascreen').style.margin="0 auto";
-    })(window,document);
 
 
 //统计代码

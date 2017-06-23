@@ -3,6 +3,7 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
@@ -18,6 +19,7 @@ module.exports = merge(baseWebpackConfig, {
     },
     output: {
         path:  path.resolve(__dirname, '../dist'),
+        publicPath: "",
         filename: utils.assetsPath('js/[name].js'),
         chunkFilename: utils.assetsPath('js/[id].js')
     },

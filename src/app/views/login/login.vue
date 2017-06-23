@@ -2,7 +2,7 @@
     <div class="login">
         <div class="container" >
             <div class="row">
-                <div class="right-con col-xs-6 col-xs-offset-6">
+                <div class="col-xs-6 col-xs-offset-6 login-right">
                     <div class="register-box pr">
                         <div class="register-row1 pr" >
                             <a class="logo"></a>

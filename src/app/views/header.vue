@@ -27,7 +27,7 @@
                             <span class="badge">{{msgData.msgNum}}</span>
                         </a>
                          <a class="setting-btn"  @click="setting()">
-                             <i class="glyphicon glyphicon-th-list" style="width:30px;"></i>
+                             <i class="glyphicon glyphicon-th-large" style="width:30px;"></i>
                              应用
                          </a>
                         <a class="cash-btn"  @click="cash()">
@@ -97,8 +97,8 @@
             this.$store.commit('setShopData', shopData);
             //判断备用金 只填写一次
 
-            if(this.shopData.needSpareCash){
-                this.shopData.needSpareCash=false;
+            if(!this.shopData.needSpareCash){
+                this.shopData.needSpareCash=true;
                 util.pushLocal("shopData",this.shopData);
                 setTimeout(() => {
                     this.cash();
@@ -107,7 +107,7 @@
 
 
             this.$store.dispatch("loadLastData");
-            this.addMsglistener();
+            //this.addMsglistener();
         },
         mounted(){
             this.$nextTick(_=>{

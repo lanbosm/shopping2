@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-5 col-xs-offset-3">
                     <div class="input-group searchCustom">
-                            <span class="input-group-btn"><button class="btn btn-default" @click="doSearch()"><span class="glyphicon glyphicon-search" ></span></button>
+                            <span class="input-group-btn"><button  class="btn btn-default" @click="doSearch()"><span class="glyphicon glyphicon-search" ></span></button>
                             </span>        <input type="text" v-model="searchstr" class="form-control" @keyup.enter="doSearch()" placeholder="搜索顾客">
 
                     </div>
@@ -14,7 +14,7 @@
 
                         <a v-if="step=='normal' || step=='list'" class="btn add-custom" @click="toAdd()"></a>
                         <a v-if="step=='register' || step=='detail'" class="btn cancel-custom"  @click="toAdd()">取消</a>
-                        <a v-if="step=='detail'" class="btn select-ticket btn-lightgreen"   @click="toSelect()">选择</a>
+                        <a v-if="step=='detail'" class="btn select-ticket btn-primary"   @click="toSelect()">选择</a>
 
                 </div>
 

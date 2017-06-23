@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="modal-foot">
-                    <a class="btn btn-default showAdmin-layer-close" @click="checkShopAdmin" >确认</a>
+                    <a class="btn btn-primary showAdmin-layer-close" @click="checkShopAdmin" >确认</a>
                 </div>
             </div>
         </div>
@@ -101,7 +101,11 @@
                     })
             },
             checkShopAdmin(){
-                if(!this.shopAdminIndex){return false;}
+                if(!this.shopAdminIndex){
+                    var modal='#layer-showAdmin';
+                    $(modal).modal('hide');
+                    return false;
+                }
                 var shopAdmin=this.listData[this.shopAdminIndex];
                 this.$store.commit("setShopAdminData",shopAdmin);
                 this.$store.commit("setOrderParams",{
