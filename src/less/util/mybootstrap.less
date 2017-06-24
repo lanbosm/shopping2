@@ -24,18 +24,12 @@
 .pagination>li>span{margin-right:20px}
 .pagination>li>span:hover{color:#333;background:#fff;font-weight:400}
 .nav-tabs{border-bottom: none;}
-.panel{border:none}
+.panel{border:none; box-shadow: none; -webkit-box-shadow: none;}
 .panel-primary>.panel-heading{color:#fff;background:0 0;padding:0;border:none; background-color:transparent; border:none;
   position: relative;}
 .panel-primary>.panel-heading .nav-tabs>li>a{width:auto;}
 .panel-primary>.panel-body{
   padding:@gutter;
-  height:@productHeight;
-  @media (min-width:1600px){
-    height:@productHeight*1.5;
-  }
-
-  overflow: hidden;
   border: 1px solid @border-color;
   border-radius: 0;
   border-top-right-radius:5px;

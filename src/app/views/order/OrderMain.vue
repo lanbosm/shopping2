@@ -11,7 +11,7 @@
                     <div class="content">
                         <transition name="slide">
                             <keep-alive>
-                               <router-view :message="message" :amount="amount"  :order="order" :show-shop-admin-btn="true"></router-view>
+                               <router-view :message="message" :amount="amount"   :show-shop-admin-btn="true"></router-view>
                             </keep-alive>
                         </transition>
                     </div>

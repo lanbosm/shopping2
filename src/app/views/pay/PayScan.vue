@@ -4,9 +4,10 @@
             <h1 class="pay-amount ">￥ {{amount}}</h1>
             <p class="pay-gift-amount" v-if="giftAmount" >{{giftAmount}}</p>
             <div class="pay-type-box">
-                <div class="wxpay paytype">
-                    微信
-                    <input type="radio" v-model="payMethod" value="17" @change="setPay()"/>
+                <div class="paytype">
+
+                    <input type="radio" id="wxpay" v-model="payMethod" value="17" @change="setPay()"/>
+                    <label class="paybox wxpay" for="wxpay"></label>
                 </div>
                 <div class="alipay paytype">
                     支付宝

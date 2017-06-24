@@ -33,10 +33,11 @@
 							</div>
 						</li>
 					</ul>
+					<div class="totalprice">
+						总价 <span class="primary">{{totalprice | currency }}</span>
+					</div>
 				</div>
-				<div class="totalprice">
-					总价 <span class="primary">{{totalprice | currency }}</span>
-				</div>
+
 	</div>
 </template>
 

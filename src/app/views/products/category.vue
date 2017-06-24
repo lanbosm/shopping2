@@ -1,7 +1,7 @@
 <template>
 
         <div class="dropdown-menu menu" :class="{'show':showCategory}" @mouseleave="outcheck"  >
-            <li class="sub all" ><a  :class="{cur:!productParams.categoryId}" href="javascript:void(0)"  @click="fetchAllBrand()">全部分类</a></li>
+            <li class="sub all" :class="{cur:!productParams.categoryId}"><a   href="javascript:void(0)"  @click="fetchAllBrand()">全部分类</a></li>
             <li class="sub" v-for="(item,index) in productCategories" :class="{cur:item.id==productParams.categoryId}">
                 <a href="javascript:void(0)"  @click="fetchCategory(item.id,item.name,$event)" >{{item.name}}</a>
             </li>
@@ -72,7 +72,7 @@
             }
         },
         created(){
-            //alert(this.showCategory+"s");
+            console.log(this.productParams.categoryId);
         },
         mounted(){
 
@@ -83,19 +83,19 @@
 
 
 
-                this.$parent.showCategory = false;
-                var out=true;
-                function lock(){
 
-                    out=false;
-                    console.log(out);
-                };
+                var out=true;
                 if(document.querySelector('.category-list')) {
-                    document.querySelector('.category-list').addEventListener('mouseover', lock, false);
+                    document.querySelector('.category-list').addEventListener('mouseover', function(){
+                        out=false;
+                    }, false);
 
                     setTimeout(() => {
+
                         if (out ) {
-                            document.querySelector('.category-list').addEventListener('mouseover', lock, false);
+                            document.querySelector('.category-list').addEventListener('mouseover', function(){
+                                out=false;
+                            }, false);
                             $(".category-list").removeClass('open').trigger($.Event('hidden.bs.dropdown'));
                             this.$parent.showCategory = false;
                         }
@@ -126,6 +126,8 @@
 
                 this.$store.dispatch('fetchList',params).then(res=>{
                     this.showSubMenu=false;
+                    this.$parent.switchNavBar('product');
+                    console.log(this.productParams.categoryId);
                     setTimeout(()=> {
                         this.$parent.showCategory = false;
                     },300);
@@ -140,6 +142,7 @@
                 var params={"categoryId": this.productParams.categoryId, "categoryName": this.productParams.categoryName, "brandId":bid,"brandName":bname,"pageNum":1};
                 this.$store.dispatch('fetchList',params).then(res=>{
                     this.$parent.showCategory=false;
+                    this.$parent.switchNavBar('product');
                 })
 
             },

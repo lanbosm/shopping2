@@ -110,6 +110,10 @@ img {
   -webkit-user-select: none;
   display: block;
 }
+html,
+body {
+  height: 100%;
+}
 /*class*/
 .hide {
   display: none;

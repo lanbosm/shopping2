@@ -10,20 +10,20 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading" >
                                 <div class="row">
-                                    <div class="col-xs-7">
+                                    <div class="col-xs-12 col-md-7">
                                         <ul class="nav nav-tabs app-nav">
                                             <li class="category-list" :class='{active:showList=="product"}' @click="openCategory('product')">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                                     <span class="glyphicon glyphicon-th-list"></span>分类筛选<span class="caret"></span>
                                                 </a>
-                                                <category :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
+                                                <category v-show="showCategory" :show-category="showCategory" :product-categories="productCategories" :product-params="productParams"></category>
 
                                             </li>
                                             <li @click="switchNavBar('act')"  :class='{active:showList=="act"}'><a href="javascript:void(0)">活动专区</a></li>
                                          </ul>
                                     </div>
 
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-12  col-md-5">
                                         <searchbar  :product-params="productParams"></searchbar>
                                     </div>
                                 </div>
@@ -32,10 +32,9 @@
 
                                 <product-list v-if='showList=="product"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></product-list>
                                 <act-product-list v-if='showList=="act"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></act-product-list>
-
-                            </div>
-                            <div class="panel-footer" v-if='showList=="product"'>
-                                <pagination :page="page" :go-callback="goCallback" ></pagination>
+                                <div class="productlist-footer"  v-if='showList=="product"'>
+                                    <pagination :page="page" :go-callback="goCallback" ></pagination>
+                                </div>
                             </div>
 
                         </div>
@@ -142,9 +141,12 @@
 
             },
             openCategory(navname){
-                this.switchNavBar(navname);
-                this.showCategory=true;
-                if(this.showCategory){
+                //
+
+
+
+                if(!this.showCategory){
+                    this.showCategory=true;
                     this.$store.dispatch('fetchCategory',this.productParams.categoryId);
                 }
             },

@@ -140,11 +140,28 @@
         float: left;
         width: 250px;
         height:187px;
+        position: relative;
+        input{
+          position:absolute;
+          display: block;
+          opacity: 1;
 
+        }
       }
+      .paybox{
+         width: 100%;
+         height: 100%;
+         left: 0;
+         top:0;
+         position: absolute;
+      }
+
+    .paytype input[type=radio]:checked + label{
+      opacity: 0.5;
+    }
       .wxpay{
         background: url('@{imgPath}/pay_wx.jpg')  no-repeat;
-        background-size:cover;
+        background-size:100%;
       }
       .alipay{
         background: url('@{imgPath}/pay_ali.jpg')  no-repeat;

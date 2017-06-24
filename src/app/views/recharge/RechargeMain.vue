@@ -8,14 +8,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-nn-30  left-con">
+                        <div class="col-nn-30">
                             <div class="recharge-menu">
                                 <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==12}"  @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
                                 <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==10}"  @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
                                 <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==11}"  @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
                             </div>
                         </div>
-                        <div class="col-nn-70 right-con">
+                        <div class="col-nn-70 ">
                                 <recharge-list  :amount="amount" :gift-amount="giftAmount" :message="message" ></recharge-list>
                         </div>
                     </div>

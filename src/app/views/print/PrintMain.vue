@@ -164,8 +164,8 @@
     .print-box  table.printtable tr{ display:block;clear: left;  padding-top:10pt; padding-bottom:10pt; }
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
-    .print-box  table.printtable td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
-    .print-box  table.printtable td:first-child{display: block; width: 60%;float: left; position: relative;}
+    .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
+    .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
     .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
     .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
     .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
@@ -246,8 +246,11 @@
                         width: 230,  //230内扫不出
                         height: 230
                     });
+
                     clearInterval(this.timer);
                     this.timer=this.scanResListen();
+                    window.open('./qrc.html?curl='+this.printData.wechatCodeUrl,'qrc','width=520,height=520,left=12,location=0,menubar=0,scrollbars=0,top=0,toolbar=0' )
+
                 }
 
                 if(this.printData.wechatMallUrl) {

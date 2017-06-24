@@ -13,7 +13,7 @@
         </div>
         <div class="row"   v-else>
 
-            <div class="col-xs-2" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" v-for="(item,index) in itemData "  @click="fetchItem(item.id);">
                 <div class="item">
                     <!--图片盒子-->
                     <div class="cc">

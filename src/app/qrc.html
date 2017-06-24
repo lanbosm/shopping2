@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二维码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+</head>
+<body>
+  	<h2 style=" margin: 0 auto;">扫码付款</h2>
+	<div id="qrcCode" style="width: 520px; height: 520px; margin: 0 auto;"></div>
+
+
+
+</body>
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery.qrcode.min.js"></script>
+<script>
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
+}
+
+
+	  var curl=getUrlParam('curl');
+	  alert(curl);
+	  if(!curl){return false;}
+     $('#qrcCode').qrcode({
+                        render: "table",
+                        text: curl,
+                        width: 520,  //230内扫不出
+                        height: 520
+       });
+                
+</script>
+</html>

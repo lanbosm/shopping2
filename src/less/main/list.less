@@ -1,21 +1,22 @@
-#productList{
-  height: @productHeight+(-70);
-  @media (min-width:1600px){
-    height:@productHeight*1.5+(-50);;
-  }
+#productList,#actProductList{
+  height: @productHeight;
 }
-#actProductList{
-  height: @productHeight+(-70);
-  @media (min-width:1600px){
-    height:@productHeight*1.5+(-50);;
-  }
-}
+@media (min-width:1600px) {
 
+  #productList, #actProductList {
+    height: @productHeight *1.2;
+  }
+}
+@media (min-width:1900px){
+
+  #productList,#actProductList {
+    height: @productHeight *1.5;
+  }
+}
 //商品
 .product{
     position: relative;
     padding-top: 0;
-    margin-top: @gutter;
     padding: @gutter;
     .clearfix();
     border-radius: 5px !important;
@@ -152,6 +153,10 @@
     font-size: 12px;
   }
 
+}
+
+.productlist-footer{
+  margin-top: @gutter;
 }
 
 #actProductList > div:first-child{
