@@ -8,7 +8,8 @@
             <div class="list-body" v-else-if="listData.list.length==0">
                 <div class="no-list"></div>
             </div>
-            <div class="list-body" id="custom-list-main-list" v-else >
+            <div class="list-body" id="custom-list-main-list"  v-else >
+                <ul>
                 <!--list-->
                 <div class="list-row" v-for="(item,index) in listData.list">
                     <dl class="col">
@@ -22,6 +23,7 @@
                         <a class="detail-btn" @click="handleDetail(item)">查看详情</a>
                     </span>
                 </div>
+                </ul>
             </div>
             <div class="list-footer" slot="list-footer">
                     <div class="footer-left">
@@ -123,7 +125,7 @@
             return {
                 title:"会员",
                 back:{"label":"返回","url":"index","show":true},
-                listData:{},
+                listData:{ },
                 pageNum:1,                 //一页显示多少
             }
         },
@@ -146,9 +148,8 @@
                 window.scrollTo(0,0);
             },
             handleStock(item){
-                this.$store.dispatch("fetchPickList",{"memberId":item.id,"pageNum":1}).then(res=>{
-                    this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
-                });
+                this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
+
             },
             handleDetail(item){
                 this.$root.showCustomDialog=true;
@@ -197,11 +198,13 @@
             fetchList() {
                     var data={searchStr:'',pageNum:this.pageNum};
                     this.$store.dispatch('fetchCustomList',data).then(res=>{
-                        this.listData=res.page;
-                        this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-main-list');
-                        })
-                        console.log(res);
+                        if(res.page.list.length>0) {
+                            this.listData = res.page;
+                            this.$nextTick(_ => {
+                                this.$simpleScroll('#custom-list-main-list');
+                            })
+                            console.log(res);
+                        }
                     }).catch(res=>{
                         console.log(res);
                         console.log('err');

@@ -39,8 +39,8 @@
                             <span style="width: 25%">
                                 <div class="span_all">
                                     <input class="span1" type="button" value="-" @click="edd(1,item.operationNum,index)">
-                                    <input class="span2" type="tel" v-model="item.operationNum">
-                                    <input class="span3" type="button" value="+" @click="add(1,item.operationNum,item.quantity,index)">
+                                    <input class="span2" type="tel" @blur="out(item.operationNum,index)" v-model="item.operationNum">
+                                    <input class="span3" type="button" value="+" @click="add(1,item.operationNum,index)">
                                 </div>
                             </span>
                         </div>
@@ -69,7 +69,6 @@
     .span_all .span1{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
     .span_all .span2{width: 68px;height: 38px;line-height: 38px;text-align: center;float: left}
     .span_all .span3{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
-    .no-list{ width: 100%; height:600px; background: url(/images/no_list.jpg) no-repeat 50% 0%;}
     .log-products{
         position: relative;
     .list-row{
@@ -164,52 +163,55 @@
 
         },
         components:{
-//            Pagination
+
         },
         computed:{
-            Num(){
-                var num_act={};
-                var length=this.listdata.length;
-                for (var i=0;i<length;i++){
-                    this.$set(num_act,i,0)
-                }
-                return num_act;
-            },
-            order(){
-                return this.$store.state.currentPage.stockData
-            },
+
+
+
         },
         created(){
 
-                this.mid=this.$route.query.mid
-//
 
         },
         methods:{
-            add(number,index,max,ss){
-                var vm=this;
-                index=this.listData[ss].operationNum;
-                if(index<max){
-                    index+=number;
-//                        this.listdata[ss].quantity=index;
-                    console.log(this.listData[ss]);
-                    this.$set(this.listData[ss],'operationNum',index);
-//                        alert(this.listdata[ss].quantity)
-                }else {
-                    index=max;
+            out(operationNum,index){
+                var cantakeNum=this.listData.list[index].quantity-this.listData.list[index].takenNum;
+                var nowNum=operationNum;
+                if(nowNum>cantakeNum){
+                    this.$message.error('超过可提数量');
+                    return false;
                 }
+                if(nowNum<0){
+                    return false;
+                }
+                this.listData.list[index].operationNum=nowNum;
 
             },
-            edd(number,index,ss){
-//                this.Num[index]-=Number(number);
-//                if(this.Num[index]<0){ this.Num[index]=0;}
-//                console.log(this.Num)
-                if(index<=0){
-                    index=0;
-                }else {
-                    index-=Number(number);
-                    this.$set(this.listData[ss],'operationNum',index);
+            add(number,operationNum,index){
+                var cantakeNum=this.listData.list[index].quantity-this.listData.list[index].takenNum;
+                var nowNum=operationNum+number;
+                if(nowNum>cantakeNum){
+                    this.$message.error('超过可提数量');
+                    return false;
                 }
+                if(nowNum<0){
+                    return false;
+                }
+                this.listData.list[index].operationNum=nowNum;
+
+            },
+            edd(number,operationNum,index){
+                var cantakeNum=this.listData.list[index].quantity-this.listData.list[index].takenNum;
+                var nowNum=operationNum-number;
+                if(nowNum>cantakeNum){
+                    this.$message.error('超过可提数量');
+                    return false;
+                }
+                if(nowNum<0){
+                    return false;
+                }
+                this.listData.list[index].operationNum=nowNum;
             },
             handleCurrentChange(pageIndex){
                 this.pageNum=pageIndex;

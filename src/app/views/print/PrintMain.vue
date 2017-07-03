@@ -51,7 +51,9 @@
                             </tr>
                             <tr class="split" v-for="(item,index) in printData.appOrderItemConfirms">
                                 <td><span>{{item.name}}</span><span>*{{item.quantity}}</span></td>
-                                <td>{{item.price | currency}}</td>
+
+                                <td v-if="item.editPrice">{{item.editPrice | currency}}</td>
+                                <td v-else="item.price">{{item.price | currency}}</td>
                             </tr>
                             <tr class="split">
                                 <td>小计 </td>
@@ -89,7 +91,7 @@
                             </tbody>
                         </table>
 
-                        <p class="text-center" v-if="order.wechatCodeUrl">请微信扫码付款</p>
+                        <p class="text-center" v-if="order.wechatCodeUrl">请使用{{payName}}扫码付款</p>
                         <div id="qrcCode"></div>
                         <hr></hr>
                         <div class="diy-box">
@@ -118,8 +120,8 @@
                         .print-box  table.printtable tr{ display:block;clear: left;  padding-top:10pt; padding-bottom:10pt; }
                         .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                         .print-box  table.printtable{*zoom:1;}
-                        .print-box  table.printtable td:last-child{display: block; width: 40%;float: left; position: relative; text-align: right;}
-                        .print-box  table.printtable td:first-child{display: block; width: 60%;float: left; position: relative;}
+                        .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
+                        .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
                         .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
                         .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
                         .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
@@ -197,11 +199,12 @@
                 back:{"label":"返回","url":"order","show":false},
                 next:{"label":"下个订单","url":"index","show":true,"cb":this.clearOrder},
                 message: '等待付款',
+                payName:"",
                 amount:0,
                 payStatus:"wait",
                 timer:null,
-                orderMsg:null
-
+                orderMsg:null,
+                qrcWin:null
             }
         },
         computed: {
@@ -218,7 +221,6 @@
                 var print=this.$store.state.currentPage.printData;
                 var nowDate = new Date();
 
-                var paymentName={12:"扫码支付",10:"现金支付",11:"刷卡支付",14:"余额支付"};
 
                // print.paymentName=paymentName[this.orderParams.paymentMethodId];
                 print.cash=this.orderParams.cash ;
@@ -238,18 +240,41 @@
                 //付款二维码
                 $('#qrcCode').html("");
                 console.log(this.printData);
+
                 //有链接就生成
                 if(this.printData.wechatCodeUrl) {
-                    $('#qrcCode').qrcode({
-                        render: "table",
-                        text: this.printData.wechatCodeUrl,
-                        width: 230,  //230内扫不出
-                        height: 230
+
+                    var scanType={
+                        17:"微信",
+                        18:"支付宝"
+                    }
+                    this.payName=scanType[this.orderParams.paymentMethodId];
+                    clearInterval(this.timer);
+                    this.qrcWin=layer.open({
+                            zIndex:99,
+                            type: 2,
+                            title: '请用'+ this.payName+'扫以下二维码进行付款, 成功后窗口会自动消失 ',
+                            shadeClose: true,
+                            shade: false,
+                            maxmin: true, //开启最大化最小化按钮
+                            offset: ['70px', '12px'],
+                            area: ['600px', '480px'],
+                            content: '/qrc.html?curl='+encodeURIComponent(this.printData.wechatCodeUrl)
                     });
 
-                    clearInterval(this.timer);
-                    this.timer=this.scanResListen();
-                    window.open('./qrc.html?curl='+this.printData.wechatCodeUrl,'qrc','width=520,height=520,left=12,location=0,menubar=0,scrollbars=0,top=0,toolbar=0' )
+
+
+                        //自定义二维码
+                        $('#qrcCode').html("");
+                        $('#qrcCode').qrcode({
+                            render: "table",
+                            text: this.printData.wechatCodeUrl,
+                            width: 230,  //230内扫不出
+                            height: 230
+                        });
+
+
+
 
                 }
 
@@ -263,7 +288,7 @@
                         height: 230
                     });
                 }
-               // this.scanResListen();
+                this.scanResListen();
                 this.$simpleScroll('#printDiv');
 
             });
@@ -355,18 +380,19 @@
                     if(this.payStatus=="wait"){
                         this.timer=setTimeout(()=> {              //每5秒一次请求
                             this.scanResListen();
-                        },5000);
+                        },1000);
                     }else{
                         if(this.payStatus=="success"){
                             this.message="付款成功";
                             clearInterval(this.timer);
                             $(".payres-txt").addClass("success");
-                            layer.msg(this.message, {icon: 1});
+                            layer.msg(this.message, {icon: 1,zIndex:999});
+                            layer.close(this.qrcWin);
                         }else {
                             this.message="付款失败";
                             clearInterval(this.timer);
                             $(".payres-txt").addClass("error");
-                            layer.msg(this.message, {icon: 2});
+                            //layer.msg(this.message, {icon: 2,zIndex:999});
                         }
                     }
 

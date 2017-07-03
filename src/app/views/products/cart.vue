@@ -1,8 +1,8 @@
 <template>
    	<div class="shoppingCart">
-				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:cartData.length==0}">
+				<div class="shoppingCart-list" id="shoppingCart-list" :class="{empty:filterCartData.length==0}">
 					<ul>
-						<li :class="{checked:index==cartItemIndex}" v-for="(item,index) in cartData " track-by="$index" @click="checkCartItem(index);">
+						<li :class="{checked:index==cartItemIndex}" v-for="(item,index) in filterCartData " track-by="$index" @click="checkCartItem(index);">
 							<div class="shoppingCart-item">
 								<p>{{item.title}}</p>
 								<p class="small">
@@ -22,7 +22,9 @@
 										</em>
 										<em v-else>{{item.price | currency }}</em>
 									</span>
-									<span class="tips" @click="openStock(item)">{{item | stocktips}}</span>
+									<span class="tips" v-if="item.needStock" @click="openStock(item)">
+										<a class="btn needStock-btn">申请调拨</a>
+									</span>
 								</p>
 								<p class="small sales" v-if="item.isSales">
 									<i> {{item.sales}} 折</i>
@@ -53,7 +55,7 @@
             stocktips: function (value) {
                // console.log(value.id);
                 if(value.amount>value.availableStock) {
-                    return "库存不足";
+                    return "库存不足申请调拨";
                 }else{
                     return "";
 				}
@@ -72,6 +74,22 @@
             this.$simpleScroll('.shoppingCart-list');
 		},
         computed: {
+            filterCartData(){
+                var temp=this.cartData;
+
+                this.cartData.forEach((ele,index)=>{
+
+                    if(ele.amount>ele.availableStock){
+                        this.$set(ele,'needStock',true);
+					}else{
+                        this.$set(ele,'needStock',false);
+					}
+
+				});
+
+              	return   this.cartData;
+
+			},
             //数据来自全局
             totalprice () {
                 var total=0;
@@ -88,23 +106,7 @@
 
         },
         methods:{
-            //自适应高
-           setCartHeight (){
 
-                    var w = window.innerWidth;
-                    var lh = document.querySelector('.left-con').offsetHeight;
-                    var ch = document.querySelector('.shoppingCalc').offsetHeight;
-
-
-                    if (w >= 768) {
-                        document.getElementById("#shoppingCart-list").style.display="block";
-                        document.getElementById("shoppingCart-list").style.height = lh - ch - 140 + "px";
-                    } else {
-
-                        document.getElementById("#shoppingCart-list").style.display="none";
-                    }
-
-			},
             checkCartItem:function(index){
 				//console.log(this.cartData);
                 this.$parent.cartItemIndex=index;

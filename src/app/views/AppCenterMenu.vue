@@ -12,7 +12,6 @@
 <script>
     export default{
         name: 'OrderMenu',
-        props:["mode"],
         data(){
             return {
                 menuIndex:1,
@@ -26,6 +25,16 @@
             payMethod(){
                 return this.$store.state.currentPage.orderParams.paymentMethodId
             }
+        },
+        created(){
+            var mids={
+                'PayCard':17,
+                'PayCash':10,
+                'PayCard':11
+            }
+
+            this.$store.commit("setOrderParams",{ paymentMethodId:mids[this.$route.name]})
+
         },
         methods:{
             //扫码支付

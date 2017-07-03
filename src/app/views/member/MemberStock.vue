@@ -64,7 +64,6 @@
     .span_all .span1{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
     .span_all .span2{width: 68px;height: 38px;line-height: 38px;text-align: center;float: left}
     .span_all .span3{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
-    .no-list{ width: 100%; height:600px; background: url(/images/no_list.jpg) no-repeat 50% 0%;}
     .log-products{
         position: relative;
     .list-row{

@@ -2,7 +2,7 @@
     <div class="container order-custom">
             <div class="row">
                 <div class="col-nn-30">
-                    <a class="btn btn-primary custom-btn btn-block" @click="showCustomModal()">
+                    <a class="btn btn-default custom-btn btn-block" @click="showCustomModal()">
                         <span class="iconfont icon-guanliyuan"></span> {{custom.nickname}}
                     </a>
                 </div>

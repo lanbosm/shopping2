@@ -64,6 +64,7 @@
             this.$root.showCustomDialog=false;
             this.$root.showCashDialog=false;
             this.$root.showLogDialog=false;
+
         },
         watch: {
             'username': function (val) {
@@ -101,7 +102,8 @@
                     if(this.lastUserName!=this.username){
                         util.pushLocal("lastData", []);
                     }
-                    util.pushLocal('shopData',res)
+                    console.log(res);
+                    this.$store.commit('setShopData',res);
                     this.setCookie("username",this.username,7);
 
                     loading.close();

@@ -24,17 +24,15 @@
                                     </div>
 
                                     <div class="col-xs-12  col-md-5">
-                                        <searchbar  :product-params="productParams"></searchbar>
+                                        <searchbar ref="searchbar" :product-params="productParams"></searchbar>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-body">
 
-                                <product-list v-if='showList=="product"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></product-list>
-                                <act-product-list v-if='showList=="act"' :page="page" :product-params="productParams"  @open-detail="openDetail" ></act-product-list>
-                                <div class="productlist-footer"  v-if='showList=="product"'>
-                                    <pagination :page="page" :go-callback="goCallback" ></pagination>
-                                </div>
+                                <product-list v-if='showList=="product"'  @open-detail="openDetail" ></product-list>
+                                <act-product-main v-if='showList=="act"'  @open-detail="openDetail" ></act-product-main>
+
                             </div>
 
                         </div>
@@ -66,7 +64,7 @@
 
 
     import ProductList from 'views/products/ProductList.vue';
-    import ActProductList from 'views/products/ActProductList.vue';
+    import ActProductMain from 'views/products/ActProductMain.vue';
 
 
 
@@ -95,7 +93,6 @@
                 return this.$store.state.currentPage.list;
             },
             page () {
-
                 return this.$store.state.currentPage.pageData;
             },
             productDetail (){
@@ -125,12 +122,12 @@
              breadcrumb,                  //面包屑
              category,                    //分类
              ProductList,                 //商品列表
-             ActProductList,                 //活动商品列表
+             ActProductMain,                 //活动
              searchbar,
              Loading
         },
         created(){
-
+            this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
         },
         methods:{
             switchNavBar(navname){
@@ -141,23 +138,12 @@
 
             },
             openCategory(navname){
-                //
-
-
-
                 if(!this.showCategory){
                     this.showCategory=true;
                     this.$store.dispatch('fetchCategory',this.productParams.categoryId);
                 }
             },
-            //请求列表
-            fetchList() {
-                this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
-            },
-            goCallback(pageIndex){
-                this.pageNum=pageIndex;
-                this.$store.dispatch('fetchList',{"pageNum":this.pageNum});
-            },
+
             //创建订单
             buildOrder:function(cart){
                 //alert(this.mode);
@@ -185,34 +171,17 @@
                     }
                 });
 
-                console.log(cartParam);
 
+                this.$store.dispatch('bulidOrder',cartParam).then(res=>{
 
+                    this.$router.push('/order');
 
-                this.$store.commit("setOrderParams",{
-                        cartParam:JSON.stringify(cartParam),
-                        giftIds:JSON.stringify(giftParam),
-                        couponCodeId:null,
-                        usePoint:false,
-                        useBalance:false,
-                        memberId:this.customData.id,
-                        guiderId:null
-                })
+                }).catch((res,cart)=>{
 
-
-
-                var apiObj={
-                    url:API_URLS.b2b_orders+"/build",
-                    data:this.$store.state.currentPage.orderParams
-                }
-
-                request.fnPost(this,apiObj,(res)=>{
-                     this.$store.commit("setOrderData",res.appOrderConfirmBean);
-                     this.$store.state.currentPage.cartData=[];
-                     var pageList=this.$store.state.pageList;
-                     this.$store.commit('setLocalList',pageList);    //存储本地
-                     this.$router.push('/order');
-                })
+                    this.$alert(res.msg, {
+                        type: 'error',
+                    });
+                });
 
 
             },
@@ -380,15 +349,22 @@
 
                             //如果没赠品直接找到
                             if(!this.cartData[i].appGiftItem){
-                                this.cartData[i].amount++;
+                                var cartitem=this.cartData[i];
+                                cartitem.amount++;
+                                this.$set(this.cartData,i,cartitem)
                                 this.cartItemIndex=i;
                                 find=true;
+                                this.$store.commit('setLocalList');    //存储本地
                             }
 
                             else if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
-                                this.cartData[i].amount++;
+
+                                var cartitem=this.cartData[i];
+                                cartitem.amount++;
+                                this.$set(this.cartData,i,cartitem);
                                 this.cartItemIndex=i;
                                 find=true;
+                                this.$store.commit('setLocalList');    //存储本地
                                 //break;
                             }
                         }
@@ -396,9 +372,11 @@
                 }
 
                 if(!find){
+                    item.amount=1;
                     this.cartData.push(item);
                     this.cartItemIndex=this.cartData.length-1;
                     this.$refs.calc.calcmode="qty";
+
                     //在存下
 
                     this.$store.commit('setLocalList');    //存储本地

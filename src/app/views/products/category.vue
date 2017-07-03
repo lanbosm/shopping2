@@ -82,8 +82,6 @@
             outcheck(){
 
 
-
-
                 var out=true;
                 if(document.querySelector('.category-list')) {
                     document.querySelector('.category-list').addEventListener('mouseover', function(){
@@ -104,9 +102,7 @@
             },
             fetchCategory(cid,cname,e){
 
-//                setTimeout(function() {
-//                    $('.category-list').addClass('open');
-//                },0);
+
                 if(cid){this.showSubMenu=true;}
                 this.$store.dispatch('fetchCategory',cid).then(res=>{
                          this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
@@ -124,26 +120,27 @@
                     "brandName":null
                 }
 
-                this.$store.dispatch('fetchList',params).then(res=>{
-                    this.showSubMenu=false;
-                    this.$parent.switchNavBar('product');
-                    console.log(this.productParams.categoryId);
-                    setTimeout(()=> {
-                        this.$parent.showCategory = false;
-                    },300);
 
-                })
-
-//
+                this.$store.commit("setProductParams",params);
+                this.$parent.switchNavBar('product');
+                this.showSubMenu=false;
+                setTimeout(()=> {
+                    this.$parent.showCategory = false;
+                },300);
 
             },
             fetchBrand(bid,bname){
 
-                var params={"categoryId": this.productParams.categoryId, "categoryName": this.productParams.categoryName, "brandId":bid,"brandName":bname,"pageNum":1};
-                this.$store.dispatch('fetchList',params).then(res=>{
-                    this.$parent.showCategory=false;
-                    this.$parent.switchNavBar('product');
-                })
+
+                var params={ "brandId":bid,"brandName":bname,"pageNum":1};
+
+                this.$store.commit("setProductParams",params);
+                this.$parent.switchNavBar('product');
+                this.showSubMenu=false;
+                setTimeout(()=> {
+                        this.$parent.showCategory = false;
+               },300);
+
 
             },
         }

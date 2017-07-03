@@ -44,16 +44,21 @@
                     <div class="text-center" v-if="!member.appCoupons || !member.appCoupons.length">暂无优惠券</div>
                     <ul >
                         <li v-for="coupon in member.appCoupons">
-                            <div class="left">
-                                <span class="m">{{coupon.amount}}</span>
-                                <span class="u">满{{coupon.conditionLine}}可用</span>
+                            <div class="nocodeProduct" v-if="coupon.type=='nocodeProduct'">
+                                          {{coupon.name   }}
                             </div>
-                            <div class="right">
-                                    <span class="yxq" >有效期
-                                        <em class="primary">{{coupon.endDate}}</em>
-                                    </span>
-                                <span class="l2">{{coupon.toSbName}}</span>
-                                <span class="l3 primary">{{coupon.type | couponType}}</span>
+                            <div v-else>
+                                <div class="left">
+                                    <span class="m">{{coupon.amount}}</span>
+                                    <span class="u">满{{coupon.conditionLine}}可用</span>
+                                </div>
+                                <div class="right">
+                                        <span class="yxq" >有效期
+                                            <em class="primary">{{coupon.endDate}}</em>
+                                        </span>
+                                    <span class="l2">{{coupon.toSbName}}</span>
+                                    <span class="l3 primary">{{coupon.type | couponType}}</span>
+                                </div>
                             </div>
                         </li>
                     </ul>

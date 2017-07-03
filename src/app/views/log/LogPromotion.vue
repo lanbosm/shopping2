@@ -18,7 +18,7 @@
 						加载中...
                     </div>
 					<div class="list-body" v-else-if="listData.list.length==0">
-						<div class="no-list"></div>
+						<div class="log-no-list"></div>
 					</div>
 					<div class="list-body" v-else>
 						<!--list-->
@@ -170,7 +170,6 @@
 
             return {
                 listData:{},
-                shiftInfo:{},
                 pageNum:1,                 //一页显示多少个
             }
 
@@ -199,8 +198,11 @@
                     this.$store.dispatch('fetchLog',{"type":"promotion","pageNum":this.pageNum}).then(res=>{
 
                          this.listData=res.page;
+           			 }).catch(res=>{
 
-                         this.shiftInfo=res.appShiftInfo;
+                        this.$alert(res.msg,{
+                            type: 'error',
+                        })
                     })
             }
         }

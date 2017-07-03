@@ -32,8 +32,6 @@
         height:650px;
         overflow: hidden;
 
-        .no-list{ width: 100%; height:500px; background: url(/images/no_list.jpg) no-repeat 50% 50%; background-size: 360px}
-
 
         .common-list-header{
 

@@ -7,8 +7,8 @@
                 <span>{{item.createDate}}</span>
             </div>
             <div class="r">
-                <a class="btn btn-agree" @click="checkAllocation(item.id,'agreed',index)">同意</a>
-                <a class="btn btn-refuse" @click="checkAllocation(item.id,'refused',index)">拒绝</a>
+                <a class="btn btn-agree" @click="checkAllocation(item.id,'agreed',0)">同意</a>
+                <a class="btn btn-refuse" @click="checkAllocation(item.id,'refused',1)">拒绝</a>
             </div>
     </div>
 </template>
@@ -37,7 +37,7 @@
             color: #666666;
             margin-top: 5px;
         }
-        .c{ height: 80px; line-height: 20px; overflow: hidden;  }
+        .c{  line-height: 20px; overflow: hidden;  }
         .r{text-align: right; }
         .btn-agree{
             border: solid 1px @green;
@@ -66,12 +66,13 @@
 
 
 <script>
-    
 
+    import store from '../../../js/vuex/store'
 
     export default{
         name:"LogModal",
         props:['item','index'],
+        store,
         created(){
             //this.fetchLog()
         },
@@ -88,6 +89,7 @@
                     'memo':''
                 }
 
+                console.log(this.$root);
                 this.$store.dispatch("approvalAllocation",params).then(res=>{
                     this.$alert('操作成功',{
                         type: 'success',

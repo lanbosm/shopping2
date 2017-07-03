@@ -50,7 +50,6 @@
     @import "../../../less/util/skin.less";
     @import "../../../less/util/mixin.less";
     .col-nl-20{width: 25%;text-align: center;float: left;height: 60px;line-height: 60px;}
-    .no-list{ width: 100%; height:600px; background: url(/images/no_list.jpg) no-repeat 50% 0%;}
     .ico{font-size: 18px;}
     .good_invent div{text-align: center;border-radius:5px;width: 80%;height: 40px;background-color: #6fc89c;margin-left: 10%;margin-top: 10px;line-height: 40px;color: #fff;font-size: 16px;}
     .log-products{

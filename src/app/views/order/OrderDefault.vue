@@ -17,11 +17,6 @@
         props:['message','amount','showShopAdminBtn'],
         components:{
             shopAdminBtn
-        },
-        filters: {
-            currency: function (value) {
-                return '¥ ' + value;
-            }
         }
 
     }

@@ -231,6 +231,7 @@ gulp.task('rev:html', function (done) {
             prefix: '@@',
             basepath: '@file'
         }))
+        .pipe(chsiRev())
         .pipe(gulp.dest('dist'))
 });
 

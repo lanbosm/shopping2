@@ -2,7 +2,7 @@
     <div class="member_main">
         <commom-header  :title="title" :back="back" :next="next"></commom-header>
         <!--提货-->
-        <member-cargo :list-data="takeList"></member-cargo>
+        <member-cargo :list-data="listData"></member-cargo>
     </div>
 </template>
 
@@ -105,9 +105,13 @@
             return{
                 title:'提货',
                 back:{"label":"返回","url":"customlist","show":true,},
-                next:{"label":"提货","url":"","show":true},//提货是2
+                next:{"label":"提货","url":"","show":true,cb:this.takeStock},//提货是2
                 message: '',
                 listType:null,
+                takeMap:null,
+                mid:null,
+                pageNum:1,
+                listData:{}
             }
         },
         components:{
@@ -120,9 +124,62 @@
         },
         created(){
               this.back.url=this.back.url+"?p="+this.$route.query.p;
+              this.mid=this.$route.query.mid;
+              this.pageNum=this.$route.query.p;
+              this.fetchList();
 
         },
         methods:{
+            fetchList(){
+                this.$store.dispatch("fetchPickList",{"memberId":this.mid,"pageNum":this.pageNum}).then(res=>{
+                       this.listData=res.page;
+                });
+            },
+            takeStock(){
+                var checkTake=false;
+                var takeMap=[];
+                this.takeList.list.forEach((ele,index)=>{
+                    if(ele.operationNum>0){
+                        takeMap.push({consignId: ele.consign,takeNum: ele.operationNum});
+                        checkTake=true;
+                    }
+                })
+
+               if(!checkTake){
+                   this.$message.error('请选择物品');
+                   return false;
+               }
+
+                this.$prompt('请输入密码', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputValidator:function(){
+
+                       return true
+
+                    } ,
+                    inputErrorMessage: ''
+                }).then(({ value }) => {
+
+                        var postData={consignParamJson:JSON.stringify(takeMap),password:value,memberId:this.mid};
+                        this.$store.dispatch('postPickList',postData).then(res=>{
+                            this.$alert({
+                                type: 'success',
+                                message:'操作成功'
+                            });
+                        }).catch(res=>{
+
+                            this.$alert('这是一段内容', '标题名称', {
+                                type: 'error',
+                                message: res.msg
+                            });
+
+                        })
+
+                })
+               console.log(takeMap);
+
+            }
         }
 
     }

@@ -6,14 +6,16 @@
 				<a class="gallery-btn gallery-ok" @click="submitUpload">确定</a>
 				<a class="gallery-btn gallery-empty" @click="emptyList">清空</a>
 			</div>
-			<div class="gallery">
+			<div class="gallery" id="gallery">
 				<el-upload
 						ref="upload"
-						action="http://cs.awo123.cn/cashier/member/ads/add_image"
+						action="http://http://192.168.1.122:82/cashier/member/ads/add_image"
 						list-type="picture-card"
+						accept="image/jpg,image/png,image/jpeg"
 						:show-file-list="true"
-						:auto-upload="false"
+						:auto-upload="true"
 						:file-list="fileList"
+						:on-change="handleChange"
 						:on-preview="handlePictureCardPreview"
 						:on-remove="handleRemove"
 						:on-success="handleSuccess"
@@ -56,51 +58,131 @@
 
         created(){
 
-            this.$store.dispatch('fetchAdList').then(res=>{
-                for(var i in res.ads){
-                    res.ads[i].url= res.ads[i].image;
+			  this.$nextTick(_=> {
+                  this.$simpleScroll("#gallery");
 
-				}
-
-				this.fileList=res.ads;
-				console.log(this.$refs.upload);
-                console.log(res);
-                //action="http://192.168.1.122:82/cashier/member/ads/add_image"
-
-			})
-
+              });
+				this.fetchList();
 
 		},
         methods:{
-            beforeUpload (file) {
+            fetchList(){
+
+                this.$store.dispatch('fetchAdList').then(res=>{
+                    for(let i in res.ads){
+                        res.ads[i].url= res.ads[i].image;
+                        var num=parseInt(i)+1;
+                        res.ads[i].name="广告图"+num;
+
+                    }
+
+                    this.fileList=res.ads;
+                    console.log(this.$refs.upload);
+                   // console.log(res);
+                    //action="http://192.168.1.122:82/cashier/member/ads/add_image"
+
+                })
+
+			},
+            beforeUpload (file,xx) {
+
 				 console.log(file);
 
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 1;
-                 var  isMax=false;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-
-				var token=this.$store.state.login;
-
-                this.$set(this.token,'accessToken',token)
-
+                var token=this.$store.state.login;
                 if(!token) {
-                    this.$message.error('令牌过期');
-                }
+                    this.$message.error('没有权限上传');
+                }else{
 
-                if(this.fileList.length>10) {
-                    isMax=true;
-                    this.$message.error('最多只能保留10张图片');
-                }
-                return isJPG && isLt2M && token && !isMax;
+                    this.$set(this.token,'accessToken',token);
+				}
+
+                return  new Promise((resolve,reject)=> {
+
+                    var canUpload=true;
+
+
+
+					var isImage=true;
+
+                    const imageType = /image\/(jpg|jpeg|png|JPG|PNG)/;
+                     if (!file.type.match(imageType)) {
+                        	 isImage=false;
+                     }
+
+                    const isLt500KB = file.size / 1024 / 1024 < 0.5;
+
+
+                    if (!isImage) {
+                        this.$message.error('上传头像图片只能是 JPG 格式!');
+                        canUpload=false;
+                    }
+                    if (!isLt500KB) {
+                        this.$message.error('上传头像图片大小不能超过 500KB!');
+                        canUpload=false;
+                    }
+
+
+
+                    if(this.fileList.length>10) {
+                        canUpload=false;
+                        this.$message.error('最多只能保留10张图片');
+                    }
+
+                    var _URL = window.URL || window.webkitURL;
+                    var blobUrl=_URL.createObjectURL(file);
+                    var img = new Image();
+
+                    img.onload = (_)=>{
+                        console.log(img.width/img.height);
+                        if(img.width/img.height<=1.2 || img.width/img.height>=1.5  ){  //4比3
+                            canUpload=false;
+                            this.$message.error('上传图片不符合规范大小(4:3)');
+                        }
+                         resolve(canUpload);
+
+                    };
+                    img.src = blobUrl;
+
+
+
+                }).then(res=>{
+
+                    if(res){		//图片可以上传
+
+                        return Promise.resolve();
+
+					}else{  //图片不可以上传
+                        return Promise.reject();
+					}
+
+
+				});
+
+
+//                img.src = blobUrl;
+//                var imgwidth = img.offsetWidth;
+//                var imgheight = img.offsetHeight;
+//
+//                alert(imgwidth + "," + imgheight);
+//                alert(2222222);
+//				return  false;
+
+
+
+
+               // return isJPG && isLt2M && token && !isMax && false;
+
+
+
+
+
+
+
+
             },
+            handleChange(file, fileList) {
 
+            },
             emptyList(){
 
                 this.$confirm('确认清空广告吗？',{'type':'warning'}).then(_ => {
@@ -136,14 +218,17 @@
                 this.$refs.upload.submit();
             },
             handleRemove(file, fileList) {
-
-                this.$store.dispatch('removeAdList',{'strIds':file.id}).then(res=>{
-                    console.log(res);
-                    this.fileList=fileList;
-                })
+                if(file) {
+                    this.$store.dispatch('removeAdList', {'strIds': file.id}).then(res => {
+                        console.log(res);
+                        this.fileList = fileList;
+                    })
+                }
             },
             handleSuccess(response, file, fileList){
-                this.fileList=fileList;
+
+              this.fileList=fileList;
+              //  alert(222);
 			},
 
             handleUpload(file){

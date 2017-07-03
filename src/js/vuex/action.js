@@ -11,50 +11,57 @@ const actions= {
                 url:API_URLS.public_key,
             };
 
-            return new Promise((resolve, reject) => {
-                request.fnGet_dev(apiObj).then(res => { //成功
+            return request.fnGet_dev(apiObj).then(res => { //成功
                     if(res.data.code=="20000"){
-                        resolve(res.data);
+                        return Promise.resolve(res.data);
+                    }else{
+
+                        return Promise.reject(res.data);
                     }
-                }).catch( res=> { //失败
-                    reject(res.data);
-                })
-            });
+            }).catch(res=>{
+                commit("hide_waiting");
+                return  Promise.reject(res);
+            })
         },
         addSpareCash({dispatch,commit},value){
-            return dispatch('getPublicKey').then(res => {
+            commit("show_waiting");
+            return dispatch('getPublicKey')
+                .then(res => {
                   var  publicKey=res.data;
                   var  rsaKey = new RSAKey();
                   rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
                   var  enPwd = hex2b64(rsaKey.encrypt(value.password));
 
-                  var  apiObj={
-                        url:API_URLS.cashier_shift,
-                        data:{
-                            'enPasswd':enPwd,
-                            'tmpKey':publicKey.tmpKey,
-                            'spareCash':value.spareCash
-                        }
-                  };
+                  return {publicKey:publicKey,enPwd:enPwd};
 
-                return new Promise((resolve, reject) => {
-
-                    request.fnPost2(apiObj).then(res => { //成功
-                        if(res.code=="20000"){
+                 })
+                .then(res=> {
+                        var  apiObj={
+                            url:API_URLS.cashier_shift,
+                            data:{
+                                enPasswd: res.enPwd,
+                                tmpKey: res.publicKey.tmpKey,
+                                spareCash:value.spareCash
+                            }
+                        };
+                        return request.fnPost_dev(apiObj).then(res => { //成功
                             commit("hide_waiting");
+                            if (res.data.code=="20000")  {
 
-                            resolve(res);
-                        }else{
+                                var needSpareCash=res.data.spareCash>0?false:true;
+                                commit('setShopData', {'spareCash': res.data.spareCash,'needSpareCash':needSpareCash});
+                                return  Promise.resolve(res.data);
+                            } else {
+                                return  Promise.reject(res);
+                            }
+                        }).catch(res => { //失败
+                            console.log(res);
                             commit("hide_waiting");
-                            reject(res);
-                        }
-                    }).catch( res=> { //失败
-                        commit("hide_waiting");
-                        reject(res); //这里可以尝试扩展备用接口
-                    })
+                            return  Promise.reject(res.data); //这里可以尝试扩展备用接口
+                        })
                 });
 
-            })
+
         },
         //重置密码
         reset({dispatch,commit},value){
@@ -136,24 +143,7 @@ const actions= {
                         });
                     }
                 })
-            // let apiObj = {
-            //     url:API_URLS.customers,
-            //     data:value
-            // };
-            // return new Promise((resolve, reject) => {
-            //         request.fnPost_dev(apiObj).then(res=> {
-            //             commit("hide_waiting");
-            //             if (res.data.code=="20000") {
-            //                 commit('setCustomData', res.data.appMember );
-            //                 resolve(res.data);
-            //             } else {
-            //                 reject(res.data);
-            //             }
-            //         }).catch(res=>{
-            //             commit("hide_waiting");
-            //             reject(res.data);
-            //         });
-            // });
+
         },
         //登陆
         loginIn({dispatch,commit,state},value){
@@ -193,7 +183,7 @@ const actions= {
                                 return  Promise.reject(res);
                             });
                     }
-            })
+                })
 
         },
         //退出
@@ -204,7 +194,7 @@ const actions= {
             }
 
             commit("show_waiting");
-            window.localStorage.setItem('currentShiftId',value);
+
             return   request.fnGet_dev(apiObj).then(res => { //成功
                     commit("hide_waiting");
                     if(res.data.code=="20000"){
@@ -218,19 +208,18 @@ const actions= {
                         commit('setShopData', {});
                         util.delLocal("accessToken");
                         util.delLocal("shopData");
-                      
+                        window.localStorage.setItem('currentShiftId',value);
                        return Promise.resolve(res.data);
                     }
                 }).catch( res=> { //失败
                     commit("hide_waiting");
-                    return Promise.reject(res.data);
-            });
+                    return Promise.reject(res);
+                 });
         },
         //意外退出
         logoutUnexpected({commit,state,dispatch}){
 
-            commit("hide_waiting");
-
+                commit("hide_waiting");
 
                 clearInterval(state.msgTimer);
                 router.replace('/login');
@@ -242,7 +231,6 @@ const actions= {
                 commit('setShopData', {});
                 util.delLocal("accessToken");
                 util.delLocal("shopData");
-
 
 
         },
@@ -305,6 +293,45 @@ const actions= {
             }
             commit('setLocalList',state.pageList);    //存储本地
         },
+        //建立订单
+        bulidOrder({state,commit,dispatch},value){
+            commit("show_waiting");
+
+            commit("setOrderParams",{
+                cartParam:JSON.stringify(value),
+                giftIds:JSON.stringify(value),
+                couponCodeId:null,
+                usePoint:false,
+                useBalance:false,
+                memberId:value.id,
+                guiderId:null
+            })
+
+
+            var apiObj={
+                url:API_URLS.b2b_orders+"/build",
+                data:state.currentPage.orderParams
+            }
+
+            var oldCart=value;
+
+            return  request.fnPost_dev(apiObj).then(res=>{
+                    commit("hide_waiting");
+                    if(res.data.code=="20000"){                //新数据
+
+                        commit("setOrderData",res.data.appOrderConfirmBean);
+                        state.currentPage.cartData=[];
+                        commit('setLocalList');    //存储本地
+                         return Promise.resolve(res.data);
+                    }else{                                //旧数据
+                        return Promise.reject(res.data,oldCart);
+                    }
+                }).catch(res=> { //失败
+                        commit("hide_waiting");
+                        return Promise.reject(res);
+                 })
+
+        },
         //刷新订单
         fetchOrder({state,commit,dispatch}){
             commit("show_waiting");
@@ -332,7 +359,7 @@ const actions= {
         },
         fetchOrderList({commit},value){
             let apiObj = {
-                url : API_URLS.b2b_orders+'/wechat',
+                url : API_URLS.b2b_orders,
                 data:value
             };
             commit("show_waiting");
@@ -347,6 +374,8 @@ const actions= {
                 return    Promise.reject(res.data);
             });
         },
+
+        //退货
         refundOrder({commit,state},value){
 
             commit("show_waiting");
@@ -369,10 +398,11 @@ const actions= {
 
         },
         fetchList({commit,state},value){
+
             if(value){
                 var oldPageData=state.currentPage.pageData;
-                commit("setProductParams",value);
                // commit("setPageData",{});
+               commit("setProductParams",{params:value});
             }
 
             let apiObj={
@@ -388,16 +418,19 @@ const actions= {
             commit("set_list_waiting",true);
             return  request.fnGet_dev(apiObj).then(res=> {
                 commit("set_list_waiting",false);
-
                 if (res.data.code=="20000") {
                     commit("setPageData",res.data.page);
+                    commit("setLocalList");
                     return  Promise.resolve(res.data);
                 } else {
                     commit("setPageData",oldPageData);
+                    commit("setLocalList");
                     return   Promise.reject(res.data);
                 }
             }).catch(res=>{
-                return    Promise.reject(res.data);
+                commit("set_list_waiting",false);
+                return Promise.reject(res);
+
             });
         },
         //获取商品详情
@@ -406,21 +439,20 @@ const actions= {
             let apiObj={
                 url:API_URLS.products+"/"+pid,
             };
-            return new Promise((resolve, reject) => {
-                request.fnGet(apiObj).then(res => { //成功
+            return request.fnGet_dev(apiObj).then(res => { //成功
                     commit("set_list_waiting",false);
-                    if(res.code=="20000"){
-                        commit("setItemData",res);
-                        resolve(res);
+                    if(res.data.code=="20000"){
+                        commit("setItemData",res.data);
+                        return Promise.resolve(res.data);
                     }else{
-                        reject(res);
+                        return Promise.reject(res.data);
                     }
                 })
                  .catch(res=> { //失败
                         commit("set_list_waiting",false);
-                        reject(res);
-                    })
-            });
+                        return Promise.reject(res);
+             })
+
         },
 
         //获取分类
@@ -461,7 +493,7 @@ const actions= {
                     return   Promise.reject(res.data);
                 }
             }).catch(res=>{
-                return    Promise.reject(res.data);
+                return    Promise.reject(res);
             });
         },
         //获取会员列表
@@ -516,22 +548,21 @@ const actions= {
                 data:value
             };
 
-            return new Promise((resolve, reject) => {
-                request.fnGet(apiObj).then(res => { //成功
+            return  request.fnGet_dev(apiObj).then(res => { //成功
                     commit("hide_waiting");
-                    if(res.code=="20000"){
-                        commit("setLogData",res.appShiftInfo);
-                        resolve(res);
+                    if(res.data.code=="20000"){
+
+                        commit('setShopData',{'spareCash':res.data.appShiftInfo.endSpareCash})
+                        commit("setLogData",res.data.appShiftInfo);
+                        return  Promise.resolve(res.data);
                     }else{
-                        reject(res);
+                        return  Promise.reject(res.data);
                     }
                 })
                 .catch( res=> { //失败
                         commit("hide_waiting");
-                        reject(res);
-                    })
-
-            });
+                        return  Promise.reject(res);
+             })
 
         },
 
@@ -543,21 +574,19 @@ const actions= {
                 data:value
             };
 
-            return new Promise((resolve, reject) => {
-                commit("hide_waiting");
-                request.fnGet(apiObj).then(res => { //成功
-                    if(res.code=="20000"){
-                        commit("setLogData",res.page);
-                        resolve(res);
+            return request.fnGet_dev(apiObj).then(res => { //成功
+                    commit("hide_waiting");
+                    if(res.data.code=="20000"){
+                        commit("setLogData",res.data.page);
+                       return Promise.resolve(res.data);
                     }else{
-                        reject(res);
+                        return Promise.reject(res.data);
                     }
-                })
-                 .catch( res=> { //失败
-                        commit("hide_waiting");
-                        reject(res);
-                 })
-            });
+                }).catch( res=> { //失败
+                    commit("hide_waiting");
+                    return    Promise.reject(res);
+            })
+
         },
 
         //获取门店信息
@@ -600,30 +629,6 @@ const actions= {
             });
 
         },
-
-        // //获取个人购买商品列表
-        // personalList({commit,state},value){
-        //       commit("show_waiting");
-        //       let apiObj={
-        //           url: API_URLS.cashier_shift+'/products',
-        //           data:value
-        //       };
-        //       return new Promise((resolve,reject)=>{
-        //            commit("hide_waiting");
-        //            request.fnGet(apiObj).then(res=>{
-        //                if(res.code=="20000"){
-        //                    commit("setpersonalData",res.page);
-        //                    resolve(res);
-        //                }else {
-        //                    reject(res);
-        //                }
-        //            }).catch( res=> { //失败
-        //                commit("hide_waiting");
-        //                reject(res);
-        //            })
-        //       })
-        //
-        // },
 
         //获取广告列表
         fetchAdList({commit,state},value){
@@ -680,7 +685,6 @@ const actions= {
              });
          },
 
-
         //点击存货发送的请求取数据
         stockGoods({commit,state},value){
                 commit("show_waiting");
@@ -717,9 +721,6 @@ const actions= {
                 commit("hide_waiting");
                 return  Promise.reject(res);
             });
-
-//                           alert(vm.$store.state.currentPage.customData.id);
-
         },
         //点击查看存货信息获取提货列表
         fetchPickList({commit,state},value){
@@ -741,6 +742,50 @@ const actions= {
                 commit("hide_waiting");
                 return  Promise.reject(res);
             });
+
+        },
+        //点击查看存货信息获取提货列表
+        postPickList({dispatch,commit,state},value){
+            commit("show_waiting");
+            return dispatch('getPublicKey')
+                .then(res => {
+                    let publicKey=res.data;
+
+                    let  rsaKey = new RSAKey();
+                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                    let  enPwd = hex2b64(rsaKey.encrypt(value.password));
+                    return {publicKey:publicKey,enPwd:enPwd};
+                })
+                .then(res=>{
+                    console.log(111);
+                        if(res.publicKey && res.enPwd) {
+                            console.log(value);
+                            let apiobj = {
+                                url: API_URLS.takepost,
+                                data: {
+                                    memberId:value.memberId,
+                                    consignParamJson: value. consignParamJson,
+                                    enPasswd: res.enPwd,
+                                    tmpKey: res.publicKey.tmpKey
+                                }
+                            };
+
+                            return  request.fnPost_dev(apiobj).then(res=> {
+                                commit("hide_waiting");
+                                if (res.data.code=="20000") {
+                                    return  Promise.resolve(res.data);
+                                } else {
+                                    return  Promise.reject(res.data);
+                                }
+                            }).catch(res=>{
+                                commit("hide_waiting");
+                                return  Promise.reject(res);
+                            });
+                        }
+
+
+                })
+
 
         },
         exportProducts({commit},value){
@@ -787,20 +832,22 @@ const actions= {
         addListenAllocation({commit},value){
             var apiObj = {
                 url: API_URLS.products + '/allocation/unconfirm_list',
-                data: ''
+                data: {
+                    'oAuth':false
+                }
             }
 
-            return new Promise((resolve, reject) => {
-                request.fnPost2(apiObj).then(res => { //成功
-                    if(res.code=="20000"){
-                        resolve(res);
+            return request.fnPost_dev(apiObj).then(res => { //成功
+                    if(res.data.code=="20000"){
+                      return   Promise.resolve(res.data);
                     }else{
-                        reject(res);
+                      return   Promise.reject(res.data);
                     }
                 }).catch( res=> { //失败
-                    reject(res);
+
+                      return  Promise.reject(res);
                 })
-            });
+
 
 
         },

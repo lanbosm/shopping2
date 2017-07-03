@@ -10,13 +10,13 @@
                     <div class="row">
                         <div class="col-nn-30">
                             <div class="recharge-menu">
-                                <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==12}"  @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
+                                <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==17||payMethod==18}"  @click="payScan"><span class="iconfont icon-qr2" aria-hidden="true"></span> 扫码</a>
                                 <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==10}"  @click="payMoney"><span class="iconfont icon-icon" aria-hidden="true"></span>现金</a>
                                 <a  class="btn btn-primary scan-btn btn-block" :class="{on:payMethod==11}"  @click="payCard" ><span class="iconfont icon-xinyongqiahuankuan" aria-hidden="true"></span>刷卡</a>
                             </div>
                         </div>
                         <div class="col-nn-70 ">
-                                <recharge-list  :amount="amount" :gift-amount="giftAmount" :message="message" ></recharge-list>
+                                <recharge-list  :payMethod="payMethod" :amount="amount" :gift-amount="giftAmount" :message="message" ></recharge-list>
                         </div>
                     </div>
                 </div>
@@ -100,116 +100,11 @@
          </div>
     </div>
 </template>
-<style  rel="stylesheet/less"  scope lang="less">
 
-
-    @import "../../../less/util/skin.less";
-
-    @imgPath:"/images";
-
-    /*!Recharge modale*/
-    .recharge-layer {
-        z-index: 9999;
-        background: rgba(0,0,0,0.1);
-        .modal-dialog{width: 768px; }
-        border-bottom:solid 3px #93d6b3;padding:10px 30px;
-        .modal-header{
-            border-bottom: solid 3px @green;
-            text-align: center;
-            .close{margin-top:-20px}
-        }
-        .modal-body {
-            padding: 30px 30px;
-            .recharge-menu{
-                    .btn{
-                        color: #666;
-                        padding: 15px;
-                        position: relative;
-                        border-color: @border-color;
-                        border-radius: 5px;
-                        background: #f0eeef;
-                        margin-top: 15px;
-                        margin-bottom: 30px;
-                        font-size: 14px;
-                        span {
-                            margin-right: 20px;
-                        }
-                        &:hover,&.on{
-                            background-color: @green;
-                            color: #ffffff;
-                        }
-                    }
-            }
-            .tab-con{
-                border-bottom: @borderDashedStyle;
-                border-width: 2px;
-                min-height: 260px;
-                display: none;
-                position: relative;
-                &.tabShow{display: block;
-                    .pay-amount{ color: @themeColor;   font-size: 30px; line-height: 40px; }
-                    .pay-gift-amount {color: @themeColor; margin-top: 10px; font-size: 16px; }
-                    .pay-tips {color: @themeColor; margin-top: 10px; font-size: 16px; }
-                    .txt{color: #999999; line-height: 20px;}
-                }
-            }
-
-            .list-box{
-                padding-bottom:0px;
-                table{border: none;}
-                table td,table th{ width: 25%; text-align: center;border: none; font-size: 14px; padding: 4px; line-height: 30px; }
-                table tbody tr{ background: @green; color: #ffffff;}
-
-                table tbody tr td:nth-child(2) span {  background: #ffffff; color:@green;  width: 90%;  display: inline-block; border-radius: 4px; }
-
-                table tbody tr td:nth-child(3){ background: #b998cd; color:#ffffff;}
-
-                border-bottom: @borderDashedStyle;
-                border-width: 2px;
-            }
-
-            .calc-box{
-                padding-top: 15px;
-                padding-bottom: 30px;
-                ul {
-                    width: 180px; background: #ffffff; border-left: solid 1px @border-color; border-top: solid 1px @border-color;
-                    margin: 0; padding: 0;
-                    li {
-                        box-sizing: border-box;
-                        border-right: solid 1px @border-color;
-                        border-bottom: solid 1px @border-color;
-                        width: 33%;
-                        height: 60px;
-                        line-height: 60px;
-                        font-size: 16px;
-                        float: left;
-                    }
-                }
-            }
-
-        }
-        .modal-foot{
-            border-top:1px dashed @border-color;
-            padding:10px 0px; text-align: center;
-            .recharge-layer-ok{display: inline-block;
-                background:@green; color: #ffffff; padding:10px 50px;
-                margin: 0 20px;
-            }
-            .recharge-layer-cancel{display: inline-block;
-                padding:10px 50px;
-                margin: 0 20px;
-            }
-        }
-
-    }
-</style>
 
 <script>
 
     import RechargeList from './RechargeList.vue'
-    import PayCard from 'views/pay/PayCard.vue'
-    import PayMoney from 'views/pay/PayMoney.vue'
-    import PayScan from 'views/pay/PayScan.vue'
 
     import layer from 'layer';
     import $ from 'jquery';
@@ -228,6 +123,7 @@
                 diySeleted:false,
                 payMethod:null,
                 customName:null,
+                id:null,
                 printData:{}
             }
         },
@@ -238,16 +134,13 @@
         },
         components:{
             RechargeList,
-            PayCard,
-            PayMoney,
-            PayScan
         },
         methods:{
             choseAmount(){
-              this.payMethod=null;
+                this.payMethod=null;
             },
             payScan(){
-                this.payMethod=12;
+                this.payMethod=17;
             },
             payMoney(){
                 this.payMethod=10;
@@ -268,8 +161,8 @@
                     data:{
                         phone:this.customName,
                         amount:this.amount,
-                        paymentMethodId: this.payMethod
-
+                        paymentMethodId: this.payMethod,
+                        id:this.id
                     }
                 }
                 var vm=this;

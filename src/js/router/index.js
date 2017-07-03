@@ -90,6 +90,7 @@ const router = new VueRouter({
             component: AppCenter
         },
 
+
         {
             path: '/order',
             name: 'AppCenter',

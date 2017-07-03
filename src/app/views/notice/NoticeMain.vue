@@ -2,10 +2,16 @@
    	  <div class="message">
 
             <commom-header  :title="title" :back="back" :next="next" ></commom-header>
-
-            <div class="container message-body" >
-                <div class="row page-con">
-                    <div class="col-xs-6" v-for="(item,index) in listData.list">
+            <commom-list>
+            <div class="message-body" v-if="!listData.list">
+                    加载中...
+            </div>
+            <div class="message-body" v-else-if="listData.list.length==0">
+                    <div class="no-list"></div>
+            </div>
+            <div class="message-body" id="message-body" v-else >
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6" v-for="(item,index) in listData.list">
                         <div class="m-box" >
                             <a class="btn msg-pop-close" @click="closeMsg" style="display: none;">&times;</a>
                             <h3>{{item.shopName}}</h3>
@@ -25,25 +31,15 @@
                     </div>
                 </div>
             </div>
-            <div class="container message-footer" >
+            <div class="message-footer" >
                         <pagination :page="listData" :go-callback="goCallback"></pagination>
 
             </div>
+           </commom-list>
 
 
 
 
-          <div id="layer-comfirm-box" class="layer-comfirm-box">
-              <div class="t">
-                   {{comfirmTitle}}
-              </div>
-              <div class="c form-horizontal">
-                  <textarea class="form-control" rows="4" v-model="memo" placeholder="请填写备注"></textarea>
-              </div>
-              <div class="f text-center">
-                  <a class="btn comfirm-ok" @click="checkAllocation()">确认</a>
-              </div>
-          </div>
 
         </div>
 
@@ -59,49 +55,16 @@
 
     .message{
 
-        .btn-normal{background: @themeColor; color: #ffffff;}
-        .layer-comfirm-box{
-            width: 400px;
-            padding: @gutter;
-            z-index: 99;
-            display: none;
-            .t{
-                padding: @gutter;
-                text-align: center;
-                font-size: 16px;
-            }
-            .c{
-                padding-left: @gutter;
-                padding-right: @gutter;
-            }
-            .f{
-                padding: @gutter;
-                text-align: center;
-                .comfirm-ok{
-                    .green-btn;
-                    padding-left: 60px;
-                    padding-right: 60px;
-                    &:hover,&:active{
-                        padding-left: 60px;
-                        padding-right: 60px;
-                    }
-                }
-            }
+
+
+        .message-body{
+            height: @listHeight;
 
         }
 
 
-
-
-        .page-con{height: 588px;}
-
-
-        .container{
-            background-color:#ffffff;
-            border-left: @borderDashedStyle;
-            border-right: @borderDashedStyle;
-        }
         .message-footer{
+            margin-top: @gutter;
             padding: @gutter;
         }
         .btn{
@@ -225,23 +188,33 @@
                         this.comfirmTitle="拒绝调货";
                         this.allocationStatus="refused";
                     }
-                    layer.open({
-                        id: 'layui-layer-comfirm',
-                        type: 1,            //1 普通层
-                        shade: 0.01,  //遮罩
-                        anim: 0,
-                        zIndex: 1000,
-                        closeBtn: 2,
-                        title: false,
-                        area: ['auto', 'auto'], //宽高
-                        content: $('#layer-comfirm-box'),
-                        success: function () {
 
-                        },
-                        end: function () {
+                this.$prompt('请输入备注',this.comfirmTitle,{
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPlaceholder:'备注',
+                }).then(({value}) => {
+                       this.memo=value;
+                       this.checkAllocation();
+                })
 
-                        }
-                    });
+//                    layer.open({
+//                        id: 'layui-layer-comfirm',
+//                        type: 1,            //1 普通层
+//                        shade: 0.01,  //遮罩
+//                        anim: 0,
+//                        zIndex: 1000,
+//                        closeBtn: 2,
+//                        title: false,
+//                        area: ['auto', 'auto'], //宽高
+//                        content: $('#layer-comfirm-box'),
+//                        success: function () {
+//
+//                        },
+//                        end: function () {
+//
+//                        }
+//                    });
 
 
             },
@@ -262,15 +235,26 @@
                 }
 
                 this.$store.dispatch("approvalAllocation",params).then(res=>{
-                    layer.alert("操作成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
-                    this.memo='';
-                    this.allocationId='';
-                    this.fetchList();
+                    this.$alert('操作成功',{
+                        type: 'success',
+                    }).then(_=>{
+                        this.memo='';
+                        this.allocationId='';
+                        this.fetchList();
+                        layer.closeAll();
+                    });
+
                 }).catch(res=>{
-                    layer.alert("操作失败",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
-                    this.memo='';
-                    this.allocationId='';
-                    this.fetchList();
+                        this.$alert(msg,'操作失败',{
+                            type: 'error',
+                        }).then(_=>{
+                            this.memo='';
+                            this.allocationId='';
+                            this.fetchList();
+                            layer.closeAll();
+                        })
+
+
                 });
             },
             goCallback(pageIndex){
@@ -282,9 +266,13 @@
             fetchList() {
 
                 this.$store.dispatch("fetchMsgList",{"pageNum":this.pageNum}).then(res=>{
-//                        res.page.pages= 2;
-//                        res.page.pageSize=5;
+
                         this.listData=res.page;
+                        if(this.listData.list.length>0) {
+                            this.$nextTick(_ => {
+                                this.$simpleScroll('#message-body');
+                            })
+                        }
 
                 }).catch(res=>{
 

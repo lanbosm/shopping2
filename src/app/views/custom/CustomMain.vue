@@ -225,7 +225,8 @@
             },
             orderEvent(){
                 this.closeWin();
-                this.$router.push('/orderlist');
+                this.$router.replace({path:'/orderlist',query:{type:"custom",p:1,mid:this.customData.id}});
+               // this.$router.push('/orderlist');
             },
             rechargeEvent(){
                 this.$root.showRechargeModal=true;

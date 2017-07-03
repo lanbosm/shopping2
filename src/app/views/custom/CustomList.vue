@@ -5,8 +5,8 @@
             <p class="data-placeholder" v-if="!listData.list" >数据加载中...</p>
             <p class="data-placeholder" v-else-if="listData.list.length==0" >暂无记录</p>
             <ul class="custom-list" id="custom-list-list" v-else  >
-              <li v-for="(item,index) in listData.list" :class="{select:index==currentIndex}" @click="checkCustom(index)"
-                    @dblclick="viewCustom(item,index)">
+              <li v-for="(item,index) in listData.list" :class="{select:index==currentIndex}"
+                    @click="viewCustom(item,index)">
                   <div class="item-col item-col1">
                       <div class="item-photo">
                         <img :src="item.headPortrait"/>
@@ -56,8 +56,10 @@
             },
             checkCustom(index){
                 this.currentIndex=index;
+
             },
             viewCustom(item,index){
+                this.checkCustom(index);
                 this.listCallback(item,index);
             }
         }

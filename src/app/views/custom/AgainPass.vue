@@ -132,7 +132,7 @@
                     });
                     return false;
                 }
-                alert(vm.$store.state.currentPage.customData.username);
+                //alert(vm.$store.state.currentPage.customData.username);
                 //这里后台接口有误
                 this.$store.dispatch("reset",{phone:vm.$store.state.currentPage.customData.username,enPassword:vm.password,verifCode:vm.verifCode}).then(res=>{
                     layer.alert("成功",{icon:1 ,closeBtn :false,yes:function(index){ layer.closeAll();}});

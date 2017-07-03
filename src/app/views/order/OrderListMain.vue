@@ -254,18 +254,29 @@
     	name: 'CustomList',
         data(){
             return {
-                title:"网络订单",
+                title:"订单中心",
                 back:{"label":"返回","url":"/","show":true},
                 listData:{},
                 pageNum:1,                 //一页显示多少
-
+                type:null,
+                memberId:null,
                 totalAmount:0
 
             }
         },
         created(){
-
+            this.memberId=this.$route.query.mid;
             this.pageNum=this.$route.query.p||1;
+            this.type=this.$route.query.type;
+
+
+            if(this.type=="custom"){
+                this.title="会员订单"
+            }
+            if(this.type=="wechat"){
+                this.title="微商城订单"
+            }
+
 
             this.fetchList();
         },
@@ -337,8 +348,33 @@
             },
             //请求列表
             fetchList() {
+                this.$store.dispatch('fetchOrderList',{pageNum:this.pageNum, memberId:this.memberId}).then(res=> {
+                    console.log(res);
+                    this.listData = res.page;
+                    this.totalAmount=res.totalAmount;
 
+                    this.listData=res.page;
+                    this.totalAmount=res.totalAmount;
 
+                    this.listData.list.forEach((ele,index)=>{
+                        ele.canRefunds=false;
+
+                        ele.items.forEach((ele2,index)=>{
+                            if(ele2.quantity>ele2.returnQuantity){
+
+                                ele.canRefunds=false;
+                            }
+                        });
+                    });
+                    this.$nextTick(_ => {
+                        this.$simpleScroll('#order-list-main-list');
+                    })
+                }).catch(res=>{
+                    console.log(res);
+                    console.log('err');
+                });
+            },
+            fetchCutsomList() {
                 this.$store.dispatch('fetchOrderList',{pageNum:this.pageNum}).then(res=> {
                     console.log(res);
                     this.listData = res.page;

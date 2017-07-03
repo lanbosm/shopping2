@@ -133,40 +133,50 @@
       }
       .pay-type-box{
         .clearfix();
-      }
+
       .paytype{
-        margin-top:12px;
-        margin-bottom:12px;
-        float: left;
-        width: 250px;
-        height:187px;
+        padding: @gutter;
+        margin:@gutter;
+        margin-left: 24px;
+        display: inline-block;
+        width: 240px;
+        height:127px;
+
         position: relative;
         input{
           position:absolute;
           display: block;
-          opacity: 1;
-
+          opacity: 0;
+          width: 0;
+          height: 0;
         }
+        border: @borderStyle;
+        border-radius: 5px;
+      }
+      .paytype.selected{
+        border-color: @themeColor;
       }
       .paybox{
-         width: 100%;
-         height: 100%;
-         left: 0;
-         top:0;
-         position: absolute;
+           width: 100%;
+           height: 100%;
+           left: 0;
+           top:0;
+           opacity: 0.5;
+           position: relative;
       }
 
-    .paytype input[type=radio]:checked + label{
-      opacity: 0.5;
-    }
+      .paytype input[type=radio]:checked + label{
+        opacity: 1;
+      }
       .wxpay{
-        background: url('@{imgPath}/pay_wx.jpg')  no-repeat;
-        background-size:100%;
+        background: url('@{imgPath}/pay_wx.jpg')  no-repeat 50% 50%;
+        background-size:60%;
       }
       .alipay{
-        background: url('@{imgPath}/pay_ali.jpg')  no-repeat;
-        background-size:cover;
+        background: url('@{imgPath}/pay_ali.jpg')  no-repeat 50% 50%;
+        background-size:60%;
       }
+    }
       .calc-box{
           width: 30%;
           padding:@gutter;
@@ -203,8 +213,12 @@
       }
 
       .tab-con-1{
+        .right-box{
 
-        .shopAdminBox{ width:50%;  padding:@gutter;  position:relative;  float: right;}
+           width:50%;  padding:@gutter;  position:relative;  float: right;
+        }
+        .nowCash{margin: 40px 0px; text-align: center; font-size: 16px; color: @themeColor;}
+        .shopAdminBox{position: relative; }
       }
 
 

@@ -10,7 +10,7 @@
             >
                 <div class="dialog-log-con">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 col-sm-6">
                             <div class="grid">
                                 <div class="t">应有现金 <span>{{logData.endSpareCash | currency}}</span></div>
                                 <div class="c">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 col-sm-6">
                             <div class="grid">
                                 <div class="t">总销售额 <span>{{logData.totalSales | currency}}</span></div>
                                 <div class="c">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 col-sm-6">
                             <div class="grid">
                                 <div class="t">充值 <span>{{logData.totalRecharge | currency}}</span></div>
                                 <div class="c">
@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 col-sm-6">
                             <div class="grid">
                                 <div class="t">促销统计 <span>{{logData.promotion | currency}}</span></div>
                                 <div class="c">
@@ -51,10 +51,13 @@
                 </div>
                 <div class="dialog-footer" slot="footer">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <a class="log-table" @click="logTo('products')">销售商品报表</a>
-                            <a class="log-out" @click="logOut()">交接班并退出</a>
+                        <div class="col-xs-12 col-sm-3 col-sm-offset-1 text-center">
+                            <a class="log-table btn btn-primary btn-block" @click="logTo('products')">销售商品报表</a>
                         </div>
+                        <div class="col-xs-12 col-sm-6 col-sm-offset-1 text-center">
+                            <a class="log-out btn btn-primary btn-block" @click="logOut()">交接班并退出</a>
+                        </div>
+
                     </div>
                 </div>
     </el-dialog>
@@ -73,10 +76,10 @@
             border-bottom: 1px solid @green;
         }
         .el-dialog__body{
-            padding: @gutter 40px;
+            padding: @gutter 20px;
         }
         .el-dialog__footer{
-            text-align: left;
+            padding-top:0;
         }
         .dialog-log-con{
             width: 100%;
@@ -111,15 +114,12 @@
         }
 
         .dialog-footer{
-            .log-table{
-                margin-left: 20px;
-                .green-btn(@padding: 12px 40px);
+            .log-out,.log-table{
+                margin: @gutter/2 auto;
+                padding: 10px 30px;
             }
 
-            .log-out{
-                margin-left: 100px;
-                .green-btn(@padding: 12px 120px);
-            }
+
         }
 
     }
@@ -137,13 +137,6 @@
             shopData(){
                 return this.$store.state.shopData;
             },
-        },
-        created(){
-            this.$store.dispatch('fetchLog',{"type":"all"}).then(res=>{
-
-                this.$store.state.shopData.spareCash=   Number(res.appShiftInfo.endSpareCash);;
-
-            })
         },
         created(){
             this.fetchLog()
@@ -165,6 +158,11 @@
             fetchLog() {
                 this.$store.dispatch('fetchLog',{"type":"all"}).then(res=>{
                     this.logData=res.appShiftInfo;
+                }).catch(res=>{
+                    console.log(res);
+                    this.$alert(res.msg,{
+                        type: 'error',
+                    })
                 })
             },
             logOut(){

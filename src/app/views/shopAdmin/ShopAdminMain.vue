@@ -54,9 +54,11 @@
                 clear: both;
                 ul{height: 160px; overflow-x: hidden; padding: 0; margin: 0;}
                 li{
-                    width: 40%;
+                    width: 50%;
                     float: left;
-                    margin: 15px 15px;
+                    text-align: center;
+                    margin-top: @gutter;
+
 
                 }
             }
@@ -101,7 +103,8 @@
                     })
             },
             checkShopAdmin(){
-                if(!this.shopAdminIndex){
+
+                if(isNaN(this.shopAdminIndex)){
                     var modal='#layer-showAdmin';
                     $(modal).modal('hide');
                     return false;

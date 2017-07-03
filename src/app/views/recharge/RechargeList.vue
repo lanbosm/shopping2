@@ -5,12 +5,25 @@
              <p v-if="!activityList">加载中...</p>
              <p v-else-if="activityList.length==0">没有活动</p>
              <div v-else class="col-nn-15" v-for="activity in activityList">
-                     <a class="btn btn-primary btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
+                     <a class="btn btn-default btn-block rechargelist-btn" :class="{select:selectAmount == activity.baseline}" @click="chooseAmount(activity)">
                          <span>¥ {{activity.baseline}}</span>
-                         <em v-if="activity.amount">赠 ¥{{activity.amount}}</em>
+                         <em v-if="activity.amount">{{activity.amount}}</em>
                          <em v-else class="dis">无赠送活动</em>
                      </a>
              </div>
+        </div>
+        <div class="row" v-if="payMethod==17||payMethod==18">
+            <div class="pay-type-box">
+                <p class="txt">请选择扫码类型</p>
+                <div class="paytype" :class="{selected:payMethod==17}">
+                    <input type="radio" id="wxpay" v-model="payMethod" value="17" @change="setPay()"/>
+                    <label title="微信支付" class="paybox wxpay" for="wxpay"></label>
+                </div>
+                <div class="paytype"  :class="{selected:payMethod==18}">
+                    <input type="radio" id="alipay" v-model="payMethod" value="18" @change="setPay()"/>
+                    <label title="支付宝支付" class="paybox alipay" for="alipay"></label>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -25,7 +38,8 @@
             "amount",
             "message",
             "giftAmount",
-            "diySeleted"
+            "diySeleted",
+            "payMethod"
         ],
         data (){
             return {
@@ -64,6 +78,7 @@
                 if(a){
                     this.selectAmount = a.baseline;
                     this.diyamountSeleted = false;
+                    this.rechargeMain.id=a.id;
 
                     this.rechargeMain.amount=this.selectAmount;
 

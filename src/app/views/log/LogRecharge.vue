@@ -18,7 +18,7 @@
 					加载中...
                 </div>
 				<div class="list-body" v-else-if="listData.list.length==0">
-					<div class="no-list"></div>
+					<div class="log-no-list"></div>
 				</div>
 				<div class="list-body" v-else>
 					<!--list-->
@@ -152,6 +152,11 @@
                     this.shiftInfo=res.appShiftInfo;
 
                     console.log(this.shiftInfo);
+                }).catch(res=>{
+
+                    this.$alert(res.msg,{
+                        type: 'error',
+                    })
                 })
             }
         }

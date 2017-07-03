@@ -1,20 +1,19 @@
 <template>
    	  <!--默认无选择-->
         <div class="tab-con tab-con-0 text-center tabShow">
-            <h1 class="pay-amount ">￥ {{amount}}</h1>
-            <p class="pay-gift-amount" v-if="giftAmount" >{{giftAmount}}</p>
+            <h1 class="pay-amount ">{{amount | currency}}</h1>
+            <p class="pay-gift-amount" v-if="giftAmount" >{{giftAmoun | currencyt}}</p>
             <div class="pay-type-box">
-                <div class="paytype">
-
+                <p class="txt">请选择扫码类型</p>
+                <div class="paytype" :class="{selected:payMethod==17}">
                     <input type="radio" id="wxpay" v-model="payMethod" value="17" @change="setPay()"/>
-                    <label class="paybox wxpay" for="wxpay"></label>
+                    <label title="微信支付" class="paybox wxpay" for="wxpay"></label>
                 </div>
-                <div class="alipay paytype">
-                    支付宝
-                     <input type="radio" v-model="payMethod" value="18" @change="setPay()"/>
+                <div class="paytype"  :class="{selected:payMethod==18}">
+                    <input type="radio" id="alipay" v-model="payMethod" value="18" @change="setPay()"/>
+                    <label title="支付宝支付" class="paybox alipay" for="alipay"></label>
                 </div>
             </div>
-            <p class="txt">请选择二维码类型</p>
             <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
         </div>
 </template>

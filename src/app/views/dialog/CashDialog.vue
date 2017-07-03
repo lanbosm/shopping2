@@ -122,9 +122,7 @@
         },
         created(){
             this.$store.dispatch('fetchLog',{"type":"all"}).then(res=>{
-
-                this.$store.state.shopData.spareCash=   Number(res.appShiftInfo.endSpareCash);;
-
+                this.spareCash= this.$store.state.shopData.spareCash;
             })
         },
         methods:{
@@ -161,28 +159,25 @@
                 this.$store.dispatch("addSpareCash",{password:this.password,spareCash:this.spareCash}).then(res=>{
 
                     this.password="";
-                    this.spareCash=0;
-                    var  needSpareCash=false;
-                    if(res.spareCash<=0){
-                        needSpareCash=true;
-                    }
-                    this.$store.commit('setShopData',{'spareCash':Number(res.spareCash),'needSpareCash':needSpareCash});
-                    util.pushLocal('shopData',this.shopData);
+                    this.spareCash=res.spareCash;
+
+                   //
 
                     this.$alert('操作成功',{
                         type: 'success',
                     }).then(_=>{
-                        this.dialogShow=false;
-                        this.$root.showCashDialog=false;
+                         this.dialogShow=false;
+                         this.$root.showCashDialog=false;
                     });
 
                 }).catch(res=>{
+                    console.log(res);
                     var msg=res.errmsg||res.msg;
                     this.$alert(msg,'操作失败',{
                         type: 'error',
                     }).then(_=>{
-                        this.dialogShow=false;
-                        this.$root.showCashDialog=false;
+//                        this.dialogShow=false;
+//                        this.$root.showCashDialog=false;
                     });
 
 

@@ -6,8 +6,7 @@ import Vuex from 'vuex'
 import util from 'util/util.js'
 import actions from './action.js'
 
-Vue.use(Vuex)
-
+Vue.use(Vuex);
 
 //vue 定义全局变量
 const store = new Vuex.Store({
@@ -68,11 +67,9 @@ const store = new Vuex.Store({
          state.loading=data;
       },
       setShopData(state,data){
-          Object.assign(state.shopData,data);
-      },
-      setMsgData(state,data){
-          state.msgData.appUnconfirmList=state.msgData.appUnconfirmList.concat(data.appUnconfirmList);
-          state.msgData.msgNum=data.msgNum;
+          var obj=Object.assign({},state.shopData,data);
+          state.shopData=obj;
+          util.pushLocal('shopData',obj);
       },
       setActive(state,data){
          state.activeId=data;
@@ -89,8 +86,13 @@ const store = new Vuex.Store({
       setCategoryData (state,data){
           state.currentPage.categoryData=data;
       },
-      setProductParams (state,data){
-          Object.assign(state.currentPage.list,data);
+      setProductParams (state,{params}){
+          if(params){
+              state.currentPage.list=params;
+          }else{
+             var obj=Object.assign({},state.currentPage.list,arguments[1]);
+             state.currentPage.list=obj;
+          }
       },
       setOrderParams(state,data){
           Object.assign(state.currentPage.orderParams,data);

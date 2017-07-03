@@ -100,6 +100,11 @@
 									amount=str.substring(0,str.length-1);
 									if(amount==""){
 										this.cartData.splice(index,1);
+
+										if(this.$parent.$refs.searchbar.type=='barcode'){
+                                            document.querySelector('#searchBar').focus();
+										}
+
 									}
 									else{
 										this.cartData[index].amount=parseInt(amount);
@@ -110,6 +115,7 @@
                             if(keycode!='.'){
                                 amount+=keycode+'';
                                 this.cartData[index].amount=parseInt(amount);
+
                             }
 						}
                 }

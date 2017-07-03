@@ -96,7 +96,7 @@
         },
         created(){
             this.$store.dispatch("fetchShopData").then(res=>{
-                console.log(res);
+                            console.log(res);
                             this.shopName.val=res.shopSetting.shopName;
                             this.contactName.val=res.shopSetting.contactName;
                             this.contactPhone.val=res.shopSetting.contactTel;
@@ -104,7 +104,8 @@
 
 
             }).catch(res=>{
-                this.$alert('获取失败',{
+
+                this.$alert(res.msg,{
                     type: 'error',
                 })
             })

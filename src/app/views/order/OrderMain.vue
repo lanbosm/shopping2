@@ -46,6 +46,8 @@
         watch: {
 
         },
+
+
         computed: {
             //数据来自全局cartData:[],
             customData(){
@@ -62,6 +64,10 @@
             },
             orderParams(){
                 return this.$store.state.currentPage.orderParams;
+            },
+            //数据来自全局
+            shopData(){
+                return this.$store.state.shopData;
             }
         },
         methods: {
@@ -127,6 +133,14 @@
                         return false;
                     }
 
+                    if( this.orderParams.cash>this.shopData.spareCash) {
+
+                        this.$message({
+                            message: '备用金不足 ',
+                            type: 'error'
+                        });
+                        return false;
+                    }
                     this.$store.dispatch("createOrder").then(res=>{
 
 

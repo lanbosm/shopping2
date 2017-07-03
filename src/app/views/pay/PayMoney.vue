@@ -1,8 +1,8 @@
 <template>
                 <!--现金方式-->
                     <div class="tab-con tab-con-1 text-center tabShow">
-                        <h1 class="pay-amount ">￥ {{amount}}</h1>
-                        <p class="pay-gift-amount" v-if="giftAmount">{{giftAmount}}</p>
+                        <h1 class="pay-amount ">{{amount | currency}}</h1>
+                        <p class="pay-gift-amount" v-if="giftAmount">{{giftAmount | currency}}</p>
 
                         <div class="list-box ">
                             <table class="table">
@@ -41,7 +41,11 @@
 
                             </ul>
                         </div>
-                        <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
+                        <div class="right-box">
+                            <div class="nowCash">当前备用金：{{spareCash | currency}}</div>
+                            <shop-admin-btn v-show="showShopAdminBtn"></shop-admin-btn>
+                        </div>
+
          </div>
 
 </template>
@@ -62,13 +66,14 @@
         props:['message','amount','giftAmount','showShopAdminBtn'],
         data(){
             return {
-                rmb:0
+                rmb:0,
+                spareCash:0
             }
         },
         computed: {
             //数据来自全局
-            mode(){
-                return this.$store.state.currentPage.mode;
+            shopData(){
+                return this.$store.state.shopData;
             },
             cash(){
                 var b=this.rmb-this.amount;
@@ -76,6 +81,19 @@
                 this.$store.commit("setOrderParams",{ rmb:this.rmb,cash:b});
                 return this.$store.state.currentPage.orderParams.cash;
             }
+
+        },
+        watch:{
+            'shopData'(cur,old){
+
+                this.spareCash =this.$store.state.shopData.spareCash ;
+            }
+
+
+        },
+        created(){
+
+            this.spareCash =this.$store.state.shopData.spareCash ;
 
         },
         components:{

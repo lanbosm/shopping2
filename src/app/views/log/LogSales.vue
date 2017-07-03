@@ -12,7 +12,7 @@
 			加载中...
         </div>
 		<div class="list-body" v-else-if="listData.list.length==0">
-			<div class="no-list"></div>
+			<div class="log-no-list"></div>
 		</div>
 		<div class="list-body" id="sales-list-main-list" v-else>
 			<!--list-->
@@ -350,11 +350,17 @@
 										}
                                 });
 						 });
+                        if(this.listData.length>0) {
+                            this.$nextTick(_ => {
+                                this.$simpleScroll('#sales-list-main-list');
+                            })
+                        }
 
-                        this.$nextTick(_ => {
-                            this.$simpleScroll('#sales-list-main-list');
+                    }).catch(res=>{
+
+                        this.$alert(res.msg,{
+                            type: 'error',
                         })
-
                     })
             }
         }
