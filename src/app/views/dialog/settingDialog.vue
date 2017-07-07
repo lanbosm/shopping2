@@ -67,7 +67,7 @@
             //会员设置
             customSetting(){
                 this.$root.showSettingDialog=false;
-                this.$router.push('/customlist');
+                this.$router.push({path:'/customList',query:{p:1}});
             },
             //门店设置
             shopSetting(){
@@ -77,7 +77,7 @@
             //订单设置
             orderSetting(){
                 this.$root.showSettingDialog=false;
-                this.$router.push('/orderlist');
+                this.$router.push({path:'/orderlist',query:{type:'wechat',p:1}});
             },
             //广告管理
             adSetting(){

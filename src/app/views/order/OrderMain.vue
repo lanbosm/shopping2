@@ -35,7 +35,7 @@
             return {
                 title:"结账",
                 back:{"label":"返回","url":"/","show":true},
-                next:{"label":"打印","url":"/print","show":true,"cb":this.createOrder},
+                next:{"label":"生成订单","url":"/print","show":true,"cb":this.createOrder},
                 message: '请选择一个付款方式'
             }
         },
@@ -90,6 +90,9 @@
 
 
                         this.$router.replace("/print");
+                        setTimeout(_=> {
+                            this.$parent.$refs.print.printPage();
+                        },300);
 
                     }).catch(res=>{
                         this.$alert('创建支付失败',{
@@ -145,7 +148,9 @@
 
 
                         this.$router.replace("/print");
-
+                        setTimeout(_=> {
+                            this.$parent.$refs.print.printPage();
+                        },300);
                     }).catch(res=>{
                         this.$alert('创建支付失败',{
                             type: 'error'
@@ -161,7 +166,9 @@
                         this.$store.dispatch("createOrder").then(res=>{
 
                             this.$router.replace("/print");
-
+                            setTimeout(_=> {
+                                this.$parent.$refs.print.printPage();
+                            },300);
                         }).catch(res=>{
                             this.$alert('创建支付失败',{
                                 type: 'error'

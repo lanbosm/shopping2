@@ -9,7 +9,7 @@
 			<div class="gallery" id="gallery">
 				<el-upload
 						ref="upload"
-						action="http://http://192.168.1.122:82/cashier/member/ads/add_image"
+						:action='url'
 						list-type="picture-card"
 						accept="image/jpg,image/png,image/jpeg"
 						:show-file-list="true"
@@ -49,8 +49,8 @@
                     dialogImageUrl: '',
                     dialogVisible: false,
                     fileList: [],
-					token:{}
-
+					token:{},
+					url:HOST+API_URLS.ads+'/add_image'
                 }
         },
         computed: {

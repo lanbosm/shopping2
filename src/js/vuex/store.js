@@ -71,11 +71,14 @@ const store = new Vuex.Store({
           state.shopData=obj;
           util.pushLocal('shopData',obj);
       },
+      setPageTab(state,data){
+          state.currentPage.pageTab=data; //存在内存
+      },
+      setAddData(state,data){
+          state.currentPage.addData=data; //存在内存
+      },
       setActive(state,data){
          state.activeId=data;
-      },
-      setaddflag(state,data){
-          state.flag=data;
       },
       setPageData (state,data){
           state.currentPage.pageData=data; //存在内存
@@ -86,12 +89,13 @@ const store = new Vuex.Store({
       setCategoryData (state,data){
           state.currentPage.categoryData=data;
       },
-      setProductParams (state,{params}){
-          if(params){
-              state.currentPage.list=params;
-          }else{
-             var obj=Object.assign({},state.currentPage.list,arguments[1]);
-             state.currentPage.list=obj;
+
+      setProductParams (state,params){
+
+          var temp=Object.assign({},state.currentPage.list,params);
+
+          if(JSON.stringify(state.currentPage.list)!=JSON.stringify(temp)){
+              state.currentPage.list=temp;
           }
       },
       setOrderParams(state,data){

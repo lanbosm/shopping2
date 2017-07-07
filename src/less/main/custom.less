@@ -58,6 +58,9 @@
             .input-group{margin-top: @gutter; margin-bottom:@gutter;}
             .btn{position: relative;margin-top: @gutter; margin-bottom:@gutter;}
         }
+        #custom-solt{
+          min-height:-80+@listHeight;
+        }
         //列表样式
         .list{
             width: 90%;
@@ -116,6 +119,21 @@
 
                 .nickname{line-height:70px;font-size:14px;display:block;float:left;}
                 span{padding-left: 30px;}
+            }
+            .brand{
+
+              display: block;
+              height: 72px;
+              em{
+                width: 48px;
+                height: 48px;
+                display: inline-block;
+                overflow: hidden;
+                border-radius: 50%;
+                border: solid 1px #cccccc;
+                margin-left:-10px;
+                img{width: 100%;}
+              }
             }
             .custom-bar{
                 width: 80%;

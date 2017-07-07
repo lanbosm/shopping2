@@ -41,9 +41,9 @@
                
                 <div class="right-con" >
                     <!-- 购物车 -->
-                    <cart ref="cart" @open-stock="openStock" @open-price="openPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></cart>
+                    <cart ref="cart" @open-stock="openStock"  :cart-data="cartData"  :add-data="addData" :cart-select-item="cartSelectItem"   :cartZone="cartZone"></cart>
                     <!-- 计算器 -->
-                    <calc ref="calc" @trigger-build-order="buildOrder" @trigger-edit-price="editPrice" :cart-data="cartData" :cart-item-index="cartItemIndex"></calc>
+                    <calc ref="calc" @trigger-build-order="buildOrder" @trigger-edit-price="editPrice"  :cartZone="cartZone" :cart-zone-list="cartZoneList" :cart-select-item="cartSelectItem"></calc>
                 </div>
             </div>
 
@@ -76,15 +76,18 @@
         name: 'app',
         data() {
             return {
-                showList:'product',
+
                 showCategory:false,
-                editItem:{},
-                cartItemIndex:0,
-                pageNum:1,
+                cartZone:'cart',
+                cartZoneList:[],
+                cartSelectItem:{}
 
             }
         },
-        computed: {
+        computed:{
+            showList() {
+                 return this.$store.state.currentPage.pageTab;
+            },
             //数据来自全局
             listLoading () {
                 return this.$store.state.currentPage.listLoading;
@@ -110,6 +113,10 @@
             cartData () {
                 return this.$store.state.currentPage.cartData
             },
+            addData () {
+                console.log(this.$store.state.currentPage.addData)
+                return this.$store.state.currentPage.addData
+            },
             //数据来自全局
             customData () {
                 return this.$store.state.currentPage.customData;
@@ -126,15 +133,23 @@
              searchbar,
              Loading
         },
+        watch:{
+
+
+
+
+        },
         created(){
-            this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
+          //  alert(222);
+           // this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
         },
         methods:{
             switchNavBar(navname){
                 if (navname != 'product') {
                     this.showCategory = false;
                 }
-                this.showList=navname;
+                this.$store.commit('setPageTab',navname)
+                this.$store.commit('setLocalList');    //存储本地
 
             },
             openCategory(navname){
@@ -145,17 +160,34 @@
             },
 
             //创建订单
-            buildOrder:function(cart){
+            buildOrder:function(){
+                console.log('cartData');
+                console.log(this.cartData);
+                console.log('addData');
+                console.log(this.addData);
+
+
+                var cart=this.cartData;
+                var add=this.addData;
+
+
+
+                if(cart.length>0 && add.length>0) {
+                    this.$emit('trigger-build-order');
+
+                }else{
+                    this.$message.info('请先选择物品');
+                }
                 //alert(this.mode);
-                var cartParam={itemParams:[]};
+                var cartParam={itemParams:[],addiParam:[]};
 
                 cart.forEach(function(ele,index){
 
                     cartParam.itemParams.push(
-                        {"productId":ele.id,
-                         "quantity":ele.amount,
-                         'discount':ele.discountPrice,
-                         'salePer':ele.sales && ele.sales!=10?ele.sales*10:null
+                        { productId:ele.id,
+                          quantity:ele.amount,
+                          discount:ele.discountPrice,
+                          salePer:ele.sales && ele.sales!=10?ele.sales*10:null
                         }
                     )
                 });
@@ -166,11 +198,41 @@
 
                     if(ele.appGiftItem) {
                         giftParam.giftIds.push(
-                            {"productId": ele.appGiftItem.id, "quantity": ele.appGiftItem.amount}
+                            {productId: ele.appGiftItem.id, quantity: ele.appGiftItem.amount}
                         )
                     }
                 });
 
+
+                console.log(add);
+
+                add.forEach((ele,index)=>{
+
+                    var rowParam={addiItemParams:[], addProuctId:null,addiActivityId: null,addiPurchaseId:null};
+                    if(ele.id){
+                        rowParam.addiActivityId=ele.id;
+                    }
+                    if(ele.addiPurchaseId){
+                        rowParam.addiPurchaseId=ele.addiPurchaseId;
+                    }
+                    if(ele.addProuct){
+                        rowParam.addProuctId=ele.addProuct.id;
+                    }
+
+                    if(ele.pickItems.length>0){
+
+                        ele.pickItems.forEach((ele2,index2)=>{
+                            rowParam.addiItemParams.push({productId:ele2.id,quantity:ele2.amount})
+                        });
+                        cartParam.addiParam.push(rowParam);
+                    }
+
+                });
+
+
+                if(cartParam.addiParam.length==0){
+                    cartParam.addiParam=null;
+                }
 
                 this.$store.dispatch('bulidOrder',cartParam).then(res=>{
 
@@ -185,6 +247,7 @@
 
 
             },
+
             //改价
             editPrice(){
                 var item=this.cartData[this.cartItemIndex];
@@ -192,6 +255,7 @@
             },
             //打开详情
             openDetail() {
+
                 //是否存在赠品
                 let vm=this;
                 let item=this.$store.state.itemData.appProductDetail;
@@ -325,17 +389,6 @@
                         layer.alert("调拨申请失败",{icon:2 ,closeBtn :false,yes:function(index){ layer.closeAll();}});
                     });
                 }
-
-
-            },
-            //打开改价
-            openPrice(item){
-
-
-                this.$set(item,'isDiscount',true);
-                this.editItem=item;
-
-
             },
             //判断如何加入购物车
             pushCart(item){
@@ -352,19 +405,16 @@
                                 var cartitem=this.cartData[i];
                                 cartitem.amount++;
                                 this.$set(this.cartData,i,cartitem)
-                                this.cartItemIndex=i;
+                                this.cartSelectItem=cartitem;
                                 find=true;
-                                this.$store.commit('setLocalList');    //存储本地
+
                             }
-
                             else if (this.cartData[i].appGiftItem.id== item.appGiftItem.id) {
-
                                 var cartitem=this.cartData[i];
                                 cartitem.amount++;
                                 this.$set(this.cartData,i,cartitem);
-                                this.cartItemIndex=i;
+                                this.cartSelectItem=cartitem;
                                 find=true;
-                                this.$store.commit('setLocalList');    //存储本地
                                 //break;
                             }
                         }
@@ -374,14 +424,13 @@
                 if(!find){
                     item.amount=1;
                     this.cartData.push(item);
-                    this.cartItemIndex=this.cartData.length-1;
-                    this.$refs.calc.calcmode="qty";
-
-                    //在存下
-
-                    this.$store.commit('setLocalList');    //存储本地
+                    this.cartSelectItem=item;
                 }
+                this.cartZone='cart';
 
+                this.cartZoneList=this.cartData;
+                this.$refs.calc.calcmode="qty";
+                this.$store.commit('setLocalList');    //存储本地
             }
         }
     }

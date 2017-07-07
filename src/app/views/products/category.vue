@@ -72,7 +72,7 @@
             }
         },
         created(){
-            console.log(this.productParams.categoryId);
+            //console.log(this.productParams.categoryId);
         },
         mounted(){
 
@@ -105,7 +105,7 @@
 
                 if(cid){this.showSubMenu=true;}
                 this.$store.dispatch('fetchCategory',cid).then(res=>{
-                         this.$store.commit("setProductParams", {"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null});
+                         this.$store.commit("setProductParams", {'searchStr': null,"categoryId": cid, "categoryName": cname,"brandId":null,"brandName":null,"type":0});
                 });
 
             },
@@ -117,7 +117,8 @@
                     'pageNum':  1,
                     'searchStr': null,
                     "categoryName": null,
-                    "brandName":null
+                    "brandName":null,
+                    "type":0
                 }
 
 
@@ -132,7 +133,7 @@
             fetchBrand(bid,bname){
 
 
-                var params={ "brandId":bid,"brandName":bname,"pageNum":1};
+                var params={ 'searchStr': null,"brandId":bid,"brandName":bname,"pageNum":1,"type":0};
 
                 this.$store.commit("setProductParams",params);
                 this.$parent.switchNavBar('product');

@@ -109,15 +109,15 @@
                     <div style="display: none" id="styles">
                         *{padding:0; margin:0;}
                         body{ box-sizing: border-box;}
-                        .print-box {width: 180pt; padding:10pt 10pt 50pt 10pt; margin:0 auto; font-size: 10pt;  }
-                        .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:20pt;  }
-                        .print-box  h5{font-size: 10pt; display:block; adding-top:10pt; padding-bottom:10pt;}
-                        .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:20pt; padding-bottom:20pt;  font-family:'黑体' }
+                        .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
+                        .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
+                        .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
+                        .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
                         .print-box  table.printtable tbody{display: block;}
                         .print-box  table.printtable caption{display:block;}
                         .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
                         .print-box  table.printtable .split{ margin-top:10pt;   }
-                        .print-box  table.printtable tr{ display:block;clear: left;  padding-top:10pt; padding-bottom:10pt; }
+                        .print-box  table.printtable tr{ display:block;clear: left;  padding-top:5pt; padding-bottom:5pt; }
                         .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                         .print-box  table.printtable{*zoom:1;}
                         .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
@@ -129,10 +129,10 @@
                         .print-box  .text-right {text-align: right !important;}
                         .print-box  .text-left {text-align: left !important;}
                         .print-box  p {margin-top:10pt;}
-                        .print-box  #qrcCode{ margin-top:30pt;  }
+                        .print-box  #qrcCode{ margin-top:10pt;  }
 
-                        .print-box #shopQrc{margin-left:5pt;  margin-top:30pt;   }
-                        hr{width:100%; height:0px;margin-top:30pt;  border-top:dotted 3px #cccccc;}
+                        .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
+                        hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
                     </div>
 
                 </div>
@@ -155,15 +155,15 @@
 
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
-    .print-box {width: 180pt; padding:10pt 10pt 50pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
-    .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:20pt;  }
-    .print-box  h5{font-size: 10pt; display:block; adding-top:10pt; padding-bottom:10pt;}
-    .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:20pt;  font-family:'黑体' }
+    .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
+    .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
+    .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
+    .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
     .print-box  table.printtable tbody{display: block;}
     .print-box  table.printtable caption{display:block;}
     .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
     .print-box  table.printtable .split{ margin-top:10pt;   }
-    .print-box  table.printtable tr{ display:block;clear: left;  padding-top:10pt; padding-bottom:10pt; }
+    .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
     .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
@@ -175,10 +175,10 @@
     .print-box  .text-right {text-align: right !important;}
     .print-box  .text-left {text-align: left !important;}
     .print-box  p {margin-top:10pt;}
-    .print-box  #qrcCode{ margin-top:30pt;  }
+    .print-box  #qrcCode{ margin-top:10pt;  }
 
-    .print-box #shopQrc{margin-left:5pt;  margin-top:30pt;   }
-    hr{width:100%; height:0px;margin-top:30pt;  border-top:dotted 3px #cccccc;}
+    .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
+    hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
     .print-box   table{ width:100% !important;}
     .btn-inventory{margin-bottom: 15px;}
 
@@ -225,18 +225,21 @@
                // print.paymentName=paymentName[this.orderParams.paymentMethodId];
                 print.cash=this.orderParams.cash ;
                 print.rmb=this.orderParams.rmb ;
-
-
                 return  print;
             }
 
         },
-        mounted(){
+        created(){
 
 
             this.$nextTick(function() {
 
-                this.title='价格：¥'+this.order.totalAmountPayable;
+                var amount=this.order.totalAmountPayable;
+                if (!this.order.totalAmountPayable) amount='¥ '+ '0.00';
+                else
+                amount='¥ ' + Number(amount).toFixed(2);
+
+                this.title='价格：'+amount;
                 //付款二维码
                 $('#qrcCode').html("");
                 console.log(this.printData);
@@ -273,7 +276,7 @@
                             height: 230
                         });
 
-
+                         this.scanResListen();
 
 
                 }
@@ -288,7 +291,7 @@
                         height: 230
                     });
                 }
-                this.scanResListen();
+
                 this.$simpleScroll('#printDiv');
 
             });
@@ -388,6 +391,9 @@
                             $(".payres-txt").addClass("success");
                             layer.msg(this.message, {icon: 1,zIndex:999});
                             layer.close(this.qrcWin);
+                            setTimeout(_=> {
+                                this.printPage();
+                            },300);
                         }else {
                             this.message="付款失败";
                             clearInterval(this.timer);

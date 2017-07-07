@@ -7,14 +7,12 @@
             </div>
         </div>
         <div class="row"  v-show="listData.list.length == 0">
-            <div class="col-xs-12">
-                没有数据
-            </div>
+            <div class="col-xs-12 no-list"></div>
         </div>
         <div  id="actProductList"  v-show="listData.list.length > 0">
             <ul>
                 <div class="row product-row"  v-for="(row,rowindex) in listData.list">
-                    <div class="col-xs-6 col-sm-4 col-sm-2 act-col" v-for="(item,index) in row.rowData "  @click="fetchItem(item,rowindex);">
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-1 act-col" v-for="(item,index) in row.appProducts "  @click="fetchItem(item,row,rowindex);">
                         <div class="item" :class="{'picked':inPick(item.id,row.pickItems)}">
                             <!--图片盒子-->
                             <div class="cc">
@@ -25,7 +23,7 @@
                                         <a  class="item-icon-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
                                         <span class="info">
                                                              <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
-                                                        </span>
+                                          </span>
                                     </div>
                                 </div>
                             </div>
@@ -33,22 +31,22 @@
                             <!--文本盒子-->
                             <div class="tt">
                                 {{item.name}} {{item.barCode}}
-                                    </div>
+                             </div>
                         </div>
                     </div>
 
                     <dl class="act-box" :class="{overline:row.overline}" >
-                        <dt class="dd1">满{{row.overlinePrice}}</dt>
-                        <dd class="dd2" v-if="!row.overline">加{{row.addPrice}}元</dd>
-                        <dd class="dd3" @click="wait(row.overline);">
-                            <em v-if="row.overline" >选择赠品</em>
+                        <dt class="dd0">{{row.name}}</dt>
+                        <dd class="dd1">满{{row.meetPrice}}</dd>
+                        <dd class="dd2" v-if="!row.overline">加{{row.additionalPrice}}元</dd>
+                        <dd class="dd3" @click="handleGfit(row.overline,row.id);">
+                            <em v-if="row.overline">选择赠品</em>
                             <em v-else>查看赠品</em>
                             <small>当前金额{{row.nowPrice | currency}}</small>
                         </dd>
                         <dd class="dd4" @click="wait(row.overline);">
-                            <em v-if="row.overline" >参与活动</em>
-                            <em v-else>查看全部</em>
-
+                            <!--<em v-if="row.overline" >参与活动</em>-->
+                            <!--<em v-else>查看全部</em>-->
                         </dd>
                     </dl>
                 </div>
@@ -62,41 +60,35 @@
         name: 'ProductList',
         data() {
             return {
-                    orginData:[
-
-                        {
-                            'pickItems':[], //选中的物品
-                            'addPrice':10,  //加
-                            'overlinePrice':10, //满
-                            'rowData':this.$store.state.currentPage.pageData.list //每行数据
-                         }
-                    ]
+                    orginData:[  ]
             }
         },
         computed: {
-            productParams(){
-                return this.$store.state.currentPage.list;
+
+            addData () {
+                return this.$store.state.currentPage.addData
             },
             listData () {
                 var list= this.orginData;
+
                 list.forEach((ele,index)=>{
                     ele.overline=false;
                     ele.nowPrice=0;
                     ele.pickItems.forEach((ele2,index2)=>{
 
-                        ele.nowPrice+=Number(ele2.price);
+                        ele.nowPrice+=Number(ele2.price)*Number(ele2.amount);
 
                     });
 
-                    if(ele.nowPrice>=ele.overlinePrice){
+                    if(ele.nowPrice>=ele.meetPrice){
                         ele.overline=true;
                         ele.needPrice=0;
                     }else{
-                        ele.needPrice=ele.overlinePrice-ele.nowPrice;
+                        ele.needPrice=ele.meetPrice-ele.nowPrice;
                     }
 
                 })
-                console.log(list);
+              //  console.log(list);
                 //list.push(productRow);
                 return {'list':list};
             },
@@ -123,6 +115,19 @@
 
                 return res;
             },
+            handleGfit(over,id){
+
+
+                this.$root.showGiftDialog=true;
+
+                this.$nextTick(_=> {
+                   // console.log(this.$root.$refs.gift.overline)
+                    this.$root.$refs.gift.overline = over;
+                    this.$root.$refs.gift.id = id;
+                   // console.log(this.$root.$refs.gift);
+                });
+
+            },
             //获取物品详情
             wait(over){
                 var msg=""
@@ -142,18 +147,28 @@
             //请求列表
             fetchList() {
 
-                    this.$store.dispatch('fetchList',this.productParams).then(res=>{
-                       if(res.page.list.length>0) {
-                            this.$nextTick(_ => {
+                    if(this.addData.length>0){
+                        this.orginData=this.addData;
+                        this.$nextTick(_ => {
+                            this.$simpleScroll('#actProductList');
+                        })
+                    }else{
+                        this.$store.dispatch('fetchAdditionalsList').then(res=>{
+                            console.log(res);
+                           if(res.appAdditionalActivities.length>0) {
+                                this.orginData=res.appAdditionalActivities;
+                                this.$store.commit("setAddData",this.orginData);
 
-                                this.$simpleScroll('#actProductList');
-                            })
-                       }
-                    }).catch(res=>{
-                        this.$alert(res.msg, {
-                            type: 'error',
+                                this.$nextTick(_ => {
+                                    this.$simpleScroll('#actProductList');
+                                })
+                           }
+                        }).catch(res=>{
+                            this.$alert(res.msg, {
+                                type: 'error',
+                            });
                         });
-                    });
+                    }
 
 
             },
@@ -162,27 +177,85 @@
                 this.fetchList();
             },
             //获取物品详情
-            fetchItem:function(item,rowIndex){
+            fetchItem:function(item,row,rowIndex){
                 this.$store.dispatch('fetchItem',item.id).then(res=>{
 
-                    this.$store.state.currentPage.pageData.list=[];
+                    var newitem = {};
+                    Object.assign(newitem, item);
 
-                    this.orginData[rowIndex].pickItems.push(item);
 
+                    this.orginData[rowIndex].pickItems=this.pushRow(newitem,row.pickItems);
+                    this.$root.$refs.app.$refs.cart.checkCartItem(newitem,row.name,row.pickItems);
+
+                    var itemIndex=0;
+                    this.orginData[rowIndex].pickItems.forEach((ele,index)=>{
+
+                            if(ele.id==item.id){
+
+                                itemIndex=index;
+                            }
+
+                    })
+
+                    this.$root.$refs.app.cartSelectItem= this.orginData[rowIndex].pickItems[itemIndex];
+
+                    this.$store.commit("setAddData",this.orginData);
+
+
+                    console.log(this.orginData[rowIndex].pickItems);
+                    //在存下
+                    this.$store.commit('setLocalList');    //存储本地
 
                     // this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据  父级传过来的方法  用$emit方法去触发
                 }).catch(res=>{
+                    console.log(res);
                     this.$alert(res.msg, {
                         type: 'error',
                     });
                 });
+            },
+            //判断如何加入购物车
+            pushRow(item,pickItems){
+
+                var find=false;
+
+                if(pickItems.length>0){
+                    for (var i in pickItems) {
+
+                        if (pickItems[i].id == item.id) {
+
+                            //如果没赠品直接找到
+                            if(!pickItems[i].appGiftItem){
+                                var cartitem=pickItems[i];
+                                cartitem.amount++;
+                                //this.$set(pickItems,i,cartitem)
+                                pickItems[i]=cartitem;
+                                find=true;
+                            }
+
+                            else if (pickItems[i].appGiftItem.id== item.appGiftItem.id) {
+
+                                var cartitem=pickItems[i];
+                                cartitem.amount++;
+
+                                pickItems[i]=cartitem;
+                                find=true;
+                                //break;
+                            }
+                        }
+                    }
+                }
+
+                if(!find){
+                    item.amount=1;
+                    pickItems.push(item);
+
+
+                }
+                return pickItems;
             }
 
         }
     }
 </script>
 
-<style scoped>
-
-
-</style>

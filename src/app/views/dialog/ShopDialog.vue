@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-            title="门店设置"
+            title="系统设置"
             :visible.sync="dialogShow"
             top="20%"
             custom-class="dialog-shop"
@@ -9,24 +9,48 @@
             @close="closeWin();"
             >
                 <div class="dialog-shop-con">
-                   <ul class="row">
-                       <li class="col-xs-6">
-                           <label class="input-title" >门店名称</label>
-                           <el-input v-model="shopName.val"  class="shopname-input" :readonly="shopName.readonly" placeholder="门店名称"></el-input>
-                       </li>
-                       <li class="col-xs-6">
-                           <label class="input-title" >联系人</label>
-                           <el-input v-model="contactName.val" :readonly="contactName.readonly" placeholder="联系人"></el-input>
-                       </li>
-                       <li class="col-xs-6">
-                           <label class="input-title" >联系方式</label>
-                           <el-input v-model="contactPhone.val" type="tel" :maxlength="11"  :readonly="contactPhone.readonly" placeholder="联系方式"></el-input>
-                       </li>
-                       <li class="col-xs-12">
-                           <label class="input-title" >地址</label>
-                           <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="地址"></el-input>
-                       </li>
-                   </ul>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5>门店管理</h5>
+                            <ul class="row">
+                                <li class="col-xs-6">
+                                    <label class="input-title" >门店名称</label>
+                                    <el-input v-model="shopName.val"  class="shopname-input" :readonly="shopName.readonly" placeholder="门店名称"></el-input>
+                                </li>
+                                <li class="col-xs-6">
+                                    <label class="input-title" >联系人</label>
+                                    <el-input v-model="contactName.val" :readonly="contactName.readonly" placeholder="联系人"></el-input>
+                                </li>
+                                <li class="col-xs-6">
+                                    <label class="input-title" >联系方式</label>
+                                    <el-input v-model="contactPhone.val" type="tel" :maxlength="11"  :readonly="contactPhone.readonly" placeholder="联系方式"></el-input>
+                                </li>
+                                <li class="col-xs-12">
+                                    <label class="input-title" >门店地址</label>
+                                    <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="地址"></el-input>
+                                </li>
+                                <li class="col-xs-12">
+                                    <label class="input-title" >门店备注</label>
+                                    <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="备注"></el-input>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6">
+                               <h5>打印管理</h5>
+                               <ul class="row">
+                                   <li class="col-xs-12">
+                                        1
+                                   </li>
+                                   <li class="col-xs-12">
+                                        2
+                                   </li>
+                                   <li class="col-xs-12">
+                                        3
+                                   </li>
+
+                               </ul>
+                        </div>
+                    </div>
                 </div>
           <div slot="footer" class="dialog-footer">
                <a class="dialog-shop-btn-ok" v-show="!edit" @click="handleEdit()">修改</a>
@@ -44,7 +68,7 @@
 
     .dialog-shop{
         .dialog();
-        width: 40% !important;
+        width: 60% !important;
         input:focus{
             border-color: @themeColor;
         }

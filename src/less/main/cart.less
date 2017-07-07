@@ -52,7 +52,30 @@
             }
           }
       }
+      .add-list{
+          .title{
+             line-height: 40px;
+             color: @themeColor;
+             background: fade(@themeColor,10%);
 
+            &.over{
+              color: @green;
+              background: fade( @green,10%);
+            }
+          }
+          .addProuct{
+            border-top:@borderStyle;
+            b{
+              color: @themeColor;
+            }
+
+          }
+          width: 100%;
+          height: auto;
+
+
+
+      }
 
   }
 }
@@ -64,15 +87,18 @@
      position: absolute;
      bottom: 20px;
      .table {
+
         margin-bottom: 0;
        .t1 {
          width: 40%;
-         background-color: #eeeeee;
+         background-color: #f7f7f7;
          &.bulid-t1{
+            height: 120px;
             border-top: solid 3px @border-color;
          }
        }
        td {
+
          width: 40px;
          height: 40px;
          text-align: center !important;
@@ -107,9 +133,14 @@
          background-repeat: no-repeat;
          background-position: 50% 50%;
          background-size: 60px 80px;
-         display: inline-block
-       }
+         display: inline-block;
+                 line-height: 160px;
 
+       }
+        .dis{
+          opacity: 0.5;
+          pointer-events: none;
+        }
        .calc-mode.selected{
 
          background: @green;

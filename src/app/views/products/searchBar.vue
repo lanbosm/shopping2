@@ -44,52 +44,40 @@
                     this.fetchList();
                 }
 
-
-
-
             },
             //请求列表
             fetchList() {
-//                var a= this.keyword;
-//                this.keyword="";
+
                 if(this.searching){
                     return false;
                 }
-//                this.searching=true;
+
 
 
                 if(this.type=="search") {
 
-                    this.$store.dispatch('fetchList', {"searchStr": this.keyword, "pageNum": 1,"type":0}).then(_=>{
-                        this.searching=false;
-                    }).catch(res=>{
-                        this.$alert(res.msg, {
-                            type: 'error',
-                        });
-                    });
+                    this.$store.commit('setProductParams',{"searchStr": this.keyword, "pageNum": 1,"type":0});
+
                 }else{
                     if(!this.keyword){
                         this.$message.error('请输入商品条码');
                         return false;
                     }
 
-                    this.$store.dispatch('fetchList', {"searchStr":this.keyword, "pageNum": 1,"type":1}).then(res=> {
+
+                    this.$store.dispatch('fetchList', {"searchStr":this.keyword, "pageNum": 1,"type":1,categoryId:null, brandId:null }).then(res=> {
                         this.keyword ="";
-                        this.searching=false;
                         if (res.page) {
                             var item = res.page.list[0];
                             var newitem = {};
                             Object.assign(newitem, item);
                             newitem.amount = 1;
-
                             this.$parent.pushCart(newitem);
-
                             document.querySelector('#searchBar').focus();
                             this.$message.success('添加购物车成功');
                             this.keyword ="";
                             this.searching=false;
                         }else{
-
                             document.querySelector('#searchBar').focus();
                             this.$message.error('找不到该商品条码');
                             this.keyword ="";
@@ -97,9 +85,6 @@
 
                         }
                     }).catch(res=>{
-
-
-
                         document.querySelector('#searchBar').focus();
                         this.$message.error('找不到该商品条码');
                         this.keyword ="";

@@ -17,7 +17,7 @@ import ShopDialog    from 'views/dialog/ShopDialog.vue';
 import LogDialog    from 'views/dialog/LogDialog.vue';
 import NoticeDialog    from 'views/dialog/NoticeDialog.vue';
 import EditDialog    from 'views/dialog/EditDialog.vue';
-
+import GiftDialog    from 'views/dialog/GiftDialog.vue';
 
 import ChooseGifts from 'views/products/ChooseGifts.vue'
 
@@ -47,9 +47,6 @@ Vue.component('commom-header',CommomHeader);
 Vue.component('commom-list',CommomList);
 
 Vue.component('pagination',Pagination);
-
-
-
 
 //定义头组件
 Vue.component('app-header',appHeader);
@@ -82,6 +79,7 @@ Vue.component('dialog-edit',EditDialog);
 //定义设置弹窗
 Vue.component('dialog-setting',SettingDialog);
 
+Vue.component('dialog-gift',GiftDialog);
 
 //定义门店组件
 Vue.component('dialog-shop',ShopDialog);
@@ -213,14 +211,14 @@ var vm =new Vue({
 
             showListItem:false,
             showStockItem:false,
-            showChooseGifts:false,
             showAgainPass:false,
 
             showSettingDialog:false,
             showShopDialog:false,
             showCustomDialog:false,
             showCashDialog:false,
-            showLogDialog:false
+            showLogDialog:false,
+            showGiftDialog:false
 
 
     },

@@ -11,7 +11,7 @@
                   </span>
                   <custom-search  :step="step"  v-if="$route.name!='customlist'" :add-callback="addEvent"  :search-callback="searchEvent" :select-callback="selectEvent"></custom-search>
                  <div id="custom-solt">
-                  <custom-normal v-if="step=='normal'" :tips="tips" :searching="searching" ></custom-normal>
+                  <!--<custom-normal v-if="step=='normal'" :tips="tips" :searching="searching" ></custom-normal>-->
 
                   <custom-register v-if="step=='register'" :register-callback="regEvent"></custom-register>
 
@@ -73,13 +73,30 @@
         created(){
 
             if(this.$route.name=='customlist'){
-
                 this.$nextTick(_=> {
                     console.log(this.customData);
                     this.step='detail';
                 })
+            }else {
+                this.customListData = this.customListData_default;
+                var data = {username: '', pageNum: 1};
+                this.$store.dispatch("fetchCustom", data).then(res => {
+                    console.log(res);
 
+                    this.customListData = res.page;
+                    this.searching = false;
+                    this.step = 'list';
+                    this.$nextTick(_ => {
+                        this.$simpleScroll('#custom-list-list');
+                    })
 
+                }).catch(res => {
+
+                    this.tips = "没有搜索到该会员";
+                    this.tips = '';
+                    this.searching = false;
+
+                });
             }
 
 

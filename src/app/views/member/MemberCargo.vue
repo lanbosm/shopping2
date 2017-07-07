@@ -20,7 +20,8 @@
                 <div class="list-body" v-else-if="listData.list.length==0">
                     <div class="no-list"></div>
                 </div>
-                <div class="list-body" style="overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;" v-else>
+                <div class="list-body" id="memberCargoList" v-else>
+                    <ul>
                     <!--list-->
                     <div class="list-row" v-for="(item,index) in listData.list" v-show="item.quantity>0">
                         <div class="t">
@@ -45,6 +46,7 @@
                             </span>
                         </div>
                     </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -90,6 +92,7 @@
     }
     .list-body {
         height: @listHeight;
+
     .list-row{
         border: solid 1px  @border-color;
         margin-top: @gutter;
@@ -152,13 +155,14 @@
 
     export default{
         name:'Member_cargo',
-        props:["listData"],
         data(){
             return{
                 pageNum:1,
                 num:"",
-                aa:"",
-                mid:""
+                mid:"",
+                listData:{
+                    list:[]
+                }
             }
 
         },
@@ -171,9 +175,12 @@
 
         },
         created(){
-
+            this.mid=this.$route.query.mid;
+            this.pageNum=this.$route.query.p;
+            this.fetchList();
 
         },
+
         methods:{
             out(operationNum,index){
                 var cantakeNum=this.listData.list[index].quantity-this.listData.list[index].takenNum;
@@ -215,15 +222,21 @@
             },
             handleCurrentChange(pageIndex){
                 this.pageNum=pageIndex;
+                this.$router.replace({path:'/membercargo',query:{mid:this.mid,p:this.pageNum}});
                 this.fetchList();
                 window.scrollTo(0,0);
             },
-            //请求列表
-            fetchList() {
+            fetchList(){
                 this.$store.dispatch("fetchPickList",{"memberId":this.mid,"pageNum":this.pageNum}).then(res=>{
-
+                    this.listData=res.page;
+                    if(res.page.list.length>0){
+                        this.$nextTick(_=> {
+                            this.$simpleScroll("#memberCargoList");
+                        });
+                    }
                 });
             }
+
 
         }
 

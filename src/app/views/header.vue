@@ -97,7 +97,7 @@
                 this.cash();
             }
             this.$store.dispatch("loadLastData");
-            this.addMsglistener();
+            //this.addMsglistener();
         },
         mounted(){
 
@@ -111,6 +111,7 @@
             addPage(){
                 this.$store.dispatch('addPage').then(res=> {
                     this.$router.replace('/');
+
                 });
 
                 this.$nextTick(_=> {

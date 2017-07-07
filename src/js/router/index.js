@@ -16,9 +16,6 @@ import PayCash from 'views/pay/PayMoney.vue'
 import member from 'views/member/MemberStockMain.vue';
 import membercargomain from 'views/member/MemberCargoMain.vue';
 
-import activeProductsMain from 'views/products/activeProductsMain.vue';
-
-
 
 import AdMain from 'views/Ad/AdMain.vue';
 import OrderListMain from 'views/order/OrderListMain.vue';
@@ -50,11 +47,6 @@ const router = new VueRouter({
             path:'/member',
             name:'member',
             component:member
-        },
-        {
-            path:'/active',
-            name:'activeproductsmain',
-            component:activeProductsMain
         },
         {
             path:'/membercargo',

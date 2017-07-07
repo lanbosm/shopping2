@@ -1,8 +1,8 @@
 <template>
 	 <div class="appCenter">
 		 <app-center-loading v-if="waiting"></app-center-loading>
-		 <order-main v-if="$route.path.indexOf('/order')!=-1"></order-main>
-		 <print-main v-if="$route.path=='/print'"></print-main>
+		 <order-main  ref="order" v-if="$route.path.indexOf('/order')!=-1"></order-main>
+		 <print-main ref="print" v-if="$route.path=='/print'"></print-main>
 	 </div>
 </template>
 

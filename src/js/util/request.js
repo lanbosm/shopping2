@@ -26,9 +26,9 @@ const apiSecrect = "2a97eede0fd2de9791859f61ea6c98dd";
 //export const HOST = "http://192.168.1.99:82"; //http://192.168.1.199:82/
 //export const HOST = "http://zgq2017-xwbz.tunnel.qydev.com"; //http://192.168.1.199:82/
 // export const HOST = "http://cs.awo123.cn"; //http://192.168.1.199:82/
-const HOST_main="http://101.201.68.160:9898";              //主服务器
+//const HOST_main="http://101.201.68.160:9898";              //主服务器
 
-//const HOST_main="http://192.168.1.122:82";
+const HOST_main="http://192.168.1.122:82";
 //const HOST_main="http://192.168.1.122:82";              //主服务器
 //const HOST_main="http://cs.awo123.cn";              //主服务器
 //const HOST_main="http://lucxx.tunnel.qydev.com:80";              //主服务器
@@ -57,7 +57,8 @@ export const API_URLS = {
     send:'/cashier/common/send_code',
     shop_setting:'/cashier/member/shop_setting',
     ads:'/cashier/member/ads',
-    takepost:'/cashier/member/consigns/take'
+    takepost:'/cashier/member/consigns/take',
+    activity:'/cashier/member/activity'
 
 };
 
@@ -71,14 +72,22 @@ Vue.http.options.timeout = 3000;  //500超时
 export const request = {
 
     //通信错误方法
-    fnError(){
-        console.log("Server error");
+    fnError(response){
         store.commit('hide_waiting');
-        //if(store.state.login){
-            //MessageBox.alert("网络中断，请检查网络连接，确保网络畅通",{ type: 'error'});
-            return Promise.reject({"msg":"网络中断，请检查网络连接，确保网络畅通"});
-        //}
+        var msg={"msg": "未知错误"}
+        switch (response.data.code) {
 
+            case 49001:
+                store.dispatch('logoutUnexpected');
+                response.data.msg= "身份授权已过期，请重新登录";
+                break;
+            default:
+                console.log("Server error");
+                response=Promise.reject({"msg": "网络中断，请检查网络连接，确保网络畅通"});
+
+        }
+
+        return response;
     },
 
 
@@ -92,8 +101,8 @@ export const request = {
                     resolve(response.data);
                })
                .catch(response=> { //失败
-                    //reject(response);
-                    return this.fnError();
+
+                    return this.fnError(response);
                })
         });
     },
@@ -108,7 +117,7 @@ export const request = {
                 headers: {'Content-Type': 'application/json'},
             }).catch(response=> { //失败
                 if( !switchBack || host==HOST_back){
-                    return this.fnError();
+                    return this.fnError(response);
                 }else {
                     return this.fnGet_dev(apiObj, HOST_back);
                 }
@@ -125,7 +134,7 @@ export const request = {
             headers: {'Content-Type': 'application/json'}
         }).catch(response=> { //失败
             if(!switchBack || host==HOST_back){
-                return this.fnError();
+                return this.fnError(response);
             }else {
                 return this.fnPost_dev(apiObj, HOST_back);
             }
@@ -143,7 +152,7 @@ export const request = {
 
         }).catch(response=> { //失败
             if(!switchBack || host==HOST_back){
-                return this.fnError();
+                return this.fnError(response);
             }else {
                 return this.fnPost_form_dev(apiObj, HOST_back);
             }
@@ -240,46 +249,31 @@ export const request = {
 /**
  * 全局Vue拦截器
  */
-Vue.http.interceptors.push(function (request, next) {
+Vue.http.interceptors.push(function (req, next) {
 
     let accessToken = window.localStorage.getItem("accessToken");
-    if (request && accessToken  ) {
-        if (!request.params) {
-            request.params = {};
+    if (req && accessToken  ) {
+        if (!req.params) {
+            req.params = {};
         }
-        if(typeof request.params.oAuth == 'undefined'){
-            request.params.oAuth=true;
+        if(typeof req.params.oAuth == 'undefined'){
+            req.params.oAuth=true;
         }
-        request.params['accessToken'] =accessToken + '';
+        req.params['accessToken'] =accessToken + '';
 
     }
 
 
-    next(function (response) {
+    next(function (res) {
 
-        if (response.data && response.data.code == 49001 && request.params.oAuth && store.state.login) {
+        if (res.data && res.data.code == 49001 && req.params.oAuth && store.state.login) {
 
-            store.dispatch('logoutUnexpected');
-            MessageBox.alert("身份授权已过期，请重新登录",{ type: 'warning'})
 
-            return response;
-            //
 
-        }else if (response.data && response.data.code == 40001) {
-
-            return response;
-        }
-        else if (response.data && response.data.code == 49002) {
-            //window.location.href = './login.html';
-            return  response;
-        } else if (response.data && response.data.code ==  45004) {
-
-            MessageBox.alert("商品库存不足",{ type: 'warning'});
-
-            return response;
+            return  request.fnError(res);
         }
         else {
-            return response;
+            return res;
         }
     });
 });

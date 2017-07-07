@@ -2,7 +2,7 @@
     <div class="member_main">
         <commom-header  :title="title" :back="back" :next="next"></commom-header>
         <!--提货-->
-        <member-cargo :list-data="listData"></member-cargo>
+        <member-cargo :list-data="listData" ref="cargo"></member-cargo>
     </div>
 </template>
 
@@ -111,7 +111,9 @@
                 takeMap:null,
                 mid:null,
                 pageNum:1,
-                listData:{}
+                listData:{
+                    list:[]
+                }
             }
         },
         components:{
@@ -123,18 +125,11 @@
             }
         },
         created(){
-              this.back.url=this.back.url+"?p="+this.$route.query.p;
-              this.mid=this.$route.query.mid;
-              this.pageNum=this.$route.query.p;
-              this.fetchList();
+            this.back.url=this.back.url+"?p="+this.$route.query.p;
 
         },
         methods:{
-            fetchList(){
-                this.$store.dispatch("fetchPickList",{"memberId":this.mid,"pageNum":this.pageNum}).then(res=>{
-                       this.listData=res.page;
-                });
-            },
+
             takeStock(){
                 var checkTake=false;
                 var takeMap=[];
@@ -150,6 +145,7 @@
                    return false;
                }
 
+
                 this.$prompt('请输入密码', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -161,24 +157,28 @@
                     inputErrorMessage: ''
                 }).then(({ value }) => {
 
-                        var postData={consignParamJson:JSON.stringify(takeMap),password:value,memberId:this.mid};
+                        var postData={consignParamJson:JSON.stringify(takeMap),password:value,memberId:this.$route.query.mid};
                         this.$store.dispatch('postPickList',postData).then(res=>{
-                            this.$alert({
-                                type: 'success',
-                                message:'操作成功'
-                            });
+
+                          this.$alert('操作成功', {
+                                  type: 'success',
+                           });
+
+                          this.$refs.cargo.fetchList();
                         }).catch(res=>{
 
-                            this.$alert('这是一段内容', '标题名称', {
+                            this.$alert(res.msg, {
                                 type: 'error',
-                                message: res.msg
                             });
+
 
                         })
 
                 })
                console.log(takeMap);
-
+               setTimeout(_=> {
+                   $(".el-input__inner").prop('type','password');
+               },0);
             }
         }
 

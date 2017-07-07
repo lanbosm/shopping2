@@ -17,6 +17,7 @@
                 <div class="no-list"></div>
             </div>
             <div class="list-body" id="order-list-main-list" v-else>
+                <ul>
                 <!--list-->
                 <div class="list-row" v-for="(item,index) in listData.list">
                     <div class="t">
@@ -26,7 +27,7 @@
                     <div class="c">
                         <dl class="col">
                             <dd  v-for="item2 in item.items" :class="{'single':item.items.length==1}">
-                                <span class="list-checkbox inner-checkbox" v-show="item.showRefunds && item2.quantity>item2.returnQuantity"><input type="checkbox" v-model="item2.isRefund"  @change="handlecheck(item2)"/> <i></i> </span>
+                                <span class="list-checkbox inner-checkbox" v-show="item.refundShow && item2.quantity>item2.returnQuantity"><input type="checkbox" v-model="item2.isRefund"  @change="handlecheck(item2)"/> <i></i> </span>
                                 <span >{{item2.name}} <em class="refunded" v-if="item2.quantity==item2.returnQuantity">已退货</em></span>
                             </dd>
                         </dl>
@@ -38,12 +39,13 @@
                         <span class="col">{{item.username}}</span>
                         <span class="col">{{item.amountPaid | currency}}</span>
                         <span class="col">
-                            <a class="check-btn" :class="{dis:!item.canRefunds}" v-show="!item.showRefunds"  @click="handleShowCheck(item)">退款</a>
-                            <a class="refund-btn" v-show="item.showRefunds" @click="handleRefund(item)">确定</a>
-                            <a class="cancel-btn" v-show="item.showRefunds" @click="handleCancel(item)">取消</a>
+                            <a class="check-btn" :class="{dis:!item.canRefunds}" v-show="!item.refundShow"  @click="handleShowCheck(item)">退款</a>
+                            <a class="refund-btn" v-show="item.refundShow" @click="handleRefund(item)">确定</a>
+                            <a class="cancel-btn" v-show="item.refundShow" @click="handleCancel(item)">取消</a>
                         </span>
                     </div>
                 </div>
+                </ul>
             </div>
             <div class="list-footer" slot="list-footer">
                 <div class="footer-left">
@@ -202,18 +204,18 @@
         .refund-btn,.check-btn{
             font-size: 12px;
             line-height: 20px;
-            .diy-btn(#ffffff,@themeColor,@themeColor,30px,@padding: 5px 20px);
+            .diy-btn(#ffffff,@themeColor,@themeColor,30px,@padding: 5px 15px);
         }
         .check-btn.dis{
             pointer-events: none;
-            .diy-btn(#ffffff,#cccccc,#cccccc,30px,@padding: 5px 20px);
+            .diy-btn(#ffffff,#cccccc,#cccccc,30px,@padding: 5px 15px);
             opacity: 0.9;
         }
         .cancel-btn {
             margin-left: 5px;
             font-size: 12px;
             line-height: 20px;
-            .diy-btn(@themeColor,#ffffff,@themeColor,30px,@padding: 5px 20px);
+            .diy-btn(@themeColor,#ffffff,@themeColor,30px,@padding: 5px 15px);
         }
     }
     .list-footer{
@@ -296,16 +298,22 @@
             handleCurrentChange(pageIndex){
                 //this.$router.push({path:'/membercargo',query:{mid:item.id,p:this.pageNum}});
                 this.pageNum=pageIndex;
-                this.$router.replace({path:this.$route.path,query:{p:this.pageNum}});
+                this.$router.replace({path:this.$route.path,query:{type:this.type,p:this.pageNum}});
                 this.fetchList();
                 window.scrollTo(0,0);
             },
             handleShowCheck(item){
+                console.log(item);
                 this.listData.list.forEach((ele,index)=>{
                        // ele.refundShow=false;
                        this.$set(ele, 'refundShow',false)
                 })
                 this.$set(item, 'refundShow',true)
+
+            },
+            handleCancel(item){
+
+                this.$set(item, 'refundShow',false)
 
             },
             handleRefund(item){
@@ -348,7 +356,7 @@
             },
             //请求列表
             fetchList() {
-                this.$store.dispatch('fetchOrderList',{pageNum:this.pageNum, memberId:this.memberId}).then(res=> {
+                this.$store.dispatch('fetchOrderList',{type:this.type,pageNum:this.pageNum, memberId:this.memberId}).then(res=> {
                     console.log(res);
                     this.listData = res.page;
                     this.totalAmount=res.totalAmount;
@@ -362,7 +370,7 @@
                         ele.items.forEach((ele2,index)=>{
                             if(ele2.quantity>ele2.returnQuantity){
 
-                                ele.canRefunds=false;
+                                ele.canRefunds=true;
                             }
                         });
                     });
@@ -375,7 +383,7 @@
                 });
             },
             fetchCutsomList() {
-                this.$store.dispatch('fetchOrderList',{pageNum:this.pageNum}).then(res=> {
+                this.$store.dispatch('fetchOrderList',{type:this.type,memberId:this.memberId,pageNum:this.pageNum}).then(res=> {
                     console.log(res);
                     this.listData = res.page;
                     this.totalAmount=res.totalAmount;
@@ -389,7 +397,7 @@
                         ele.items.forEach((ele2,index)=>{
                             if(ele2.quantity>ele2.returnQuantity){
 
-                                ele.canRefunds=false;
+                                ele.canRefunds=true;
                             }
                         });
                     });

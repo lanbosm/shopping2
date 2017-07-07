@@ -298,20 +298,23 @@ const actions= {
             commit("show_waiting");
 
             commit("setOrderParams",{
-                cartParam:JSON.stringify(value),
-                giftIds:JSON.stringify(value),
+                cartParam:JSON.stringify({'itemParams':value.itemParams}),
+                addiParam:JSON.stringify(value.addiParam),
                 couponCodeId:null,
                 usePoint:false,
                 useBalance:false,
-                memberId:value.id,
+                memberId:state.currentPage.customData.id,
                 guiderId:null
             })
+
 
 
             var apiObj={
                 url:API_URLS.b2b_orders+"/build",
                 data:state.currentPage.orderParams
             }
+
+
 
             var oldCart=value;
 
@@ -320,15 +323,15 @@ const actions= {
                     if(res.data.code=="20000"){                //新数据
 
                         commit("setOrderData",res.data.appOrderConfirmBean);
-                        state.currentPage.cartData=[];
+                        //state.currentPage.cartData=[];
                         commit('setLocalList');    //存储本地
                          return Promise.resolve(res.data);
                     }else{                                //旧数据
-                        return Promise.reject(res.data,oldCart);
+                        return Promise.reject(res,oldCart);
                     }
                 }).catch(res=> { //失败
                         commit("hide_waiting");
-                        return Promise.reject(res);
+                        return Promise.reject(res.data,oldCart);
                  })
 
         },
@@ -358,10 +361,14 @@ const actions= {
             });
         },
         fetchOrderList({commit},value){
+
             let apiObj = {
                 url : API_URLS.b2b_orders,
                 data:value
             };
+            if(value.type=="wechat"){
+                apiObj.url=API_URLS.b2b_orders+'/wechat';
+            }
             commit("show_waiting");
             return  request.fnGet_dev(apiObj).then(res=> {
                 commit("hide_waiting");
@@ -402,7 +409,7 @@ const actions= {
             if(value){
                 var oldPageData=state.currentPage.pageData;
                // commit("setPageData",{});
-               commit("setProductParams",{params:value});
+               commit("setProductParams",value);
             }
 
             let apiObj={
@@ -425,12 +432,36 @@ const actions= {
                 } else {
                     commit("setPageData",oldPageData);
                     commit("setLocalList");
-                    return   Promise.reject(res.data);
+                    return   Promise.reject(res);
                 }
             }).catch(res=>{
                 commit("set_list_waiting",false);
-                return Promise.reject(res);
+                return Promise.reject(res.data);
 
+            });
+        },
+        fetchActList({commit,state},value){
+
+            let apiObj={
+                url: API_URLS.activity+"/"+value.type,
+                data:value
+            };
+
+            console.log(apiObj);
+            commit("set_list_waiting",true);
+            return  request.fnGet_dev(apiObj).then(res=> {
+
+                commit("set_list_waiting",false);
+                if (res.data.code=="20000") {
+                    commit("setLocalList");
+                    return  Promise.resolve(res.data);
+                } else {
+                    commit("setLocalList");
+                    return   Promise.reject(res);
+                }
+            }).catch(res=>{
+                commit("set_list_waiting",false);
+                return Promise.reject(res.data);
             });
         },
         //获取商品详情
@@ -445,13 +476,13 @@ const actions= {
                         commit("setItemData",res.data);
                         return Promise.resolve(res.data);
                     }else{
-                        return Promise.reject(res.data);
+                        return Promise.reject(res);
                     }
                 })
                  .catch(res=> { //失败
                         commit("set_list_waiting",false);
-                        return Promise.reject(res);
-             })
+                        return Promise.reject(res.data);
+                 })
 
         },
 
@@ -469,7 +500,7 @@ const actions= {
                         commit("setCategoryData",res.data.appProductCategories);
                         Promise.resolve(res.data);
                     }else{
-                        Promise.reject(res.data);
+                        Promise.reject(res);
                     }
                 })
                 .catch( res=> { //失败
@@ -477,6 +508,55 @@ const actions= {
                          Promise.reject(res.data);
             })
 
+        },
+         //获取加价购列表
+        fetchAdditionalsList({commit,state},value){
+
+            let apiObj={
+                url: API_URLS.activity+'/additionals',
+                data:{
+
+                }
+            };
+            commit("set_list_waiting",true);
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("set_list_waiting",false);
+                if (res.data.code=="20000") {
+                    commit("setLocalList");
+                    return  Promise.resolve(res.data);
+                } else {
+                    commit("setLocalList");
+                    return   Promise.reject(res.data);
+                }
+            }).catch(res=>{
+                commit("set_list_waiting",false);
+                return Promise.reject(res);
+
+            });
+        },
+        //获取加价购列表
+        fetchPurchaseList({commit,state},value){
+
+            let apiObj={
+                url: API_URLS.activity+'/purchase_products',
+                data:{
+                    appAdditionalActivityId:value
+                }
+            };
+            commit("show_waiting");
+            return  request.fnGet_dev(apiObj).then(res=> {
+                commit("hide_waiting");
+                if (res.data.code=="20000") {
+
+                    return  Promise.resolve(res.data);
+                } else {
+                    return   Promise.reject(res);
+                }
+            }).catch(res=>{
+                commit("hide_waiting");
+                return Promise.reject(res);
+
+            });
         },
        //获取会员
         fetchCustomList({commit},value){
@@ -490,10 +570,10 @@ const actions= {
                 if (res.data.code=="20000") {
                     return  Promise.resolve(res.data);
                 } else {
-                    return   Promise.reject(res.data);
+                    return   Promise.reject(res);
                 }
             }).catch(res=>{
-                return    Promise.reject(res);
+                return    Promise.reject(res.data);
             });
         },
         //获取会员列表
@@ -757,7 +837,6 @@ const actions= {
                     return {publicKey:publicKey,enPwd:enPwd};
                 })
                 .then(res=>{
-                    console.log(111);
                         if(res.publicKey && res.enPwd) {
                             console.log(value);
                             let apiobj = {
@@ -964,7 +1043,10 @@ function defaultPage(title){
     //备注 这里的所有数据为临时状态 会存放本地存储 然后让头部选项卡切换时数据不丢失
     return {
         history:"/",               //状态模式
-        pageData:{},                //商品数据
+        pageTab:'product',
+        pageData:{
+            list:[]
+        },                //商品数据
         itemData:{                  //商品详情数据
             appProductDetail:{},
             appSpecifications:[]
@@ -991,7 +1073,8 @@ function defaultPage(title){
             searchStr:"",
             pageNum:1,
             categoryName:"",
-            brandName:""
+            brandName:"",
+            type: 0
         },
         listLoading: false, //等待
         personalData:{      //个人购买商品数据
@@ -1003,6 +1086,7 @@ function defaultPage(title){
             pageNUm:1
         },
         cartData:[],                //购物车数据
+        addData:[],
         customData: {                //顾客数据
             id:null,
             nickname:'顾客',

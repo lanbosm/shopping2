@@ -9,9 +9,15 @@
                         <!--{{customData.curCustom.sex | sex}}-->
                         <em class="sex-photo"><img v-show="member.headPortrait" :src="member.headPortrait"/></em>
                         <span class="nickname">{{member.nickname}}</span>
-                        <span class="brand">
-                            <em v-for="item in member.brands">{{item}}</em></span>
-                        <span class="password_again" @click="againPass()">重置密码</span>
+                        <!--<span class="password_again" @click="againPass()">重置密码</span>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 clearfix" v-if="member.brands.length>0">
+                             <div class="brand" >
+                                  <h5>购买过的品牌</h5>
+                                  <em v-for="item in member.brands"><img :src='item' /></em>
+                            </div>
                     </div>
                 </div>
                 <div class="row">

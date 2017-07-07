@@ -44,7 +44,7 @@
 
 					<!--主体-->
 					<transition name="slide" >
-									<router-view ref="app"></router-view>
+						<router-view ref="app"></router-view>
 					</transition>
 
 
@@ -72,16 +72,18 @@
 					<dialog-log v-if="showLogDialog"></dialog-log>
 					<!--备用金-->
 					<dialog-cash v-if="showCashDialog" ></dialog-cash>
+					<!--赠品弹框-->
+					<dialog-gift v-if="showGiftDialog" ref="gift"></dialog-gift>
+
 
 
 					<!--物品详情-->
 					<list-item v-if="showListItem"></list-item>
 
 					<!--库存详情-->
-				    <stock-item v-if="showStockItem"></stock-item>
+				    <stock-item v-if="showStockItem" ></stock-item>
 
-				    <!--赠品弹框-->
-				    <choose-gifts v-if="showChooseGifts"></choose-gifts>
+
 
 				    <!--重置密码框-->
 				    <again-pass v-if="showAgainPass"></again-pass>
