@@ -44,6 +44,7 @@ module.exports = {
     externals: {
         jquery: "window.jQuery",
         layer: "window.layer",
+        LODOP:"window.LODOP"
 
     },
     resolve: {

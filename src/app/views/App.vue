@@ -114,8 +114,10 @@
                 return this.$store.state.currentPage.cartData
             },
             addData () {
-                console.log(this.$store.state.currentPage.addData)
                 return this.$store.state.currentPage.addData
+            },
+            shopData () {
+                return this.$store.state.shopData
             },
             //数据来自全局
             customData () {
@@ -136,10 +138,10 @@
         watch:{
 
 
-
-
         },
         created(){
+
+
           //  alert(222);
            // this.$store.commit("setProductParams", {"categoryId": null, "categoryName": null,"brandId":null,"brandName":null});
         },
@@ -172,11 +174,13 @@
 
 
 
-                if(cart.length>0 && add.length>0) {
+                if(cart.length>0 || add.length>0) {
+
                     this.$emit('trigger-build-order');
 
                 }else{
                     this.$message.info('请先选择物品');
+                    return false;
                 }
                 //alert(this.mode);
                 var cartParam={itemParams:[],addiParam:[]};
@@ -264,6 +268,7 @@
                 let itemswiper = '';
 
 
+
                 //如果该商品没有规格和赠品 直接加入购物车    appGiftActivity appSpecificationValue
                 if(!itemGift && itemSpec.length==0){
 
@@ -297,6 +302,8 @@
                                     spaceBetween: 10,
                                     onInit:function(swiper){
                                         vm.giftIndex=swiper.activeIndex;
+                                        vm.productDetail.giftIndex=swiper.activeIndex;
+
                                     }
                                 });
 
@@ -330,7 +337,6 @@
                 })
             },
             closeDetail(item){
-
                 layer.closeAll();
                 this.pushCart(item);
             },
@@ -429,6 +435,8 @@
                 this.cartZone='cart';
 
                 this.cartZoneList=this.cartData;
+
+
                 this.$refs.calc.calcmode="qty";
                 this.$store.commit('setLocalList');    //存储本地
             }

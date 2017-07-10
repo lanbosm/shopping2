@@ -22,7 +22,7 @@
                             <div class="txt">
                                 <a  class="item-icon-btn" role="button"   v-if="item.point" >积</a>
                                 <a  class="item-icon-btn" role="button"   v-if="item.sekillTime" >限</a>
-                                <a  class="item-icon-btn" role="button"   v-if="item.giftType=='none'" ><span class="iconfont icon-baobei"></span></a>
+                                <a  class="item-icon-btn" role="button"   v-if="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
                                 <a  class="item-icon-btn" role="button"   v-if="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
                                 <span class="info">
 										 <span class="price">{{item.seckillPrice || item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>

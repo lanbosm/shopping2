@@ -114,8 +114,11 @@
                             }
                             break;
                         case '.':   //close
-                            var str=this.rmb+".";
-                            this.rmb=str;
+
+                            if(this.rmb.indexOf('.')<0){
+                                var str=this.rmb+".";
+                                this.rmb=str;
+                            }
                             break;
                     }
                 }else{

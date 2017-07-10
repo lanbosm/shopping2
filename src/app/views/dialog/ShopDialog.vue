@@ -1,4 +1,5 @@
 <template>
+
     <el-dialog
             title="系统设置"
             :visible.sync="dialogShow"
@@ -8,56 +9,133 @@
             :modal=true
             @close="closeWin();"
             >
-                <div class="dialog-shop-con">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h5>门店管理</h5>
-                            <ul class="row">
-                                <li class="col-xs-6">
-                                    <label class="input-title" >门店名称</label>
-                                    <el-input v-model="shopName.val"  class="shopname-input" :readonly="shopName.readonly" placeholder="门店名称"></el-input>
-                                </li>
-                                <li class="col-xs-6">
-                                    <label class="input-title" >联系人</label>
-                                    <el-input v-model="contactName.val" :readonly="contactName.readonly" placeholder="联系人"></el-input>
-                                </li>
-                                <li class="col-xs-6">
-                                    <label class="input-title" >联系方式</label>
-                                    <el-input v-model="contactPhone.val" type="tel" :maxlength="11"  :readonly="contactPhone.readonly" placeholder="联系方式"></el-input>
-                                </li>
-                                <li class="col-xs-12">
-                                    <label class="input-title" >门店地址</label>
-                                    <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="地址"></el-input>
-                                </li>
-                                <li class="col-xs-12">
-                                    <label class="input-title" >门店备注</label>
-                                    <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="备注"></el-input>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-6">
-                               <h5>打印管理</h5>
-                               <ul class="row">
-                                   <li class="col-xs-12">
-                                        1
-                                   </li>
-                                   <li class="col-xs-12">
-                                        2
-                                   </li>
-                                   <li class="col-xs-12">
-                                        3
-                                   </li>
+                <div class="dialog-shop-con row">
+                    <div class="col-xs-6">
+                          <ul class="row">
+                                    <h5 class="col-xs-12">门店管理</h5>
+                                    <li class="col-xs-6">
+                                        <label class="input-title" >门店名称</label>
+                                        <el-input v-model="shopName.val"  class="shopname-input" :readonly="shopName.readonly" placeholder="门店名称"></el-input>
+                                    </li>
+                                    <li class="col-xs-6">
+                                        <label class="input-title" >联系人</label>
+                                        <el-input v-model="contactName.val" :readonly="contactName.readonly" placeholder="联系人"></el-input>
+                                    </li>
+                                    <li class="col-xs-6">
+                                        <label class="input-title" >联系方式</label>
+                                        <el-input v-model="contactPhone.val" type="tel" :maxlength="11"  :readonly="contactPhone.readonly" placeholder="联系方式"></el-input>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title" >门店地址</label>
+                                        <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="地址"></el-input>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title" >门店备注</label>
+                                        <el-input v-model="memo.val" type="textarea" :rows="2" :readonly="memo.readonly" placeholder="备注"></el-input>
+                                    </li>
+                          </ul>
+                          <div class="row">
+                                <div class="col-xs-12 dialog-footer">
+                                    <a class="dialog-shop-btn-ok" v-show="!edit" @click="handleEdit()">修改</a>
+                                    <a class="dialog-shop-btn-ok" v-show="edit" @click="handleSave()" >确定</a>
+                                    <a class="dialog-shop-btn-cancel" @click="handleCancel()">取消</a>
+                                </div>
+                          </div>
+                    </div>
 
-                               </ul>
+                    <div class="col-xs-6">
+                            <ul class="row">
+                                    <h5 class="col-xs-12">打印管理</h5>
+                                    <li class="col-xs-12">
+                                        <label class="input-title">打印机  </label>
+                                        <el-select v-model="printer.hardsoft.value" placeholder="请选择">
+                                            <el-option
+                                                    v-for="item in printer.hardsoft.list"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title">字体类型</label>
+                                        <el-select v-model="printer.font.value" placeholder="请选择">
+                                            <el-option
+                                                    v-for="item in printer.font.list"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title">字体大小</label>
+                                        <el-select v-model="printer.size.value" placeholder="请选择">
+                                            <el-option
+                                                    v-for="item in printer.size.list"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title" >走纸</label>
+                                        <el-input-number v-model="printer.pageBottom"  :min="1" :max="100"></el-input-number>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title" >打印份数</label>
+                                        <el-input-number v-model="printer.copies"  :min="1" :max="2"></el-input-number>
+                                    </li>
+                                    <li class="col-xs-12">
+                                        <label class="input-title" >打印二维码内容</label>
+                                        <el-input v-model="printer.qrcCodeContent" type="textarea" :rows="2" placeholder="二维码内容 默认微商城链接"></el-input>
+                                    </li>
+
+                        </ul>
+                        <div class="row">
+                            <div class="col-xs-12 dialog-footer">
+                                <a class="dialog-shop-btn-ok"  @click="handlePrintSave()" >确定</a>
+                                <a class="dialog-shop-btn-testPrint"  @click="printPage()">测试打印</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-          <div slot="footer" class="dialog-footer">
-               <a class="dialog-shop-btn-ok" v-show="!edit" @click="handleEdit()">修改</a>
-               <a class="dialog-shop-btn-ok" v-show="edit" @click="handleSave()" >确定</a>
-               <a class="dialog-shop-btn-cancel" @click="handleCancel()">取消</a>
-          </div>
 
+                <div slot="footer" class=""> </div>
+        <div style="display: none" id="styles">
+            *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
+             img{width: 100%;}
+             body{ width: 128pt; box-sizing: border-box;}
+            .print-box {width: 144pt; padding:10pt 0pt 10pt 0pt; margin:0 auto; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
+            .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:5pt;  }
+            .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:5pt;}
+            .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-size: {fontSize};  font-family:'{font}'; }
+            .print-box  table.printtable tbody{display: block;}
+            .print-box  table.printtable caption{display:block;}
+            .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
+            .print-box  table.printtable .split{ margin-top:10pt;   }
+            .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
+            .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+            .print-box  table.printtable{*zoom:1;}
+            .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
+            .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+            .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
+            .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+            .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
+            .print-box  .text-center {text-align: center !important;}
+            .print-box  .text-right {text-align: right !important;}
+            .print-box  .text-left {text-align: left !important;}
+            .print-box  p {margin-top:5pt;}
+            .print-box  #qrcCode{ margin-top:5pt;  }
+            .print-npx .diy-box{}
+            .print-box #shopQrc{  margin-top:5pt;   }
+            hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
+            .print-box   table{ width:100% !important;}
+            .btn-inventory{margin-bottom: 15px;}
+
+    </div>
     </el-dialog>
 
 </template>
@@ -83,6 +161,9 @@
             text-align: left;
         }
         .dialog-shop-con{
+            .input-title{
+                width: 120px;
+            }
             width: 100%;
             li{ margin-top: @gutter;}
             .dialog-setting-btn{
@@ -91,32 +172,85 @@
                 .green-btn();
 
             }
-        }
-        .dialog-footer{
 
-            .dialog-shop-btn-ok{
+        }
+
+
+
+        .dialog-shop-btn-ok{
                .diy-btn(#ffffff,@themeColor);
-            }
-            .dialog-shop-btn-cancel{
+        }
+        .dialog-shop-btn-cancel{
                 margin-left: 20px;
                 .diy-btn(#666666,#ffffff);
-            }
+        }
+        .dialog-shop-btn-testPrint{
+                 margin-left: 20px;
+                .diy-btn(#666666,#ffffff);
         }
 
     }
 </style>
 <script>
+
+
+    function CreatePrinterList(){
+
+        var LODOP=getLodop();
+        var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+        var arr={list:[]};
+        for(var i=0;i<iPrinterCount;i++){
+            arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
+
+    function CreateFontList(){
+
+        var arr={list:[]};
+        var fontList=['微软雅黑','宋体','黑体'];
+        for(var i=0;i<fontList.length;i++){
+            //var option=document.createElement('option');
+            arr.list.push({ value: i,  label: fontList[i]})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
+
+    function CreateFontSize(){
+
+        var arr={list:[]};
+        var fontList=['8pt','10pt','12pt'];
+        for(var i=0;i<fontList.length;i++){
+            //var option=document.createElement('option');
+            arr.list.push({ value: i,  label: fontList[i]})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
+
+
     export default {
         name:"ShopDialog",
         data() {
             return {
                 dialogShow: true,
-                shopName:{val:'',readonly:true},
-                contactName:{val:'',readonly:true},
-                contactPhone:{val:'',readonly:true},
-                address:{val:'',readonly:true},
-                edit:false
-            };
+                shopName: {val: '', readonly: true},
+                contactName: {val: '', readonly: true},
+                contactPhone: {val: '', readonly: true},
+                address: {val: '', readonly: true},
+                memo: {val: '', readonly: true},
+                edit: false,
+                printer: {
+                    hardsoft:{},
+                    font:{},
+                    size:{},
+                    pageBottom:45,
+                    copies:1,
+                    qrcCodeContent:''
+                }
+            }
         },
         created(){
             this.$store.dispatch("fetchShopData").then(res=>{
@@ -125,7 +259,9 @@
                             this.contactName.val=res.shopSetting.contactName;
                             this.contactPhone.val=res.shopSetting.contactTel;
                             this.address.val=res.shopSetting.shopAddress;
-
+                            this.memo.val=res.shopSetting.memo;
+                            this.printer.qrcCodeContent= res.shopSetting.qrcCodeContent;
+                            this.setPrinter();
 
             }).catch(res=>{
 
@@ -136,13 +272,62 @@
 
         },
         methods: {
+            printPage(){
+               // var obj=document.getElementById('printDiv');
+                var docStr = "测试打印机链接,当你看到这段文字时 测试成功";
+
+                var styles=document.getElementById("styles").innerHTML;
+
+
+
+                var stylestr = styles.replace(/{size}/g, this.printer.size.list[this.printer.size.value].label)
+                                .replace(/{font}/g, this.printer.font.list[this.printer.font.value].label)
+
+
+                var header='<!DOCTYPE html>'+
+                    '<html lang="en">'+
+                    '<head>'+
+                    '<meta charset="UTF-8">'+
+                    '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">'+
+                    '<title>打印</title>'+
+                    '<style type="text/css">'+
+                    stylestr+
+                    '</style>'+
+                    '</head>'+
+                    '<body>';
+
+                var footer='</body>'+
+                    '</html>';
+                docStr=header+docStr+footer;
+
+               // var h=obj.offsetHeight;
+                var LODOP=getLodop();
+
+                //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
+                LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
+                LODOP.SET_PRINTER_INDEX(this.printer.hardsoft.value);
+                //1in = 2.54cm = 25.4mm = 72pt = 96px
+                LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
+                LODOP.SET_PRINT_PAGESIZE(3,'144pt',printer.pageBottom,"");
+                var toMM=25.4/96*10;
+                LODOP.ADD_PRINT_HTM(0,0,'144pt',30*toMM,docStr);
+                LODOP.PRINT();
+            },
             closeWin(){
                 this.dialogShow=false;
                 setTimeout(_=> {
                     this.$root.showShopDialog = false;
                 },300);
             },
+            setPrinter(){
 
+                //获取打印机类型
+                this.printer.hardsoft=CreatePrinterList();
+                this.printer.font=CreateFontList();
+                this.printer.size=CreateFontSize();
+               // console.log(this.printer.font);
+
+            },
             //修改
             handleEdit(){
                 this.edit=true;
@@ -150,7 +335,25 @@
                 this.contactName.readonly=false;
                 this.contactPhone.readonly=false;
                 this.address.readonly=false;
+                this.memo.readonly=false;
                 document.querySelector('.shopname-input input').focus();
+
+            },
+            handlePrintSave(){
+
+                var postData={
+                    'qrcCodeContent':this.printer.qrcCodeContent,
+                }
+                this.$store.dispatch("saveShopData",postData).then(res=>{
+                    console.log(res);
+
+                    this.$alert('修改成功',{
+                        type: 'success',
+                    }).then(_=>{
+                        this.dialogShow=false;
+                        this.$root.showShopDialog=false;
+                    });
+                })
 
             },
             //保存
@@ -170,6 +373,7 @@
                 this.contactName.readonly=true;
                 this.contactPhone.readonly=true;
                 this.address.readonly=true;
+                this.memo.readonly=true;
                 this.edit=false;
 
                 var postData={
@@ -177,6 +381,7 @@
                     'contactName':this.contactName.val,
                     'contactTel':this.contactPhone.val,
                     'shopAddress':this.address.val,
+                    'memo':this.memo.val
                 }
                 this.$store.dispatch("saveShopData",postData).then(res=>{
                     console.log(res);

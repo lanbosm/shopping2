@@ -12,7 +12,8 @@
         <div  id="actProductList"  v-show="listData.list.length > 0">
             <ul>
                 <div class="row product-row"  v-for="(row,rowindex) in listData.list">
-                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-1 act-col" v-for="(item,index) in row.appProducts "  @click="fetchItem(item,row,rowindex);">
+                    <div class="act-ul">
+                    <div class="col-xs-6 col-sm-3 col-md-2 col-lg-1 act-col" v-for="(item,index) in row.appProducts "  @click="fetchItem(item,row,rowindex);">
                         <div class="item" :class="{'picked':inPick(item.id,row.pickItems)}">
                             <!--图片盒子-->
                             <div class="cc">
@@ -22,7 +23,7 @@
                                         <a  class="item-icon-btn" role="button"   v-show="item.giftType!='none'" ><span class="iconfont icon-baobei"></span></a>
                                         <a  class="item-icon-btn" role="button"   v-show="item.specDesc&&item.specDesc.length"><span class="iconfont icon-liebiao"></span></a>
                                         <span class="info">
-                                                             <span class="price">{{item.price | currency }}</span><span class="stock">&times;{{item.availableStock}}</span>
+                                                  <span class="price">{{item.price | currency }}</span><span class="stock">{{item.availableStock}}</span>
                                           </span>
                                     </div>
                                 </div>
@@ -34,7 +35,7 @@
                              </div>
                         </div>
                     </div>
-
+                    </div >
                     <dl class="act-box" :class="{overline:row.overline}" >
                         <dt class="dd0">{{row.name}}</dt>
                         <dd class="dd1">满{{row.meetPrice}}</dd>
@@ -50,7 +51,6 @@
                         </dd>
                     </dl>
                 </div>
-
             </ul>
         </div>
     </div>
@@ -150,7 +150,7 @@
                     if(this.addData.length>0){
                         this.orginData=this.addData;
                         this.$nextTick(_ => {
-                            this.$simpleScroll('#actProductList');
+                            //this.$simpleScroll('#actProductList');
                         })
                     }else{
                         this.$store.dispatch('fetchAdditionalsList').then(res=>{
@@ -160,7 +160,7 @@
                                 this.$store.commit("setAddData",this.orginData);
 
                                 this.$nextTick(_ => {
-                                    this.$simpleScroll('#actProductList');
+                                    //this.$simpleScroll('#actProductList');
                                 })
                            }
                         }).catch(res=>{

@@ -91,12 +91,18 @@
 
             //获取门店信息
             var shopData= util.pullLocal("shopData");
+
             this.$store.commit('setShopData', shopData);
             //判断备用金 只填写一次
             if(this.shopData.needSpareCash && this.$store.state.login){
                 this.cash();
             }
             this.$store.dispatch("loadLastData");
+
+            this.$store.dispatch("fetchShopData").then(res=>{
+                this.shopData.shopSetting=res.shopSetting;
+
+            })
             //this.addMsglistener();
         },
         mounted(){

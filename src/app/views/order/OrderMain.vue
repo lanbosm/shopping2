@@ -90,9 +90,9 @@
 
 
                         this.$router.replace("/print");
-                        setTimeout(_=> {
-                            this.$parent.$refs.print.printPage();
-                        },300);
+//                        setTimeout(_=> {
+//                            this.$parent.$refs.print.printPage();
+//                        },300);
 
                     }).catch(res=>{
                         this.$alert('创建支付失败',{
@@ -148,9 +148,9 @@
 
 
                         this.$router.replace("/print");
-                        setTimeout(_=> {
-                            this.$parent.$refs.print.printPage();
-                        },300);
+//                        setTimeout(_=> {
+//                            this.$parent.$refs.print.printPage();
+//                        },300);
                     }).catch(res=>{
                         this.$alert('创建支付失败',{
                             type: 'error'
@@ -166,9 +166,9 @@
                         this.$store.dispatch("createOrder").then(res=>{
 
                             this.$router.replace("/print");
-                            setTimeout(_=> {
-                                this.$parent.$refs.print.printPage();
-                            },300);
+//                            setTimeout(_=> {
+//                                this.$parent.$refs.print.printPage();
+//                            },300);
                         }).catch(res=>{
                             this.$alert('创建支付失败',{
                                 type: 'error'

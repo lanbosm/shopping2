@@ -92,48 +92,58 @@
                         </table>
 
                         <p class="text-center" v-if="order.wechatCodeUrl">请使用{{payName}}扫码付款</p>
-                        <div id="qrcCode"></div>
-                        <hr></hr>
+                        <div v-if="order.wechatCodeUrl" id="qrcCode">
+                            生成中...
+                        </div>
+
                         <div class="diy-box">
-                            <p class="text-center">扫描关注公众号 更多优惠等您来</p>
+                            <p class="text-center">{{shopData.shopSetting.memo}}</p>
                             <div  id="shopQrc">
                                     生成中...
                             </div>
-
+                            <p>
+                                门店地址 ：{{shopData.shopSetting.shopAddress}}
+                            </p>
+                            <p>
+                                联系电话 ：{{shopData.shopSetting.contactTel}}
+                            </p>
                         </div>
 
-                         <hr></hr>
 
                     </div>
 
                     <div style="display: none" id="styles">
-                        *{padding:0; margin:0;}
-                        body{ box-sizing: border-box;}
-                        .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
-                        .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
-                        .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
-                        .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
-                        .print-box  table.printtable tbody{display: block;}
-                        .print-box  table.printtable caption{display:block;}
-                        .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
-                        .print-box  table.printtable .split{ margin-top:10pt;   }
-                        .print-box  table.printtable tr{ display:block;clear: left;  padding-top:5pt; padding-bottom:5pt; }
-                        .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-                        .print-box  table.printtable{*zoom:1;}
-                        .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
-                        .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
-                        .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
-                        .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
-                        .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
-                        .print-box  .text-center {text-align: center !important;}
-                        .print-box  .text-right {text-align: right !important;}
-                        .print-box  .text-left {text-align: left !important;}
-                        .print-box  p {margin-top:10pt;}
-                        .print-box  #qrcCode{ margin-top:10pt;  }
+                             *{padding:0; margin:0; font-size: 8pt;  font-family:'微软雅黑'; }
+                              img{width: 100%;}
+                              body{ width: 144pt;  box-sizing: border-box;}
+                             .print-box {width: 128pt; padding:10pt 0pt 10pt 0pt; margin:0 auto; font-size: 8pt;  border: solid 1px #cccccc ;  font-family:'微软雅黑'; }
+                             .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:5pt;  }
+                             .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:5pt;}
+                             .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-size: 8pt;  font-family:'微软雅黑'; }
+                             .print-box  table.printtable tbody{display: block;}
+                             .print-box  table.printtable caption{display:block;}
+                             .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
+                             .print-box  table.printtable .split{ margin-top:10pt;   }
+                             .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
+                             .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+                             .print-box  table.printtable{*zoom:1;}
+                             .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
+                             .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+                             .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
+                             .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+                             .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
+                             .print-box  .text-center {text-align: center !important;}
+                             .print-box  .text-right {text-align: right !important;}
+                             .print-box  .text-left {text-align: left !important;}
+                             .print-box  p {margin-top:5pt;}
+                             .print-box  #qrcCode{ margin-top:5pt;  }
+                             .print-npx .diy-box{}
+                             .print-box #shopQrc{  margin-top:5pt;   }
+                             hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
+                             .print-box   table{ width:100% !important;}
+                             .btn-inventory{margin-bottom: 15px;}
 
-                        .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
-                        hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
-                    </div>
+                     </div>
 
                 </div>
             </div>
@@ -151,10 +161,11 @@
     .prev-txt{ margin-top: 10px; font-size: 14px; color: #999999;}
     .payres-txt.success{  color: #6fc89c;}
     .print-div{
-        height:360px; overflow: hidden }
+        height:360px; overflow-x: hidden; }
 
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
+    .print-box img{width: 100%;}
     .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
     .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
     .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
@@ -216,6 +227,10 @@
             order () {
                 return this.$store.state.currentPage.orderData;
             },
+            shopData(){
+
+                return this.$store.state.shopData;
+            },
             //打印数据
             printData(){
                 var print=this.$store.state.currentPage.printData;
@@ -225,12 +240,13 @@
                // print.paymentName=paymentName[this.orderParams.paymentMethodId];
                 print.cash=this.orderParams.cash ;
                 print.rmb=this.orderParams.rmb ;
+
+
                 return  print;
             }
 
         },
         created(){
-
 
             this.$nextTick(function() {
 
@@ -245,7 +261,7 @@
                 console.log(this.printData);
 
                 //有链接就生成
-                if(this.printData.wechatCodeUrl) {
+                if(this.printData.wechatCodeBase64) {
 
                     var scanType={
                         17:"微信",
@@ -266,33 +282,23 @@
                     });
 
 
-
-                        //自定义二维码
-                        $('#qrcCode').html("");
-                        $('#qrcCode').qrcode({
-                            render: "table",
-                            text: this.printData.wechatCodeUrl,
-                            width: 230,  //230内扫不出
-                            height: 230
-                        });
-
-                         this.scanResListen();
-
-
-                }
-
-                if(this.printData.wechatMallUrl) {
                     //自定义二维码
-                    $('#shopQrc').html("");
-                    $('#shopQrc').qrcode({
-                        render: "table",
-                        text: this.printData.wechatMallUrl,
-                        width: 230,  //230内扫不出
-                        height: 230
-                    });
+                    var imgData="data:image/png;base64,"
+                    var base64=this.printData.wechatCodeBase64;
+                    $('#qrcCode').html('<img src="'+imgData+base64+'"/>');
+                    this. scanResListen();
+
+
                 }
 
-                this.$simpleScroll('#printDiv');
+                if(this.printData.wechatMallBase64) {
+                    //自定义二维码
+                    var imgData="data:image/png;base64,"
+                    var base64=this.printData.wechatMallBase64;
+                    $('#shopQrc').html('<img src="'+imgData+base64+'"/>');
+                }
+
+
 
             });
 
@@ -311,15 +317,11 @@
             },
             printPage(){
 
-
-
-                var obj=document.getElementById('printDiv').getElementsByTagName('div')[0];
+                var obj=document.getElementById('printDiv');
                 var docStr = obj.innerHTML;
 
 
                 var styles=document.getElementById("styles").innerHTML;
-
-
                 var header='<!DOCTYPE html>'+
                     '<html lang="en">'+
                     '<head>'+
@@ -336,38 +338,23 @@
                     '</html>';
                 docStr=header+docStr+footer;
 
+                var h=obj.offsetHeight;
 
-                (function ($) {
-                    var printAreaCount = 0;
-                    $.fn.printArea = function () {
-                        var idPrefix = "printArea_";
-                        removePrintArea(idPrefix + printAreaCount);
-                        printAreaCount++;
-                        var iframeId = idPrefix + printAreaCount;
-                        var iframeStyle = 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;';
 
-                        var iframe = document.createElement('iframe');
+                var LODOP=getLodop();
+                LODOP.PRINT_INIT("");
+                //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
+                var h=document.getElementById('printDiv').offsetHeight;
+                //var strBodyStyle="<style>"+document.getElementById("test").innerHTML+"</style>";
+                //var strFormHtml=strBodyStyle+"<body>"+document.getElementById("printDiv").innerHTML+"</body>";
+                LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
+                //1in = 2.54cm = 25.4mm = 72pt = 96px
+                LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
+                LODOP.SET_PRINT_PAGESIZE(3,'144pt',45,"");
 
-                        $(iframe).attr({
-                            style: iframeStyle,
-                            id: iframeId
-                        });
-
-                        document.body.appendChild(iframe);
-                        var doc = iframe.contentWindow.document;
-                        doc.write( docStr);
-                        doc.close();
-                        var frameWindow = iframe.contentWindow;
-                        frameWindow.close();
-                        frameWindow.focus();
-                        frameWindow.print();
-                    }
-                    var removePrintArea = function (id) {
-                        $("iframe#" + id).remove();
-                    };
-                })(jQuery);
-
-                $("#printDiv").printArea();
+                var toMM=25.4/96*10;
+                LODOP.ADD_PRINT_HTM(0,0,'144pt',h*toMM,docStr);
+                LODOP.PRINT();
             },
             scanResListen(){
                     var apiObj={
@@ -391,9 +378,7 @@
                             $(".payres-txt").addClass("success");
                             layer.msg(this.message, {icon: 1,zIndex:999});
                             layer.close(this.qrcWin);
-                            setTimeout(_=> {
-                                this.printPage();
-                            },300);
+                            this.printPage();
                         }else {
                             this.message="付款失败";
                             clearInterval(this.timer);

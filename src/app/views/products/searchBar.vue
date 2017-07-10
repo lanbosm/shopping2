@@ -63,10 +63,11 @@
                         this.$message.error('请输入商品条码');
                         return false;
                     }
-
+                    this.searching=true;
 
                     this.$store.dispatch('fetchList', {"searchStr":this.keyword, "pageNum": 1,"type":1,categoryId:null, brandId:null }).then(res=> {
-                        this.keyword ="";
+                        //this.keyword ="";
+                       // this.searching=false;
                         if (res.page) {
                             var item = res.page.list[0];
                             var newitem = {};

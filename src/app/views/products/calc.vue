@@ -48,6 +48,12 @@
 
 		},
 		computed:{
+            cartData () {
+                return this.$store.state.currentPage.cartData
+            },
+            addData () {
+                return this.$store.state.currentPage.addData
+            },
 			customName(){
 				let customs = this.$store.state.currentPage.customData;
 				if(customs.nickname){
@@ -95,18 +101,16 @@
 							   		//close
 									var str=amount+"";
 									amount=str.substring(0,str.length-1);
+                            		console.log(this.cartZoneList);
+									console.log(this.cartSelectItem);
 									if(amount==""){
+
+
 									    this.cartZoneList.forEach((ele,index)=>{
 									        if(ele.id==this.cartSelectItem.id){
-
-
-                                                this.cartZoneList.splice(index,1);
-
-												if(index>0) {
-                                                    this.$parent.cartSelectItem = this.cartZoneList[index - 1];
-                                                }
-
-
+                                                this.$parent.cartZoneList.splice(index,1);
+                                                this.$parent.cartSelectItem = this.$parent.cartZoneList[index - 1];
+												console.log(this.$parent.cartSelectItem);
 											}
 										})
 
@@ -128,6 +132,9 @@
                                 console.log(this.cartSelectItem);
                             }
 						}
+
+
+
 
                 }
                 else if(this.calcmode=="disc") {

@@ -62,13 +62,16 @@
             },
             cartItem(){
                  var newitem = {};
+
                  Object.assign(newitem, this.productDetail);
                  newitem.selectDate = util.getSelectDate(); //自动获取选择日期
                  newitem.amount = 1; //数量默认为1
                  if(this.productDetail.giftType!='none') {
                     newitem.appGiftItem = this.productDetail.appGiftActivity.appGifts[this.productDetail.giftIndex]     //选择的赠品id
-
                  }
+
+                 console.log( this.productDetail);
+
                 return newitem;
             }
         },

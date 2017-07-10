@@ -10,7 +10,7 @@
             >
                 <div class="dialog-gift-con">
                     <div class="act-type">
-                        <a class="btn act-type-btn" :class="{selected:tabIndex==index}"  v-for="(item,index) in listData.list" @click="changeTab(item.id,index)">+{{item.additionalPrice}}</a>
+                        <a class="btn act-type-btn" :class="{selected:tabIndex==index}"  v-for="(item,index) in listData.list" @click="changeTab(item.id,index,item.additionalPrice)">+{{item.additionalPrice}}</a>
                     </div>
                     <div class="row" v-if="!listData.list">
                         <div class="col-xs-12">
@@ -119,6 +119,7 @@
                 listIndex:null,
                 tabIndex:0,
                 addiPurchaseId:null,
+                additionalPrice:null,
                 addProuct:null,
                 listData:{ }
 
@@ -155,6 +156,7 @@
 
                         if (this.listData.list.length > 0) {
                             this.addiPurchaseId=res.appAdditionalPurchases[0].id;
+                            this.additionalPrice=res.appAdditionalPurchases[0].additionalPrice;
                             this.$nextTick(_ => {
                                 this.$simpleScroll('#giftProductList');
                             })
@@ -176,9 +178,10 @@
                 }, 300);
             },
             //
-            changeTab(id,index){
+            changeTab(id,index,price){
                 this.addiPurchaseId=id;
                 this.tabIndex=index;
+                this.additionalPrice=price;
                 this.listIndex=null;
             },
             //修改
@@ -199,11 +202,11 @@
                     });
                     return false;
                 }
-
+                this.addProuct.additionalPrice=this.additionalPrice;
                 this.addData.forEach((ele,index)=>{
-
                         if(ele.id==this.id){
                             ele.addiPurchaseId= this.addiPurchaseId;
+                            this.$set(ele,'addiPurchaseId',this.addiPurchaseId);
                             this.$set(ele,'addiPurchaseId',this.addiPurchaseId);
                             this.$set(ele,'addProuct',this.addProuct);
                         }

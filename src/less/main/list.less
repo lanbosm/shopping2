@@ -103,6 +103,7 @@
     margin-top: -100px;
     color: #fff;
     right: 0;
+    z-index:30;
     position: absolute;
     background: url('@{imgPath}/redBg.png') no-repeat;
     background-size:cover;
@@ -189,7 +190,7 @@
     border-radius: 5px !important;
     box-shadow: 0 0 10px #cccccc !important;
     margin:12px 0;
-
+    overflow-y:hidden;
 
     .item {
       //-webkit-animation:none;
@@ -197,11 +198,21 @@
     }
     //商品
     .act-col {
-      display: none;
-    }
+      display: inline-block;
+      float: none;
 
+    }
+    .act-ul{
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-y: hidden;
+
+      padding-right: 200px;
+
+    }
     .act-col:nth-child(1),.act-col:nth-child(2),.act-col:nth-child(3),.act-col:nth-child(4),.act-col:nth-child(5),.act-col:nth-child(6){
-      display: block;
+      //display: block;
     }
 
 }

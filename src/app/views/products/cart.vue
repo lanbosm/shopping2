@@ -63,8 +63,8 @@
 															</em>
 															<em v-else>{{item.seckillPrice || item.price | currency }}</em>
 														</span>
-																			<span class="tips" v-if="item.needStock" @click="openStock(item)">
-															<a class="btn needStock-btn">申请调拨</a>
+														<span class="tips" v-if="item.amount>item.availableStock" >
+															<a class="btn needStock-btn">库存不足</a>
 														</span>
 													</p>
 													<p class="small sales" v-if="item.isSales">
@@ -82,12 +82,12 @@
 													<p class="small">
 														<span>{{row.addProuct.name}} <b>加价购</b></span>
 														<span >
-															<em >{{row.addProuct.price | currency }}</em>
+															<em ><b>{{row.addProuct.additionalPrice | currency }}</b></em>
 														</span>
 													</p>
 													<p class="small">
 														<span >
-															数量 :1 * <em>{{row.addProuct.price | currency }}</em>
+															数量 :1 * <em><del>{{row.addProuct.price | currency }}</del></em>
 														</span>
 													</p>
 												</div>
@@ -130,9 +130,13 @@
             });
 
 		},
+        watch:{
+
+
+
+		},
         computed: {
             filterCartData(){
-
 
                 this.cartData.forEach((ele,index)=>{
 
@@ -147,11 +151,11 @@
               	return   this.cartData;
 			},
             filterAddData(){
-
                 //检查是否
                 this.addData.forEach((ele,index)=>{
 
-					 if(!ele.overline){
+						 if(!ele.overline){
+
 					     delete  ele.addProuct;
                      }
 				})
@@ -160,13 +164,24 @@
             },
             pickData(){
                 var pickData=[];
-                console.log(this.addData);
+               // console.log(this.addData);
                 this.addData.forEach((ele, index) => {
                     pickData= pickData.concat(ele.pickItems);
                 });
 
                 return pickData;
             },
+            additionalData(){
+                var additionalData=[];
+
+                this.addData.forEach((ele, index) => {
+
+                    if(ele.addProuct) {
+                        additionalData.push(ele.addProuct);
+                    }
+                });
+                return  additionalData;
+			},
             //数据来自全局
             totalprice () {
                 var total=0;
@@ -179,7 +194,7 @@
                     total+=Number(realPrcie)*e.amount*realSales;
                 })
 
-					//var arr=
+				//选择加价购的物品
                 this.pickData.forEach(function(e,i){
                     var realPrcie=e.isDiscount?e.discountPrice:e.price;
                     if( e.isSales && e.sales>=10){e.sales=10;}
@@ -187,6 +202,15 @@
                     // console.log(realSales);
                     total+=Number(realPrcie)*e.amount*realSales;
                 })
+
+
+                //加价购的的价格
+                this.additionalData.forEach(function(e,i){
+                    // console.log(realSales);
+                   		total+=Number(e.additionalPrice);
+                })
+                //this.additionalData.addProuct()
+
 
                 return total;
             }
