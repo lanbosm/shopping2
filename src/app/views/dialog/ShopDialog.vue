@@ -3,7 +3,7 @@
     <el-dialog
             title="系统设置"
             :visible.sync="dialogShow"
-            top="20%"
+            top="10%"
             custom-class="dialog-shop"
             :close-on-click-modal=false
             :modal=true
@@ -12,7 +12,12 @@
                 <div class="dialog-shop-con row">
                     <div class="col-xs-6">
                           <ul class="row">
-                                    <h5 class="col-xs-12">门店管理</h5>
+                                    <h5 class="col-xs-12">
+                                        门店管理
+                                        <a class="dialog-shop-btn-ok" v-show="!edit" @click="handleEdit()">修改</a>
+                                        <a class="dialog-shop-btn-ok" v-show="edit" @click="handleSave()" >确定</a>
+                                        <a class="dialog-shop-btn-cancel" @click="handleCancel()">取消</a>
+                                    </h5>
                                     <li class="col-xs-6">
                                         <label class="input-title" >门店名称</label>
                                         <el-input v-model="shopName.val"  class="shopname-input" :readonly="shopName.readonly" placeholder="门店名称"></el-input>
@@ -27,25 +32,22 @@
                                     </li>
                                     <li class="col-xs-12">
                                         <label class="input-title" >门店地址</label>
-                                        <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly" placeholder="地址"></el-input>
+                                        <el-input v-model="address.val" type="textarea" :rows="2" :readonly="address.readonly"   resize="none" placeholder="地址"></el-input>
                                     </li>
                                     <li class="col-xs-12">
                                         <label class="input-title" >门店备注</label>
-                                        <el-input v-model="memo.val" type="textarea" :rows="2" :readonly="memo.readonly" placeholder="备注"></el-input>
+                                        <el-input v-model="memo.val" type="textarea" :rows="2" :readonly="memo.readonly"  resize="none" placeholder="备注"></el-input>
                                     </li>
                           </ul>
-                          <div class="row">
-                                <div class="col-xs-12 dialog-footer">
-                                    <a class="dialog-shop-btn-ok" v-show="!edit" @click="handleEdit()">修改</a>
-                                    <a class="dialog-shop-btn-ok" v-show="edit" @click="handleSave()" >确定</a>
-                                    <a class="dialog-shop-btn-cancel" @click="handleCancel()">取消</a>
-                                </div>
-                          </div>
                     </div>
 
                     <div class="col-xs-6">
                             <ul class="row">
-                                    <h5 class="col-xs-12">打印管理</h5>
+                                    <h5 class="col-xs-12">
+                                        打印管理
+                                        <a class="dialog-shop-btn-ok"  @click="handlePrintSave()" >确定</a>
+                                        <a class="dialog-shop-btn-testPrint"  @click="printPage()">测试打印</a>
+                                    </h5>
                                     <li class="col-xs-12">
                                         <label class="input-title">打印机  </label>
                                         <el-select v-model="printer.hardsoft.value" placeholder="请选择">
@@ -90,20 +92,32 @@
                                     </li>
                                     <li class="col-xs-12">
                                         <label class="input-title" >打印二维码内容</label>
-                                        <el-input v-model="printer.qrcCodeContent" type="textarea" :rows="2" placeholder="二维码内容 默认微商城链接"></el-input>
+                                        <el-input v-model="printer.qrCodeContent" type="textarea"  resize="none" :rows="2" placeholder="二维码内容 默认微商城链接"></el-input>
                                     </li>
 
                         </ul>
-                        <div class="row">
-                            <div class="col-xs-12 dialog-footer">
-                                <a class="dialog-shop-btn-ok"  @click="handlePrintSave()" >确定</a>
-                                <a class="dialog-shop-btn-testPrint"  @click="printPage()">测试打印</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <div slot="footer" class=""> </div>
+                <div slot="footer" class="">
+                    <div class="row">
+                        <div class="col-xs-12 dialog-footer">
+                            <h5>其他设置</h5>
+                            <div class="row">
+                                 <el-checkbox class="col-xs-4" v-model="backScreen">副屏显示</el-checkbox>
+                                 <el-checkbox class="col-xs-4" v-model="noticeTips">消息推送</el-checkbox>
+                                 <div class="col-xs-3">
+
+                                 </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
         <div style="display: none" id="styles">
             *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
              img{width: 100%;}
@@ -146,13 +160,13 @@
 
     .dialog-shop{
         .dialog();
-        width: 60% !important;
+        width: 720px !important;
         input:focus{
             border-color: @themeColor;
         }
         .el-dialog__header{
             padding-bottom: 10px;
-            border-bottom: 1px solid @themeColor;
+            border-bottom: 1px solid @green;
         }
         .el-dialog__body{
             padding: @gutter 20px;
@@ -178,15 +192,22 @@
 
 
         .dialog-shop-btn-ok{
-               .diy-btn(#ffffff,@themeColor);
+                  margin-left: 20px;
+                font-size: 12px;
+                line-height: 20px;
+                 .diy-btn(#ffffff,@green,@green,30px,@padding: 5px 15px);
         }
         .dialog-shop-btn-cancel{
                 margin-left: 20px;
-                .diy-btn(#666666,#ffffff);
+                font-size: 12px;
+                line-height: 20px;
+                .diy-btn(@green,#ffffff,@green,30px,@padding: 5px 15px);
         }
         .dialog-shop-btn-testPrint{
-                 margin-left: 20px;
-                .diy-btn(#666666,#ffffff);
+                margin-left: 20px;
+                font-size: 12px;
+                line-height: 20px;
+                .diy-btn(@green,#ffffff,@green,30px,@padding: 5px 15px);
         }
 
     }
@@ -231,6 +252,30 @@
     };
 
 
+    function setDiyColor(color,styles,id){
+
+        var myStyle=document.getElementById(id);
+        if(myStyle){
+            document.getElementsByTagName('HEAD').item(0).removeChild(myStyle);
+        }
+
+        var newstyle=styles;
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.id=id;
+
+        var newColor=color;
+        style.innerHTML=newstyle.replace(/#6fc89c/g,newColor)
+            .replace(/#6ec89b/g,newColor)
+            .replace(/#6FC89C/g,darken(newColor,'30%'))
+            .replace(/#4aba83/g,darken(newColor,'50%'))
+            .replace(/#3a9769/g,darken(newColor,'70%'));
+        console.log(style.innerHTML);
+
+        document.getElementsByTagName('HEAD').item(0).appendChild(style);
+
+    }
+
     export default {
         name:"ShopDialog",
         data() {
@@ -249,10 +294,19 @@
                     pageBottom:45,
                     copies:1,
                     qrcCodeContent:''
-                }
+                },
+                backScreen:false,
+                noticeTips:true
             }
         },
+        computed:{
+            shopData () {
+                return this.$store.state.shopData;
+            },
+
+        },
         created(){
+
             this.$store.dispatch("fetchShopData").then(res=>{
                             console.log(res);
                             this.shopName.val=res.shopSetting.shopName;
@@ -260,8 +314,8 @@
                             this.contactPhone.val=res.shopSetting.contactTel;
                             this.address.val=res.shopSetting.shopAddress;
                             this.memo.val=res.shopSetting.memo;
-                            this.printer.qrcCodeContent= res.shopSetting.qrcCodeContent;
-                            this.setPrinter();
+                            this.printer.qrCodeContent= res.shopSetting.qrCodeContent;
+                            this.printer=this.shopData.printer;
 
             }).catch(res=>{
 
@@ -269,10 +323,14 @@
                     type: 'error',
                 })
             })
-
+            this.setPrinter();
         },
         methods: {
             printPage(){
+                if(!this.printer){
+                    alert("未连接打印机");
+                    return false;
+                }
                // var obj=document.getElementById('printDiv');
                 var docStr = "测试打印机链接,当你看到这段文字时 测试成功";
 
@@ -342,16 +400,20 @@
             handlePrintSave(){
 
                 var postData={
+                    'shopName':this.shopName.val,
+                    'contactName':this.contactName.val,
+                    'contactTel':this.contactPhone.val,
+                    'shopAddress':this.address.val,
+                    'memo':this.memo.val,
                     'qrcCodeContent':this.printer.qrcCodeContent,
                 }
                 this.$store.dispatch("saveShopData",postData).then(res=>{
-                    console.log(res);
+                    this.shopData.printer=this.printer;
 
                     this.$alert('修改成功',{
                         type: 'success',
                     }).then(_=>{
-                        this.dialogShow=false;
-                        this.$root.showShopDialog=false;
+
                     });
                 })
 
@@ -388,16 +450,13 @@
 
                     this.$alert('修改成功',{
                         type: 'success',
-                    }).then(_=>{
-                        this.dialogShow=false;
-                        this.$root.showShopDialog=false;
-                    });
+                    })
                 })
             },
             handleCancel(){
                 this.edit=false;
-                this.dialogShow=false;
-                this.$root.showShopDialog=false;
+               // this.dialogShow=false;
+               // this.$root.showShopDialog=false;
             }
 
         }

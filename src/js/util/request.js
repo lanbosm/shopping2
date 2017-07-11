@@ -8,8 +8,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
-import { MessageBox } from 'element-ui';
-
+import { Message } from 'element-ui';
 
 //import * as data from '../util/mock';
 //http请求
@@ -79,8 +78,15 @@ export const request = {
 
             case 49001:
                 store.dispatch('logoutUnexpected');
+
+
               //  MessageBox.alert("身份授权已过期，请重新登录",{ type: 'error'});
                 response.data.msg= "身份授权已过期，请重新登录";
+
+                Message({
+                    message: response.data.msg,
+                    type: 'warning'
+                });
                 break;
             default:
                 console.log("Server error");

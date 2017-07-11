@@ -43,7 +43,7 @@
 
     .dialog-cash{
         .dialog();
-         width: 35% !important;
+         width: 480px !important;
         .el-dialog__header{
             padding-bottom: 10px;
             border-bottom: 1px solid @green;

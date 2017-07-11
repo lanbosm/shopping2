@@ -95,9 +95,9 @@
                 }
 
                 .recharge-btn,.stock-btn,.detail-btn{
-                    margin-top: 20px;
+                    margin-top: 27.5px;
                     margin-right: 20px;
-                    .green-btn(@radius:30px,@padding:12px 30px);
+                    .diy-btn(#fff,@green,@green,30px,@padding: 5px 15px);
                 }
 
             }

@@ -29,6 +29,8 @@
 
     .dialog-setting{
         .dialog();
+
+        width: 480px !important;
         .el-dialog__header{
             padding-bottom: 10px;
             border-bottom: 1px solid @green;

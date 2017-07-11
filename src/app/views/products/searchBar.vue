@@ -22,7 +22,7 @@
           return {
               type:"search",
               typestr:'搜索条码/商品名称',
-              typestrArr:{'barcode':"条码入库",'search':"搜索条码/商品名称"},
+              typestrArr:{'barcode':"输入条码 加入购物车",'search':"搜索条码/商品名称"},
               keyword:"",
               searching:false,
           }

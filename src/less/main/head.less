@@ -3,10 +3,6 @@
 .icon {
     display: inline-block; overflow: hidden; vertical-align: top; background-repeat: no-repeat  !important;
     background-position: 0% 50% !important;
-
-
-    width: 40px;
-    height:50px;
 }
 .icon-log{background: url('@{imgPath}/icon_scan.png') no-repeat; background-size:25px 25px;}
 .icon-cash{background: url('@{imgPath}/icon_cash.jpg') no-repeat; background-size:25px 25px;}
@@ -19,17 +15,31 @@
     z-index: 100;
     width: 100%;
     font-size:12px;
-    min-width: 1280px;
     margin: 0 auto;
     min-height: 50px;
     background-color:#393939;
     padding-left: @gutter;
     padding-right: @gutter;
-    .logo {float: left;  }
-    .staff{
-        position:relative;display:block;padding-top:15px;padding-bottom:15px; width:120px;
-        margin-right:10px;float:left;color:#fff;text-align:center;
+    .clearfix();
+    &:before{
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 50px;
+      background:#222222;
+      position: absolute;
+      left:0;
     }
+    .logo {float: left;  }
+    .staff,.staff-xs{
+        float: left;
+        line-height: 50px;
+        position:relative;  width:auto;
+        margin-right:30px; display:inline-block; padding:0 @gutter; color:#fff;text-align:center;
+    }
+   .staff-xs{
+      clear: left;
+   }
    .nav-box{
             float: left;
             white-space: nowrap;
@@ -83,43 +93,46 @@
   .menu-box{
           height: 50px;
           overflow: hidden;
+          float: right;
+
           a{
-              padding-left: 10px;
-              padding-right:20px;
+              padding-left: @gutter;
+              padding-right:@gutter;
 
           }
-            float: right;
-            .contact-btn{ display: inline-block; line-height: 50px;
-                border-left: solid 1px #333333;
-                box-shadow: -1px 0px 1px #666666;
-                margin-left: 0px;
-                cursor: pointer; color: #999999;
-                &:after{content: " 正在连接设备";}
-                &:hover{ text-decoration: none; }
-                &.success{ color: #37D7A9;  }
-                &.success:after{content: " 扫描连接成功";}
-                &.error{ color: #D72940; }
-                &.error:after{content: " 扫描连接失败";}
-            }
-            .msg-btn,.cash-btn,.log-btn,.setting-btn{ display: inline-block; line-height: 50px;
+          em{
+            padding-left: @gutter;
+            padding-right:@gutter;
+          }
+          .icon{cursor: pointer; color: #eeeeee;}
+          .msg-btn,.cash-btn,.log-btn,.setting-btn{ display: inline-block; line-height: 50px;
                 border-left: solid 1px #333333;
                 box-shadow: -1px 0px 1px #666666;
                 margin-left: 0px;
                 cursor: pointer; color: #eeeeee;
                 &:hover{ text-decoration: none; ;}
 
-            }
-            .msg-btn{border-left: none;}
-            .cash-btn,.log-btn,.setting-btn{color: @green;}
+         }
+         .msg-btn{border-left: none;}
+         .cash-btn,.log-btn,.setting-btn {
+             color: @green;
+              .icon{color:@green;}
+         }
 
-            .exit-btn{ display: inline-block; line-height: 50px;
+         .sys-btns{ display: inline-block; line-height: 50px;
                 border-left: solid 1px #333333;
                 box-shadow: -1px 0px 1px #666666;
-                margin-left: 20px;
-                cursor: pointer; color: #eeeeee;
-                &:hover{ text-decoration: none; ;}
+                padding-left: 20px;
+                display:inline-block;
 
-            }
+               .icon.enabled{
+                 color:  @green;
+               }
+               .icon-wifi{ }
+               .icon-tuichu{font-size: 24px;}
+               // &:hover{ text-decoration: none; ;}
+
+        }
 
   }
 

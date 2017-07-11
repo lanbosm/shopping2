@@ -4,10 +4,10 @@
             <div class="col-xs-12">
                 <div class="list-header">
                     <div class="list-row">
-                        <span style="width: 40%">商品</span>
+                        <span style="width: 35%">商品</span>
                         <span style="width: 25%">数量</span>
-                        <span style="width: 10%">已提数量</span>
-                        <span style="width: 25%">提货数量</span>
+                        <span style="width: 15%">已提数量</span>
+                        <span style="width: 20%">提货数量</span>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                             编号: {{item.productSn}}
                         </div>
                         <div class="c">
-									<span style="width: 40%">
+									<span style="width: 35%">
                                         <!--商品图片-->
 										<img :src="item.productImage">
                                         <!--商品描述-->
@@ -36,7 +36,7 @@
 									</span>
                             <!--数量-->
                             <span style="width: 25%">{{item.quantity}}件</span>
-                            <span style="width: 10%">{{item.takenNum}}件</span>
+                            <span style="width: 15%">{{item.takenNum}}件</span>
                             <span style="width: 25%">
                                 <div class="span_all">
                                     <input class="span1" type="button" value="-" @click="edd(1,item.operationNum,index)">

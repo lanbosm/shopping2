@@ -63,7 +63,6 @@
 
                 this.fetchList();
 
-
         },
         watch:{
             'type'(val){
@@ -80,13 +79,17 @@
 
                     this.$store.dispatch('fetchActList',{"type":this.type,"pageNum":this.pageNum}).then(res=>{
                         console.log(res.page);
-                        console.log(this.type);
+                        //console.log(this.type);
                         this.listData=res.page;
-                        if(this.listData.list.length>0) {
-//                            this.$nextTick(_ => {
-//                                this.$simpleScroll('#actTypeList');
-//                            })
-                        }
+
+                        this.$nextTick(_=> {
+                            this.$root.$refs.header.resetHeight('#actTypeList');
+
+//                            if(this.listData.list.length>0) {
+//
+//                            }
+                        });
+
 
                     })
 

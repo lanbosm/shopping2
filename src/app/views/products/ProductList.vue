@@ -57,7 +57,17 @@
                 return this.$store.state.currentPage.list;
             },
             listData () {
-                return this.$store.state.currentPage.pageData;
+
+                var ss=this.$store.state.currentPage.pageData;
+
+                ss.list.forEach((ele,index)=>{
+
+                        ele.image=ele.image+'?x-oss-process=image/resize,h_100';
+
+
+                })
+
+                return ss;
             },
         },
         created(){
@@ -81,12 +91,15 @@
 
                     this.$store.dispatch('fetchList',this.productParams).then(res=>{
 
-                       if(res.page.list.length>0) {
-//                            this.$nextTick(_ => {
-//
+                        this.$nextTick(_=> {
+                            this.$root.$refs.header.resetHeight('#productList');
+
+//                            if(res.page.list.length>0) {
 //                                this.$simpleScroll('#productList');
-//                            })
-                       }
+ //                           }
+
+                        });
+
                     }).catch(res=>{
                         this.$alert(res.msg, {
                             type: 'error',

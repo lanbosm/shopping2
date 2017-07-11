@@ -70,7 +70,7 @@
 
     .dialog-log{
         .dialog();
-         width: 50% !important;
+         width: 720px !important;
         .el-dialog__header{
             padding-bottom: 10px;
             border-bottom: 1px solid @green;

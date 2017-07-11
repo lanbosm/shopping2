@@ -3,7 +3,7 @@
             <div class="logo">
                 <router-link  class="navbar-brand" :to="{ path: '/'}" replace><img src="/images/logo.jpg" alt="Brand"></router-link>
             </div>
-            <div class="staff">{{shopData.adminName}}</div>
+            <div class="staff hidden-xs">{{shopData.adminName}}</div>
             <div class="nav-box" id="header-nav">
                     <div class="nav-box-list" id="nav-box-list">
                         <ul class="nav" >
@@ -20,32 +20,31 @@
                     <a class="custom-add" @click="addPage()">+</a>
                     <a class="custom-remove" @click="removePage()">-</a>
             </div>
-             <div class="menu-box">
+             <span class="staff-xs visible-xs-inline" >{{shopData.adminName}}</span>
+             <div class="menu-box" >
 
                         <a class="msg-btn"  @click="msg()">
                             消息
                             <!--<span class="badge">{{msgNum}}</span>-->
                         </a>
                          <a class="setting-btn"  @click="setting()">
-                             <i class="glyphicon glyphicon-th-large" style="width:30px;"></i>
-                             应用
+                             <i class="glyphicon glyphicon-th-large" ></i>
+                             <em class="hidden-sm">应用</em>
                          </a>
                         <a class="cash-btn"  @click="cash()">
-                            <i class="icon icon-cash"></i>
-                            备用金
+                            <i class="icon iconfont icon-xianjin"></i>
+                            <em class="hidden-sm">备用金</em>
                         </a>
                         <a class="log-btn"  @click="log()">
-                            <i class="icon icon-log"></i>
-                            营业状态
+                            <i class="icon iconfont icon-yingyebaobiao"></i>
+                            <em class="hidden-sm">营业状态</em>
                         </a>
-                        <a class="exit-btn" @click="exit()">
-                            <i class="icon icon-exit"></i>
-                            退出
-                        </a>
-                        <!--<a class="exit-btn" @click="demo()">-->
-                            <!--<i class="icon icon-exit"></i>-->
-                            <!--测试赠品弹框-->
-                        <!--</a>-->
+                        <span class="sys-btns">
+                            <a><i class="icon iconfont icon-wifi" :class="{enabled:msgTimer}" ></i></a>
+                            <a @click="fullscreen()"><i class="icon iconfont icon-quanping " :class="{enabled:fullScreen}"></i></a>
+                            <a @click="exit()"><i class="icon iconfont icon-tuichu"  ></i></a>
+                        </span>
+
              </div>
     </div>
 </template>
@@ -54,6 +53,59 @@
 <script>
 
     import util from 'util/util.js';
+
+
+    function checkFullScreen(){
+        var doc = document.documentElement;
+        return ( 'requestFullscreen' in doc ) ||
+            ( 'webkitRequestFullScreen' in doc ) ||
+            // 对Firefox除了能力判断，还加上了属性判断
+            ( 'mozRequestFullScreen' in doc && document.mozFullScreenEnabled ) ||
+            false;
+    }
+
+    function requestFullScreen() {
+
+        var element=document.documentElement;
+        // 判断各种浏览器，找到正确的方法
+        var requestMethod = element.requestFullScreen || //W3C
+            element.webkitRequestFullScreen ||    //Chrome等
+            element.mozRequestFullScreen || //FireFox
+            element.msRequestFullScreen; //IE11
+        if (requestMethod) {
+            requestMethod.call(element);
+            return true;
+        }
+        else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+            return true;
+        }else{
+            alert("请手动全屏");
+            return false;
+        }
+    }
+
+    //退出全屏 判断浏览器种类
+    function exitFull() {
+        // 判断各种浏览器，找到正确的方法
+        var exitMethod = document.exitFullscreen || //W3C
+            document.mozCancelFullScreen ||    //Chrome等
+            document.webkitExitFullscreen || //FireFox
+            document.webkitExitFullscreen; //IE11
+        if (exitMethod) {
+            exitMethod.call(document);
+        }
+        else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
 
 
     export default{
@@ -75,16 +127,18 @@
             },
             history(){
                 return this.$store.state.currentPage.history;
+            },
+            msgTimer(){
+                return  this.$store.state.msgTimer
             }
-
         },
         data(){
             return {
                 dialogVisible: false,
-                timer:null,
                 notice:null,
-                msgNum:0
-
+                msgNum:0,
+                fullScreen:false,
+                listName:'#productList'
             }
         },
         created(){
@@ -102,8 +156,16 @@
             this.$store.dispatch("fetchShopData").then(res=>{
                 this.shopData.shopSetting=res.shopSetting;
 
-            })
-            //this.addMsglistener();
+            });
+
+            this.$nextTick(_=> {
+//
+
+
+                this.resetHeight();
+                window.onresize=this.autoresetHeight;
+            });
+            this.addMsglistener();
         },
         mounted(){
 
@@ -114,6 +176,30 @@
 
         },
         methods:{
+            autoresetHeight(){
+                var listBox=this.listName;
+                if(document.querySelector(listBox)) {
+                    this.listName=listBox;
+                    var sss = document.querySelector(listBox).getBoundingClientRect().top;
+                    var ph = window.innerHeight - sss - 100;
+
+                    document.querySelector(listBox).style.height = ph + 'px';
+                }
+            },
+            resetHeight(listBox){
+
+
+                    if(document.querySelector(listBox)) {
+                        this.listName=listBox;
+                        var sss = document.querySelector(listBox).getBoundingClientRect().top;
+                        var ph = window.innerHeight - sss - 100;
+
+                        document.querySelector(listBox).style.height = ph + 'px';
+                    }
+
+
+
+            },
             addPage(){
                 this.$store.dispatch('addPage').then(res=> {
                     this.$router.replace('/');
@@ -197,12 +283,26 @@
             setting(){
                 this.$root.showSettingDialog=true;
             },
+            fullscreen(){
+
+                if(!this.fullScreen){
+
+                    if(requestFullScreen()) {
+                        this.fullScreen = true;
+                    }
+                }else{
+                    exitFull();
+                    this.fullScreen=false;
+                }
+
+            },
             exit(){
 
                 this.$confirm('确定要退出吗？', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
+
                 }).then(() => {
                     this.$store.dispatch('logout',this.shopData.currentShiftId).catch((res)=>{
                         this.$alert(res.msg, {

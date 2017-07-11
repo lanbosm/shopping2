@@ -101,16 +101,25 @@
 							   		//close
 									var str=amount+"";
 									amount=str.substring(0,str.length-1);
-                            		console.log(this.cartZoneList);
-									console.log(this.cartSelectItem);
+                            		//console.log(this.cartZoneList);
+									//console.log(this.cartSelectItem);
 									if(amount==""){
-
 
 									    this.cartZoneList.forEach((ele,index)=>{
 									        if(ele.id==this.cartSelectItem.id){
+
                                                 this.$parent.cartZoneList.splice(index,1);
-                                                this.$parent.cartSelectItem = this.$parent.cartZoneList[index - 1];
-												console.log(this.$parent.cartSelectItem);
+
+
+                                                if(index - 1<0){index =1}
+                                                this.$parent.cartSelectItem = this.$parent.cartZoneList[index-1];
+
+												if(this.cartZone=="cart"){
+                                                    this.cartData=this.$parent.cartZoneList;
+												}else{
+                                                    this.addData=this.$parent.cartZoneList;
+												}
+
 											}
 										})
 

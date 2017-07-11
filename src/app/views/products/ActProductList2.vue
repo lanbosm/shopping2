@@ -1,16 +1,16 @@
 //列表组件
 <template>
     <div>
-        <div class="row"  v-show="!listData.list">
+        <div class="row"  v-if="!listData.list">
             <div class="col-xs-12">
                 加载中...
             </div>
         </div>
-        <div class="row"  v-show="listData.list.length == 0">
+        <div class="row"  v-else-if="listData.list.length == 0">
             <div class="col-xs-12 no-list"></div>
         </div>
-        <div  id="actProductList"  v-show="listData.list.length > 0">
-            <ul>
+        <div  v-else>
+            <ul id="actProductList">
                 <div class="row product-row"  v-for="(row,rowindex) in listData.list">
                     <div class="act-ul">
                     <div class="col-xs-6 col-sm-3 col-md-2 col-lg-1 act-col" v-for="(item,index) in row.appProducts "  @click="fetchItem(item,row,rowindex);">
@@ -52,7 +52,12 @@
                     </dl>
                 </div>
             </ul>
+            <div class="actProductList-footer" >
+
+
+            </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -96,6 +101,7 @@
         },
         created(){
             this.fetchList();
+
         },
         watch:{
             
@@ -149,9 +155,12 @@
 
                     if(this.addData.length>0){
                         this.orginData=this.addData;
-                        this.$nextTick(_ => {
+                        this.$nextTick(_=> {
+                            this.$root.$refs.header.resetHeight('#actProductList');
                             //this.$simpleScroll('#actProductList');
-                        })
+                        });
+
+
                     }else{
                         this.$store.dispatch('fetchAdditionalsList').then(res=>{
                             console.log(res);
@@ -159,9 +168,11 @@
                                 this.orginData=res.appAdditionalActivities;
                                 this.$store.commit("setAddData",this.orginData);
 
-                                this.$nextTick(_ => {
-                                    //this.$simpleScroll('#actProductList');
-                                })
+                               this.$nextTick(_=> {
+                                   this.$root.$refs.header.resetHeight('#actProductList');
+                                   //this.$simpleScroll('#actProductList');
+                               });
+
                            }
                         }).catch(res=>{
                             this.$alert(res.msg, {
