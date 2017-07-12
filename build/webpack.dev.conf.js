@@ -1,11 +1,13 @@
 var path = require('path')
 var utils = require('./utils')
 var webpack = require('webpack')
+var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
 // 动态给每个js入口添加热刷新 js合并
 // add hot-reload related code to entry chunks
@@ -13,9 +15,13 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
     baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
+
 module.exports = merge(baseWebpackConfig, {
     module: {
-        rules: utils.styleLoaders({ sourceMap: true })
+        rules: utils.styleLoaders({
+            sourceMap: config.dev.cssSourceMap,
+            extract: true
+        })
     },
     output: {
         path:  path.resolve(__dirname, '../dist'),
@@ -35,6 +41,11 @@ module.exports = merge(baseWebpackConfig, {
             name: 'vendor',
             filename: "js/vendor.js",
         }),
+        new ExtractTextPlugin({
+          filename: utils.assetsPath('css/[name].css')
+        }),
+        //new ExtractTextPlugin({ filename:utils.assetsPath("css/style.css") }),
+        //   filename: utils.assetsPath('css/[name].[contenthash].css')
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),

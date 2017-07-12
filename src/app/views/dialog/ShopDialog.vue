@@ -306,6 +306,11 @@
 
         },
         created(){
+//            $.get('./css/main.css',function(res){
+//                setDiyColor('red',res,'myStyle')
+//
+//
+//            })
 
             this.$store.dispatch("fetchShopData").then(res=>{
                             console.log(res);
@@ -314,8 +319,11 @@
                             this.contactPhone.val=res.shopSetting.contactTel;
                             this.address.val=res.shopSetting.shopAddress;
                             this.memo.val=res.shopSetting.memo;
+
+                            if(this.shopData.printer){
+                                this.printer=this.shopData.printer;
+                            }
                             this.printer.qrCodeContent= res.shopSetting.qrCodeContent;
-                            this.printer=this.shopData.printer;
 
             }).catch(res=>{
 
@@ -405,7 +413,7 @@
                     'contactTel':this.contactPhone.val,
                     'shopAddress':this.address.val,
                     'memo':this.memo.val,
-                    'qrcCodeContent':this.printer.qrcCodeContent,
+                    'qrCodeContent':this.printer.qrCodeContent,
                 }
                 this.$store.dispatch("saveShopData",postData).then(res=>{
                     this.shopData.printer=this.printer;

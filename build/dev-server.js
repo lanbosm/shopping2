@@ -26,7 +26,7 @@ module.exports = {
 
         var devMiddleware = require('webpack-dev-middleware')(compiler, {
             publicPath: config.output.publicPath,
-            noInfo: true,
+            noInfo: false,
             stats: {
                 colors: true
             }
@@ -67,9 +67,29 @@ module.exports = {
             next();
         });
 
-        app.use('/',   function(req, res) {
+
+        app.use('/index.html',   function(req, res) {
+
             res.render('index.html');
         });
+        //http://www.expressjs.com.cn/4x/api.html#res.sendStatus
+        // app.get('/css/element.css', function (req, res) {
+        //     res.sendStatus(200).send(({ message: '找错了哦' }));
+        //
+        // });
+
+        app.get('*', function(req, res){
+
+            res.render('404.html', {
+                title: '找不到该资源'
+            })
+        });
+        // app.use('/css/element.css',   function(req, res) {
+        //
+        //    // res.render('index.html');
+        //     res.send('layui');
+        //
+        // });
 
 
 
