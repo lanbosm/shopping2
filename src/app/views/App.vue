@@ -240,7 +240,7 @@
 
                 this.$store.dispatch('bulidOrder',cartParam).then(res=>{
 
-                    this.$router.push('/order');
+                    this.$router.push('/order/pay');
 
                 }).catch((res,cart)=>{
 
