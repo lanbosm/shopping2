@@ -3,6 +3,7 @@
 var path = require('path');
 var utils = require('./utils')
 var fs = require('fs');
+var vueLoaderConfig = require('./vue-loader.conf')
 
 //定义了一些文件夹的路径
 var ROOT_PATH = path.resolve(__dirname, '../');
@@ -64,21 +65,8 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                use: [
-                    {
-                        loader: 'vue-loader',
-                        options: {
-                            loaders: [
-                                utils.cssLoaders({
-                                    sourceMap: true,
-                                    extract: true
-                                })
-                            ]
-                        }
-                    },
-
-                ]
-
+                loader: 'vue-loader',
+                options: vueLoaderConfig
             },
             {
                 test: /\.js$/,
@@ -90,6 +78,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 1024,
+                    publicPath: "../",
                     name: utils.assetsPath('images/[name].[ext]')
                 }
             },
@@ -98,6 +87,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 1024,
+                    publicPath: "../",
                     name: utils.assetsPath('fonts/[name].[ext]')
                 }
             }

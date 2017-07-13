@@ -80,7 +80,7 @@ gulp.task('copy:lib',function(){
         path.dirname = "./";             //以根目录方式输出
     })).pipe(gulp.dest('./dist/js'));
 
-    gulp.src(['**/*.css'],{             //抓取时候会存在子目录
+    gulp.src(['**/*.css','!**/index.css'],{             //抓取时候会存在子目录
         cwd:'./lib/'
     }).pipe(rename(function (path) {
         path.dirname = "./";             //以根目录方式输出

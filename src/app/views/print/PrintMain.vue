@@ -40,50 +40,58 @@
                                 <h5 class="text-left">订单号 {{printData.sn}}</h5>
                             </caption>
                             <tbody>
-                            <tr v-show="printData.cashierName">
+                            <tr v-if="printData.cashierName">
                                 <td colspan="2" class="text-left block">营业员：{{printData.cashierName}}</td>
                             </tr>
-                            <tr v-show="printData.customer">
+                            <tr v-if="printData.customer">
                                 <td colspan="2" class="text-left block">顾客：{{printData.customer}}</td>
                             </tr>
-                            <tr v-show="printData.guiderName">
+                            <tr v-if="printData.guiderName">
                                 <td colspan="2" class="text-left  block">导购员：{{printData.guiderName}}</td>
                             </tr>
-                            <tr class="split" v-for="(item,index) in printData.appOrderItemConfirms">
-                                <td><span>{{item.name}}</span><span>*{{item.quantity}}</span></td>
+                            <tr class="itemsRow" v-for="(item,index) in printData.appOrderItemConfirms">
+                                <td>
+                                    <span>{{item.name}}</span>
+                                </td>
+                                <td>
+                                    <span>
+                                              <em>数量*{{item.quantity}}</em>
+                                              <em v-if="item.editPrice">{{item.editPrice | currency}}</em>
+                                              <em v-else="item.price">{{item.price | currency}}</em>
+                                     </span>
+                                </td>
 
-                                <td v-if="item.editPrice">{{item.editPrice | currency}}</td>
-                                <td v-else="item.price">{{item.price | currency}}</td>
+
                             </tr>
-                            <tr class="split">
+                            <tr >
                                 <td>小计 </td>
                                 <td>{{printData.totalPrice | currency}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="printData.couponDiscount">
                                 <td>优惠券 </td>
                                 <td>{{printData.couponDiscount}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="printData.pointDiscount">
                                 <td>积分支付</td>
                                 <td>¥ {{printData.pointDiscount}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="printData.balanceAmount"
                                 <td>余额支付</td>
                                 <td>{{printData.balanceAmount | currency}}</td>
                             </tr>
-                            <tr class="strong split">
+                            <tr class="strong">
                                 <td>价格</td>
                                 <td>{{order.totalAmountPayable | currency}}</td>
                             </tr>
-                            <tr class="split">
+                            <tr >
                                 <td>付款方式</td>
                                 <td>{{printData.paymentMethodName}}</td>
                             </tr>
-                            <tr class="split" v-if="orderParams.paymentMethodId == 10 ">
+                            <tr v-if="orderParams.paymentMethodId == 10 ">
                                 <td>现金支付</td>
                                 <td>{{printData.rmb | currency}}</td>
                             </tr>
-                            <tr class="split"  v-if="orderParams.paymentMethodId == 10 ">
+                            <tr  v-if="orderParams.paymentMethodId == 10 ">
                                 <td>找零</td>
                                 <td>{{printData.cash | currency}}</td>
                             </tr>
@@ -113,37 +121,45 @@
                     </div>
 
                     <div style="display: none" id="styles">
-                             *{padding:0; margin:0; font-size: 8pt;  font-family:'微软雅黑'; }
-                              img{width: 100%;}
-                              body{ width: 144pt;  box-sizing: border-box;}
-                             .print-box {width: 128pt; padding:10pt 0pt 10pt 0pt; margin:0 auto; font-size: 8pt;  border: solid 1px #cccccc ;  font-family:'微软雅黑'; }
-                             .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:5pt;  }
-                             .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:5pt;}
-                             .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-size: 8pt;  font-family:'微软雅黑'; }
-                             .print-box  table.printtable tbody{display: block;}
-                             .print-box  table.printtable caption{display:block;}
-                             .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
-                             .print-box  table.printtable .split{ margin-top:10pt;   }
-                             .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
-                             .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-                             .print-box  table.printtable{*zoom:1;}
-                             .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
-                             .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
-                             .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
-                             .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
-                             .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
-                             .print-box  .text-center {text-align: center !important;}
-                             .print-box  .text-right {text-align: right !important;}
-                             .print-box  .text-left {text-align: left !important;}
-                             .print-box  p {margin-top:5pt;}
-                             .print-box  #qrcCode{ margin-top:5pt;  }
-                             .print-npx .diy-box{}
-                             .print-box #shopQrc{  margin-top:5pt;   }
-                             hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
-                             .print-box   table{ width:100% !important;}
-                             .btn-inventory{margin-bottom: 15px;}
+                      img{width: 60%; margin:0}
+                      body{ width: 100%; box-sizing: border-box;}
+                     .print-box {width: 100%; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
+                     .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
+                     .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
+                     .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
+                     .print-box  table.printtable tbody{display: block;}
+                     .print-box  table.printtable caption{display:block;}
+                     .print-box  table.printtable .strong{ margin-top: 2pt;}
+                     .print-box  table.printtable .split{ margin-top:10pt;   }
+                     .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
 
-                     </div>
+                     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+                     .print-box  table.printtable{*zoom:1;}
+                     .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
+                     .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+
+                     .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
+                     .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+
+                     .print-box  table.printtable tr.itemsRow  td{
+                         width: 100% !important; clear: both;
+                     }
+                     .print-box  table.printtable tr.itemsRow  td span{
+                         width: 100% !important; float: none;
+                     }
+                     .print-box  table.printtable tr.itemsRow em:last-child{display: inline-block; width:50%; float:right;  text-align: right}
+                     .print-box  table.printtable tr.itemsRow em:first-child{display: inline-block; width:50%; float: left; text-align: left;}
+
+                     .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
+                     .print-box  .text-center {text-align: center !important;}
+                     .print-box  .text-right {text-align: right !important;}
+                     .print-box  .text-left {text-align: left !important;}
+                     .print-box  p {margin-top:10pt;}
+                     .print-box  #qrcCode{ margin-top:10pt;  }
+
+                     .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
+                     hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
+                  </div>
 
                 </div>
             </div>
@@ -165,22 +181,34 @@
 
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
-    .print-box img{width: 100%;}
+    .print-box img{width: 60%; margin: 0 auto;}
     .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
     .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
     .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
     .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
     .print-box  table.printtable tbody{display: block;}
     .print-box  table.printtable caption{display:block;}
-    .print-box  table.printtable .strong{font-weight: bold; font-size: 12pt;}
+    .print-box  table.printtable .strong{ margin-top: 2pt;}
     .print-box  table.printtable .split{ margin-top:10pt;   }
     .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
+
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
     .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
     .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+
     .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
     .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+
+    .print-box  table.printtable tr.itemsRow  td{
+        width: 100% !important; clear: both;
+    }
+    .print-box  table.printtable tr.itemsRow  td span{
+        width: 100% !important; float: none;
+    }
+    .print-box  table.printtable tr.itemsRow em:last-child{display: inline-block; width:50%; float:right;  text-align: right}
+    .print-box  table.printtable tr.itemsRow em:first-child{display: inline-block; width:50%; float: left; text-align: left;}
+
     .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
     .print-box  .text-center {text-align: center !important;}
     .print-box  .text-right {text-align: right !important;}
@@ -197,7 +225,41 @@
 
 
 <script>
+    function CreatePrinterList(){
 
+        var LODOP=getLodop();
+        var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+        var arr={list:[]};
+        for(var i=0;i<iPrinterCount;i++){
+            arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
+
+    function CreateFontList(){
+
+        var arr={list:[]};
+        var fontList=['微软雅黑','宋体','黑体'];
+        for(var i=0;i<fontList.length;i++){
+            //var option=document.createElement('option');
+            arr.list.push({ value: i,  label: fontList[i]})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
+
+    function CreateFontSize(){
+
+        var arr={list:[]};
+        var fontList=['8pt','10pt','12pt'];
+        for(var i=0;i<fontList.length;i++){
+            //var option=document.createElement('option');
+            arr.list.push({ value: i,  label: fontList[i]})
+        };
+        arr.value= 0 ;
+        return arr;
+    };
 
     import {request, API_URLS, HOST} from 'util/request.js';
     import layer from 'layer';
@@ -215,7 +277,14 @@
                 payStatus:"wait",
                 timer:null,
                 orderMsg:null,
-                qrcWin:null
+                qrcWin:null,
+                printer: {
+                    hardsoft:{},
+                    font:{},
+                    size:{},
+                    pageBottom:30,
+                    copies:1,
+                }
             }
         },
         computed: {
@@ -234,7 +303,6 @@
             //打印数据
             printData(){
                 var print=this.$store.state.currentPage.printData;
-                var nowDate = new Date();
 
 
                // print.paymentName=paymentName[this.orderParams.paymentMethodId];
@@ -297,10 +365,9 @@
                     var base64=this.printData.wechatMallBase64;
                     $('#shopQrc').html('<img src="'+imgData+base64+'"/>');
                 }
-
-
-
             });
+
+            this.setPrinter();
 
         },
         methods: {
@@ -315,13 +382,36 @@
                // this.$store.commit('switchPage', curPage);
 
             },
+            setPrinter(){
+
+                //获取打印机类型
+                this.printer.hardsoft=CreatePrinterList();
+                this.printer.font=CreateFontList();
+                this.printer.size=CreateFontSize();
+
+                if(this.shopData.printer){
+
+                    this.printer=this.shopData.printer;
+                }
+
+            },
             printPage(){
 
+                if(isNaN(this.printer.hardsoft.value)){
+                    alert("未连接打印机");
+                    return false;
+                }
                 var obj=document.getElementById('printDiv');
                 var docStr = obj.innerHTML;
 
-
                 var styles=document.getElementById("styles").innerHTML;
+
+
+
+
+                var stylestr = styles.replace(/{size}/g, this.printer.size.list[this.printer.size.value].label)
+                    .replace(/{font}/g, this.printer.font.list[this.printer.font.value].label);
+
                 var header='<!DOCTYPE html>'+
                     '<html lang="en">'+
                     '<head>'+
@@ -329,7 +419,7 @@
                     '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">'+
                     '<title>打印</title>'+
                     '<style type="text/css">'+
-                    styles+
+                    stylestr+
                     '</style>'+
                     '</head>'+
                     '<body>';
@@ -338,23 +428,42 @@
                     '</html>';
                 docStr=header+docStr+footer;
 
-                var h=obj.offsetHeight;
 
 
-                var LODOP=getLodop();
-                LODOP.PRINT_INIT("");
-                //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
+
+
                 var h=document.getElementById('printDiv').offsetHeight;
-                //var strBodyStyle="<style>"+document.getElementById("test").innerHTML+"</style>";
-                //var strFormHtml=strBodyStyle+"<body>"+document.getElementById("printDiv").innerHTML+"</body>";
+                var LODOP=getLodop();
+
+                //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
                 LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
+                LODOP.SET_PRINTER_INDEX(this.printer.hardsoft.value);
                 //1in = 2.54cm = 25.4mm = 72pt = 96px
                 LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
-                LODOP.SET_PRINT_PAGESIZE(3,'144pt',45,"");
-
+                LODOP.SET_PRINT_COPIES(this.printer.copies);
+                LODOP.SET_PRINT_MODE("POS_BASEON_PAPER",true);
+                LODOP.SET_PRINT_PAGESIZE(3,'144pt',this.printer.pageBottom+'mm',"");
                 var toMM=25.4/96*10;
-                LODOP.ADD_PRINT_HTM(0,0,'144pt',h*toMM,docStr);
+                LODOP.ADD_PRINT_LINE(0, 0, 0,"RightMargin:0mm", 3,0);
+                LODOP.ADD_PRINT_HTM(9,0,"RightMargin:0mm",h*toMM,docStr);
                 LODOP.PRINT();
+
+
+
+//                var LODOP=getLodop();
+//                LODOP.PRINT_INIT("");
+//                //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
+//
+//                //var strBodyStyle="<style>"+document.getElementById("test").innerHTML+"</style>";
+//                //var strFormHtml=strBodyStyle+"<body>"+document.getElementById("printDiv").innerHTML+"</body>";
+//                LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
+//                //1in = 2.54cm = 25.4mm = 72pt = 96px
+//                LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
+//                LODOP.SET_PRINT_PAGESIZE(3,'144pt',45,"");
+//
+//                var toMM=25.4/96*10;
+//                LODOP.ADD_PRINT_HTM(0,0,'144pt',h*toMM,docStr);
+//                LODOP.PRINT();
             },
             scanResListen(){
                     var apiObj={

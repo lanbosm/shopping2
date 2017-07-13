@@ -121,7 +121,9 @@
                 setTimeout(_=>{
                     if (this.step == "register" ) {
                         this.step = this.historyStep;
-
+                        this.$nextTick(_=>{
+                            this.$simpleScroll('#custom-list-list');
+                        })
                     }
                     else  if (this.step == "detail" ) {
                         this.step = "list";

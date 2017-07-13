@@ -10,7 +10,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading" >
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-7">
+                                    <div class="col-xs-12 col-sm-7">
                                         <ul class="nav nav-tabs app-nav">
                                             <li class="category-list" :class='{active:showList=="product"}' @click="openCategory('product')">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -23,7 +23,7 @@
                                          </ul>
                                     </div>
 
-                                    <div class="col-xs-12  col-md-5">
+                                    <div class="col-xs-12  col-sm-5">
                                         <searchbar ref="searchbar" :product-params="productParams"></searchbar>
                                     </div>
                                 </div>

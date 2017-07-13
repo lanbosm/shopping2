@@ -83,7 +83,7 @@
                                         </el-select>
                                     </li>
                                     <li class="col-xs-12">
-                                        <label class="input-title" >走纸</label>
+                                        <label class="input-title" >走纸(mm)</label>
                                         <el-input-number v-model="printer.pageBottom"  :min="1" :max="100"></el-input-number>
                                     </li>
                                     <li class="col-xs-12">
@@ -104,7 +104,7 @@
                         <div class="col-xs-12 dialog-footer">
                             <h5>其他设置</h5>
                             <div class="row">
-                                 <el-checkbox class="col-xs-4" v-model="backScreen">副屏显示</el-checkbox>
+                                 <el-checkbox class="col-xs-4 " disabled v-model="backScreen">副屏显示</el-checkbox>
                                  <el-checkbox class="col-xs-4" v-model="noticeTips">消息推送</el-checkbox>
                                  <div class="col-xs-3">
 
@@ -119,10 +119,11 @@
 
                 </div>
         <div style="display: none" id="styles">
+
             *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
-             img{width: 100%;}
-             body{ width: 128pt; box-sizing: border-box;}
-            .print-box {width: 144pt; padding:10pt 0pt 10pt 0pt; margin:0 auto; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
+             img{width: 60%; margin:0}
+             body{ width: 100%; box-sizing: border-box;}
+            .print-box {width: 100%; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
             .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:5pt;  }
             .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:5pt;}
             .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-size: {fontSize};  font-family:'{font}'; }
@@ -149,7 +150,11 @@
             .print-box   table{ width:100% !important;}
             .btn-inventory{margin-bottom: 15px;}
 
-    </div>
+             #test{
+                border-bottom:dash 2px #333333;
+                fonr-size:32px;
+            }
+         </div>
     </el-dialog>
 
 </template>
@@ -291,7 +296,7 @@
                     hardsoft:{},
                     font:{},
                     size:{},
-                    pageBottom:45,
+                    pageBottom:30,
                     copies:1,
                     qrcCodeContent:''
                 },
@@ -322,6 +327,7 @@
 
                             if(this.shopData.printer){
                                 this.printer=this.shopData.printer;
+
                             }
                             this.printer.qrCodeContent= res.shopSetting.qrCodeContent;
 
@@ -335,12 +341,16 @@
         },
         methods: {
             printPage(){
-                if(!this.printer){
+
+
+                if(isNaN(this.printer.hardsoft.value)){
                     alert("未连接打印机");
                     return false;
                 }
+
+
                // var obj=document.getElementById('printDiv');
-                var docStr = "测试打印机链接,当你看到这段文字时 测试成功";
+                var docStr = "<div id='test'>测试打印机链接,当你看到这段文字时 测试成功</div>";
 
                 var styles=document.getElementById("styles").innerHTML;
 
@@ -366,17 +376,22 @@
                     '</html>';
                 docStr=header+docStr+footer;
 
-               // var h=obj.offsetHeight;
+                //api 参考 http://blog.csdn.net/lybwwp/article/details/9320247
                 var LODOP=getLodop();
 
                 //LODOP.SET_PRINT_PAGESIZE(1,580,2100,"A3")
                 LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
                 LODOP.SET_PRINTER_INDEX(this.printer.hardsoft.value);
                 //1in = 2.54cm = 25.4mm = 72pt = 96px
-                LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
-                LODOP.SET_PRINT_PAGESIZE(3,'144pt',printer.pageBottom,"");
+
+                LODOP.SET_PRINT_STYLE("FontName","黑体");
+                LODOP.SET_PRINT_COPIES(this.printer.copies);
+                LODOP.SET_PRINT_MODE("POS_BASEON_PAPER",true);
+                LODOP.SET_PRINT_PAGESIZE(3,'144pt',this.printer.pageBottom+'mm',"");
                 var toMM=25.4/96*10;
-                LODOP.ADD_PRINT_HTM(0,0,'144pt',30*toMM,docStr);
+               // 数字型，0--实线 1--破折线 2--点线 3--点划线 4--双点划线
+                LODOP.ADD_PRINT_LINE(0, 0, 0,"RightMargin:0mm", 3,0);
+                LODOP.ADD_PRINT_HTM('10mm',0,"RightMargin:0mm",30*toMM,docStr);
                 LODOP.PRINT();
             },
             closeWin(){
@@ -391,6 +406,11 @@
                 this.printer.hardsoft=CreatePrinterList();
                 this.printer.font=CreateFontList();
                 this.printer.size=CreateFontSize();
+
+                if(this.shopData.printer){
+
+                    this.printer=this.shopData.printer;
+                }
                // console.log(this.printer.font);
 
             },

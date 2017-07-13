@@ -4,11 +4,12 @@ var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
-var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;//合并文件
+var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+
 // 动态给每个js入口添加热刷新 js合并
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -19,7 +20,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
-            sourceMap: config.dev.cssSourceMap,
+            sourceMap: true,
             extract: true
         })
     },
@@ -41,11 +42,17 @@ module.exports = merge(baseWebpackConfig, {
             name: 'vendor',
             filename: "js/vendor.js",
         }),
+        // extract css into its own file
         new ExtractTextPlugin({
-          filename: utils.assetsPath('css/[name].css')
+            filename: utils.assetsPath('css/style.css')
         }),
-        //new ExtractTextPlugin({ filename:utils.assetsPath("css/style.css") }),
-        //   filename: utils.assetsPath('css/[name].[contenthash].css')
+        // Compress extracted CSS. We are using this plugin so that possible
+        // duplicated CSS from different components can be deduped.
+        // new OptimizeCSSPlugin({
+        //     cssProcessorOptions: {
+        //         safe: true
+        //     }
+        // }),
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
