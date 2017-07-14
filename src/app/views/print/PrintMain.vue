@@ -33,14 +33,14 @@
                 <div class="col-xs-12 print-div" id="printDiv">
                     <div class="print-box show" >
                         <hr></hr>
-                        <table class="printtable">
+                        <table class="printtable" >
                             <caption class="text-center">
-                                <h3>{{printData.shopName}}</h3>
+                                <h3 class="text-center">{{printData.shopName}}</h3>
                                 <h5 class="text-left">{{printData.time}}</h5>
                                 <h5 class="text-left">订单号 {{printData.sn}}</h5>
                             </caption>
-                            <tbody>
-                            <tr v-if="printData.cashierName">
+                            <tbody >
+                            <tr v-if="printData.cashierName" >
                                 <td colspan="2" class="text-left block">营业员：{{printData.cashierName}}</td>
                             </tr>
                             <tr v-if="printData.customer">
@@ -49,20 +49,20 @@
                             <tr v-if="printData.guiderName">
                                 <td colspan="2" class="text-left  block">导购员：{{printData.guiderName}}</td>
                             </tr>
-                            <tr class="itemsRow" v-for="(item,index) in printData.appOrderItemConfirms">
+                            <template  v-for="(item,index) in printData.appOrderItemConfirms">
+                             <tr>
                                 <td>
-                                    <span>{{item.name}}</span>
+                                    {{item.name}}
                                 </td>
-                                <td>
-                                    <span>
-                                              <em>数量*{{item.quantity}}</em>
-                                              <em v-if="item.editPrice">{{item.editPrice | currency}}</em>
-                                              <em v-else="item.price">{{item.price | currency}}</em>
-                                     </span>
+                             </tr>
+                            <tr >
+                                <td class="itemsRow">
+                                    <span>数量*{{item.quantity}}</span>
+                                    <span v-if="item.editPrice">{{item.editPrice | currency}}</span>
+                                    <span v-else="item.price">{{item.price | currency}}</span>
                                 </td>
-
-
                             </tr>
+                            </template>
                             <tr >
                                 <td>小计 </td>
                                 <td>{{printData.totalPrice | currency}}</td>
@@ -75,7 +75,7 @@
                                 <td>积分支付</td>
                                 <td>¥ {{printData.pointDiscount}}</td>
                             </tr>
-                            <tr v-if="printData.balanceAmount"
+                            <tr v-if="printData.balanceAmount">
                                 <td>余额支付</td>
                                 <td>{{printData.balanceAmount | currency}}</td>
                             </tr>
@@ -100,19 +100,19 @@
                         </table>
 
                         <p class="text-center" v-if="order.wechatCodeUrl">请使用{{payName}}扫码付款</p>
-                        <div v-if="order.wechatCodeUrl" id="qrcCode">
+                        <div v-if="order.wechatCodeUrl" id="qrcCode" class="text-center" >
                             生成中...
                         </div>
 
-                        <div class="diy-box">
+                        <div class="diy-box" >
                             <p class="text-center">{{shopData.shopSetting.memo}}</p>
-                            <div  id="shopQrc">
-                                    生成中...
+                            <div  id="shopQrc" class="text-center">
+                                    生成中2...
                             </div>
-                            <p>
+                            <p class="text-left">
                                 门店地址 ：{{shopData.shopSetting.shopAddress}}
                             </p>
-                            <p>
+                            <p class="text-left">
                                 联系电话 ：{{shopData.shopSetting.contactTel}}
                             </p>
                         </div>
@@ -121,45 +121,39 @@
                     </div>
 
                     <div style="display: none" id="styles">
-                      img{width: 60%; margin:0}
-                      body{ width: 100%; box-sizing: border-box;}
-                     .print-box {width: 100%; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
-                     .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
-                     .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
-                     .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
-                     .print-box  table.printtable tbody{display: block;}
-                     .print-box  table.printtable caption{display:block;}
-                     .print-box  table.printtable .strong{ margin-top: 2pt;}
-                     .print-box  table.printtable .split{ margin-top:10pt;   }
-                     .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
+                        *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
+        img{width: 60%; margin:0 auto;}
+        body{ width: 140pt; box-sizing: border-box;}
+       .print-box {width: 140pt; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
+       .print-box  h3{font-size: '{font}'; display:block; padding-top:0pt; padding-bottom:5pt; text-align:left; }
+       .print-box  h5{font-size: '{font}'; display:block; padding-top:0pt; padding-bottom:5pt; text-align:left;}
+       .print-box  table.printtable{ width: 100%; }
+                .print-box  table.printtable caption{}
+                .print-box  table.printtable .strong{ margin-top: 2pt;}
+                .print-box  table.printtable .split{ margin-top:10pt;   }
+                .print-box  table.printtable tr{ padding-top:0pt; padding-bottom:0pt; }
 
-                     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-                     .print-box  table.printtable{*zoom:1;}
-                     .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
-                     .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+                .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+                .print-box  table.printtable{*zoom:1;}
+                .print-box  table.printtable td:last-child{ position: relative; text-align: right;}
+                .print-box  table.printtable td:first-child{  position: relative; text-align: left;}
 
-                     .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
-                     .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
 
-                     .print-box  table.printtable tr.itemsRow  td{
-                         width: 100% !important; clear: both;
-                     }
-                     .print-box  table.printtable tr.itemsRow  td span{
-                         width: 100% !important; float: none;
-                     }
-                     .print-box  table.printtable tr.itemsRow em:last-child{display: inline-block; width:50%; float:right;  text-align: right}
-                     .print-box  table.printtable tr.itemsRow em:first-child{display: inline-block; width:50%; float: left; text-align: left;}
 
-                     .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
-                     .print-box  .text-center {text-align: center !important;}
-                     .print-box  .text-right {text-align: right !important;}
-                     .print-box  .text-left {text-align: left !important;}
-                     .print-box  p {margin-top:10pt;}
-                     .print-box  #qrcCode{ margin-top:10pt;  }
+                .print-box  table.printtable .itemsRow span:last-child{ display:inline-block; width:50%; position: relative; text-align: right;}
+                .print-box  table.printtable .itemsRow span:first-child{ display:inline-block; width:50%;position:  relative; text-align: left;}
 
-                     .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
-                     hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
-                  </div>
+
+
+                .text-center {text-align: center !important;}
+                .text-right {text-align: right !important;}
+                .text-left {text-align: left !important;}
+                .print-box .diy-box{ }
+                .print-box  p { margin-top:5pt; }
+                .print-box  #qrcCode{margin:0 auto;   margin-top:5pt;  }
+                .print-box #shopQrc{margin:0 auto;  margin-top:5pt;   }
+                hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
+             </div>
 
                 </div>
             </div>
@@ -177,7 +171,7 @@
     .prev-txt{ margin-top: 10px; font-size: 14px; color: #999999;}
     .payres-txt.success{  color: #6fc89c;}
     .print-div{
-        height:360px; overflow-x: hidden; }
+        height:360px; overflow-x: hidden;  }
 
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
@@ -185,38 +179,29 @@
     .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
     .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
     .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
-    .print-box  table.printtable{ width: 100%; display: block;position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
-    .print-box  table.printtable tbody{display: block;}
-    .print-box  table.printtable caption{display:block;}
+    .print-box  table.printtable{ width: 100%; position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
+    .print-box  table.printtable tbody{}
+    .print-box  table.printtable caption{}
     .print-box  table.printtable .strong{ margin-top: 2pt;}
     .print-box  table.printtable .split{ margin-top:10pt;   }
-    .print-box  table.printtable tr{ display:block;clear: left;  padding-top:0pt; padding-bottom:0pt; }
+    .print-box  table.printtable tr{   padding-top:0pt; padding-bottom:0pt;}
 
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
-    .print-box  table.printtable td:last-child{display: block; width: 50%;float: left; position: relative; text-align: right;}
-    .print-box  table.printtable td:first-child{display: block; width: 50%;float: left; position: relative;}
+    .print-box  table.printtable td:last-child{ position: relative; text-align: right;}
+    .print-box  table.printtable td:first-child{  position: relative; text-align: left;}
 
-    .print-box  table.printtable span:last-child{display: inline-block; width:20%; float:right;  }
-    .print-box  table.printtable span:first-child{display: inline-block; width:80%; float: left;}
+    .print-box  table.printtable .itemsRow span:last-child{  position: relative; text-align: right; margin-left: 4pt;}
+    .print-box  table.printtable .itemsRow span:first-child{  position:  relative; text-align: left;}
 
-    .print-box  table.printtable tr.itemsRow  td{
-        width: 100% !important; clear: both;
-    }
-    .print-box  table.printtable tr.itemsRow  td span{
-        width: 100% !important; float: none;
-    }
-    .print-box  table.printtable tr.itemsRow em:last-child{display: inline-block; width:50%; float:right;  text-align: right}
-    .print-box  table.printtable tr.itemsRow em:first-child{display: inline-block; width:50%; float: left; text-align: left;}
 
-    .print-box  table.printtable td.block{width:100% !important;   clear:both; text-align:center;  }
     .print-box  .text-center {text-align: center !important;}
     .print-box  .text-right {text-align: right !important;}
     .print-box  .text-left {text-align: left !important;}
     .print-box  p {margin-top:10pt;}
     .print-box  #qrcCode{ margin-top:10pt;  }
-
-    .print-box #shopQrc{margin-left:5pt;  margin-top:10pt;   }
+    .print-box .diy-box{ padding:  0 15px;}
+    .print-box #shopQrc{  margin-top:10pt;   }
     hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
     .print-box   table{ width:100% !important;}
     .btn-inventory{margin-bottom: 15px;}
@@ -354,7 +339,7 @@
                     var imgData="data:image/png;base64,"
                     var base64=this.printData.wechatCodeBase64;
                     $('#qrcCode').html('<img src="'+imgData+base64+'"/>');
-                    this. scanResListen();
+                    //this. scanResListen();
 
 
                 }
@@ -444,10 +429,13 @@
                 LODOP.SET_PRINT_MODE("POS_BASEON_PAPER",true);
                 LODOP.SET_PRINT_PAGESIZE(3,'144pt',this.printer.pageBottom+'mm',"");
                 var toMM=25.4/96*10;
-                LODOP.ADD_PRINT_LINE(0, 0, 0,"RightMargin:0mm", 3,0);
-                LODOP.ADD_PRINT_HTM(9,0,"RightMargin:0mm",h*toMM,docStr);
+                LODOP.ADD_PRINT_LINE(0, 0, 0,'144pt', 3,0);
+                LODOP.ADD_PRINT_HTM(0,0,'144pt',h*toMM,docStr);
                 LODOP.PRINT();
 
+
+                console.log(this.printer);
+                //LODOP.PREVIEW();
 
 
 //                var LODOP=getLodop();
