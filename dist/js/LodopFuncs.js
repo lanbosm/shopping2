@@ -65,14 +65,14 @@ function getLodop(oOBJECT,oEMBED){
             try{ LODOP=getCLodop();} catch(err) {};
 	    if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
             if (!LODOP) {
-		 if (isIE) document.write(strCLodopInstall); else
-		 document.documentElement.innerHTML=strCLodopInstall+document.documentElement.innerHTML;
+		 if (isIE) document.getElementById('tips').innerHTML=strCLodopInstall; else
+             document.getElementById('tips').innerHTML=strCLodopInstall;
                  return;
             } else {
 
 	         if (CLODOP.CVERSION<"2.1.0.2") { 
-			if (isIE) document.write(strCLodopUpdate); else
-			document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML;
+			if (isIE) document.getElementById('tips').innerHTML=strCLodopUpdate; else
+                document.getElementById('tips').innerHTML=strCLodopUpdate;
 		 };
 		 if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
 		 if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);	
@@ -95,21 +95,21 @@ function getLodop(oOBJECT,oEMBED){
             //=====Lodop插件未安装时提示下载地址:==========
             if ((LODOP==null)||(typeof(LODOP.VERSION)=="undefined")) {
                  if (navigator.userAgent.indexOf('Chrome')>=0)
-                     document.documentElement.innerHTML=strHtmChrome+document.documentElement.innerHTML;
+                     document.getElementById('tips').innerHTML==strHtmChrome
                  if (navigator.userAgent.indexOf('Firefox')>=0)
-                     document.documentElement.innerHTML=strHtmFireFox+document.documentElement.innerHTML;
+                     document.getElementById('tips').innerHTML=strHtmFireFox
                  if (is64IE) document.write(strHtm64_Install); else
-                 if (isIE)   document.write(strHtmInstall);    else
-                     document.documentElement.innerHTML=strHtmInstall+document.documentElement.innerHTML;
+                 if (isIE)   document.getElementById('tips').innerHTML=strHtmInstall;    else
+                     document.getElementById('tips').innerHTML=strHtmInstall
                  return LODOP;
             };
         };
         if (LODOP.VERSION<"6.2.1.7") {
             if (needCLodop())
-            document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML; else
-            if (is64IE) document.write(strHtm64_Update); else
-            if (isIE) document.write(strHtmUpdate); else
-            document.documentElement.innerHTML=strHtmUpdate+document.documentElement.innerHTML;
+                document.getElementById('tips').innerHTML==strCLodopUpdate; else
+            if (is64IE) document.getElementById('tips').innerHTML=strHtm64_Update; else
+           if (isIE) document.getElementById('tips').innerHTML=strHtmUpdate; else
+               document.getElementById('tips').innerHTML==strHtmUpdate;
             return LODOP;
         };
         //===如下空白位置适合调用统一功能(如注册语句、语言选择等):===

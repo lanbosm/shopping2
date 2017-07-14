@@ -7,7 +7,6 @@
                 <div class="col-xs-12" v-if="printData.memberId">
                     <a class="btn btn-primary print-btn btn-block btn-inventory"  @click="gostock()">
                         <span class="iconfont icon-kucun" aria-hidden="true"></span> 存货
-
                     </a>
                 </div>
                 <div class="col-xs-12">
@@ -32,87 +31,90 @@
             <div class="row">
                 <div class="col-xs-12 print-div" id="printDiv">
                     <div class="print-box show" >
-                        <hr></hr>
                         <table class="printtable" >
                             <caption class="text-center">
-                                <h3 class="text-center">{{printData.shopName}}</h3>
+                                <h5 class="text-center">{{printData.shopName}}</h5>
                                 <h5 class="text-left">{{printData.time}}</h5>
                                 <h5 class="text-left">订单号 {{printData.sn}}</h5>
+                                <h5 class="text-left"  v-if="printData.cashierName">营业员：{{printData.cashierName}}</h5>
+                                <h5 class="text-left"  v-if="printData.customer">顾客：{{printData.customer}}</h5>
+                                <h5 class="text-left"  v-if="printData.guiderName">导购员：{{printData.guiderName}}</h5>
                             </caption>
                             <tbody >
-                            <tr v-if="printData.cashierName" >
-                                <td colspan="2" class="text-left block">营业员：{{printData.cashierName}}</td>
-                            </tr>
-                            <tr v-if="printData.customer">
-                                <td colspan="2" class="text-left block">顾客：{{printData.customer}}</td>
-                            </tr>
-                            <tr v-if="printData.guiderName">
-                                <td colspan="2" class="text-left  block">导购员：{{printData.guiderName}}</td>
+                            <tr>
+                                <td colspan="2" >
+                                    <div class="dashline"></div>
+                                </td>
                             </tr>
                             <template  v-for="(item,index) in printData.appOrderItemConfirms">
                              <tr>
-                                <td>
+                                <td colspan="2" class="itemsName">
                                     {{item.name}}
                                 </td>
                              </tr>
                             <tr >
-                                <td class="itemsRow">
+                                <td colspan="2" class="itemsRow">
                                     <span>数量*{{item.quantity}}</span>
-                                    <span v-if="item.editPrice">{{item.editPrice | currency}}</span>
-                                    <span v-else="item.price">{{item.price | currency}}</span>
+                                    <span class="text-right" v-if="item.editPrice">{{item.editPrice | currency}}</span>
+                                    <span class="text-right" v-else="item.price">{{item.price | currency}}</span>
                                 </td>
                             </tr>
                             </template>
+                            <tr>
+                                <td colspan="2" >
+                                    <div class="dashline"></div>
+                                </td>
+                            </tr>
                             <tr >
                                 <td>小计 </td>
-                                <td>{{printData.totalPrice | currency}}</td>
+                                <td  class="text-right">{{printData.totalPrice | currency}}</td>
                             </tr>
                             <tr v-if="printData.couponDiscount">
                                 <td>优惠券 </td>
-                                <td>{{printData.couponDiscount}}</td>
+                                <td  class="text-right">{{printData.couponDiscount}}</td>
                             </tr>
                             <tr v-if="printData.pointDiscount">
                                 <td>积分支付</td>
-                                <td>¥ {{printData.pointDiscount}}</td>
+                                <td class="text-right">¥ {{printData.pointDiscount}}</td>
                             </tr>
                             <tr v-if="printData.balanceAmount">
                                 <td>余额支付</td>
-                                <td>{{printData.balanceAmount | currency}}</td>
+                                <td  class="text-right">{{printData.balanceAmount | currency}}</td>
                             </tr>
                             <tr class="strong">
                                 <td>价格</td>
-                                <td>{{order.totalAmountPayable | currency}}</td>
+                                <td  class="text-right">{{order.totalAmountPayable | currency}}</td>
                             </tr>
                             <tr >
                                 <td>付款方式</td>
-                                <td>{{printData.paymentMethodName}}</td>
+                                <td  class="text-right">{{printData.paymentMethodName}}</td>
                             </tr>
                             <tr v-if="orderParams.paymentMethodId == 10 ">
                                 <td>现金支付</td>
-                                <td>{{printData.rmb | currency}}</td>
+                                <td  class="text-right">{{printData.rmb | currency}}</td>
                             </tr>
                             <tr  v-if="orderParams.paymentMethodId == 10 ">
                                 <td>找零</td>
-                                <td>{{printData.cash | currency}}</td>
+                                <td  class="text-right">{{printData.cash | currency}}</td>
                             </tr>
 
                             </tbody>
                         </table>
 
-                        <p class="text-center" v-if="order.wechatCodeUrl">请使用{{payName}}扫码付款</p>
-                        <div v-if="order.wechatCodeUrl" id="qrcCode" class="text-center" >
+                        <p class="text-center mt2" v-if="order.wechatCodeUrl">请使用{{payName}}扫码付款</p>
+                        <div v-if="order.wechatCodeUrl" id="qrcCode" class="text-center mt5" >
                             生成中...
                         </div>
 
                         <div class="diy-box" >
-                            <p class="text-center">{{shopData.shopSetting.memo}}</p>
-                            <div  id="shopQrc" class="text-center">
+                            <p class="text-center mt2">{{shopData.shopSetting.memo}}</p>
+                            <div  id="shopQrc" class="text-center mt5">
                                     生成中2...
                             </div>
-                            <p class="text-left">
+                            <p class="text-left mt5">
                                 门店地址 ：{{shopData.shopSetting.shopAddress}}
                             </p>
-                            <p class="text-left">
+                            <p class="text-left mt2">
                                 联系电话 ：{{shopData.shopSetting.contactTel}}
                             </p>
                         </div>
@@ -121,38 +123,49 @@
                     </div>
 
                     <div style="display: none" id="styles">
-                        *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
-        img{width: 60%; margin:0 auto;}
-        body{ width: 140pt; box-sizing: border-box;}
-       .print-box {width: 140pt; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
-       .print-box  h3{font-size: '{font}'; display:block; padding-top:0pt; padding-bottom:5pt; text-align:left; }
-       .print-box  h5{font-size: '{font}'; display:block; padding-top:0pt; padding-bottom:5pt; text-align:left;}
-       .print-box  table.printtable{ width: 100%; }
+                *{padding:0; margin:0; font-size: {size};  font-family:'{font}'; }
+                 img{width: 60%; margin:0 auto;}
+                 body{ width: 136pt; box-sizing: border-box;}
+
+                .print-box {width: 136pt; padding:10pt 0pt 10pt 0pt; margin:0; font-size: {fontSize};  border: solid 1px #cccccc ;  font-family:'{font}'; }
+                .print-box  h5{font-size: '{font}'; display:block; padding-top:0pt; padding-bottom:0pt; line-height:'{font}'; }
+                .print-box  p {  }
+                .print-box  table.printtable{ width: 100%;  line-height:'{font}'; }
                 .print-box  table.printtable caption{}
+                .print-box  table.printtable .dashline{
+                        height:0pt;
+                        margin-top:3pt;
+                        margin-bottom:3pt;
+                        border-bottom: 2pt dashed #666666;
+
+                }
                 .print-box  table.printtable .strong{ margin-top: 2pt;}
                 .print-box  table.printtable .split{ margin-top:10pt;   }
                 .print-box  table.printtable tr{ padding-top:0pt; padding-bottom:0pt; }
 
                 .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
                 .print-box  table.printtable{*zoom:1;}
-                .print-box  table.printtable td:last-child{ position: relative; text-align: right;}
-                .print-box  table.printtable td:first-child{  position: relative; text-align: left;}
 
 
 
-                .print-box  table.printtable .itemsRow span:last-child{ display:inline-block; width:50%; position: relative; text-align: right;}
-                .print-box  table.printtable .itemsRow span:first-child{ display:inline-block; width:50%;position:  relative; text-align: left;}
+                .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+                .print-box  table.printtable .itemsRow{clear: both;}
+                .print-box  table.printtable .itemsRow span{  width:50%; display:block; float: left; }
+
 
 
 
                 .text-center {text-align: center !important;}
                 .text-right {text-align: right !important;}
                 .text-left {text-align: left !important;}
-                .print-box .diy-box{ }
-                .print-box  p { margin-top:5pt; }
-                .print-box  #qrcCode{margin:0 auto;   margin-top:5pt;  }
-                .print-box #shopQrc{margin:0 auto;  margin-top:5pt;   }
-                hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
+                .mt2{ margin-top:2pt !important;}
+                .mt5{ margin-top:5pt !important;}
+                .print-box .diy-box{ width:100%;}
+
+
+                .print-box  #qrcCode{margin:0 auto;     }
+                .print-box #shopQrc{margin:0 auto;     }
+
              </div>
 
                 </div>
@@ -176,34 +189,44 @@
     *{padding:0; margin:0;}
     body{ box-sizing: border-box;}
     .print-box img{width: 60%; margin: 0 auto;}
-    .print-box {width: 180pt; padding:10pt 10pt 10pt 10pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc; }
-    .print-box  h3{font-size: 12pt; display:block; padding-top:0pt; padding-bottom:0pt;  }
-    .print-box  h5{font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt;}
-    .print-box  table.printtable{ width: 100%; position: relative;  padding-top:0pt; padding-bottom:10pt;  font-family:'黑体' }
-    .print-box  table.printtable tbody{}
+    .print-box {width: 180pt; padding:10pt 5pt 10pt 5pt; margin:0 auto; font-size: 10pt;  border: solid 1px #cccccc;  font-family:'微软雅黑'; }
+    .print-box  h5{ font-size: 10pt; display:block; padding-top:0pt; padding-bottom:0pt; margin:0; line-height:14pt; }
+    .print-box  p { margin:0; }
+    .print-box  table.printtable{ width: 100%;  line-height: 12pt; }
     .print-box  table.printtable caption{}
+    .print-box  table.printtable .dashline{
+        height:0pt;
+        margin-top:3pt;
+        margin-bottom:3pt;
+        border-bottom: 2pt dashed #666666;
+
+    }
     .print-box  table.printtable .strong{ margin-top: 2pt;}
     .print-box  table.printtable .split{ margin-top:10pt;   }
-    .print-box  table.printtable tr{   padding-top:0pt; padding-bottom:0pt;}
+    .print-box  table.printtable tr{ padding-top:0pt; padding-bottom:0pt; }
 
     .print-box  table.printtable:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
     .print-box  table.printtable{*zoom:1;}
-    .print-box  table.printtable td:last-child{ position: relative; text-align: right;}
-    .print-box  table.printtable td:first-child{  position: relative; text-align: left;}
-
-    .print-box  table.printtable .itemsRow span:last-child{  position: relative; text-align: right; margin-left: 4pt;}
-    .print-box  table.printtable .itemsRow span:first-child{  position:  relative; text-align: left;}
 
 
-    .print-box  .text-center {text-align: center !important;}
-    .print-box  .text-right {text-align: right !important;}
-    .print-box  .text-left {text-align: left !important;}
-    .print-box  p {margin-top:10pt;}
-    .print-box  #qrcCode{ margin-top:10pt;  }
-    .print-box .diy-box{ padding:  0 15px;}
-    .print-box #shopQrc{  margin-top:10pt;   }
-    hr{width:100%; height:0px;   border-top:dotted 3px #cccccc; margin-top:10px; margin-bottom: 0px;}
-    .print-box   table{ width:100% !important;}
+    .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+    .print-box  table.printtable .itemsRow{clear: both;}
+    .print-box  table.printtable .itemsRow span{  width:50%; display:block; float: left; }
+
+
+
+
+    .text-center {text-align: center !important;}
+    .text-right {text-align: right !important;}
+    .text-left {text-align: left !important;}
+    .mt2{ margin-top:2pt !important;}
+    .mt5{ margin-top:5pt !important;}
+    .print-box .diy-box{ width:100%;}
+
+
+    .print-box  #qrcCode{margin:0 auto;     }
+    .print-box  #shopQrc{margin:0 auto;     }
+
     .btn-inventory{margin-bottom: 15px;}
 
 </style>
@@ -391,7 +414,7 @@
 
                 var styles=document.getElementById("styles").innerHTML;
 
-
+             //  alert(this.printer.font.list[this.printer.font.value].label);
 
 
                 var stylestr = styles.replace(/{size}/g, this.printer.size.list[this.printer.size.value].label)
@@ -424,18 +447,18 @@
                 LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
                 LODOP.SET_PRINTER_INDEX(this.printer.hardsoft.value);
                 //1in = 2.54cm = 25.4mm = 72pt = 96px
-                LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
+               // LODOP.SET_PRINT_STYLE("FontName","微软雅黑");
                 LODOP.SET_PRINT_COPIES(this.printer.copies);
                 LODOP.SET_PRINT_MODE("POS_BASEON_PAPER",true);
-                LODOP.SET_PRINT_PAGESIZE(3,'144pt',this.printer.pageBottom+'mm',"");
+                LODOP.SET_PRINT_PAGESIZE(3,'136pt',this.printer.pageBottom+'mm',"");
                 var toMM=25.4/96*10;
-                LODOP.ADD_PRINT_LINE(0, 0, 0,'144pt', 3,0);
-                LODOP.ADD_PRINT_HTM(0,0,'144pt',h*toMM,docStr);
+              //  LODOP.ADD_PRINT_LINE(50, 0, 50, '144pt', 2, 0);
+                LODOP.ADD_PRINT_HTM(0,0,'136pt',h*toMM,docStr);
                 LODOP.PRINT();
 
 
                 console.log(this.printer);
-                //LODOP.PREVIEW();
+               // LODOP.PREVIEW();
 
 
 //                var LODOP=getLodop();

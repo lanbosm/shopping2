@@ -336,8 +336,10 @@
                 this.$alert(res.msg,{
                     type: 'error',
                 })
-            })
-            this.setPrinter();
+            });
+
+             this.setPrinter();
+
         },
         methods: {
             printPage(){

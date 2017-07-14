@@ -10,20 +10,9 @@
   .btn{
     position:relative;
   }
-  .order-header{
-     padding: 15px;
-     position: relative;
-     .order-row;
-     h3{
-       font-size: 18px; line-height: 30px; margin: 0;
-     }
-     .ok-btn,.back-btn{
-       .order-header-btn;
-     }
-   }
 
   .order-custom{
-     padding: 20px 15px;
+     padding: 20px  @gutter;
      position: relative;
     .cur{
       border-color: @themeColor !important;
@@ -33,12 +22,12 @@
     }
     .order-row;
     .custom-btn{
-         font-size: 18px;
+         font-size: 14px;
         .order-custom-btn;
 
     }
     .coupon-btn,.point-btn,.balance-btn{
-         font-size: 18px;
+         font-size: 14px;
 
          b{
            position: relative;
@@ -69,13 +58,13 @@
       .order-row;
 
       .menu-con{
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top:@gutter;
+        padding-bottom: @gutter;
         border-right: @borderDashedStyle;
         border-width: 1px;
         position: relative;
         .btn{
-          margin-top: @gutter; margin-bottom: @gutter; font-size: 18px;
+          margin-top: @gutter; margin-bottom: @gutter; font-size: 14px;
           span {margin-right: 20px;}
         }
         .scan-btn,.money-btn,.card-btn{
