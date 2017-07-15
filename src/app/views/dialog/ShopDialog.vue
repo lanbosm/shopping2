@@ -105,7 +105,7 @@
                             <h5>其他设置</h5>
                             <div class="row">
                                  <el-checkbox class="col-xs-4 " disabled v-model="backScreen">副屏显示</el-checkbox>
-                                 <el-checkbox class="col-xs-4" v-model="noticeTips">消息推送</el-checkbox>
+                                 <el-checkbox class="col-xs-4" v-model="noticeOn" @change="switchNotice">消息推送</el-checkbox>
                                  <div class="col-xs-3">
 
                                  </div>
@@ -223,13 +223,18 @@
     function CreatePrinterList(){
 
         var LODOP=getLodop();
-        var iPrinterCount=LODOP.GET_PRINTER_COUNT();
-        var arr={list:[]};
-        for(var i=0;i<iPrinterCount;i++){
-            arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
-        };
-        arr.value= 0 ;
-        return arr;
+
+        if(LODOP){
+            var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+            var arr={list:[]};
+            for(var i=0;i<iPrinterCount;i++){
+                arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
+            };
+            arr.value= 0 ;
+            return arr;
+        }else{
+            return [];
+        }
     };
 
     function CreateFontList(){
@@ -255,6 +260,7 @@
         arr.value= 0 ;
         return arr;
     };
+
 
 
     function setDiyColor(color,styles,id){
@@ -308,7 +314,9 @@
             shopData () {
                 return this.$store.state.shopData;
             },
-
+            noticeOn(){
+                return this.$store.state.noticeOn;
+            }
         },
         created(){
 //            $.get('./css/main.css',function(res){
@@ -342,9 +350,17 @@
 
         },
         methods: {
+            switchNotice(){
+                if(this.noticeOn){
+                   this.$store.state.noticeOn=false;
+                   this.$root.$refs.header.addMsglistener();
+                }else{
+                    this.$store.state.noticeOn=true;
+                    clearInterval(this.$store.state.msgTimer);
+                }
+
+            },
             printPage(){
-
-
                 if(isNaN(this.printer.hardsoft.value)){
                     alert("未连接打印机");
                     return false;
@@ -403,7 +419,6 @@
                 },300);
             },
             setPrinter(){
-
                 //获取打印机类型
                 this.printer.hardsoft=CreatePrinterList();
                 this.printer.font=CreateFontList();

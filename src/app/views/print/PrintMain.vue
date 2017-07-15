@@ -235,14 +235,17 @@
 <script>
     function CreatePrinterList(){
 
-        var LODOP=getLodop();
-        var iPrinterCount=LODOP.GET_PRINTER_COUNT();
-        var arr={list:[]};
-        for(var i=0;i<iPrinterCount;i++){
-            arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
-        };
-        arr.value= 0 ;
-        return arr;
+        if(LODOP){
+            var iPrinterCount=LODOP.GET_PRINTER_COUNT();
+            var arr={list:[]};
+            for(var i=0;i<iPrinterCount;i++){
+                arr.list.push({ value: i,  label: LODOP.GET_PRINTER_NAME(i)})
+            };
+            arr.value= 0 ;
+            return arr;
+        }else{
+            return [];
+        }
     };
 
     function CreateFontList(){

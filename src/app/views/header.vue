@@ -27,22 +27,22 @@
                             消息
                             <!--<span class="badge">{{msgNum}}</span>-->
                         </a>
-                         <a class="setting-btn"  @click="setting()">
+                         <a class="setting-btn"  @click="setting()" title="设置">
                              <i class="glyphicon glyphicon-th-large" ></i>
                              <em class="hidden-sm">应用</em>
                          </a>
-                        <a class="cash-btn"  @click="cash()">
+                        <a class="cash-btn"  @click="cash()" title="备用金">
                             <i class="icon iconfont icon-xianjin"></i>
                             <em class="hidden-sm">备用金</em>
                         </a>
-                        <a class="log-btn"  @click="log()">
+                        <a class="log-btn"  @click="log()" title="营业状态">
                             <i class="icon iconfont icon-yingyebaobiao"></i>
                             <em class="hidden-sm">营业状态</em>
                         </a>
                         <span class="sys-btns">
-                            <a><i class="icon iconfont icon-wifi" :class="{enabled:msgTimer}" ></i></a>
-                            <a @click="fullscreen()"><i class="icon iconfont icon-quanping " :class="{enabled:fullScreen}"></i></a>
-                            <a @click="exit()"><i class="icon iconfont icon-tuichu"  ></i></a>
+                            <a title="网络"><i class="icon iconfont icon-wifi" :class="{enabled:online}" ></i></a>
+                            <a title="全屏" @click="fullscreen()"><i class="icon iconfont icon-quanping " :class="{enabled:fullScreen}"></i></a>
+                            <a title="退出" @click="exit()"><i class="icon iconfont icon-tuichu"  ></i></a>
                         </span>
 
              </div>
@@ -128,14 +128,19 @@
             history(){
                 return this.$store.state.currentPage.history;
             },
+            online(){
+                return  this.$store.state.online;
+            },
             msgTimer(){
-                return  this.$store.state.msgTimer
+                return  this.$store.state.msgTimer;
+            },
+            noticeOn(){
+                return  this.$store.state.noticeOn;
             }
         },
         data(){
             return {
                 dialogVisible: false,
-                notice:null,
                 msgNum:0,
                 fullScreen:false,
                 listName:'#productList'
@@ -159,9 +164,6 @@
             });
 
             this.$nextTick(_=> {
-//
-
-
                 this.resetHeight();
                 window.onresize=this.autoresetHeight;
             });
@@ -187,8 +189,6 @@
                 }
             },
             resetHeight(listBox){
-
-
                     if(document.querySelector(listBox)) {
                         this.listName=listBox;
                         var sss = document.querySelector(listBox).getBoundingClientRect().top;
@@ -196,9 +196,6 @@
 
                         document.querySelector(listBox).style.height = ph + 'px';
                     }
-
-
-
             },
             addPage(){
                 this.$store.dispatch('addPage').then(res=> {
@@ -243,32 +240,15 @@
 
                 var delay=10000;
                 var roopOver=false;
+                this.fetchNotice();
 
-                const vnode = this.$createElement;
                 var roopAction=()=>{
                     this.$store.state.msgTimer=setTimeout(()=> {
                             console.log("发生请求包");
 
-                           this.$store.dispatch("addListenAllocation").then(res => {
-                               if (res.appUnconfirmList.length > 0) {
+                            this.fetchNotice();
 
-
-                                   var newMsg = res.appUnconfirmList;
-
-
-                                   var html = vnode('dialog-notice', {props: {"item": newMsg[0]}});
-
-                                   this.$notify({
-                                       title: newMsg[0].shopName + '的申请调拨',
-                                       message: html,
-                                       customClass: 'notice',
-                                       type: 'warning',
-                                       duration: 0
-                                   });
-                               }
-                           });
-
-                            if(!roopOver&&this.$store.state.login){
+                            if(!roopOver&&this.$store.state.login&& this.noticeOn){
                                 roopAction();
                             }
                     }, delay);
@@ -276,6 +256,27 @@
                 }
 
                 roopAction();
+            },
+            fetchNotice(){
+                const vnode = this.$createElement;
+                this.$store.dispatch("addListenAllocation").then(res => {
+                    if (res.appUnconfirmList.length > 0) {
+
+
+                        var newMsg = res.appUnconfirmList;
+
+
+                        var html = vnode('dialog-notice', {props: {"item": newMsg[0]}});
+
+                        this.$notify({
+                            title: newMsg[0].shopName + '的申请调拨',
+                            message: html,
+                            customClass: 'notice',
+                            type: 'warning',
+                            duration: 0
+                        });
+                    }
+                });
             },
             log(){
                 this.$root.showLogDialog=true;

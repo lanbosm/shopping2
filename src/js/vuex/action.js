@@ -429,7 +429,7 @@ const actions= {
                     commit("setPageData",res.data.page);
                     commit("setLocalList");
                     return  Promise.resolve(res.data);
-                } else {
+                } else if(state.login){
                     commit("setPageData",oldPageData);
                     commit("setLocalList");
                     return   Promise.reject(res);
@@ -455,13 +455,15 @@ const actions= {
                 if (res.data.code=="20000") {
                     commit("setLocalList");
                     return  Promise.resolve(res.data);
-                } else {
+                } else if(state.login){
                     commit("setLocalList");
                     return   Promise.reject(res);
                 }
             }).catch(res=>{
                 commit("set_list_waiting",false);
+
                 return Promise.reject(res.data);
+
             });
         },
         //获取商品详情
@@ -475,8 +477,8 @@ const actions= {
                     if(res.data.code=="20000"){
                         commit("setItemData",res.data);
                         return Promise.resolve(res.data);
-                    }else{
-                        return Promise.reject(res);
+                    }else if(state.login){
+                        return   Promise.reject(res);
                     }
                 })
                  .catch(res=> { //失败
@@ -498,14 +500,14 @@ const actions= {
                     commit("set_list_waiting",false);
                     if(res.data.code=="20000"){
                         commit("setCategoryData",res.data.appProductCategories);
-                        Promise.resolve(res.data);
-                    }else{
-                        Promise.reject(res);
+                        return   Promise.resolve(res.data);
+                    }else if(state.login){
+                        return   Promise.reject(res);
                     }
                 })
                 .catch( res=> { //失败
                         commit("set_list_waiting",false);
-                         Promise.reject(res.data);
+                        return   Promise.reject(res.data);
             })
 
         },
@@ -524,13 +526,13 @@ const actions= {
                 if (res.data.code=="20000") {
                     commit("setLocalList");
                     return  Promise.resolve(res.data);
-                } else {
+                } else if(state.login){
                     commit("setLocalList");
-                    return   Promise.reject(res.data);
+                    return   Promise.reject(res);
                 }
             }).catch(res=>{
                 commit("set_list_waiting",false);
-                return Promise.reject(res);
+                return Promise.reject(res.data);
 
             });
         },
@@ -549,7 +551,7 @@ const actions= {
                 if (res.data.code=="20000") {
 
                     return  Promise.resolve(res.data);
-                } else {
+                } else if(state.login){
                     return   Promise.reject(res);
                 }
             }).catch(res=>{
@@ -569,11 +571,11 @@ const actions= {
                  commit("hide_waiting");
                 if (res.data.code=="20000") {
                     return  Promise.resolve(res.data);
-                } else {
+                } else if(state.login){
                     return   Promise.reject(res);
                 }
             }).catch(res=>{
-                return    Promise.reject(res.data);
+                     return    Promise.reject(res.data);
             });
         },
         //获取会员列表
@@ -587,8 +589,8 @@ const actions= {
                    // commit("hide_waiting");
                     if (res.data.code=="20000") {
                         return  Promise.resolve(res.data);
-                    } else {
-                        return  reject(res.data);
+                    } else if(state.login){
+                        return  reject(res);
                     }
                 }).catch(res=>{
                         return   reject(res.data);
@@ -721,12 +723,12 @@ const actions= {
                 commit("hide_waiting");
                 if (res.data.code=="20000") {
                     return  Promise.resolve(res.data);
-                } else {
-                    return  Promise.reject(res.data);
+                } else if(state.login){
+                    return  Promise.reject(res);
                 }
             }).catch(res=>{
                 commit("hide_waiting");
-                return  Promise.reject(res);
+                return  Promise.reject(res.dara);
             });
         },
 
@@ -908,7 +910,7 @@ const actions= {
 
         },
         //检测调拨信息()
-        addListenAllocation({commit},value){
+        addListenAllocation({state,commit},value){
             var apiObj = {
                 url: API_URLS.products + '/allocation/unconfirm_list',
                 data: {
@@ -918,13 +920,14 @@ const actions= {
 
             return request.fnPost_dev(apiObj).then(res => { //成功
                     if(res.data.code=="20000"){
+                      state.online=true;
                       return   Promise.resolve(res.data);
                     }else{
-                      return   Promise.reject(res.data);
+                      return   Promise.reject(res);
                     }
                 }).catch( res=> { //失败
-
-                      return  Promise.reject(res);
+                        state.online=false;
+                      return  Promise.reject(res.data);
                 })
 
 

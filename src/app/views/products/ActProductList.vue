@@ -83,15 +83,15 @@
                         this.listData=res.page;
 
                         this.$nextTick(_=> {
-                            this.$root.$refs.header.resetHeight('#actTypeList');
-
-//                            if(this.listData.list.length>0) {
-//
-//                            }
+                            if(res) {
+                                this.$root.$refs.header.resetHeight('#actTypeList');
+                            }
                         });
-
-
-                    })
+                    }).catch(res=>{
+                        if(res) {
+                            this.$alert(res.msg, { type: 'error' });
+                        }
+                    });
 
             },
             goCallback(pageIndex){

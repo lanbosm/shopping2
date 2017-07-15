@@ -2,13 +2,15 @@
  * Created by Administrator on 2017/2/6.
  * wiki http://www.cnblogs.com/keepfool/p/5625583.html
  */
-//wiki es6  http://www.cnblogs.com/dupd/p/5951311.html
+//wiki es6  http://blog.csdn.net/lihongxun945/article/details/49031383
 //vue-resource https://github.com/pagekit/vue-resource/blob/develop/docs/http.md
 //then http://www.zhangxinxu.com/wordpress/2014/02/es6-javascript-promise-%E6%84%9F%E6%80%A7%E8%AE%A4%E7%9F%A5/
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import store from '../vuex/store'
 import { Message } from 'element-ui';
+
+
 
 //import * as data from '../util/mock';
 //http请求
@@ -73,16 +75,12 @@ export const request = {
     //通信错误方法
     fnError(response){
         store.commit('hide_waiting');
-        var msg={"msg": "未知错误"}
+
         switch (response.data.code) {
 
             case 49001:
                 store.dispatch('logoutUnexpected');
-
-
-              //  MessageBox.alert("身份授权已过期，请重新登录",{ type: 'error'});
                 response.data.msg= "身份授权已过期，请重新登录";
-
                 Message({
                     message: response.data.msg,
                     type: 'warning'
@@ -90,7 +88,7 @@ export const request = {
                 break;
             default:
                 console.log("Server error");
-                response=Promise.reject({"msg": "网络中断，请检查网络连接，确保网络畅通"});
+                response.data={"msg": "网络中断，请检查网络连接，确保网络畅通"};
 
         }
 
@@ -274,8 +272,6 @@ Vue.http.interceptors.push(function (req, next) {
     next(function (res) {
 
         if (res.data && res.data.code == 49001 && req.params.oAuth && store.state.login) {
-
-
 
             return  request.fnError(res);
         }

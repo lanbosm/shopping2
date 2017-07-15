@@ -62,7 +62,7 @@
 
                 ss.list.forEach((ele,index)=>{
 
-                        ele.image=ele.image+'?x-oss-process=image/resize,h_100';
+                       // ele.image=ele.image+'?x-oss-process=image/resize,h_200';
 
 
                 })
@@ -92,18 +92,15 @@
                     this.$store.dispatch('fetchList',this.productParams).then(res=>{
 
                         this.$nextTick(_=> {
-                            this.$root.$refs.header.resetHeight('#productList');
-
-//                            if(res.page.list.length>0) {
-//                                this.$simpleScroll('#productList');
- //                           }
-
+                            if(res) {
+                                this.$root.$refs.header.resetHeight('#productList');
+                            }
                         });
 
                     }).catch(res=>{
-                        this.$alert(res.msg, {
-                            type: 'error',
-                        });
+                            if(res) {
+                                this.$alert(res.msg, { type: 'error' });
+                            }
                     });
 
 
@@ -117,9 +114,11 @@
                 this.$store.dispatch('fetchItem',pid).then(res=>{
                      this.$emit('open-detail'); //主动触发upup方法，'hehe'为向父组件传递的数据  父级传过来的方法  用$emit方法去触发
                 }).catch(res=>{
-                    this.$alert(res.msg, {
-                        type: 'error',
-                    });
+                    if(res) {
+                        this.$alert(res.msg, {
+                            type: 'error',
+                        });
+                    }
                 });
             }
 

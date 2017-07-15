@@ -175,9 +175,9 @@
 
                            }
                         }).catch(res=>{
-                            this.$alert(res.msg, {
-                                type: 'error',
-                            });
+                            if(res) {
+                                this.$alert(res.msg, { type: 'error' });
+                            }
                         });
                     }
 

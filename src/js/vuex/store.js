@@ -15,19 +15,15 @@ const store = new Vuex.Store({
   state: {
     login:false, //=>accessToken
     waiting:false,
-    noticeId:'',
+    online:false,
     shopCount:1,
     headIndex:0,
-    activeId:{
-        number:1
-    },
-    flag:{
-        addflag:true
-    },
     shopData:{
         "name":"",
         "adminName":""
     },
+    noticeOn:true,
+    noticeId:'',
     msgTimer:null, //监听消息
     msgData:{
         appUnconfirmList:[],
