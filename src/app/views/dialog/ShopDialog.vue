@@ -220,6 +220,7 @@
 <script>
 
 
+
     function CreatePrinterList(){
 
         var LODOP=getLodop();
@@ -275,13 +276,19 @@
         style.type = 'text/css';
         style.id=id;
 
+
+
         var newColor=color;
-        style.innerHTML=newstyle.replace(/#6fc89c/g,newColor)
-            .replace(/#6ec89b/g,newColor)
-            .replace(/#6FC89C/g,darken(newColor,'30%'))
-            .replace(/#4aba83/g,darken(newColor,'50%'))
-            .replace(/#3a9769/g,darken(newColor,'70%'));
-        console.log(style.innerHTML);
+        var nowColor='#6fc89c';
+
+
+
+        style.innerHTML=newstyle.replace(new RegExp(`${nowColor}`,"ig"),newColor)
+            .replace(new RegExp(`${darken(nowColor,'10')}`,"ig",darken(newColor,'10')))
+            .replace(new RegExp(`${darken(nowColor,'20')}`,"ig",darken(newColor,'20')))
+            .replace(new RegExp(`${darken(nowColor,'30')}`,"ig",darken(newColor,'30')));
+
+
 
         document.getElementsByTagName('HEAD').item(0).appendChild(style);
 
@@ -319,11 +326,7 @@
             }
         },
         created(){
-//            $.get('./css/main.css',function(res){
-//                setDiyColor('red',res,'myStyle')
-//
-//
-//            })
+
 
             this.$store.dispatch("fetchShopData").then(res=>{
                             console.log(res);
@@ -337,7 +340,18 @@
                                 this.printer=this.shopData.printer;
 
                             }
+
                             this.printer.qrCodeContent= res.shopSetting.qrCodeContent;
+
+//                            $.get('./css/style.css?v=2',function(res){;
+//                                setDiyColor('#fcc',res,'myStyle')
+//                            })
+//
+//                            $.get('./css/main.css?v=2',function(res){
+//
+//                                setDiyColor('#fcc',res,'myStyle2')
+//
+//                            })
 
             }).catch(res=>{
 
@@ -346,7 +360,7 @@
                 })
             });
 
-             this.setPrinter();
+             //this.setPrinter();
 
         },
         methods: {

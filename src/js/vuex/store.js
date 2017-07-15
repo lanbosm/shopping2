@@ -95,7 +95,8 @@ const store = new Vuex.Store({
           }
       },
       setOrderParams(state,data){
-          Object.assign(state.currentPage.orderParams,data);
+          var obj= Object.assign({},state.currentPage.orderParams,data);
+          state.currentPage.orderParams=obj;
       },
       setOrderData(state, data){
           state.currentPage.orderData = data;

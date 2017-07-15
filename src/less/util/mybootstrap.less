@@ -17,9 +17,9 @@
 .breadcrumb>li+li:before{content:" » "}
 .breadcrumb li a{color:#333}
 .breadcrumb li a:hover{ text-decoration: none;}
-.breadcrumb li.active a{color:#539776}
+.breadcrumb li.active a{color:@green;}
 .pagination>li>a,.pagination>li>span{color:#333}
-.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{background:#6fc89c;color:#fff;border-color:#6fc89c}
+.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{background:darken(@green,20%);color:#fff;border-color:darken(@green,30%)}
 .pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{color:#333;font-weight:700}
 .pagination>li>span{margin-right:20px}
 .pagination>li>span:hover{color:#333;background:#fff;font-weight:400}
@@ -46,20 +46,20 @@
 .btn-primary{
   color: #ffffff;
   background-color: @green;
-  border-color:darken(@green,10%);
+  border-color:darken(@green,30%);
 }
-.btn-primary:active,.btn-primary:focus,.btn-primary:hover{color:#fff;background-color:darken(@green,20%)!important; border-color:darken(@green,10%) !important; }
+.btn-primary:active,.btn-primary:focus,.btn-primary:hover{color:#fff;background-color:darken(@green,30%)!important; border-color:darken(@green,10%) !important; }
 
 
-.nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{background:#6fc89c;color:#fff}
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{background:@green;color:#fff}
 .col-fixed-3{padding-left:15px;width:300px;padding-right:15px;position:fixed;margin-top:0}
 .col-nn-30{ padding-left: 15px; padding-right: 15px; float: left; width: 30%;}
 .col-nn-23{ padding-left: 15px; padding-right: 15px; float: left; width: 23%;}
 .col-nn-70{ padding-left: 15px; padding-right: 15px; float: left; width: 70%;}
 .btn-gray{background: #e8e9f1;color: #666;}
-.btn-gray:active,.btn-gray:focus,.btn-gray:hover{color:#fff;background-color:#6ec89b}
+.btn-gray:active,.btn-gray:focus,.btn-gray:hover{color:#fff;background-color:darken(@green,20%)}
 .activity_list{margin-top: 10px;margin-bottom: 10px}
 .activity_btn{cursor: pointer;padding: 5px 30px; font-size: .7rem; position: relative;border-radius: 5px;box-sizing: border-box;background-color: #e8e9f1;margin-left: 12px;color: #666;text-decoration: none !important; }
-.activeOn{background-color: #6ec89b;color: #fff}
+.activeOn{background-color: darken(@green,30%);color: #fff}
 .btn{font-size:14px;}
 input[type=file]{display: none;}

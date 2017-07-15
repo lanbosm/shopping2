@@ -21,9 +21,8 @@
 
 .common-header-btn(){
   .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
-  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+  &:hover{ .class-order-btn(#ffffff,darken(@green,20%),#cccccc,5px,10px 20px );}
+  &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc,5px,10px 20px);}
 }
 
 
@@ -71,16 +70,14 @@
 
 .order-header-btn(){
   .class-order-btn(#666666,#f0eeef,#cccccc,5px,10px 20px);
-  &:hover{ .class-order-btn(#ffffff,@green,#cccccc,5px,10px 20px );}
-  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc,5px,10px 20px);}
-  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+  &:hover{ .class-order-btn(#ffffff,darken(@green,20%),#cccccc,5px,10px 20px );}
+  &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc,5px,10px 20px);}
 }
 
 .order-left-btn(){
   .class-order-btn(#666666,#f0eeef,#cccccc);
-  &:hover{ .class-order-btn(#ffffff,@green,#cccccc);}
-  &:active{ .class-order-btn(#ffffff,#3b8c64,#cccccc);}
-  &.select{.class-order-btn(#ffffff,@green,#cccccc);}
+  &:hover{ .class-order-btn(#ffffff,red,#cccccc);}
+  &:active,&.select{ .class-order-btn(#ffffff,darken(@green,30%),#cccccc);}
 }
 
 
