@@ -59,7 +59,8 @@ export const API_URLS = {
     shop_setting:'/cashier/member/shop_setting',
     ads:'/cashier/member/ads',
     takepost:'/cashier/member/consigns/take',
-    activity:'/cashier/member/activity'
+    activity:'/cashier/member/activity',
+    areas:'/cashier/member/common/areas'
 
 };
 

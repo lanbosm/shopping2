@@ -33,13 +33,13 @@
 										<em>{{item.productName}}</em>
 									</span>
                             <!--数量-->
-                            <span>{{item.productCount}}件</span>
+                            <span>{{item.quantity-item.takenNum}}件</span>
 
                             <span>
                                 <div class="span_all">
-                                    <input class="span1" type="button" value="-" @click="edd(1,item.quantity,index)">
-                                    <input class="span2" type="tel" v-model="item.quantity">
-                                    <input class="span3" type="button" value="+" @click="add(1,item.quantity,item.productCount,index)">
+                                    <input class="span1" type="button" value="-" @click="edd(1,item.num,index)">
+                                    <input class="span2" type="tel" v-model="item.num">
+                                    <input class="span3" type="button" value="+" @click="add(1,item.num,item.cantake,index)">
                                 </div>
                             </span>
                         </div>
@@ -55,15 +55,16 @@
 
     @import "../../../less/util/skin.less";
     @import "../../../less/util/mixin.less";
-    .span_all{width: 150px;height: 40px;margin: 0 auto;margin-top: 10px;
+
+    .span_all{width: 80%;height: 40px;margin: 0 auto;margin-top: 10px;
         margin: 0 auto;
         margin-top: 32px;
         border-radius: 5px;
         border: 1px solid #999
     }
-    .span_all .span1{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
-    .span_all .span2{width: 68px;height: 38px;line-height: 38px;text-align: center;float: left}
-    .span_all .span3{width: 40px;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
+    .span_all .span1{width:30%;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
+    .span_all .span2{width: 40%;height: 38px;line-height: 38px;text-align: center;float: left}
+    .span_all .span3{width: 30%;height: 38px;background: @green;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
     .log-products{
         position: relative;
     .list-row{
@@ -168,9 +169,7 @@
                 }
                 return num_act;
             },
-            order(){
-                return this.$store.state.currentPage.stockData
-            },
+
         },
         created(){
                 console.log(this.listData);
@@ -179,35 +178,34 @@
 //            console.log(this.order)
         },
         methods:{
-            add(number,index,max,ss){
-                var vm=this;
-                index=this.listData[ss].quantity;
-                    if(index<max){
-                        index+=number;
-//                        this.listData[ss].quantity=index;
-                        console.log(this.listData[ss])
-                        this.$set(this.listData[ss],'quantity',index);
-//                        alert(this.listData[ss].quantity)
-                    }else {
-                        index=max;
-                    }
+            add(count,num,max,index){
 
+
+                    if(num<max){
+                        num+=count;
+
+                    }else {
+                        num=max;
+
+                    }
+                 this.$parent.listData[index].num=num;
             },
-            edd(number,index,ss){
-//                this.Num[index]-=Number(number);
-//                if(this.Num[index]<0){ this.Num[index]=0;}
-//                console.log(this.Num)
-                if(index<=0){
-                    index=0;
+            edd(count,num,index){
+
+
+                if(num<=0){
+                    num=0;
+
                 }else {
-                    index-=Number(number);
-                    this.$set(this.listData[ss],'quantity',index);
+
+                     num-=Number(count);
+
+
                 }
+                this.$parent.listData[index].num=num;
             },
             goCallback(pageIndex){
-                this.pageNum=pageIndex;
-                this.fetchList();
-                window.scrollTo(0,0);
+
             },
             //请求列表
 //            fetchList() {

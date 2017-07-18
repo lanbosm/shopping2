@@ -55,7 +55,17 @@
             .women-radio.radio label{background:url('@{imgPath}/women.png') 50% 50% no-repeat}
             .man-radio.radio input:checked+label{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat}
             .women-radio.radio input:checked+label{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat}
-            .input-group{margin-top: @gutter; margin-bottom:@gutter;}
+            .input-group{margin-top: @gutter; margin-bottom:@gutter; width: 100%;}
+            .input-group .el-input-group__prepend{
+              color: #fff;
+              background: darken(@green,20%);
+            }
+            .input-group-addon {
+              background: darken(@green,20%);
+              color: #fff;
+              border: solid 1px  @green;
+            }
+            .el-cascader{width: 100%;}
             .btn{position: relative;margin-top: @gutter; margin-bottom:@gutter;}
         }
         #custom-solt{
@@ -71,7 +81,7 @@
               border: @borderDashedStyle; width: 100%;   height:240px;   text-align: center; padding-top: 30px;
             }
             .custom-list { width: 100%;  padding-bottom: 20px;
-              height: @listHeight/1.2;
+              height: @listHeight/1.2; overflow-x: hidden;
               li {
                 height:80px; border: @borderDashedStyle;
                 &.select{
@@ -104,21 +114,21 @@
         //详情样式
         .detail{
             margin: 0 auto;
-            height: 560px; overflow: hidden;
+            height: @listHeight; overflow-x: hidden;
             .custom-table-body{padding: @gutter; }
             .custom-member{
                 width: 80%;
                 margin: 0 auto;
-                .custom-name, .custom-phone{margin-top:10px;margin-bottom:10px}
-                .custom-name .input-group-addon,.custom-layer .custom-phone .input-group-addon{background:0 0}
-                color:#999;margin-top:-20px;
+
                 .row{margin-top:20px}
-                .sex-photo{width:70px;height:70px;display:block;float:left;border-radius: 50%; overflow: hidden;}
+                .sex-photo{width:70px;height:70px;display:block;float:left;  margin-right: @gutter;border-radius: 50%; overflow: hidden;}
                 .sex-photo.male{background:url('@{imgPath}/man_check.png') 50% 50% no-repeat;background-size:100%}
                 .sex-photo.female{background:url('@{imgPath}/women_check.png') 50% 50% no-repeat;background-size:100%}
 
                 .nickname{line-height:70px;font-size:14px;display:block;float:left;}
-                span{padding-left: 30px;}
+                b{
+                  margin-right: @gutter;
+                }
             }
             .brand{
 
@@ -130,8 +140,8 @@
                 display: inline-block;
                 overflow: hidden;
                 border-radius: 50%;
-                border: solid 1px #cccccc;
-                margin-left:-10px;
+                border: solid 2px #999999;
+                margin-left:-5px;
                 img{width: 100%;}
               }
             }
@@ -184,9 +194,9 @@
                  margin-bottom:@gutter;
                 .yxq{color: #999999;}
                 .custom-ticket-header{margin-bottom:@gutter;padding-left:60px;}
-                .custom-ticket-body{height:180px;overflow:hidden;  width: 80%; margin: 0 auto;}
+                .custom-ticket-body{height:180px;overflow:hidden;  width: 80%; margin: 0 auto; color: #999999;}
                 .custom-ticket-body ul{list-style:none;padding:0}
-
+                .custom-ticket-body .noTicket{line-height:180px;}
                 .custom-ticket-body li .nocodeProduct{line-height: 60px; text-align: center; color: @themeColor; font-size: 16px;}
                 .custom-ticket-body li{width:80%;height:60px;display:block;border:1px solid #e8e9f1;border-radius:5px;margin:10px auto 0;font-size:.8rem}
                 .custom-ticket-body li:first-child{margin-top:0}

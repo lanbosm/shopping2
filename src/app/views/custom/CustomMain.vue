@@ -78,16 +78,23 @@
                     this.step='detail';
                 })
             }else {
+
                 this.customListData = this.customListData_default;
                 var data = {username: '', pageNum: 1};
+                let lock;
+                this.$nextTick(_=>{
+
+                     lock=this.wait();
+                })
+
                 this.$store.dispatch("fetchCustom", data).then(res => {
                     console.log(res);
-
+                    lock.close();
                     this.customListData = res.page;
                     this.searching = false;
                     this.step = 'list';
                     this.$nextTick(_ => {
-                        this.$simpleScroll('#custom-list-list');
+                        //this.$simpleScroll('#custom-list-list');
                     })
 
                 }).catch(res => {
@@ -122,13 +129,13 @@
                     if (this.step == "register" ) {
                         this.step = this.historyStep;
                         this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-list');
+                           // this.$simpleScroll('#custom-list-list');
                         })
                     }
                     else  if (this.step == "detail" ) {
                         this.step = "list";
                         this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-list');
+                           // this.$simpleScroll('#custom-list-list');
                         })
 
                     }
@@ -167,7 +174,7 @@
                         this.searching=false;
                         this.step='list';
                         this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-list');
+                            //this.$simpleScroll('#custom-list-list');
                         })
                     },300)
                 }).catch(res=>{
@@ -229,7 +236,8 @@
                         this.searching=false;
                         this.step='list';
                         this.$nextTick(_=>{
-                            this.$simpleScroll('#custom-list-list');
+                            document.getElementById('custom-list-list').scrollTop=0;
+                            //this.$simpleScroll('#custom-list-list');
                         })
                     },300)
                 }).catch(res=>{

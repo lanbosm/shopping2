@@ -114,11 +114,13 @@
                             }
                             break;
                         case '.':   //close
+                            var str=this.rmb+"";
+                            if(keycode=='.' && str.indexOf('.')<0 || !isNaN(keycode)){  //如果是点的话 已经包含小数
 
-                            if(this.rmb.indexOf('.')<0){
-                                var str=this.rmb+".";
+                                str+=keycode+'';
                                 this.rmb=str;
                             }
+
                             break;
                     }
                 }else{

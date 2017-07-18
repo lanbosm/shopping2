@@ -8,6 +8,7 @@
         </div>
         <div class="row"  v-else-if="listData.list.length == 0">
             <div class="col-xs-12 no-list"></div>
+
         </div>
         <div  v-else>
             <ul id="actProductList">

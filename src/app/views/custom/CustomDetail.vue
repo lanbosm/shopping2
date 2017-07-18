@@ -5,28 +5,38 @@
         <div class="custom-table-body">
             <div class="custom-member">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 clearfix">
+                    <div class="col-xs-6">
                         <!--{{customData.curCustom.sex | sex}}-->
-                        <em class="sex-photo"><img v-show="member.headPortrait" :src="member.headPortrait"/></em>
-                        <span class="nickname">{{member.nickname}}</span>
+                        <span class="nickname ">
+                             <em class="sex-photo"><img v-show="member.headPortrait" :src="member.headPortrait"/></em>
+                            <b>{{member.nickname}}</b>
+                        </span>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="areaName "><b>所在地：</b>{{member.areaName }}</span>
                         <!--<span class="password_again" @click="againPass()">重置密码</span>-->
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-xs-6">
+                         <span><b>手机号：</b>{{member.username}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <span ><b>积分：</b>{{member.point}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"><b>余额：</b> <span>{{member.balance | currency}}</span></div>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-12 clearfix" v-if="member.brands.length>0">
                              <div class="brand" >
-                                  <h5>购买过的品牌</h5>
+                                 <h5><b>购买过的品牌</b></h5>
                                   <em v-for="item in member.brands"><img :src='item' /></em>
                             </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">手机号<span>{{member.username}}</span></div>
-                    <div class="col-xs-12 col-sm-6">积分<span>{{member.point}}</span></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">余额 <span>{{member.balance}}</span></div>
-                </div>
+
             </div>
             <div class="custom-bar">
                     <a class="order-btn" @click="handleOrder()">订单</a>
@@ -47,7 +57,7 @@
                 <div class="line"><span class="primary glyphicon glyphicon-tag"></span></div>
                 <div class="custom-ticket-header">优惠券</div>
                 <div class="custom-ticket-body" id="custom-ticket-list">
-                    <div class="text-center" v-if="!member.appCoupons || !member.appCoupons.length">暂无优惠券</div>
+                    <div class="text-center noTicket" v-if="!member.appCoupons || !member.appCoupons.length">暂无优惠券</div>
                     <ul >
                         <li v-for="coupon in member.appCoupons">
                             <div class="nocodeProduct" v-if="coupon.type=='nocodeProduct'">
@@ -108,7 +118,7 @@
                     if(this.member&&this.member.babyPhotos.length>0){
                         this.$simpleScroll('#custom-gallery-list', 'horizontal');
                     }
-                    this.$simpleScroll('#custom-detail', 'vertical');
+                    //this.$simpleScroll('#custom-detail', 'vertical');
                 });
         },
         computed: {

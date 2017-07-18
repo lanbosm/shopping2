@@ -109,30 +109,45 @@
                  next:{"label":"存货","url":"","show":true,"cb":this.save}, //存货是1
                  message: '',
                  listType:null,
+                 listData:{}
              }
          },
         components:{
             MemberStock
         },
         computed:{
-            listData(){
-                return this.$store.state.currentPage.stockData
-            }
+
         },
         created(){
 
+            this.fetchList();
         },
         methods:{
 
+            fetchList(){
+                var sn=this.$route.query.sn;
+                var mid=this.$route.query.mid;
+                this.$store.dispatch("stockGoods",{"orderSn":sn,"mid":this.$route.query.mid}).then(res=>{
+                    res.appConsigns.forEach((ele,index)=>{
+                        ele.cantake=ele.quantity-ele.takenNum;
+                        this.$set( ele,'num',ele.quantity-ele.takenNum)
+                    })
+
+                    this.listData=res.appConsigns;
+
+                    // console.log(sn);
+                })
+
+            },
             save(){
 
                     var vm=this;
                     var obj3 = [];
                     var obj4 = [];
-                    var testdata = vm.$store.state.currentPage.stockData;
+                    var testdata = this.listData;
                     for (var i = 0; i < testdata.length; i++) {
                         obj3.push(0);
-                        obj4.push(testdata[i].quantity)
+                        obj4.push(testdata[i].num)
                     }
                     if (obj3.toString() == obj4.toString()) {
                         this.$message.error('存货数量不能为空');
@@ -141,12 +156,13 @@
                         var consignList = [];
 
                         testdata.forEach(function (ele, index) {
-                            consignList.push({
-                                'quantity': ele.quantity,
-                                'productId': ele.productId,
-                                'b2cOrderItemId': ele.orderItemId
-                            })
-
+                            if(ele.num>0) {
+                                consignList.push({
+                                    'quantity': ele.num,
+                                    'productId': ele.productId,
+                                    'b2cOrderItemId': ele.orderItemId
+                                })
+                            }
 
                         })
                         var aa = JSON.stringify(consignList);
@@ -157,18 +173,11 @@
                             this.$alert('操作成功', {
                                 type: 'success'
                             }).then(_ => {
-                                this.$store.dispatch("stockGoods", {"orderSn": this.$route.query.sn,"mid":this.$route.query.mid}).then(res=>{
-                                        var temp=this.listData;
-
-                                         temp.forEach(function(ele,index){
-                                             ele.quantity=ele.productCount;
-                                         })
-                                    this.listData=temp;
-                                })
+                               this.fetchList();
                             })
                         }).catch(_ => {
 
-                            this.$alert('操作成功', {
+                            this.$alert('操作失败', {
                                 type: 'error'
                             })
                         });

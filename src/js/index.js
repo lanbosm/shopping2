@@ -154,7 +154,7 @@ Vue.filter("currency", function(value) {   //全局方法 Vue.filter() 注册一
 //自定义属性
 
 
-router.beforeEach(({meta, path}, from, next)=> {
+router.beforeEach(({meta, path ,fullPath}, from, next)=> {
 
 
     const {auth = true} =  meta      // meta代表的是to中的meta对象，path代表的是to中的path对象  
@@ -178,7 +178,8 @@ router.beforeEach(({meta, path}, from, next)=> {
 
          next({ path: '/login' })   //  跳转到login页面  
     }else {
-        store.state.currentPage.history=path;
+
+        store.state.currentPage.history=fullPath;
         console.log(store.state.currentPage.history);
         next()   // 进行下一个钩子函数  
     }

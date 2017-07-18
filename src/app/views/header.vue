@@ -224,6 +224,7 @@
                 this.$store.dispatch('switchPage', index).then(res=> {
                     //切换路由
                     //this.history= this.history.replace(/\//i,"");
+
                     this.$router.replace(this.history);
                 });
             },

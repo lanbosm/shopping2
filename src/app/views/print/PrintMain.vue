@@ -148,7 +148,7 @@
 
 
 
-                .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+                .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden;text-overflow:ellipsis;}
                 .print-box  table.printtable .itemsRow{clear: both;}
                 .print-box  table.printtable .itemsRow span{  width:50%; display:block; float: left; }
 
@@ -209,7 +209,7 @@
     .print-box  table.printtable{*zoom:1;}
 
 
-    .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+    .print-box  table.printtable .itemsName{ width:100% ;overflow:hidden; text-overflow:ellipsis;}
     .print-box  table.printtable .itemsRow{clear: both;}
     .print-box  table.printtable .itemsRow span{  width:50%; display:block; float: left; }
 
@@ -514,11 +514,8 @@
             },
 
             gostock(){
+                this.$router.push({path:'/member',query:{sn:this.printData.sn,mid:this.printData.memberId}})
 
-                this.$store.dispatch("stockGoods",{"orderSn":this.printData.sn}).then(res=>{
-
-                    this.$router.push({path:'/member',query:{sn:this.printData.sn,mid:this.printData.memberId}})
-                })
             }
         }
 

@@ -108,15 +108,17 @@ const actions= {
             return dispatch('getPublicKey')
                 .then(res => {
                     let publicKey=res.data;
-
-                    let  rsaKey = new RSAKey();
-                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
-                    let  enPwd = hex2b64(rsaKey.encrypt(value.password));
-
-                    return {publicKey:publicKey,enPwd:enPwd};
+                    if(value.password) {
+                        let rsaKey = new RSAKey();
+                        rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                        let enPwd = hex2b64(rsaKey.encrypt(value.password));
+                        return {publicKey:publicKey,enPwd:enPwd};
+                    }else{
+                        return  {publicKey:{tmpKey:''},enPwd:''};
+                    }
                 })
                 .then(res=>{
-                    if(res.publicKey && res.enPwd) {
+
 
                         let apiobj = {
                             url:API_URLS.customers,
@@ -124,6 +126,7 @@ const actions= {
                                 phone: value.phone,
                                 name: value.name,
                                 sex: value.sex,
+                                areaId:value.areaId,
                                 membeCard: value.membeCard,
                                 enPasswd: res.enPwd,
                                 tmpKey: res.publicKey.tmpKey
@@ -141,7 +144,7 @@ const actions= {
                         }).catch(res=>{
                             return  Promise.reject(res);
                         });
-                    }
+
                 })
 
         },
@@ -579,22 +582,22 @@ const actions= {
             });
         },
         //获取会员列表
-        fetchCustom({commit},value){
+        fetchCustom({state,commit},value){
             let apiObj = {
                 url : API_URLS.customers,
                 data:value
             };
-          //  commit("show_waiting");
+            commit("show_waiting");
             return  request.fnGet_dev(apiObj).then(res=> {
-                   // commit("hide_waiting");
-                    if (res.data.code=="20000") {
-                        return  Promise.resolve(res.data);
-                    } else if(state.login){
-                        return  reject(res);
-                    }
-                }).catch(res=>{
-                        return   reject(res.data);
-             });
+                    commit("hide_waiting");
+                if (res.data.code=="20000") {
+                    return  Promise.resolve(res.data);
+                } else if(state.login){
+                    return   Promise.reject(res);
+                }
+            }).catch(res=>{
+                return    Promise.reject(res.data);
+            });
         },
 
         //获取会员详情信息
@@ -607,20 +610,33 @@ const actions= {
             return new Promise((resolve, reject) => {
                 request.fnGet(apiObj).then(res => { //成功
                     commit("hide_waiting");
-                    if(res.code=="20000"){
-                        resolve(res);
-                    }else{
-                        reject(res);
+                    if (res.data.code=="20000") {
+                        return  resolve(res.data);
+                    } else if(state.login){
+                        return  reject(res);
                     }
-                }).catch(res=> { //失败
-                        commit("hide_waiting");
-                        reject(res); //这里可以尝试扩展备用接口
-                })
-            });
+                }).catch(res=>{
+                    return   reject(res.data);
+                });
+           })
         },
+        fetchArea({commit},value){
+                    let apiObj = {
+                        url : API_URLS.areas,
+                        data:{parentId:value}
+                    };
+                return  request.fnGet_dev(apiObj).then(res=> {
+                    commit("hide_waiting");
+                    if (res.data.code=="20000") {
+                        return  Promise.resolve(res.data);
+                    } else if(state.login){
+                        return   Promise.reject(res);
+                    }
+                }).catch(res=>{
+                    return    Promise.reject(res.data);
+                });
 
-
-
+        },
         //获取班次信息
         fetchLog({commit},value){
 
@@ -831,15 +847,19 @@ const actions= {
             commit("show_waiting");
             return dispatch('getPublicKey')
                 .then(res => {
-                    let publicKey=res.data;
+                    if(value.password) {
+                        let publicKey = res.data;
 
-                    let  rsaKey = new RSAKey();
-                    rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
-                    let  enPwd = hex2b64(rsaKey.encrypt(value.password));
-                    return {publicKey:publicKey,enPwd:enPwd};
+                        let rsaKey = new RSAKey();
+                        rsaKey.setPublic(b64tohex(publicKey.modulus), b64tohex(publicKey.exponent));
+                        let enPwd = hex2b64(rsaKey.encrypt(value.password));
+                        return {publicKey: publicKey, enPwd: enPwd};
+                    }else{
+                        return {publicKey: {tmpKey:''}, enPwd: ''};
+                    }
                 })
                 .then(res=>{
-                        if(res.publicKey && res.enPwd) {
+
                             console.log(value);
                             let apiobj = {
                                 url: API_URLS.takepost,
@@ -856,13 +876,13 @@ const actions= {
                                 if (res.data.code=="20000") {
                                     return  Promise.resolve(res.data);
                                 } else {
-                                    return  Promise.reject(res.data);
+                                    return  Promise.reject(res);
                                 }
                             }).catch(res=>{
                                 commit("hide_waiting");
-                                return  Promise.reject(res);
+                                return  Promise.reject(res.data);
                             });
-                        }
+
 
 
                 })

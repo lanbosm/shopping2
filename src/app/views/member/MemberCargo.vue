@@ -36,7 +36,7 @@
 									</span>
                             <!--数量-->
                             <span style="width: 25%">{{item.quantity}}件</span>
-                            <span style="width: 15%">{{item.takenNum}}件</span>
+                            <span style="width: 15%">{{item.takenNum || 0}}件</span>
                             <span style="width: 25%">
                                 <div class="span_all">
                                     <input class="span1" type="button" value="-" @click="edd(1,item.operationNum,index)">
@@ -62,15 +62,7 @@
 
     @import "../../../less/util/skin.less";
     @import "../../../less/util/mixin.less";
-    .span_all{width: 150px;height: 40px;margin: 0 auto;margin-top: 10px;
-        margin: 0 auto;
-        margin-top: 32px;
-        border-radius: 5px;
-        border: 1px solid #999
-    }
-    .span_all .span1{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-left-radius: 5px;border-top-left-radius: 5px;}
-    .span_all .span2{width: 68px;height: 38px;line-height: 38px;text-align: center;float: left}
-    .span_all .span3{width: 40px;height: 38px;background: #5bc0de;line-height: 38px;text-align: center;font-size: 18px;color: #fff;float: left;border-bottom-right-radius: 5px;border-top-right-radius: 5px;}
+
     .log-products{
         position: relative;
     .list-row{
