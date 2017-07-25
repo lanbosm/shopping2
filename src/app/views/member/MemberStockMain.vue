@@ -105,7 +105,7 @@
          data(){
              return{
                  title:'存货',
-                 back:{"label":"返回","url":"print","show":true},
+                 back:{"label":"返回","url":"index","show":true,"cb":this.clearOrder},
                  next:{"label":"存货","url":"","show":true,"cb":this.save}, //存货是1
                  message: '',
                  listType:null,
@@ -123,7 +123,11 @@
             this.fetchList();
         },
         methods:{
-
+            clearOrder(){
+                this.$store.dispatch("removePage").then(res=> {
+                    this.$router.replace('/');
+                });
+            },
             fetchList(){
                 var sn=this.$route.query.sn;
                 var mid=this.$route.query.mid;

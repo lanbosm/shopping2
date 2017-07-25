@@ -16,16 +16,16 @@
                             </div>
                             <div class="input-group custom-name custom-group">
                                 <el-input placeholder="姓名" v-model="newCustom.name">
-                                    <template slot="prepend"><i class="iconfont icon-guanliyuan"></i></template>
+                                    <template slot="prepend"><i style="padding: 6px 3px" class="iconfont icon-guanliyuan"></i></template>
                                 </el-input>
                             </div>
                             <div class="input-group custom-phone custom-group">
                                 <el-input type="num"   :maxlength="11"  placeholder="手机号" v-model="newCustom.phone">
-                                    <template slot="prepend"><i class="iconfont icon-mobilefill"></i></template>
+                                    <template slot="prepend"><i style="padding: 6px 3px"  class="iconfont icon-mobilefill"></i></template>
                                 </el-input>
                             </div>
                             <div class="input-group  custom-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i> </span>
+                                <span class="input-group-addon" style="padding: 6px 11px"><i class="glyphicon glyphicon-home"></i> </span>
                                 <el-cascader
                                         placeholder="请选择"
                                         :options="options"
@@ -34,18 +34,18 @@
                                         v-model="selectedOptions"   @change="handleChange"
                                 ></el-cascader>
                             </div>
-                            <div class="input-group custom-phone custom-group">
-                                <span class="input-group-addon"><i  class="iconfont icon-mima"></i></span>
-                                <input type="password" class="form-control" placeholder="提货密码 (选填)"  id="password" v-model="newCustom.password">
-                            </div>
-                            <div class="input-group custom-phone custom-group">
-                                <span class="input-group-addon"><i  class="iconfont icon-querenmima"></i></span>
-                                <input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">
-                            </div>
-                            <div class="input-group custom-phone custom-group">
-                                <span class="input-group-addon"><i  class="iconfont icon-qiahao"></i></span>
-                                <input type="num" class="form-control" placeholder="卡号 (选填)"  id="card" v-model="newCustom.membeCard">
-                            </div>
+                            <!--<div class="input-group custom-phone custom-group">-->
+                                <!--<span class="input-group-addon"><i  class="iconfont icon-mima"></i></span>-->
+                                <!--<input type="password" class="form-control" placeholder="提货密码 (选填)"  id="password" v-model="newCustom.password">-->
+                            <!--</div>-->
+                            <!--<div class="input-group custom-phone custom-group">-->
+                                <!--<span class="input-group-addon"><i  class="iconfont icon-querenmima"></i></span>-->
+                                <!--<input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">-->
+                            <!--</div>-->
+                            <!--<div class="input-group custom-phone custom-group">-->
+                                <!--<span class="input-group-addon"><i  class="iconfont icon-qiahao"></i></span>-->
+                                <!--<input type="num" class="form-control" placeholder="卡号 (选填)"  id="card" v-model="newCustom.membeCard">-->
+                            <!--</div>-->
                             <a class="btn btn-primary btn-block" @click="doRegister()">保存</a>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                 newCustom:{
                     'phone':'',
                     'name':'',
-                    'sex':'',
+                    'sex':'male',
                     'membeCard':'',
                     'password':'',
                     'passworded':'',

@@ -360,7 +360,7 @@
                 })
             });
 
-             //this.setPrinter();
+             this.setPrinter();
 
         },
         methods: {

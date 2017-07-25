@@ -55,8 +55,9 @@
                             <tr >
                                 <td colspan="2" class="itemsRow">
                                     <span>数量*{{item.quantity}}</span>
-                                    <span class="text-right" v-if="item.editPrice">{{item.editPrice | currency}}</span>
-                                    <span class="text-right" v-else="item.price">{{item.price | currency}}</span>
+                                    <span class="text-right" v-if="item.editPrice">{{item.editPrice | currency}} <em v-if="item.discount">* {{item.discount *10}}折</em></span>
+                                    <span class="text-right" v-else="item.price">{{item.price | currency}} <em v-if="item.discount">* {{item.discount *10}}折</em></span>
+
                                 </td>
                             </tr>
                             </template>
@@ -365,7 +366,7 @@
                     var imgData="data:image/png;base64,"
                     var base64=this.printData.wechatCodeBase64;
                     $('#qrcCode').html('<img src="'+imgData+base64+'"/>');
-                    //this. scanResListen();
+                    this. scanResListen();
 
 
                 }

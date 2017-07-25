@@ -13,7 +13,7 @@
                         </span>
                     </div>
                     <div class="col-xs-6">
-                        <span class="areaName "><b>所在地：</b>{{member.areaName }}</span>
+
                         <!--<span class="password_again" @click="againPass()">重置密码</span>-->
                     </div>
                 </div>
@@ -27,6 +27,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6"><b>余额：</b> <span>{{member.balance | currency}}</span></div>
+                    <div class="col-xs-6">
+                        <span class="areaName "><b>所在地：</b>{{member.areaName }}</span>
+                        <!--<span class="password_again" @click="againPass()">重置密码</span>-->
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 clearfix" v-if="member.brands.length>0">

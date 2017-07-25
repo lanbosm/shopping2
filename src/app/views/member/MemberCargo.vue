@@ -71,6 +71,7 @@
 
     span{
         display: block; width: 25%; float: left; text-align: center;
+        .norow();
     &:first-child{width: 50%;}
     }
     .clearfix;
@@ -114,12 +115,12 @@
          width: 50%;
          color: @color;
          text-align: left;
-    em{ margin-left: @gutter; display: inline-block; width: 75%; height: 60px;
+    em{ width: 56%; .norow(); display: inline-block;  height: 60px;
     .norow;
     }
     }
     }
-    img{width: 60px; height: 60px; display: inline-block;}
+    img{width: 19%; height: 60px; display: inline-block;}
     }
     .clearfix;
     }
