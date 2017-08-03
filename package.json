@@ -68,7 +68,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "dev": "gulp dev",
-    "prod": "gulp prod",
+    "prod": "gulp prod"
   },
   "license": "MIT"
 }

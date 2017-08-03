@@ -80,6 +80,17 @@
                     this.$store.dispatch('fetchActList',{"type":this.type,"pageNum":this.pageNum}).then(res=>{
                         console.log(res.page);
                         //console.log(this.type);
+
+                            res.page.list.forEach((ele,index)=>{
+
+                                if(typeof  ele.image =='string' &&  ele.image.indexOf('http:')!=-1) {
+                                    ele.image = ele.image.replace('http:', '');
+
+                                }
+
+                            })
+
+
                         this.listData=res.page;
 
                         this.$nextTick(_=> {

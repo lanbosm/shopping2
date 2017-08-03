@@ -62,7 +62,10 @@
 
                 ss.list.forEach((ele,index)=>{
 
-                       // ele.image=ele.image+'?x-oss-process=image/resize,h_200';
+                    if(typeof  ele.image =='string' &&  ele.image.indexOf('http:')!=-1) {
+                        ele.image = ele.image.replace('http:', '');
+
+                    }
 
 
                 })

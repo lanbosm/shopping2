@@ -34,18 +34,18 @@
                                         v-model="selectedOptions"   @change="handleChange"
                                 ></el-cascader>
                             </div>
-                            <!--<div class="input-group custom-phone custom-group">-->
-                                <!--<span class="input-group-addon"><i  class="iconfont icon-mima"></i></span>-->
-                                <!--<input type="password" class="form-control" placeholder="提货密码 (选填)"  id="password" v-model="newCustom.password">-->
-                            <!--</div>-->
-                            <!--<div class="input-group custom-phone custom-group">-->
-                                <!--<span class="input-group-addon"><i  class="iconfont icon-querenmima"></i></span>-->
-                                <!--<input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">-->
-                            <!--</div>-->
-                            <!--<div class="input-group custom-phone custom-group">-->
-                                <!--<span class="input-group-addon"><i  class="iconfont icon-qiahao"></i></span>-->
-                                <!--<input type="num" class="form-control" placeholder="卡号 (选填)"  id="card" v-model="newCustom.membeCard">-->
-                            <!--</div>-->
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-mima"></i></span>
+                                <input type="password" class="form-control" placeholder="提货密码 (选填)"  id="password" v-model="newCustom.password">
+                            </div>
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-querenmima"></i></span>
+                                <input type="password" class="form-control" placeholder="确认密码"  id="passworded" v-model="newCustom.passworded" @keyup.enter="doRegister()">
+                            </div>
+                            <div class="input-group custom-phone custom-group">
+                                <span class="input-group-addon"><i  class="iconfont icon-qiahao"></i></span>
+                                <input type="num" class="form-control" placeholder="卡号 (选填)"  id="card" v-model="newCustom.membeCard">
+                            </div>
                             <a class="btn btn-primary btn-block" @click="doRegister()">保存</a>
                         </div>
                     </div>
